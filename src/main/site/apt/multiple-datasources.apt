@@ -1,0 +1,100 @@
+                                    ------
+                                    Introduction
+                                    ------
+                                    The myBatis Team
+                                    ------
+                                     2010
+
+~~
+~~   Copyright 2010 The myBatis Team
+~~
+~~   Licensed under the Apache License, Version 2.0 (the "License");
+~~   you may not use this file except in compliance with the License.
+~~   You may obtain a copy of the License at
+~~
+~~       http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~   Unless required by applicable law or agreed to in writing, software
+~~   distributed under the License is distributed on an "AS IS" BASIS,
+~~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~   See the License for the specific language governing permissions and
+~~   limitations under the License.
+~~
+
+~~version: $Id$
+
+Multiple Datasources
+
+  It happens often that users need to interact with multiple schemas in the same
+  application, that means to have separate myBatis configurations.
+
+  Fortunately, the <Google Guice> {{{http://google-guice.googlecode.com/svn/trunk/latest-javadoc/com/google/inject/PrivateModule.html}PrivateModule}}
+  comes to help us in a very simple and smart way, that will be explained by
+  the example below.
+
+  Let's take in consideration we have only two datasources (but the same concepts
+  can be extended for an arbitrary data sources number) one for the <<<contacts>>>
+  schema and another one for the <<<companies>>> schema. So, all it has to do is
+  installing the <iBaGuice> modules into the <Google Guice> <<<com.google.inject.PrivateModule>>>
+  as shown below:
+
++--------------------------------------+
+Injector injector = Guice.createInjector(
+        new PrivateModule() {
+            @Override
+            protected void configure() {
+                install(new SqlSessionFactoryModule(PooledDataSourceProvider.class)
+                    .addSimpleAliases(Contact.class)
+                    .addMapperClasses(ContactMapper.class));
+                Names.bindProperties(this.binder(), getConnectionProperties("contacts"));
+                // binds DAOs here
+                bind(ContactDao.class).to(ContactDaoImpl.class);
+                ...
+
+                // exposes DAOs here
+                expose(ContactDao.class);
+                ...
+            }
+        }, new PrivateModule() {
+            @Override
+            protected void configure() {
+                install(new XMLSqlSessionFactoryModule());
+                Names.bindProperties(this.binder(), getConnectionProperties("trades"));
+                // binds DAOs here
+                bind(CompanyDao.class).to(CompanyDaoImpl.class);
+                ...
+
+                // exposes DAOs here
+                expose(CompanyDao.class);
+                ...
+            }
+        }
+);
++--------------------------------------+
+
+  The example shows how to use both <iBaGuice> modules to obtain the <MyBatis>
+  <<<SqlSessionFactory>>>.
+  Feel free to implement the <<<getConnectionProperties()>>> in the way you
+  prefeer! It could be, for example:
+
++--------------------------------------+
+private final static Properties getConnectionProperties(String schema) {
+    final Properties myBatisProperties = new Properties();
+
+    // for XMLSqlSessionFactoryModule only
+    myBatisProperties.setProperty("mybatis.classpathResource", "/com/acme/sqlmap.xml");
+
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.driver", "org.apache.derby.jdbc.EmbeddedDriver");
+    myBatisProperties.setProperty("JDBC.url", "jdbc:mysql://localhost:3306/" + schema);
+    myBatisProperties.setProperty("JDBC.username", "ibaguice-user");
+    myBatisProperties.setProperty("JDBC.password", "changeme");
+    myBatisProperties.setProperty("JDBC.autoCommit", "true");
+
+    return myBatisProperties;
+}
++--------------------------------------+
+
+  To take advantage completely from <iBaGuice>, don't forget your <DAOs> have to
+  extend the <<<org.mybatis.guice.core.dao.AbstractDao>>> class.
+  Please refeer to the {{{dao.html}DAO}} section for more details.
