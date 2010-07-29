@@ -24,7 +24,6 @@ import com.google.inject.Provider;
  * 
  *
  * @version $Id$
- * 
  */
 final class MapperProvider<T> implements Provider<T> {
 
