@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains core classes to build the iBatis SqlSessionFactory through google-guice.
+ * Contains core classes to build the myBatis SqlSessionFactory through google-guice.
  *
  * @version $Id$
  */
