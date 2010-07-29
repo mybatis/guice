@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<mapper namespace="org.mybatis.guice.ContactMapper">
+
+    <!-- Contact alias: org.mybatis.guice.Contact -->
+    <resultMap type="Contact" id="contactMap">
+        <id column="id" property="id"/>
+        <result column="first_name" property="firstName"/>
+        <result column="last_name" property="lastName"/>
+    </resultMap>
+
+    <insert id="add" parameterType="Contact" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            contact (
+                first_name,
+                last_name
+            )
+        VALUES (
+            #{firstName},
+            #{lastName}
+        )
+    </insert>
+
+    <sql id="select">
+        SELECT
+            id,
+            first_name,
+            last_name
+        FROM
+            contact
+    </sql>
+
+    <sql id="where">
+        WHERE
+            id = #{id}
+    </sql>
+
+    <update id="update" parameterType="Contact">
+        UPDATE
+            contact
+        SET
+            first_name = #{firstName},
+            last_name = #{lastName}
+        <include refid="where"/>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM
+            contact
+        <include refid="where"/>
+    </delete>
+
+    <select id="getById" parameterType="java.lang.Integer" resultMap="contactMap">
+        <include refid="select"/>
+        <include refid="where"/>
+    </select>
+
+    <select id="selectAll" resultMap="contactMap">
+        <include refid="select"/>
+    </select>
+
+</mapper>
