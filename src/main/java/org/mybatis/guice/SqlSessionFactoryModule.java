@@ -259,7 +259,7 @@ public final class SqlSessionFactoryModule extends AbstractSqlSessionFactoryModu
     }
 
     private static <T> void bindMapperProvider(Binder binder, Class<T> mapperType) {
-        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType));
+        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
     }
 
 }
