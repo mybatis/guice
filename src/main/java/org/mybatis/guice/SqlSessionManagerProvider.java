@@ -20,11 +20,13 @@ import org.apache.ibatis.session.SqlSessionManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 /**
  *
  * @version $Id$
  */
+@Singleton
 final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
 
     private final SqlSessionManager sqlSessionManager;
