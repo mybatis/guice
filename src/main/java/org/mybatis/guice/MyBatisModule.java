@@ -54,7 +54,7 @@ import com.google.inject.multibindings.Multibinder;
  *
  * @version $Id$
  */
-public final class SqlSessionFactoryModule extends AbstractModule {
+public final class MyBatisModule extends AbstractModule {
 
     /**
      * The DataSource Provider class reference.
@@ -99,7 +99,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      *
      * @param dataSourceProviderClass the DataSource Provider class reference.
      */
-    public SqlSessionFactoryModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass) {
+    public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass) {
         this(dataSourceProviderClass, JdbcTransactionFactoryProvider.class);
     }
 
@@ -111,7 +111,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @param transactionFactoryProviderClass the TransactionFactory Provider
      *        class reference.
      */
-    public SqlSessionFactoryModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
+    public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
             final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass) {
         if (dataSourceProviderClass == null) {
             throw new IllegalArgumentException("Data Source provider class mustn't be null");
@@ -132,7 +132,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @param types he specified types have to be bind.
      * @return this {@code SqlSessionFactoryModule} instance.
      */
-    public SqlSessionFactoryModule addSimpleAliases(final Class<?>...types) {
+    public MyBatisModule addSimpleAliases(final Class<?>...types) {
         for (Class<?> clazz : types) {
             this.addAlias(clazz.getSimpleName(), clazz);
         }
@@ -145,7 +145,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @param alias the string type alias
      * @param clazz the type has to be bound.
      */
-    public SqlSessionFactoryModule addAlias(final String alias, final Class<?> clazz) {
+    public MyBatisModule addAlias(final String alias, final Class<?> clazz) {
         this.aliases.put(alias, clazz);
         return this;
     }
@@ -157,7 +157,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @param handler the handler type.
      * @return this {@code SqlSessionFactoryModule} instance.
      */
-    public SqlSessionFactoryModule addTypeHandler(final Class<?> type, final Class<? extends TypeHandler> handler) {
+    public MyBatisModule addTypeHandler(final Class<?> type, final Class<? extends TypeHandler> handler) {
         this.handlers.put(type, handler);
         return this;
     }
@@ -171,7 +171,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      * 
      */
-    public SqlSessionFactoryModule addInterceptorsClasses(Class<? extends Interceptor>...interceptorsClasses) {
+    public MyBatisModule addInterceptorsClasses(Class<? extends Interceptor>...interceptorsClasses) {
         if (interceptorsClasses == null || interceptorsClasses.length == 0) {
             return this;
         }
@@ -189,7 +189,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      * 
      */
-    public SqlSessionFactoryModule addMapperClasses(Class<?>...mapperClasses) {
+    public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
         if (mapperClasses == null || mapperClasses.length == 0) {
             return this;
         }
@@ -206,7 +206,7 @@ public final class SqlSessionFactoryModule extends AbstractModule {
      * @param objectFactoryProviderClass the ObjectFactory provider class.
      * @return this {@code SqlSessionFactoryModule} instance.
      */
-    public SqlSessionFactoryModule setObjectFactoryProviderClass(Class<? extends Provider<ObjectFactory>> objectFactoryProviderClass) {
+    public MyBatisModule setObjectFactoryProviderClass(Class<? extends Provider<ObjectFactory>> objectFactoryProviderClass) {
         this.objectFactoryProviderClass = objectFactoryProviderClass;
         return this;
     }

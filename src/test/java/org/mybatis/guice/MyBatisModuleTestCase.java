@@ -40,7 +40,7 @@ import com.google.inject.name.Names;
  *
  * @version $Id$
  */
-public final class MyBatisGuiceTestCase {
+public final class MyBatisModuleTestCase {
 
     private final Contact contact = new Contact();
 
@@ -72,7 +72,7 @@ public final class MyBatisGuiceTestCase {
         myBatisProperties.setProperty("JDBC.autoCommit", "true");
 
         // bindings
-        Injector injector = Guice.createInjector(new SqlSessionFactoryModule(PooledDataSourceProvider.class)
+        Injector injector = Guice.createInjector(new MyBatisModule(PooledDataSourceProvider.class)
                     .addSimpleAliases(Contact.class)
                     .addMapperClasses(ContactMapper.class),
                 new Module() {
