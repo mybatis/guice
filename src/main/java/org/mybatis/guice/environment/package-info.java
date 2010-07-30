@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains core classes to build the iBatis Environment through google-guice.
+ * Contains core classes to build the myBatis Environment through google-guice.
  *
  * @version $Id$
  */

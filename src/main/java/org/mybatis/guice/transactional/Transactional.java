@@ -35,9 +35,9 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 public @interface Transactional {
 
     /**
-     * Returns the constant indicating the iBatis executor type.
+     * Returns the constant indicating the myBatis executor type.
      *
-     * @return the constant indicating the iBatis executor type.
+     * @return the constant indicating the myBatis executor type.
      */
     ExecutorType executorType() default ExecutorType.SIMPLE;
 
@@ -49,7 +49,7 @@ public @interface Transactional {
     TransactionIsolationLevel isolationLevel() default TransactionIsolationLevel.NONE;
 
     /**
-     * Flag to indicate that iBatis has to force the transaction {@code commit().}
+     * Flag to indicate that myBatis has to force the transaction {@code commit().}
      *
      * @return false by default, user defined otherwise.
      */

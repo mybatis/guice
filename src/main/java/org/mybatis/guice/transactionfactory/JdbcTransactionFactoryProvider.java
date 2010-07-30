@@ -22,7 +22,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 /**
- * Provides the default built-in iBatis JDBC Transaction Factory.
+ * Provides the default built-in myBatis JDBC Transaction Factory.
  *
  * @version $Id$
  */
@@ -30,7 +30,7 @@ import com.google.inject.Singleton;
 public final class JdbcTransactionFactoryProvider implements Provider<TransactionFactory> {
 
     /**
-     * The default built-in iBatis JDBC Transaction Factory reference.
+     * The default built-in myBatis JDBC Transaction Factory reference.
      */
     private final TransactionFactory transactionFactory = new JdbcTransactionFactory();
 

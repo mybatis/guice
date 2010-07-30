@@ -26,7 +26,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
- * Provides the iBatis Environment.
+ * Provides the myBatis Environment.
  *
  * @version $Id$
  */
@@ -39,10 +39,10 @@ public final class EnvironmentProvider implements Provider<Environment> {
     private final Environment environment;
 
     /**
-     * Creates a new iBatis Environment Provider.
+     * Creates a new myBatis Environment Provider.
      *
      * @param id the environment id.
-     * @param transactionFactory the iBatis TransactionFactory.
+     * @param transactionFactory the myBatis TransactionFactory.
      * @param dataSource the DataSource.
      */
     @Inject

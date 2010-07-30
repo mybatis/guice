@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains core classes to build the iBatis TransactionFactory through google-guice.
+ * Contains core classes to build the myBatis TransactionFactory through google-guice.
  *
  * @version $Id$
  */

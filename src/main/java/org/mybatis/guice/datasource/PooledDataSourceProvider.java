@@ -28,7 +28,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
- * Provides the iBatis built-in PooledDataSource.
+ * Provides the myBatis built-in PooledDataSource.
  *
  * @version $Id$
  */

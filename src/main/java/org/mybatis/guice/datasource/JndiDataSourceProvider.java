@@ -27,7 +27,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
- * Provides the iBatis built-in JndiDataSourceFactory.
+ * Provides the myBatis built-in JndiDataSourceFactory.
  *
  * @version $Id$
  */

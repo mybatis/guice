@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains core classes to build the iBatis DataSource implemenations through
+ * Contains core classes to build the myBatis DataSource implementations through
  * google-guice.
  *
  * @version $Id$
