@@ -27,18 +27,24 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.transactional.Transactional;
+import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactionfactory.JdbcTransactionFactoryProvider;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
@@ -48,7 +54,7 @@ import com.google.inject.multibindings.Multibinder;
  *
  * @version $Id$
  */
-public final class SqlSessionFactoryModule extends AbstractSqlSessionFactoryModule {
+public final class SqlSessionFactoryModule extends AbstractModule {
 
     /**
      * The DataSource Provider class reference.
@@ -107,8 +113,6 @@ public final class SqlSessionFactoryModule extends AbstractSqlSessionFactoryModu
      */
     public SqlSessionFactoryModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
             final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass) {
-        super(SqlSessionFactoryProvider.class);
-
         if (dataSourceProviderClass == null) {
             throw new IllegalArgumentException("Data Source provider class mustn't be null");
         }
@@ -212,12 +216,16 @@ public final class SqlSessionFactoryModule extends AbstractSqlSessionFactoryModu
      */
     @Override
     protected void configure() {
+        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
+        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
         this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
 
-        super.configure();
+        TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+        this.binder().requestInjection(interceptor);
+        this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
 
         // optional bindings
 

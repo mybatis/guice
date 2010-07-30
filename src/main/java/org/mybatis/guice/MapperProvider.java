@@ -19,12 +19,14 @@ import org.apache.ibatis.session.SqlSessionManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 /**
  * 
  *
  * @version $Id$
  */
+@Singleton
 final class MapperProvider<T> implements Provider<T> {
 
     private final Class<T> mapperType;

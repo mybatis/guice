@@ -29,7 +29,7 @@ import com.google.inject.Singleton;
  * @version $Id$
  */
 @Singleton
-public final class SqlSessionFactoryProvider implements Provider<SqlSessionFactory> {
+final class SqlSessionFactoryProvider implements Provider<SqlSessionFactory> {
 
     /**
      * The SqlSessionFactory reference.
