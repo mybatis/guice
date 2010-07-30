@@ -31,7 +31,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
- * Provides the iBatis Configuration.
+ * Provides the myBatis Configuration.
  *
  * @version $Id$
  */
@@ -39,14 +39,14 @@ import com.google.inject.name.Named;
 public final class ConfigurationProvider implements Provider<Configuration> {
 
     /**
-     * The iBatis Configuration reference.
+     * The myBatis Configuration reference.
      */
     private final Configuration configuration;
 
     /**
-     * Creates a new iBatis Configuration from the Environment.
+     * Creates a new myBatis Configuration from the Environment.
      *
-     * @param environment the needed iBatis Environment.
+     * @param environment the needed myBatis Environment.
      */
     @Inject
     public ConfigurationProvider(final Environment environment) {
@@ -59,7 +59,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
-     * Adds the user defined type aliases to the iBatis Configuration.
+     * Adds the user defined type aliases to the myBatis Configuration.
      *
      * @param typeAliases the user defined type aliases.
      */
@@ -71,7 +71,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
-     * Adds the user defined Mapper classes to the iBatis Configuration.
+     * Adds the user defined Mapper classes to the myBatis Configuration.
      *
      * @param mapperClasses the user defined Mapper classes.
      */
@@ -83,7 +83,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
-     * Adds the user defined type handlers to the iBatis Configuration.
+     * Adds the user defined type handlers to the myBatis Configuration.
      *
      * @param typeHandlers the user defined type handlers.
      */
@@ -95,7 +95,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
-     * Adds the user defined ObjectFactory to the iBatis Configuration.
+     * Adds the user defined ObjectFactory to the myBatis Configuration.
      *
      * @param objectFactory
      */
@@ -106,7 +106,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
     /**
      * Registers the user defined plugins interceptors to the
-     * iBatis Configuration.
+     * myBatis Configuration.
      *
      * @param plugins the user defined plugins interceptors.
      */
