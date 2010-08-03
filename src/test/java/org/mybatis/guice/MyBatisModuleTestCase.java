@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.Before;
 import org.junit.Test;
-import org.mybatis.guice.datasource.PooledDataSourceProvider;
+import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 
 import com.google.inject.Binder;
 import com.google.inject.Guice;
