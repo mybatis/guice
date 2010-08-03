@@ -216,12 +216,12 @@ public final class MyBatisModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
-        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
-        this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
+        this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
+        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
+        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
 
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
         this.binder().requestInjection(interceptor);
