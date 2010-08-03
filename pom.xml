@@ -381,6 +381,7 @@
     </properties>
 
     <dependencies>
+        <!-- Compile dependencies -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -407,6 +408,14 @@
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Provided dependencies -->
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Test dependencies -->

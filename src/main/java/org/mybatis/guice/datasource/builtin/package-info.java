@@ -20,4 +20,4 @@
  *
  * @version $Id$
  */
-package org.mybatis.guice.datasource;
+package org.mybatis.guice.datasource.builtin;
