@@ -111,6 +111,4 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
         this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;
     }
 
-
-
 }
