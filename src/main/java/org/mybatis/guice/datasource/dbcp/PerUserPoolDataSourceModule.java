@@ -21,6 +21,7 @@ import java.util.Map;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Provider;
+import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -59,7 +60,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
             binder.bind(typeLiteral)
                   .annotatedWith(annotation)
                   .toProvider(providerClass)
-                  .asEagerSingleton();
+                  .in(Scopes.SINGLETON);
         }
     }
 
