@@ -79,6 +79,7 @@
                     <area id="start.example.txfactory" coords="3"/>
                     <area id="start.example.properties" coords="9"/>
                     <area id="start.example.module" coords="13"/>
+                    <area id="start.example.retrieve" coords="17"/>
                 </areaspec>
                 <programlisting><![CDATA[
 Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
@@ -95,7 +96,11 @@ Injector injector = Guice.createInjector(
     }
     new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass),
     ...
-);]]></programlisting>
+);
+
+SqlSessionFactory sessionFactory = injector.getInstance(SqlSessionFactory.class);
+SqlSessionManager sessionManager = injector.getInstance(SqlSessionManager.class);
+MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                 <calloutlist>
                     <callout arearefs="start.example.datasource">
                         <para>This is one of two required providers that has the
@@ -117,10 +122,13 @@ Injector injector = Guice.createInjector(
                     <callout arearefs="start.example.module">
                         <para>Install the MyBatis Module in the Injector.</para>
                     </callout>
+                    <callout arearefs="start.example.retrieve">
+                        <para>Retrieve built MyBatis components from the Injector.</para>
+                    </callout>
                 </calloutlist>
             </programlistingco>
 
-            Let's have a look now at the required components:
+            Let's have a look now at the MyBatis module components and features:
         </para>
 
         <section id="core.properties">
@@ -167,6 +175,49 @@ Injector injector = Guice.createInjector(
                         </para>
                     </listitem>
                 </orderedlist>
+            </para>
+        </section>
+
+        <section id="core.datasource">
+            <title>The DataSource Provider</title>
+            <para>
+                The <literal>javax.sql.DataSource</literal> Provider is one of
+                the two required providers that takes care about building and
+                injecting the used <literal>javax.sql.DataSource</literal>.
+            </para>
+            <para>
+                The mybatis-guice framework comes with some providers that
+                support the MyBatis-native Data Sources and two other well known
+                Data Sources, <emphasis>C3P0</emphasis> and
+                <emphasis>Apache Commons DBCP</emphasis>, but users are free to
+                implement their own <literal>javax.sql.DataSource</literal>
+                Provider and reference it in the <literal>org.mybatis.guice.MyBatisModule</literal>.
+            </para>
+            <para>
+                Please read the following chapter <emphasis>Data Source Providers</emphasis>
+                to obtain more informations about natively supported providers.
+            </para>
+        </section>
+
+        <section id="core.txfactory">
+            <title>The Transaction Factory Provider</title>
+            <para>
+                This provider has to serve the MyBatis <literal>org.apache.ibatis.transaction.TransactionFactory</literal>;
+                mybatis-guice comes with the native MyBatis implementation providers:
+                <orderedlist>
+                    <listitem>
+                        <para><literal>org.mybatis.guice.core.transactionfactory.JdbcTransactionFactoryProvider</literal> that
+  provides the MyBatis JDBC Transaction Manager Factory;</para>
+                    </listitem>
+                    <listitem>
+                        <para><literal>org.mybatis.guice.core.transactionfactory.ManagedTransactionFactoryProvider</literal>, that
+  provides the MyBatis user managed Transaction Manager Factory.</para>
+                    </listitem>
+                </orderedlist>
+            </para>
+            <para>
+  Users are free to write their own <literal>TransactionFactoryProvider</literal> and reference
+  it in the <literal>org.mybatis.guice.core.SqlSessionFactoryModule</literal>.
             </para>
         </section>
     </section>
