@@ -45,4 +45,5 @@
 
     <xi:include href="introduction.xml" />
     <xi:include href="core.xml" />
+    <xi:include href="datasources.xml" />
 </book>
