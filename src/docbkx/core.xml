@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<chapter id="core">
+    <title>The Core components</title>
+
+    <section id="core.introduction">
+        <title>Introduction</title>
+        <para>
+            Core components are contained in the <literal>org.mybatis.guice.*</literal>
+            package, providing a set of reusable Google Guice
+            <literal>com.google.inject.Provider</literal>s and
+            <literal>com.google.inject.Module</literal>s that
+            alleviate users the task to create MyBatis objects.
+        </para>
+        <para>
+            Installing the mybatis-guice module it is very easy, just put the
+            <literal>mybatis-guice-&version;.jar</literal> (and not provided
+            dependencies in the download) in the classpath!
+        </para>
+        <para>
+            Apache Maven users instead can easily adding the following dependency
+            in their POMs :
+            <programlisting language="xml"><![CDATA[<dependencies>
+    ...
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-guice</artifactId>
+        <version>]]>&version;<![CDATA[</version>
+    </dependency>
+    ...
+</dependencies>]]></programlisting>
+        </para>
+    </section>
+
+    <section id="core.bootstrap">
+        <title>MyBatis Bootstrap</title>
+        <para>
+            MyBatis offers an excellent APIs layer for the Bootstrap
+            configuration that makes easy writing custom bootstrap - by default
+            MyBatis comes with the XML loader - and integrating 3rd part components.
+        </para>
+        <para>
+            The core component of the Guice approach is represented by the
+            <literal>org.mybatis.guice.MyBatisModule</literal> that's able to
+            create, through a serie of required and optional
+            <literal>com.google.inject.Provider</literal>s, the core MyBatis
+            <literal>org.apache.ibatis.session.SqlSessionFactory</literal>,
+            <literal>org.apache.ibatis.session.SqlSessionManager</literal> and
+            the user defined <emphasis>Mappers</emphasis>.
+        </para>
+        <para>
+            The best way to start is just adding the
+            <literal>org.mybatis.guice.MyBatisModule</literal> into the
+            <literal>com.google.inject.Injector</literal>
+            as shown in the example below and explain details step by step:
+
+            <programlistingco>
+                <areaspec>
+                    <area id="start.example.datasource" coords="1"/>
+                    <area id="start.example.txfactory" coords="3"/>
+                    <area id="start.example.properties" coords="9"/>
+                    <area id="start.example.module" coords="13"/>
+                </areaspec>
+                <programlisting><![CDATA[
+Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+
+Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+
+Injector injector = Guice.createInjector(
+    new Module() {
+        public void configure(Binder binder) {
+            binder.bindConstant()
+                  .annotatedWith(Names.named("mybatis.environment.id"))
+                  .to("development");
+        }
+    }
+    new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass),
+    ...
+);]]></programlisting>
+                <calloutlist>
+                    <callout arearefs="start.example.datasource">
+                        <para>This is one of two required providers that has the
+                        task to create and provide
+                        the <literal>javax.sql.DataSource</literal> managed by
+                        MyBatis.</para>
+                        <para>There will be a proper section dedicated to
+                        the supported <emphasis>DataSource</emphasis> providers</para>
+                    </callout>
+                    <callout arearefs="start.example.txfactory">
+                        <para>This required provider is the one has to serve the
+                        MyBatis <literal>org.apache.ibatis.transaction.TransactionFactory</literal>
+                        </para>
+                    </callout>
+                    <callout arearefs="start.example.properties">
+                        <para>The <literal>org.apache.ibatis.mapping.Environment</literal>
+                        needs to know the <emphasis>environment id</emphasis>.</para>
+                    </callout>
+                    <callout arearefs="start.example.module">
+                        <para>Install the MyBatis Module in the Injector.</para>
+                    </callout>
+                </calloutlist>
+            </programlistingco>
+
+            Let's have a look now at the required components:
+        </para>
+
+        <section id="core.properties">
+            <title>MyBatis properties</title>
+            <para>
+                By design, we choose to reuse the default configuration
+                properties provided by Guice to let users feel free to read and
+                set them in any way you prefeer; we suggest to put it in a
+                properties file, maybe filtered and set depending on wich
+                environment users are building the application.
+            </para>
+            <para>
+                <orderedlist>
+                    <listitem>
+                        <para>
+                            <literal>mybatis.environment.id</literal> (required):
+                            the <literal>org.apache.ibatis.mapping.Environment</literal>
+                            needs to know the <emphasis>environment id</emphasis>,
+                            so users have to take care of setting the <literal>mybatis.environment.id</literal>
+                            property as a Guice constant, for example:
+                            <programlisting><![CDATA[binder.bindConstant()
+    .annotatedWith(Names.named("mybatis.environment.id"))
+    .to("production");
+]]></programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            <literal>mybatis.configuration.lazyLoadingEnabled</literal>
+                            (optional): if users need to enable the <emphasis>lazy loading</emphasis>
+                            in the MyBatis <literal>org.apache.ibatis.session.Configuration</literal>,
+                            then they have to bind the named property <literal>MyBatis.configuration.lazyLoadingEnabled</literal>
+                            with the required boolean value.
+                        </para>
+                        <para>
+                            By default, if <literal>mybatis.configuration.lazyLoadingEnabled</literal>
+                            is not specified, the property will be ignored and
+                            MyBatis will take care about proper default <emphasis>lazy loading</emphasis>
+                            initialization.
+                            <programlisting><![CDATA[binder.bindConstant()
+    .annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
+    .to(true);
+]]></programlisting>
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </para>
+        </section>
+    </section>
+
+</chapter>

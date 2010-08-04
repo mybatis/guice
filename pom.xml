@@ -324,6 +324,12 @@
             </plugin>
 
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>clirr-maven-plugin</artifactId>
+                <version>2.2.1</version>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>2.1.1</version>
@@ -333,29 +339,42 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>clirr-maven-plugin</artifactId>
-                <version>2.2.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pdf-plugin</artifactId>
-                <version>1.1</version>
+                <groupId>com.agilejava.docbkx</groupId>
+                <artifactId>docbkx-maven-plugin</artifactId>
+                <version>2.0.10</version>
                 <executions>
                     <execution>
-                        <id>pdf</id>
-                        <phase>site</phase>
                         <goals>
-                            <goal>pdf</goal>
+                            <goal>generate-pdf</goal>
                         </goals>
-                        <configuration>
-                            <includeReports>false</includeReports>
-                            <indentSize>1</indentSize>
-                            <outputDirectory>${project.reporting.outputDirectory}</outputDirectory>
-                        </configuration>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.docbook</groupId>
+                        <artifactId>docbook-xml</artifactId>
+                        <version>4.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includes>index.xml</includes>
+                    <xincludeSupported>true</xincludeSupported>
+                    <sourceDirectory>${basedir}/src/docbkx</sourceDirectory>
+                    <!-- use extensions -->
+                    <useExtensions>1</useExtensions>
+                    <highlightSource>1</highlightSource>
+                    <highlightDefaultLanguage></highlightDefaultLanguage>
+                    <!-- callouts -->
+                    <calloutsExtension>1</calloutsExtension>
+                    <entities>
+                        <entity>
+                            <name>version</name>
+                            <value>${project.version}</value>
+                        </entity>
+                    </entities>
+                </configuration>
             </plugin>
         </plugins>
 
