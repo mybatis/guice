@@ -81,7 +81,7 @@
                     <area id="start.example.module" coords="13"/>
                     <area id="start.example.retrieve" coords="17"/>
                 </areaspec>
-                <programlisting><![CDATA[
+                <programlisting language="java"><![CDATA[
 Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
 
 Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
@@ -149,7 +149,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                             needs to know the <emphasis>environment id</emphasis>,
                             so users have to take care of setting the <literal>mybatis.environment.id</literal>
                             property as a Guice constant, for example:
-                            <programlisting><![CDATA[binder.bindConstant()
+                            <programlisting language="java"><![CDATA[binder.bindConstant()
     .annotatedWith(Names.named("mybatis.environment.id"))
     .to("production");]]></programlisting>
                         </para>
@@ -167,7 +167,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                             is not specified, the property will be ignored and
                             MyBatis will take care about proper default <emphasis>lazy loading</emphasis>
                             initialization.
-                            <programlisting><![CDATA[binder.bindConstant()
+                            <programlisting language="java"><![CDATA[binder.bindConstant()
     .annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
     .to(true);]]></programlisting>
                         </para>
@@ -232,12 +232,12 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
             <para>
                 We found very useful adding simple aliases because helped us a
                 lot to reduce the errors during our development time; just call:
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.addSimpleAliases(com.acme.Foo.class, com.acme.Bar.class, ...);]]></programlisting>
             </para>
             <para>
                 If users prefeer instead using you own custom aliases, just invoke
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.addAlias("MyFoo", com.acme.Foo.class)
 module.addAlias("MyBar", com.acme.Bar.class);
 ...]]></programlisting>
@@ -251,7 +251,7 @@ module.addAlias("MyBar", com.acme.Bar.class);
                 type handlers: given the <literal>com.acme.Foo</literal> type,
                 that has to be handled by the type handler
                 <literal>com.acme.dao.FooHandler</literal>, just invoke:
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.addTypeHandler(com.acme.Foo.class, com.acme.dao.FooHandler.class);
 module.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
 ...]]></programlisting>
@@ -265,7 +265,7 @@ module.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
             <para>
                 Users can easily add their preferred <literal>org.apache.ibatis.plugin.Interceptor</literal>
                 simply invoking:
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.addInterceptorsClasses(com.acme.dao.FooInterceptor.class, com.acme.dao.BarInterceptor.class, ...);]]></programlisting>
                 and let Google Guice creating the interceptors instances and
                 bind them to be injected to MyBatis components.
@@ -277,7 +277,7 @@ module.addInterceptorsClasses(com.acme.dao.FooInterceptor.class, com.acme.dao.Ba
             <para>
                 Users can add the <emphasis>Mappers</emphasis> classes adding
                 them to the module:
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.class, ...);]]></programlisting>
                 and let Google Guice creating the interceptors instances and
                 bind them to be injected to MyBatis components.
@@ -290,7 +290,7 @@ module.addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.cla
                 Just simply define the <literal>com.google.inject.Provider</literal>
                 for your own <literal>org.apache.ibatis.reflection.factory.ObjectFactory</literal>
                 and communicate it to the module and let Google Guice create it:
-                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
 module.setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class);]]></programlisting>
             </para>
         </section>
@@ -301,7 +301,7 @@ module.setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class);]]>
                 In order to simplify the <literal>org.mybatis.guice.MyBatisModule</literal>
                 creation, <literal>MyBatisModule</literal> methods can be
                 chained like in the example below:
-                <programlisting><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
 Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
 
 Injector injector = Guice.createInjector(
@@ -316,6 +316,82 @@ Injector injector = Guice.createInjector(
     .setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class));]]></programlisting>
             </para>
         </section>
+    </section>
+
+    <section id="core.multipledatasource">
+        <title>Multiple Datasources</title>
+        <para>
+            It often happens that users need to interact with multiple schemas
+            in the same application, that means to have separate MyBatis
+            configurations.
+        </para>
+        <para>
+            Fortunately, the Google Guice <literal>com.google.inject.PrivateModule</literal>
+            comes to help us in a very simple and smart way, that will shown in
+            the following example.
+        </para>
+        <para>
+            Let's take in consideration, to simplify the example, we have only
+            two datasources (but the same concept can be extended for an
+            arbitrary data sources number) one for the <literal>contacts</literal>
+            schema and another one for the <literal>companies</literal> schema.
+            So, all it has to do is installing the <literal>org.mybatis.guice.MyBatisModule</literal>
+            modules into the Google Guice <literal>com.google.inject.PrivateModule</literal>
+            as shown below:
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(
+    new PrivateModule() {
+        @Override
+        protected void configure() {
+            install(new MyBatisModule(PooledDataSourceProvider.class)
+                .addSimpleAliases(Contact.class)
+                .addMapperClasses(ContactMapper.class));
+            Names.bindProperties(this.binder(),
+                getConnectionProperties("contacts"));
+            // binds Mappers/DAOs here
+            bind(ContactDao.class).to(ContactDaoImpl.class);
+            ...
+
+            // exposes Mappers/DAOs here
+            expose(ContactDao.class);
+            ...
+        }
+    }, new PrivateModule() {
+        @Override
+        protected void configure() {
+            install(new MyBatisModule(PooledDataSourceProvider.class));
+            Names.bindProperties(this.binder(),
+                getConnectionProperties("trades"));
+            // binds Mappers/DAOs here
+            bind(CompanyDao.class).to(CompanyDaoImpl.class);
+            ...
+
+            // exposes Mappers/DAOs here
+            expose(CompanyDao.class);
+            ...
+        }
+    }
+);]]></programlisting>
+        </para>
+        <para>
+            The example shows how to use the <literal>org.mybatis.guice.MyBatisModule</literal>
+            to create two different MyBatis configurations in the same context.
+            Feel free to implement the <literal>getConnectionProperties()</literal>
+            method in the way you prefer! It could be, for example:
+            <programlisting language="java"><![CDATA[private final static Properties getConnectionProperties(String schema) {
+    final Properties myBatisProperties = new Properties();
+
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.driver",
+        "org.apache.derby.jdbc.EmbeddedDriver");
+    myBatisProperties.setProperty("JDBC.url",
+        "jdbc:mysql://localhost:3306/" + schema);
+    myBatisProperties.setProperty("JDBC.username", "mybatis-user");
+    myBatisProperties.setProperty("JDBC.password", "changeme");
+    myBatisProperties.setProperty("JDBC.autoCommit", "true");
+
+    return myBatisProperties;
+}]]></programlisting>
+        </para>
     </section>
 
 </chapter>
