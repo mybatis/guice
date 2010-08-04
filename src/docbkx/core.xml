@@ -151,8 +151,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                             property as a Guice constant, for example:
                             <programlisting><![CDATA[binder.bindConstant()
     .annotatedWith(Names.named("mybatis.environment.id"))
-    .to("production");
-]]></programlisting>
+    .to("production");]]></programlisting>
                         </para>
                     </listitem>
                     <listitem>
@@ -170,8 +169,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                             initialization.
                             <programlisting><![CDATA[binder.bindConstant()
     .annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
-    .to(true);
-]]></programlisting>
+    .to(true);]]></programlisting>
                         </para>
                     </listitem>
                 </orderedlist>
@@ -217,7 +215,105 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
             </para>
             <para>
   Users are free to write their own <literal>TransactionFactoryProvider</literal> and reference
-  it in the <literal>org.mybatis.guice.core.SqlSessionFactoryModule</literal>.
+  it in the <literal>org.mybatis.guice.MyBatisModule</literal>.
+            </para>
+        </section>
+
+        <section id="core.aliases">
+            <title>Configuring aliases</title>
+            <para>
+                Once users create the <literal>org.mybatis.guice.MyBatisModule</literal>,
+                it's quite easy plugging optional MyBatis components, like
+                aliases: here users can define simple aliases, for example
+                <literal>Foo</literal> that stands for <literal>com.acme.Foo</literal>,
+                or custom aliases, for example <literal>MyFoo</literal> that
+                stands for <literal>com.acme.Foo</literal>.
+            </para>
+            <para>
+                We found very useful adding simple aliases because helped us a
+                lot to reduce the errors during our development time; just call:
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.addSimpleAliases(com.acme.Foo.class, com.acme.Bar.class, ...);]]></programlisting>
+            </para>
+            <para>
+                If users prefeer instead using you own custom aliases, just invoke
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.addAlias("MyFoo", com.acme.Foo.class)
+module.addAlias("MyBar", com.acme.Bar.class);
+...]]></programlisting>
+            </para>
+        </section>
+
+        <section id="core.typehandlers">
+            <title>Configuring Type Handlers</title>
+            <para>
+                Like users can configure aliases, the can do it the same for
+                type handlers: given the <literal>com.acme.Foo</literal> type,
+                that has to be handled by the type handler
+                <literal>com.acme.dao.FooHandler</literal>, just invoke:
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.addTypeHandler(com.acme.Foo.class, com.acme.dao.FooHandler.class);
+module.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
+...]]></programlisting>
+                and let Google Guice creating the handlers instances and bind
+                them to be injected to MyBatis components.
+            </para>
+        </section>
+
+        <section id="core.interceptors">
+            <title>Configuring Interceptor Plugins</title>
+            <para>
+                Users can easily add their preferred <literal>org.apache.ibatis.plugin.Interceptor</literal>
+                simply invoking:
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.addInterceptorsClasses(com.acme.dao.FooInterceptor.class, com.acme.dao.BarInterceptor.class, ...);]]></programlisting>
+                and let Google Guice creating the interceptors instances and
+                bind them to be injected to MyBatis components.
+            </para>
+        </section>
+
+        <section id="core.mappers">
+            <title>Configuring Mappers</title>
+            <para>
+                Users can add the <emphasis>Mappers</emphasis> classes adding
+                them to the module:
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.class, ...);]]></programlisting>
+                and let Google Guice creating the interceptors instances and
+                bind them to be injected to MyBatis components.
+            </para>
+        </section>
+
+        <section id="core.objectfactory">
+            <title>Configuring the Object Factory</title>
+            <para>
+                Just simply define the <literal>com.google.inject.Provider</literal>
+                for your own <literal>org.apache.ibatis.reflection.factory.ObjectFactory</literal>
+                and communicate it to the module and let Google Guice create it:
+                <programlisting><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
+module.setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class);]]></programlisting>
+            </para>
+        </section>
+
+        <section id="core.chainingmethods">
+            <title>Chaining methods</title>
+            <para>
+                In order to simplify the <literal>org.mybatis.guice.MyBatisModule</literal>
+                creation, <literal>MyBatisModule</literal> methods can be
+                chained like in the example below:
+                <programlisting><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+
+Injector injector = Guice.createInjector(
+        new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass)
+    .addSimpleAliases(com.acme.Foo.class)
+    .addAlias("MyBar", com.acme.Bar.class)
+    .addTypeHandler(com.acme.Foo.class, com.acme.dao.FooHandler.class)
+    .addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class)
+    .addInterceptorsClasses(com.acme.dao.FooInterceptor.class,
+                            com.acme.dao.BarInterceptor.class)
+    .addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.class)
+    .setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class));]]></programlisting>
             </para>
         </section>
     </section>
