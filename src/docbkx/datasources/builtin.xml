@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<section id="datasources.builtin">
+    <title>MyBatis Builtin Data Source Provider</title>
+    <para>
+        The <literal>org.mybatis.guice.datasource.builtin</literal> package
+        contains the Google Guice Providers to build the MyBatis builtin
+        DataSources.
+    </para>
+
+    <section id="datasources.builtin.unpooled">
+        <title>Unpooled Data Source Provider</title>
+        <para>
+            The <literal>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider</literal>
+            is the provider that builds the <literal>org.apache.ibatis.datasource.unpooled.UnpooledDataSource</literal>
+            and helps users to configure it.
+        </para>
+        <para>
+            Follows below the resume table of supported properties:
+            <table>
+                <caption>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Required</th>
+                        <th>Bind to Java Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JDBC.driver</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.url</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.username</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.password</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.autoCommit</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.loginTimeout</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.driverProperties</td>
+                        <td>false</td>
+                        <td>java.util.Properties</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+    </section>
+
+    <section id="datasources.builtin.pooled">
+        <title>Pooled Data Source Provider</title>
+        <para>
+            The <literal>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider</literal>
+            is the provider that builds the <literal>org.apache.ibatis.datasource.pooled.PooledDataSource</literal>
+            and helps users to configure it.
+        </para>
+        <para>
+            Follows below the resume table of supported properties:
+            <table>
+                <caption>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Required</th>
+                        <th>Bind to Java Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JDBC.driver</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.url</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.username</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.password</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.autoCommit</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.loginTimeout</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.driverProperties</td>
+                        <td>false</td>
+                        <td>java.util.Properties</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumActiveConnections</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumCheckoutTime</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumIdleConnections</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingConnectionsNotUsedFor</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingEnabled</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingQuery</td>
+                        <td>false</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.timeToWait</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+    </section>
+
+    <section id="datasources.builtin.jndi">
+        <title>JNDI Data Source Provider</title>
+        <para>
+            The <literal>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider</literal>
+            is the provider that builds the <literal>org.apache.ibatis.datasource.jndi.JndiDataSourceFactory</literal>
+            and helps users to configure it.
+        </para>
+        <para>
+            Follows below the resume table of supported properties:
+            <table>
+                <caption>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Required</th>
+                        <th>Bind to Java Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>jndi.initialContext</td>
+                        <td>false</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>jndi.dataSource</td>
+                        <td>false</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+    </section>
+</section>
