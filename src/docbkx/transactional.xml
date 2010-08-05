@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<chapter id="transactional">
+    <title>@Transactional</title>
+
+    <section id="transactional.introduction">
+        <title>Introduction</title>
+        <para>
+            Thanks to the excelletn combination between <literal>AOP</literal>
+            and Google Guice, users can drastically reduce the boilerplate
+            code into their DAOs.
+        </para>
+        <para>
+            Let's take in consideration the following code snippet, written
+            without introducing mybatis-guice:
+            <programlistingco>
+                <areaspec>
+                    <area id="transactional.example.openSession" coords="14"/>
+                    <area id="transactional.example.getFooMapper" coords="17"/>
+                    <area id="transactional.example.getBarMapper" coords="20"/>
+                    <area id="transactional.example.commitSession" coords="23"/>
+                    <area id="transactional.example.rollbackSession" coords="26"/>
+                    <area id="transactional.example.throwCustomException" coords="27"/>
+                    <area id="transactional.example.closeSession" coords="28"/>
+                </areaspec>
+                <programlisting language="java"><![CDATA[package com.acme;
+
+import org.apache.ibatis.session.*;
+import org.mybatis.guice.transactional.*;
+
+public final class FooDAOImpl {
+
+    private final SqlSessionManager sessionManager;
+
+    public FooDAOImpl(SqlSessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
+    public void doFooBar() throws MyDaoException {
+        this.sessionManager.startManagedSession(ExecutorType.BATCH,
+            TransactionIsolationLevel.READ_UNCOMMITTED);
+        try {
+            FooMapper fooMapper = this.sessionManager.getMapper(FooMapper.class);
+            fooMapper.doFoo();
+
+            BarMapper barMapper = this.sessionManager.getMapper(BarMapper.class);
+            barMapper.doBar();
+
+            this.sessionManager.commit();
+        } catch (Throwable t) {
+            this.sessionManager.rollback();
+            throw new MyDaoException("Something went wrong", t);
+        } finally {
+            this.sessionManager.close();
+        }
+    }
+
+}]]></programlisting>
+                <calloutlist>
+                    <callout arearefs="transactional.example.openSession">
+                        <para>Starts a new <literal>SqlSession</literal>.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.getFooMapper">
+                        <para>Retrieve the <literal>FooMapper</literal> and
+                        execute the <literal>doFoo()</literal> method.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.getBarMapper">
+                        <para>Same for the <literal>BarMapper</literal>,
+                        retrieved from the SqlSession and executed the
+                        <literal>doBar()</literal> method.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.commitSession">
+                        <para>If everything gone fine, commit the open session.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.rollbackSession">
+                        <para>If something gone wrong, rollback the open session.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.throwCustomException">
+                        <para>Optionally, throw a proper DAO layer <literal>Exception</literal>.</para>
+                    </callout>
+                    <callout arearefs="transactional.example.closeSession">
+                        <para>Close the session.</para>
+                    </callout>
+                </calloutlist>
+            </programlistingco>
+        </para>
+        <para>
+            Users can easily note that this is a recursive and redundant code
+            pattern that the mybatis-guice will help to simplify introducing a
+            special <literal>AOP</literal> interceptor.
+        </para>
+    </section>
+
+</chapter>
