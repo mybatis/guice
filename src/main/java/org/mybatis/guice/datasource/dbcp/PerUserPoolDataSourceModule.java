@@ -67,49 +67,55 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
     /**
      * @param perUserDefaultAutoCommitProviderClass the perUserDefaultAutoCommitProviderClass to set
      */
-    public void setPerUserDefaultAutoCommitProviderClass(
+    public PerUserPoolDataSourceModule setPerUserDefaultAutoCommitProviderClass(
             Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass) {
         this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;
+        return this;
     }
 
     /**
      * @param perUserDefaultReadOnlyProviderClass the perUserDefaultReadOnlyProviderClass to set
      */
-    public void setPerUserDefaultReadOnlyProviderClass(
+    public PerUserPoolDataSourceModule setPerUserDefaultReadOnlyProviderClass(
             Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass) {
         this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;
+        return this;
     }
 
     /**
      * @param perUserDefaultTransactionIsolationProviderClass the perUserDefaultTransactionIsolationProviderClass to set
      */
-    public void setPerUserDefaultTransactionIsolationProviderClass(
+    public PerUserPoolDataSourceModule setPerUserDefaultTransactionIsolationProviderClass(
             Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass) {
         this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;
+        return this;
     }
 
     /**
      * @param perUserMaxActiveProviderClass the perUserMaxActiveProviderClass to set
      */
-    public void setPerUserMaxActiveProviderClass(
+    public PerUserPoolDataSourceModule setPerUserMaxActiveProviderClass(
             Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass) {
         this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;
+        return this;
     }
 
     /**
      * @param perUserMaxIdleProviderClass the perUserMaxIdleProviderClass to set
      */
-    public void setPerUserMaxIdleProviderClass(
+    public PerUserPoolDataSourceModule setPerUserMaxIdleProviderClass(
             Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass) {
         this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;
+        return this;
     }
 
     /**
      * @param perUserMaxWaitProviderClass the perUserMaxWaitProviderClass to set
      */
-    public void setPerUserMaxWaitProviderClass(
+    public PerUserPoolDataSourceModule setPerUserMaxWaitProviderClass(
             Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass) {
         this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;
+        return this;
     }
 
 }
