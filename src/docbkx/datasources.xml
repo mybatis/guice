@@ -57,7 +57,7 @@
         <para>
             Follows below the resume table of supported properties:
             <table>
-                <caption>org.apache.ibatis.datasource.unpooled.UnpooledDataSource properties</caption>
+                <caption>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider properties</caption>
                 <thead>
                     <tr>
                         <th>Property</th>
@@ -100,6 +100,100 @@
                         <td>JDBC.driverProperties</td>
                         <td>false</td>
                         <td>java.util.Properties</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+    </section>
+
+    <section id="datasources.pooled">
+        <title>Pooled Data Source Provider</title>
+        <para>
+            The <literal>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider</literal>
+            is the provider that builds the <literal>org.apache.ibatis.datasource.pooled.PooledDataSource</literal>
+            and helps users to configure it.
+        </para>
+        <para>
+            Follows below the resume table of supported properties:
+            <table>
+                <caption>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Required</th>
+                        <th>Bind to Java Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JDBC.driver</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.url</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.username</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.password</td>
+                        <td>true</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.autoCommit</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.loginTimeout</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>JDBC.driverProperties</td>
+                        <td>false</td>
+                        <td>java.util.Properties</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumActiveConnections</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumCheckoutTime</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.maximumIdleConnections</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingConnectionsNotUsedFor</td>
+                        <td>false</td>
+                        <td>int</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingEnabled</td>
+                        <td>false</td>
+                        <td>boolean</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.pingQuery</td>
+                        <td>false</td>
+                        <td>java.lang.String</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.pooled.timeToWait</td>
+                        <td>false</td>
+                        <td>int</td>
                     </tr>
                 </tbody>
             </table>
