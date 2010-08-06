@@ -448,7 +448,8 @@ class MyPerUserDefaultAutoCommit implements Provider<Map<String, Boolean>> {
 
     private final Map<String, Boolean> perUserDefaultAutoCommitMap;
 
-    public MyPerUserDefaultAutoCommit(@Named("perUserDefaultAutoCommit.url") URL url) {
+    public MyPerUserDefaultAutoCommit(
+            @Named("perUserDefaultAutoCommit.url") URL url) {
         // reads the URL and populate a map
     }
 
