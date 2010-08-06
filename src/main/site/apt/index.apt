@@ -25,20 +25,7 @@
 
 Introduction
 
-  As you already supposed, the name iBaGuice is composed by MyBatis and Guice,
-  indeed that small library intends to create a perfect glue between the more
+  As you already supposed by the name <mybatis-guice>, that small library aims
+  to create a perfect glue between the more
   popular frameworks {{{http://www.mybatis.org/}MyBatis}} Sql Mapper and
   {{{http://code.google.com/p/google-guice/}Google Guice}}.
-
-  In our daily work we strongly use both frameworks and once noticed we'd been
-  continuosly repeating the same code in different projects, so according to
-  the DRY - <don't repeat yourself> - principle, we started realizing something
-  that alleviate us the task to create our stuff.
-
-Acknowledgements
-
-  This work is dedicated to our city, L'Aquila (Italy), destroyed by a terrible
-  earthquake the 6th April, 2009... That day more than 300 people were killed
-  because buildings collapsed after a magnitudo 6.3 earthquake at 3:32 am.
-
-  We'll never forget that episode.
