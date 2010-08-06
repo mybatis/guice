@@ -28,7 +28,6 @@
 
     <bannerLeft>
         <name>mybatis-guice: enjoy the power of MyBatis + Google Guice!!!</name>
-        <src>images/logo.png</src>
         <href>${project.url}/index.html</href>
     </bannerLeft>
 
