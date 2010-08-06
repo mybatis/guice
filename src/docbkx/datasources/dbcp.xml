@@ -461,19 +461,16 @@ class MyPerUserDefaultAutoCommit implements Provider<Map<String, Boolean>> {
         </para>
         <para>
             then, create the <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
-            and binding it:
-            <programlisting language="java"><![CDATA[PerUserPoolDataSourceModule perUserPoolDataSourceModule = new PerUserPoolDataSourceModule();
-perUserPoolDataSourceModule.setPerUserDefaultAutoCommitProviderClass(MyPerUserDefaultAutoCommit.class);]]></programlisting>
-        </para>
-        <para>
-            So, finally you're ready to create the context:
+            and create the context:
             <programlisting language="java"><![CDATA[import org.mybatis.guice.core.SqlSessionFactoryModule;
 import org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule;
 import org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider;
 
 Injector injector = Guice.createInjector(
-    new SqlSessionFactoryModule(PerUserPoolDataSourceProvider.class),
-    perUserPoolDataSourceModule
+    new MyBatisModule(PerUserPoolDataSourceProvider.class),
+    new PerUserPoolDataSourceModule()
+        .setPerUserDefaultAutoCommitProviderClass(
+            MyPerUserDefaultAutoCommit.class);
 );]]></programlisting>
         </para>
         <para>
