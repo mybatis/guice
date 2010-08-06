@@ -32,6 +32,11 @@
     <packaging>jar</packaging>
     <url>http://www.mybatis.org/</url>
 
+    <organization>
+        <name>MyBatis.org</name>
+        <url>http://www.mybatis.org/</url>
+    </organization>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
