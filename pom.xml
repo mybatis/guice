@@ -347,7 +347,7 @@
                         <goals>
                             <goal>generate-pdf</goal>
                         </goals>
-                        <phase>generate-sources</phase>
+                        <phase>post-site</phase>
                     </execution>
                 </executions>
                 <dependencies>
