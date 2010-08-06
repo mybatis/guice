@@ -70,4 +70,15 @@ public @interface Transactional {
      */
     Class<? extends Throwable> rethrowExceptionsAs() default Exception.class;
 
+    /**
+     * A custom error message when throwing the custom exception.
+     *
+     * It supports java.text.MessageFormat place holders, intercepted method
+     * arguments will be used as message format arguments.
+     *
+     * @return a custom error message when throwing the custom exception.
+     * @see java.text.MessageFormat#format(String, Object...)
+     */
+    String exceptionMessage() default "";
+
 }
