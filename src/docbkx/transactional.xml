@@ -25,7 +25,7 @@
     <section id="transactional.introduction">
         <title>Introduction</title>
         <para>
-            Thanks to the excelletn combination between <literal>AOP</literal>
+            Thanks to the excellent combination between <literal>AOP</literal>
             and Google Guice, users can drastically reduce the boilerplate
             code into their DAOs.
         </para>
@@ -40,18 +40,18 @@
                     <area id="transactional.example.commitSession" coords="23"/>
                     <area id="transactional.example.rollbackSession" coords="26"/>
                     <area id="transactional.example.throwCustomException" coords="27"/>
-                    <area id="transactional.example.closeSession" coords="28"/>
+                    <area id="transactional.example.closeSession" coords="29"/>
                 </areaspec>
                 <programlisting language="java"><![CDATA[package com.acme;
 
 import org.apache.ibatis.session.*;
 import org.mybatis.guice.transactional.*;
 
-public final class FooDAOImpl {
+public final class FooDAO {
 
     private final SqlSessionManager sessionManager;
 
-    public FooDAOImpl(SqlSessionManager sessionManager) {
+    public FooDAO(SqlSessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
@@ -105,8 +105,172 @@ public final class FooDAOImpl {
         </para>
         <para>
             Users can easily note that this is a recursive and redundant code
-            pattern that the mybatis-guice will help to simplify introducing a
+            pattern that mybatis-guice will help to simplify introducing a
             special <literal>AOP</literal> interceptor.
+        </para>
+    </section>
+
+    <section id="transactional.annotation">
+        <title>The @Transactional annotation</title>
+        <para>
+            Annottaing methods with the <literal>org.mybatis.guice.transactional.Transactional</literal>
+            annotation, users can eliminate recursive code patterns.
+        </para>
+        <para>
+            First of all, let's have a look at the injector thet will create the
+            previous <literal>FooDAO</literal> instance:
+            <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+
+Injector injector = Guice.createInjector(
+    new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass)
+        .addMapperClasses(FooMapper.class, BarMapper.class));
+);
+
+FooDAO fooDAO = injector.getInstance(FooDAO.class);]]></programlisting>
+        </para>
+        <para>
+            Where <literal>FooDAO</literal> definition is:
+            <programlisting language="java"><![CDATA[package com.acme;
+
+import com.google.inject.*;
+import org.apache.ibatis.session.*;
+import org.mybatis.guice.transactional.*;
+
+@Singleton
+public final class FooDAOImpl {
+
+    @Inject
+    private FooMapper fooMapper;
+
+    @Inject
+    private BarMapper barMapper;
+
+    // let's assume setters here
+
+    @Transactional(
+        executorType = ExecutorType.BATCH,
+        isolationLevel = TransactionIsolationLevel.READ_UNCOMMITTED,
+        rethrowExceptionsAs = MyDaoException.class
+    )
+    public void doFooBar() {
+        this.fooMapper.doFoo();
+        this.barMapper.doBar();
+    }
+
+}]]></programlisting>
+        </para>
+        <para>
+            Users can now simply read how the code can be reduced, delegating
+            to the interceptor the session management!
+        </para>
+        <para>
+            The <literal>org.mybatis.guice.transactional.Transactional</literal>
+            annotation supports the following parameters:
+            <table>
+                <caption>org.mybatis.guice.transactional.Transactional properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>autoCommit</td>
+                        <td>false</td>
+                        <td>the MyBatis auto commit policy</td>
+                    </tr>
+                    <tr>
+                        <td>executorType</td>
+                        <td>org.apache.ibatis.session.ExecutorType.SIMPLE</td>
+                        <td>the MyBatis executor type</td>
+                    </tr>
+                    <tr>
+                        <td>isolationLevel</td>
+                        <td>org.apache.ibatis.session.TransactionIsolationLevel.NONE</td>
+                        <td>the transaction isolation level</td>
+                    </tr>
+                    <tr>
+                        <td>force</td>
+                        <td>false</td>
+                        <td>Flag to indicate that MyBatis has to force the
+                        transaction <literal>commit()</literal></td>
+                    </tr>
+                    <tr>
+                        <td>rethrowExceptionsAs</td>
+                        <td>Exception.class</td>
+                        <td>rethrow caught exceptions as new Exception
+                        (maybe a proper layer exception)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
+        <para>
+            When configuring the <literal>@Transactional</literal> annotation
+            take care that if <literal>isolationLevel()</literal>
+            is equals to <literal>TransactionIsolationLevel.NONE</literal>,
+            then the <literal>SqlSession</literal>
+            will be started using the <literal>executorType()</literal>
+            and <literal>autoCommit()</literal> values.
+        </para>
+    </section>
+
+    <section id="transactional.nested">
+        <title>Nested transactions</title>
+        <para>
+            The <literal>org.mybatis.guice.transactional.Transactional</literal>
+            annotation is nicely handled to support inner transactional methods;
+            given the following simple MyBatis clients:
+            <programlisting language="java"><![CDATA[class ServiceA {
+
+    @org.mybatis.guice.transactional.Transactional
+    public void method() {
+        ...
+    }
+
+}
+
+class ServiceB {
+
+    @org.mybatis.guice.transactional.Transactional
+    public void method() {
+        ...
+    }
+
+}]]></programlisting>
+        </para>
+        <para>
+            That in a certain point are involved in another one in the same
+            transaction:
+            <programlisting language="java"><![CDATA[class CompositeService {
+
+    @Inject
+    ServiceA serviceA;
+
+    @Inject
+    ServiceB serviceB;
+
+    @org.mybatis.guice.transactional.Transactional
+    public void method() {
+        ...
+        this.serviceA.method();
+        ...
+        this.serviceB.method();
+        ...
+    }
+
+}]]></programlisting>
+        </para>
+        <para>
+            In this case, <literal>ServiceA#method()</literal> and
+            <literal>ServiceB#method</literal> can be invoked as atomic transactions,
+            the advantage is when <literal>serviceA#method()</literal> and
+            <literal>serviceB#method()</literal> will be invoked inside the 
+            <literal>CompositeService#method</literal>, that the interceptor will
+            take care to manage them in the same session, even if annotated to
+            start a new transaction.
         </para>
     </section>
 
