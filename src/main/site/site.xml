@@ -37,28 +37,13 @@
     <body>
         <menu name="${project.name} - Main">
             <item name="Introduction" href="index.html"/>
-            <item name="The Core components" href="core.html"/>
-            <item name="@Transactional" href="transactional.html"/>
-            <item name="Multiple Datasources" href="multiple-datasources.html"/>
-        </menu>
-
-        <menu name="Data Sources">
-            <item name="Unpooled Data Source Provider" href="datasource.html#Unpooled_Data_Source_Provider"/>
-            <item name="Pooled Data Source Provider" href="datasource.html#Pooled_Data_Source_Provider"/>
-            <item name="JNDI Data Source Provider" href="datasource.html#JNDI_Data_Source_Provider"/>
-        </menu>
-
-        <menu name="Miscellaneous">
-            <item name="PDF Manual" href="${project.name}.pdf"/>
         </menu>
 
         <menu ref="reports"/>
 
-        <menu ref="modules"/>
-
         <menu name="External Links">
-            <item name="Project Page" href="http://code.google.com/p/ibaguice/"/>
-            <item name="iBatis" href="http://www.mybatis.org/"/>
+            <item name="Project Page" href="http://code.google.com/p/mybatis/"/>
+            <item name="MyBatis" href="http://www.mybatis.org/"/>
             <item name="Google Guice" href="http://code.google.com/p/google-guice/"/>
         </menu>
     </body>
