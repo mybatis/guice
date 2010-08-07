@@ -33,7 +33,7 @@
         </para>
         <para>
             Installing the mybatis-guice module it is very easy, just put the
-            <literal>mybatis-guice-${version}.jar</literal> and
+            <literal>mybatis-guice-<?eval ${project.version}?>.jar</literal> and
             dependencies in the classpath!
         </para>
         <para>
@@ -44,7 +44,7 @@
     <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis-guice</artifactId>
-        <version>${version}</version>
+        <version>]]><?eval ${project.version}?><![CDATA[</version>
     </dependency>
     ...
 </dependencies>]]></programlisting>

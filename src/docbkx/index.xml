@@ -21,8 +21,8 @@
 -->
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
     <bookinfo>
-        <title>MyBatis-Guice &version; - Reference Documentation</title>
-        <releaseinfo>mybatis-guice &version;</releaseinfo>
+        <title>MyBatis-Guice <?eval ${project.version}?> - Reference Documentation</title>
+        <releaseinfo>mybatis-guice <?eval ${project.version}?></releaseinfo>
         <authorgroup>
             <author>
                 <firstname>Simone</firstname>
