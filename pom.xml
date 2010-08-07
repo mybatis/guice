@@ -50,6 +50,15 @@
         <url>http://code.google.com/p/mybatis/issues/</url>
     </issueManagement>
 
+    <mailingLists>
+        <mailingList>
+            <name>mybatis-user</name>
+            <subscribe>http://groups.google.com/group/mybatis-user/subscribe</subscribe>
+            <archive>http://groups.google.com/group/mybatis-user</archive>
+            <post>mybatis-user@googlegroups.com</post>
+        </mailingList>
+    </mailingLists>
+
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
