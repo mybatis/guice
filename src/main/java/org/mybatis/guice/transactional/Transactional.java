@@ -55,7 +55,7 @@ public @interface Transactional {
     boolean force() default false;
 
     /**
-     * Flag to indicate the auto commit policy on the {@link Connection}.
+     * Flag to indicate the auto commit policy.
      *
      * @return false by default, user defined otherwise.
      */
