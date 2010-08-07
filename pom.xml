@@ -369,7 +369,7 @@
                         <goals>
                             <goal>generate-pdf</goal>
                         </goals>
-                        <phase>post-site</phase>
+                        <phase>package</phase>
                     </execution>
                 </executions>
                 <dependencies>
@@ -396,6 +396,29 @@
                             <value>${project.version}</value>
                         </entity>
                     </entities>
+                    <postProcess>
+                        <move file="target/docbkx/pdf/index.pdf"
+                              tofile="target/docbkx/pdf/${project.artifactId}-${project.version}-reference.pdf"
+                              failonerror="false" />
+                    </postProcess>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/bundle.xml</descriptor>
+                    </descriptors>
                 </configuration>
             </plugin>
         </plugins>
