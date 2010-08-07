@@ -51,7 +51,10 @@
 
     <dependencySets>
         <dependencySet>
-            <outputDirectory>optional</outputDirectory>
+            <outputDirectory>lib</outputDirectory>
+            <excludes>
+                <exclude>${project.artifactId}-${project.version}.${project.packaging}</exclude>
+            </excludes>
         </dependencySet>
     </dependencySets>
 
