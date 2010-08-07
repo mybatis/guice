@@ -78,8 +78,8 @@
         <para>
             A special thanks goes to all the special people who made the Google Guice
             integration a reality, above all Clinton Begin, who strongly believed
-            on that MyBatis sub-project and Marco Speranza who helped realizing
-            the codebase.
+            on that MyBatis sub-project, and Marco Speranza, without him that
+            project wouldn't exist.
         </para>
     </section>
 
