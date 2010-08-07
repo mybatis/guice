@@ -17,87 +17,75 @@ package org.mybatis.guice;
 
 import static junit.framework.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.StringReader;
-import java.util.Properties;
+import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.junit.Before;
 import org.junit.Test;
-import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
+import org.junit.runner.RunWith;
 
-import com.google.inject.Binder;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import com.google.inject.name.Names;
+import com.google.inject.Singleton;
 
 /**
  *
  *
  * @version $Id$
  */
+@Singleton
+@RunWith(GuiceTestRunner.class)
 public final class MyBatisModuleTestCase {
 
-    private final Contact contact = new Contact();
+    @Inject
+    private Contact contact;
 
     @Inject
     private ContactMapperClient contactMapperClient;
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
 
     public void setContactMapperClient(ContactMapperClient contactMapperClient) {
         this.contactMapperClient = contactMapperClient;
     }
 
-    @Before
-    public void setUp() throws Exception {
-        this.contact.setFirstName("John");
-        this.contact.setLastName("Doe");
-
-        // db URL setup
-        File tmp = File.createTempFile("mybatis-guice_TEST", ".dat");
-        tmp.delete();
-        final String connectionURL = "jdbc:derby:"
-            + tmp.getAbsolutePath()
-            + ";create=true";
-
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.driver", "org.apache.derby.jdbc.EmbeddedDriver");
-        myBatisProperties.setProperty("JDBC.url", connectionURL);
-        myBatisProperties.setProperty("JDBC.username", "");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "true");
-
-        // bindings
-        Injector injector = Guice.createInjector(new MyBatisModule(PooledDataSourceProvider.class)
-                    .addSimpleAliases(Contact.class)
-                    .addMapperClasses(ContactMapper.class),
-                new Module() {
-                    public void configure(Binder binder) {
-                        Names.bindProperties(binder, myBatisProperties);
-                    }
-                });
-
-        // prepare the test db
-        DataSource dataSource = injector.getInstance(DataSource.class);
-        ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
-        runner.setAutoCommit(true);
-        runner.setStopOnError(true);
-        runner.runScript(new StringReader(
-                "CREATE TABLE contact (id INT NOT NULL PRIMARY KEY GENERATED "
-                + "ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), first_name "
-                + "VARCHAR(20) NOT NULL, last_name VARCHAR(20) NOT NULL);"));
-        runner.closeConnection();
-
-        injector.injectMembers(this);
-    }
-
     @Test
     public void verifyNotNullMapper() {
         assertNotNull(this.contactMapperClient);
+    }
+
+    @Test
+    public void insertContact() throws Exception {
+        this.contactMapperClient.insert(this.contact);
+    }
+
+    @Test
+    public void selectAllContacts() throws Exception {
+        List<Contact> contacts = this.contactMapperClient.getAll();
+        assert contacts.size() > 0 : "Expected not empty contact table";
+    }
+
+    @Test
+    public void reSelectAllContacts() throws Exception {
+        List<Contact> contacts = this.contactMapperClient.getAll();
+        assert contacts.size() > 0 : "Expected not empty contact table";
+    }
+
+    @Test
+    public void selectContact() throws Exception {
+        Contact contact = this.contactMapperClient.selectById(this.contact.getId());
+        assert contact != null : "impossible to retrieve Contact with id '"
+                                + this.contact.getId()
+                                + "'";
+        assert this.contact.equals(contact) : "Expected "
+                                                + this.contact
+                                                + " but found "
+                                                + contact;
+    }
+
+    @Test(expected = CustomException.class)
+    public void catchSQLException() throws Exception {
+        this.contact.setFirstName("Supercalifragilistichespiralidoso");
+        this.contactMapperClient.update(contact);
     }
 
 }
