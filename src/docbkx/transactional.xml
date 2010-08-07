@@ -224,6 +224,16 @@ public final class FooDAOImpl {
             will be started using the <literal>executorType()</literal>
             and <literal>autoCommit()</literal> values.
         </para>
+        <para>
+            When specifying <literal>rethrowExceptionsAs</literal> parameter,
+            it is required that the target exception type has the constructor
+            with <literal>Throwable</literal> single argument; when specifying
+            both <literal>rethrowExceptionsAs</literal> and <literal>exceptionMessage</literal>
+            parameters, it is required that the target exception type has the constructor
+            with <literal>String, Throwable</literal> arguments;
+            specifying the <literal>exceptionMessage</literal> parameter only
+            doesn't have any effect.
+        </para>
     </section>
 
     <section id="transactional.nested">
