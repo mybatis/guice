@@ -151,7 +151,8 @@ public final class FooDAOImpl {
     @Transactional(
         executorType = ExecutorType.BATCH,
         isolationLevel = TransactionIsolationLevel.READ_UNCOMMITTED,
-        rethrowExceptionsAs = MyDaoException.class
+        rethrowExceptionsAs = MyDaoException.class,
+        exceptionMessage = "Something went wrong"
     )
     public void doFooBar() {
         this.fooMapper.doFoo();
@@ -204,6 +205,14 @@ public final class FooDAOImpl {
                         <td>rethrow caught exceptions as new Exception
                         (maybe a proper layer exception)</td>
                     </tr>
+                    <tr>
+                        <td>exceptionMessage</td>
+                        <td>empty string</td>
+                        <td>A custom error message when throwing the custom exception;
+                        it supports <literal>java.text.MessageFormat</literal>
+                        place holders, intercepted method arguments will be used
+                        as message format arguments.</td>
+                    </tr>
                 </tbody>
             </table>
         </para>
@@ -225,7 +234,7 @@ public final class FooDAOImpl {
             given the following simple MyBatis clients:
             <programlisting language="java"><![CDATA[class ServiceA {
 
-    @org.mybatis.guice.transactional.Transactional
+    @Transactional
     public void method() {
         ...
     }
@@ -234,7 +243,7 @@ public final class FooDAOImpl {
 
 class ServiceB {
 
-    @org.mybatis.guice.transactional.Transactional
+    @Transactional
     public void method() {
         ...
     }
@@ -252,7 +261,7 @@ class ServiceB {
     @Inject
     ServiceB serviceB;
 
-    @org.mybatis.guice.transactional.Transactional
+    @Transactional
     public void method() {
         ...
         this.serviceA.method();
