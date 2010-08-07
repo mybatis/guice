@@ -52,9 +52,7 @@
     <dependencySets>
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
-            <excludes>
-                <exclude>${project.artifactId}-${project.version}.${project.packaging}</exclude>
-            </excludes>
+            <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
     </dependencySets>
 
