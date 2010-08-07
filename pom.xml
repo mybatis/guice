@@ -383,8 +383,13 @@
                             <includes>index.xml</includes>
                             <xincludeSupported>true</xincludeSupported>
                             <sourceDirectory>${basedir}/src/docbkx</sourceDirectory>
-                            <chunkedOutput>false</chunkedOutput>
                             <foCustomization>${basedir}/src/docbkx/xsl/fopdf.xsl</foCustomization>
+                            <!-- use extensions -->
+                            <useExtensions>1</useExtensions>
+                            <highlightSource>1</highlightSource>
+                            <highlightDefaultLanguage></highlightDefaultLanguage>
+                            <!-- callouts -->
+                            <calloutsExtension>1</calloutsExtension>
                             <postProcess>
                                 <move file="target/docbkx/pdf/index.pdf"
                                       tofile="target/docbkx/pdf/${project.artifactId}-${project.version}-reference.pdf"

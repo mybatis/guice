@@ -20,9 +20,10 @@
     version: $Id$
 -->
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
+
     <bookinfo>
         <title>MyBatis-Guice <?eval ${project.version}?> - Reference Documentation</title>
-        <releaseinfo>mybatis-guice <?eval ${project.version}?></releaseinfo>
+
         <authorgroup>
             <author>
                 <firstname>Simone</firstname>
@@ -47,4 +48,5 @@
     <xi:include href="core.xml" />
     <xi:include href="datasources.xml" />
     <xi:include href="transactional.xml" />
+
 </book>
