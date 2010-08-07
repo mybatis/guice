@@ -77,12 +77,11 @@
                 <areaspec>
                     <area id="start.example.datasource" coords="1"/>
                     <area id="start.example.txfactory" coords="3"/>
-                    <area id="start.example.properties" coords="9"/>
+                    <area id="start.example.properties" coords="7"/>
                     <area id="start.example.module" coords="13"/>
-                    <area id="start.example.retrieve" coords="17"/>
+                    <area id="start.example.retrieve" coords="19"/>
                 </areaspec>
-                <programlisting language="java"><![CDATA[
-Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
 
 Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
 

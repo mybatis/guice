@@ -34,10 +34,10 @@
             without introducing mybatis-guice:
             <programlistingco>
                 <areaspec>
-                    <area id="transactional.example.openSession" coords="14"/>
-                    <area id="transactional.example.getFooMapper" coords="17"/>
-                    <area id="transactional.example.getBarMapper" coords="20"/>
-                    <area id="transactional.example.commitSession" coords="23"/>
+                    <area id="transactional.example.openSession" coords="15"/>
+                    <area id="transactional.example.getFooMapper" coords="18"/>
+                    <area id="transactional.example.getBarMapper" coords="21"/>
+                    <area id="transactional.example.commitSession" coords="24"/>
                     <area id="transactional.example.rollbackSession" coords="26"/>
                     <area id="transactional.example.throwCustomException" coords="27"/>
                     <area id="transactional.example.closeSession" coords="29"/>
