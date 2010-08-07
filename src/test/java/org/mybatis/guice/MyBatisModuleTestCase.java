@@ -45,10 +45,10 @@ public final class MyBatisModuleTestCase {
     private final Contact contact = new Contact();
 
     @Inject
-    private ContactMapper contactMapper;
+    private ContactMapperClient contactMapperClient;
 
-    public void setContactMapper(ContactMapper contactMapper) {
-        this.contactMapper = contactMapper;
+    public void setContactMapperClient(ContactMapperClient contactMapperClient) {
+        this.contactMapperClient = contactMapperClient;
     }
 
     @Before
@@ -97,7 +97,7 @@ public final class MyBatisModuleTestCase {
 
     @Test
     public void verifyNotNullMapper() {
-        assertNotNull(this.contactMapper);
+        assertNotNull(this.contactMapperClient);
     }
 
 }
