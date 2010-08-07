@@ -33,8 +33,8 @@
         </para>
         <para>
             Installing the mybatis-guice module it is very easy, just put the
-            <literal>mybatis-guice-&version;.jar</literal> (and not provided
-            dependencies in the download) in the classpath!
+            <literal>mybatis-guice-${version}.jar</literal> and
+            dependencies in the classpath!
         </para>
         <para>
             Apache Maven users instead can easily adding the following dependency
@@ -44,7 +44,7 @@
     <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis-guice</artifactId>
-        <version>]]>&version;<![CDATA[</version>
+        <version>${version}</version>
     </dependency>
     ...
 </dependencies>]]></programlisting>
