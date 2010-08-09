@@ -265,7 +265,9 @@ module.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
                 Users can easily add their preferred <literal>org.apache.ibatis.plugin.Interceptor</literal>
                 simply invoking:
                 <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule module = [...]
-module.addInterceptorsClasses(com.acme.dao.FooInterceptor.class, com.acme.dao.BarInterceptor.class, ...);]]></programlisting>
+module.addInterceptorsClasses(com.acme.dao.FooInterceptor.class,
+    com.acme.dao.BarInterceptor.class,
+    ...);]]></programlisting>
                 and let Google Guice creating the interceptors instances and
                 bind them to be injected to MyBatis components.
             </para>
