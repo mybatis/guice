@@ -96,6 +96,24 @@
         </developer>
 
         <developer>
+            <id>christian.poitras</id>
+            <name>Christian Poitras</name>
+            <email>christian.poitras@ircm.qc.ca</email>
+        </developer>
+
+        <developer>
+            <id>jeffgbutler</id>
+            <name>Jeff Butler</name>
+            <email>jeffgbutler@gmail.com</email>
+        </developer>
+
+        <developer>
+            <id>nospam@kaigrabfelder.de</id>
+            <name>Kai Grabfelder</name>
+            <email>nospam@kaigrabfelder.de</email>
+        </developer>
+
+        <developer>
             <id>larry.meadors</id>
             <name>Larry Meadors</name>
             <email>larry.meadors@gmail.com</email>
