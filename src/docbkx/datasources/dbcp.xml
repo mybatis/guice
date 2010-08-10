@@ -26,11 +26,13 @@
         contains Google Guice providers for Apache Commons DBCP Data Source
         implementations.
     </para>
-    <para>
-        <emphasis>NOTE</emphasis> for Apache Maven users: the Apache Commons DBCP
-        dependency is not transitive, so they have to take care about
-        including it in their applications.
-    </para>
+    <note>
+        <title>for Apache Maven users</title>
+        <para>
+            the Apache Commons DBCP dependency is not transitive, so they have
+            to take care about including it in their applications.
+        </para>
+    </note>
 
     <section id="datasources.dbcp.basic">
         <title>Basic Data Source Provider</title>
@@ -184,11 +186,12 @@
             is the provider that builds the <literal>org.apache.commons.dbcp.datasources.SharedPoolDataSource</literal>
             and helps users to configure it.
         </para>
-        <para>
-            <emphasis>NOTE</emphasis>: this provider requires a
-            <literal>javax.sql.ConnectionPoolDataSource</literal> existing binding
-            in order to be instantiated.
-        </para>
+        <note>
+            <para>
+                this provider requires a <literal>javax.sql.ConnectionPoolDataSource</literal>
+                existing binding in order to be instantiated.
+            </para>
+        </note>
         <para>
             Follows below the resume table of supported properties:
             <table>
@@ -308,11 +311,12 @@
             is the provider that builds the <literal>org.apache.commons.dbcp.datasources.PerUserPoolDataSource</literal>
             and helps users to configure it.
         </para>
-        <para>
-            <emphasis>NOTE</emphasis>: this provider requires a
-            <literal>javax.sql.ConnectionPoolDataSource</literal> existing binding
-            in order to be instantiated.
-        </para>
+        <note>
+            <para>
+                this provider requires a <literal>javax.sql.ConnectionPoolDataSource</literal>
+                existing binding in order to be instantiated.
+            </para>
+        </note>
         <para>
             Follows below the resume table of supported properties:
             <table>
@@ -477,10 +481,14 @@ Injector injector = Guice.createInjector(
             That's all :)
         </para>
         <para>
-            <emphasis>NOTE</emphasis>: it's strongly reccommended to use the same
-            <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
-            instance to set also the other <emphasis>per user</emphasis> bindings,
-            resumed in the following table:
+            <note>
+                <para>
+                    it's strongly reccommended to use the same
+                    <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
+                    instance to set also the other <emphasis>per user</emphasis>
+                    bindings, resumed in the following table
+                </para>
+            </note>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule properties</caption>
                 <thead>

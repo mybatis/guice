@@ -26,11 +26,13 @@
         is the provider that builds the <literal>com.mchange.v2.c3p0.ComboPooledDataSource</literal>
         and helps users to configure it.
     </para>
-    <para>
-        <emphasis>NOTE</emphasis> for Apache Maven users: the C3P0
-        dependency is not transitive, so they have to take care about
-        including it in their applications.
-    </para>
+    <note>
+        <title>for Apache Maven users</title>
+        <para>
+            the C3P0 dependency is not transitive, so they have to take care
+            about including it in their applications.
+        </para>
+    </note>
     <para>
         Follows below the resume table of supported properties; for more
         details please consult the
