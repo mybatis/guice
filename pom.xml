@@ -451,7 +451,7 @@
                         <configuration>
                             <executable>python</executable>
                             <arguments>
-                                <argument>/usr/bin/googlecode_upload.py</argument>
+                                <argument>${basedir}/bin/googlecode_upload.py</argument>
                                 <argument>-p</argument>
                                 <argument>mybatis</argument>
                                 <argument>-s</argument>
