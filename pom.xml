@@ -427,13 +427,14 @@
                             <goal>assembly</goal>
                         </goals>
                         <phase>package</phase>
+                        <configuration>
+                            <attach>false</attach>
+                            <descriptors>
+                                <descriptor>src/main/assembly/bundle.xml</descriptor>
+                            </descriptors>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/bundle.xml</descriptor>
-                    </descriptors>
-                </configuration>
             </plugin>
 
             <plugin>
