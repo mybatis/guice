@@ -438,24 +438,31 @@
             </plugin>
 
             <plugin>
-                <groupId>org.riedelcastro</groupId>
-                <artifactId>gcupload-maven-plugin</artifactId>
-                <version>1.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
                 <executions>
                     <execution>
-                        <id>upload-bundles</id>
+                        <id>gcode-upload</id>
+                        <phase>deploy</phase>
                         <goals>
-                            <goal>generate-pdf</goal>
+                            <goal>exec</goal>
                         </goals>
-                        <phase>gcupload</phase>
                         <configuration>
-                            <uploads>
-                                <upload>
-                                    <extensions>zip</extensions>
-                                    <labels>Type-Archive,Featured</labels>
-                                    <summary>Google Guice bridge for MyBatis ${pom.version} release</summary>
-                                </upload>
-                            </uploads>
+                            <executable>python</executable>
+                            <arguments>
+                                <argument>/usr/bin/googlecode_upload.py</argument>
+                                <argument>-p</argument>
+                                <argument>mybatis</argument>
+                                <argument>-s</argument>
+                                <argument>Google Guice bridge for MyBatis ${pom.version} release</argument>
+                                <argument>-l</argument>
+                                <argument>Featured,Type-Archive</argument>
+                                <argument>-u</argument>
+                                <argument>${username}</argument>
+                                <argument>-w</argument>
+                                <argument>${password}</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
