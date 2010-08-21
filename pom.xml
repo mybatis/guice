@@ -27,7 +27,7 @@
     <artifactId>mybatis-guice</artifactId>
     <name>mybatis-guice</name>
     <description>An easy-to-use Google Guice bridge for
-    myBatis sql mapping framework.</description>
+    MyBatis sql mapping framework.</description>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://www.mybatis.org/</url>
@@ -432,6 +432,30 @@
                             <descriptors>
                                 <descriptor>src/main/assembly/bundle.xml</descriptor>
                             </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.riedelcastro</groupId>
+                <artifactId>gcupload-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>upload-bundles</id>
+                        <goals>
+                            <goal>generate-pdf</goal>
+                        </goals>
+                        <phase>gcupload</phase>
+                        <configuration>
+                            <uploads>
+                                <upload>
+                                    <extensions>zip</extensions>
+                                    <labels>Type-Archive,Featured</labels>
+                                    <summary>Google Guice bridge for MyBatis ${pom.version} release</summary>
+                                </upload>
+                            </uploads>
                         </configuration>
                     </execution>
                 </executions>
