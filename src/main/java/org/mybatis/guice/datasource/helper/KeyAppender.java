@@ -26,21 +26,21 @@ import com.google.inject.name.Names;
  */
 final class KeyAppender implements Appender {
 
-    private final String key;
+    private final Key<String> key;
 
     private final String defaultValue;
 
     private final String toString;
 
     public KeyAppender(final String key, final String defaultValue) {
-        this.key = key;
+        this.key = Key.get(String.class, Names.named(key));
         this.defaultValue = defaultValue;
-        this.toString = "${" + this.key + "}";
+        this.toString = "${" + key + "}";
     }
 
     public void append(StringBuilder buffer, Injector injector) {
         try {
-            buffer.append(injector.getInstance(Key.get(String.class, Names.named(this.key))));
+            buffer.append(injector.getInstance(this.key));
         } catch (Throwable e) {
             if (this.defaultValue != null) {
                 buffer.append(this.defaultValue);
