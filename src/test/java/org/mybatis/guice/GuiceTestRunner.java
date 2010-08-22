@@ -56,7 +56,7 @@ public final class GuiceTestRunner extends BlockJUnit4ClassRunner {
             myBatisProperties.setProperty("derby.create", "true");
             myBatisProperties.setProperty("JDBC.username", "");
             myBatisProperties.setProperty("JDBC.password", "");
-            myBatisProperties.setProperty("JDBC.autoCommit", "true");
+            myBatisProperties.setProperty("JDBC.autoCommit", "false");
 
             final Contact contact = new Contact();
             contact.setFirstName("John");
