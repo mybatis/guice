@@ -26,7 +26,6 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
-import org.mybatis.guice.datasource.helper.JdbcHelperModule;
 
 import com.google.inject.Binder;
 import com.google.inject.Guice;
@@ -64,7 +63,7 @@ public final class GuiceTestRunner extends BlockJUnit4ClassRunner {
             contact.setLastName("Doe");
 
             // bindings
-            this.injector = Guice.createInjector(new JdbcHelperModule(JdbcHelper.Derby_Embedded),
+            this.injector = Guice.createInjector(JdbcHelper.Derby_Embedded,
                     new MyBatisModule(PooledDataSourceProvider.class)
                         .addSimpleAliases(Contact.class)
                         .addMapperClasses(ContactMapper.class),

@@ -15,12 +15,18 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
+
 /**
  * 
  *
  * @version $Id$
  */
-public enum JdbcHelper {
+public enum JdbcHelper implements Module {
 
     Cache("jdbc:Cache://${JDBC.host|localhost}:${JDBC.port|1972}/${JDBC.schema}", "com.intersys.jdbc.CacheDriver"),
 
@@ -96,6 +102,10 @@ public enum JdbcHelper {
 
     Sybase_DataDirect("jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}", "com.ddtek.jdbc.sybase.SybaseDriver");
 
+    private static final Named JDBC_DRIVER = Names.named("JDBC.driver");
+
+    private static final Named JDBC_URL = Names.named("JDBC.url");
+
     private final String urlTemplate;
 
     private final String driverClass;
@@ -105,12 +115,9 @@ public enum JdbcHelper {
         this.driverClass = driverClass;
     }
 
-    public String getUrlTemplate() {
-        return this.urlTemplate;
-    }
-
-    public String getDriverClass() {
-        return this.driverClass;
+    public void configure(Binder binder) {
+        binder.bindConstant().annotatedWith(JDBC_DRIVER).to(this.driverClass);
+        binder.bind(Key.get(String.class, JDBC_URL)).toProvider(new Formatter(this.urlTemplate));
     }
 
 }
