@@ -26,7 +26,6 @@ import com.google.inject.Provider;
 /**
  * 
  *
- * @author Simone Tripodi
  * @version $Id$
  */
 final class Formatter implements Provider<String> {
