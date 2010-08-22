@@ -462,6 +462,7 @@
                                 <argument>${username}</argument>
                                 <argument>-w</argument>
                                 <argument>${password}</argument>
+                                <argument>${basedir}/target/${project.artifactId}-${project.version}-bundle.zip</argument>
                             </arguments>
                         </configuration>
                     </execution>
