@@ -30,7 +30,7 @@ public enum JdbcHelper {
 
     DB2_DataDirect("jdbc:datadirect:db2://${JDBC.host}:${JDBC.port|50000}/DatabaseName=${JDBC.schema}", "com.ddtek.jdbc.db2.DB2Driver"),
 
-    DB2_AS400_JTOpen("jdbc:as400://${JDBC.host}naming=sql;errors=full", "com.ibm.as400.access.AS400JDBCDriver"),
+    DB2_AS400_JTOpen("jdbc:as400://${JDBC.host}", "com.ibm.as400.access.AS400JDBCDriver"),
 
     Firebird("jdbc:firebirdsql:${JDBC.host}/${JDBC.port|3050}:${JDBC.schema}", "org.firebirdsql.jdbc.FBDriver"),
 
