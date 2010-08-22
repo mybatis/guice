@@ -25,6 +25,8 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
+import org.mybatis.guice.datasource.helper.JdbcHelper;
+import org.mybatis.guice.datasource.helper.JdbcHelperModule;
 
 import com.google.inject.Binder;
 import com.google.inject.Guice;
@@ -48,14 +50,10 @@ public final class GuiceTestRunner extends BlockJUnit4ClassRunner {
             // db URL setup
             File tmp = File.createTempFile("mybatis-guice_TEST", ".dat");
             tmp.delete();
-            final String connectionURL = "jdbc:derby:"
-                + tmp.getAbsolutePath()
-                + ";create=true";
 
             final Properties myBatisProperties = new Properties();
             myBatisProperties.setProperty("mybatis.environment.id", "test");
-            myBatisProperties.setProperty("JDBC.driver", "org.apache.derby.jdbc.EmbeddedDriver");
-            myBatisProperties.setProperty("JDBC.url", connectionURL);
+            myBatisProperties.setProperty("JDBC.schema", tmp.getAbsolutePath() + ";create=true");
             myBatisProperties.setProperty("JDBC.username", "");
             myBatisProperties.setProperty("JDBC.password", "");
             myBatisProperties.setProperty("JDBC.autoCommit", "true");
@@ -65,7 +63,8 @@ public final class GuiceTestRunner extends BlockJUnit4ClassRunner {
             contact.setLastName("Doe");
 
             // bindings
-            this.injector = Guice.createInjector(new MyBatisModule(PooledDataSourceProvider.class)
+            this.injector = Guice.createInjector(new JdbcHelperModule(JdbcHelper.Derby_Embedded),
+                    new MyBatisModule(PooledDataSourceProvider.class)
                         .addSimpleAliases(Contact.class)
                         .addMapperClasses(ContactMapper.class),
                     new Module() {
