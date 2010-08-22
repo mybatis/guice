@@ -446,9 +446,9 @@
                                 <argument>-l</argument>
                                 <argument>Featured,Type-Archive</argument>
                                 <argument>-u</argument>
-                                <argument>${username}</argument>
+                                <argument>${scm.username}</argument>
                                 <argument>-w</argument>
-                                <argument>${password}</argument>
+                                <argument>${scm.password}</argument>
                                 <argument>${basedir}/target/${project.artifactId}-${project.version}-bundle.zip</argument>
                             </arguments>
                         </configuration>
