@@ -319,6 +319,65 @@ Injector injector = Guice.createInjector(
         </section>
     </section>
 
+    <section>
+        <title>Requesting Injections</title>
+        <para>Once the MyBatis module has been set-up, clients are ready to request
+        MyBatis components injections.</para>
+        <para>Clients are free to request the injection of the <classname>SqlSessionFactory</classname>:
+        <programlisting language="java"><![CDATA[@Singleton
+public final class MySqlSessionFactoryClient {
+
+    private final SqlSessionFactory sqlSessionFactory;
+
+    @Inject
+    public MySqlSessionFactoryClient(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
+    ...
+
+}]]></programlisting>
+        </para>
+        <para>Or the powerful <classname>SqlSessionManager</classname>:
+        <programlisting language="java"><![CDATA[@Singleton
+public final class MySqlSessionManagerClient {
+
+    @Inject
+    private SqlSessionManager sqlSessionManager;
+
+    public void setSqlSessionManager(SqlSessionManager sqlSessionManager) {
+        this.sqlSessionManager = sqlSessionManager;
+    }
+
+    ...
+
+}]]></programlisting>
+        </para>
+        <para>Or, even better, users can request directly the configured
+        Mapper interfaces:
+        <programlisting language="java"><![CDATA[@Singleton
+public final class MyMappersClient {
+
+    @Inject
+    private PeopleMapper peopleMapper;
+
+    @Inject
+    private ContactsMapper contactsMapper;
+
+    public void setPeopleMapper(PeopleMapper peopleMapper) {
+        this.peopleMapper = peopleMapper;
+    }
+
+    public void setContactsMapper(ContactsMapper contactsMapper) {
+        this.contactsMapper = contactsMapper;
+    }
+
+    ...
+
+}]]></programlisting>
+        </para>
+    </section>
+
     <section id="core.multipledatasource">
         <title>Multiple Datasources</title>
         <para>
