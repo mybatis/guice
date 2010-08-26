@@ -48,5 +48,6 @@
     <xi:include href="core.xml" />
     <xi:include href="datasources.xml" />
     <xi:include href="transactional.xml" />
+    <xi:include href="appendix.xml" />
 
 </book>

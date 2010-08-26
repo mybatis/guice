@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appendix PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<appendix>
+    <title>JDBC Helper</title>
+
+    <section id="helper.intro">
+        <title>Bind automatically JDBC Connection URL and Driver</title>
+
+        <para>For those users (like me!!!) don't have a dictionary to quickly
+        retrieve the JDBC url pattern and the driver class name for a specific
+        DBMS, here it comes the <classname>org.mybatis.guice.datasource.helper.JdbcHelper</classname>
+        Module.</para>
+        <para>It is an easy to use Google Guice module that makes easy the
+        <literal>JDBC.url</literal> and <literal>JDBC.driver</literal> properties
+        binding needed for the <literal>DataSource</literal> providers.</para>
+        <para>The <classname>org.mybatis.guice.datasource.helper.JdbcHelper</classname>
+        provides a large number of <emphasis>Enumeration</emphasis> values that
+        cover the most popular DBMS (both commercial and open source) that are
+        provided/recommended by the actual database vendor, resumed in the table
+        below:
+
+        <note>
+            <title>Variable Format</title>
+            <para>Patterns contain variables in the <emphasis>Apache ANT</emphasis>
+            alike style, in the format <literal>${name|defaultValue}</literal>,
+            where <literal>name</literal> is used as label which will looked for
+            in the current Guice <literal>Injector</literal>, with <literal>defaultValue</literal>
+            as its default value, replaced in the pattern if <literal>name</literal>
+            is not found.</para>
+        </note>
+
+        <table>
+            <caption>Supported DBMS</caption>
+            <thead>
+                <tr>
+                    <th>Enumeration name</th>
+                    <th>URL Pattern</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Cache</td><td>jdbc:Cache://${JDBC.host|localhost}:${JDBC.port|1972}/${JDBC.schema}</td></tr>
+                <tr><td>Daffodil_DB</td><td>jdbc:daffodilDB://${JDBC.host|localhost}:${JDBC.port|3456}/${JDBC.schema}</td></tr>
+                <tr><td>DB2</td><td>jdbc:db2://${JDBC.host|localhost}:${JDBC.port|50000}/${JDBC.schema}</td></tr>
+                <tr><td>DB2_DataDirect</td><td>jdbc:datadirect:db2://${JDBC.host|localhost}:${JDBC.port|50000}/DatabaseName=${JDBC.schema}</td></tr>
+                <tr><td>DB2_AS400_JTOpen</td><td>jdbc:as400://${JDBC.host|localhost}</td></tr>
+                <tr><td>Firebird</td><td>jdbc:firebirdsql:${JDBC.host|localhost}/${JDBC.port|3050}:${JDBC.schema}</td></tr>
+                <tr><td>FrontBase</td><td>jdbc:FrontBase://${JDBC.host|localhost}/${JDBC.schema}</td></tr>
+                <tr><td>HP_Neoview</td><td>jdbc:hpt4jdbc://${neoview.system}:${JDBC.port}/:</td></tr>
+                <tr><td>HSQLDB_Server</td><td>jdbc:hsqldb:hsql://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}</td></tr>
+                <tr><td>HSQLDB_Embedded</td><td>jdbc:hsqldb:${JDBC.schema}</td></tr>
+                <tr><td>Informix</td><td>jdbc:informix-sqli://${JDBC.host|localhost}:${JDBC.port|1533}/${JDBC.schema}:informixserver=${dbservername}</td></tr>
+                <tr><td>Informix_DataDirect</td><td>jdbc:datadirect:informix://${JDBC.host|localhost}:${JDBC.port|1533};InformixServer=${informixserver};DatabaseServer=${JDBC.schema}</td></tr>
+                <tr><td>Derby_Server</td><td>jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}</td></tr>
+                <tr><td>Derby_Embedded</td><td>jdbc:derby:${JDBC.schema};create=${derby.create|false}</td></tr>
+                <tr><td>JDataStore</td><td>jdbc:borland:dslocal:${JDBC.schema}</td></tr>
+                <tr><td>JDBC_ODBC_Bridge</td><td>jdbc:odbc:${ODBC.datasource}</td></tr>
+                <tr><td>MaxDB</td><td>jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}</td></tr>
+                <tr><td>McKoi</td><td>jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}</td></tr>
+                <tr><td>Mimer</td><td>jdbc:mimer:${mimer.protocol}://${JDBC.host|localhost}:${JDBC.port|1360}/${JDBC.schema}</td></tr>
+                <tr><td>MySQL</td><td>jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}</td></tr>
+                <tr><td>Netezza</td><td>jdbc:netezza://${JDBC.host|localhost}:${JDBC.port|5480}/${JDBC.schema}</td></tr>
+                <tr><td>Oracle_Thin</td><td>jdbc:oracle:thin:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}</td></tr>
+                <tr><td>Oracle_OCI</td><td>jdbc:oracle:oci:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}</td></tr>
+                <tr><td>Oracle_DataDirect</td><td>jdbc:datadirect:oracle://${JDBC.host|localhost}:${JDBC.port|1521};ServiceName=${oracle.servicename|ORCL}</td></tr>
+                <tr><td>Pervasive</td><td>jdbc:pervasive://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}</td></tr>
+                <tr><td>Pointbase_Embedded</td><td>jdbc:pointbase:embedded:${JDBC.schema},database.home=${pointbase.home},create=${pointbase.create|false}</td></tr>
+                <tr><td>Pointbase_Server</td><td>jdbc:pointbase:server://${JDBC.host|localhost}:${JDBC.port|9092}/${JDBC.schema},database.home=${pointbase.home},create=${pointbase.create|false}</td></tr>
+                <tr><td>PostgreSQL</td><td>jdbc:postgresql://${JDBC.host|localhost}:${JDBC.port|5432}/${JDBC.schema}</td></tr>
+                <tr><td>Progress</td><td>jdbc:jdbcProgress:T:${JDBC.host|localhost}:${JDBC.port|2055}:${JDBC.schema}</td></tr>
+                <tr><td>SQL_Server_DataDirect</td><td>jdbc:datadirect:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}</td></tr>
+                <tr><td>SQL_Server_jTDS</td><td>jdbc:jtds:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind};domain=${sqlserver.domain}</td></tr>
+                <tr><td>SQL_Server_MS_Driver</td><td>jdbc:microsoft:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}</td></tr>
+                <tr><td>SQL_Server_2005_MS_Driver</td><td>jdbc:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}</td></tr>
+                <tr><td>Sybase_ASE_jTDS</td><td>jdbc:jtds:sybase://${JDBC.host|localhost}:${JDBC.port|5000};DatabaseName=${JDBC.schema}</td></tr>
+                <tr><td>Sybase_ASE_JConnect</td><td>jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|5000}/${JDBC.schema}</td></tr>
+                <tr><td>Sybase_SQL_Anywhere_JConnect</td><td>jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|2638}/${JDBC.schema}</td></tr>
+                <tr><td>Sybase_DataDirect</td><td>jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}</td></tr>
+            </tbody>
+        </table>
+        </para>
+    </section>
+
+    <section id="helper.example">
+        <title>Usage Example</title>
+        <para>Using the helper is simpler than explain how it works, let's have a look at the code
+        below that configures the <literal>PooledDataSourceProvider</literal> for
+        <emphasis>MySQL</emphasis>:
+
+        <programlistingco>
+            <areaspec>
+                <area id="helper.example.host" coords="3"/>
+                <area id="helper.example.port" coords="4"/>
+                <area id="helper.example.schema" coords="5"/>
+                <area id="helper.example.bindMySQL" coords="10"/>
+                <area id="helper.example.bindProperties" coords="16"/>
+            </areaspec>
+            <programlisting language="java"><![CDATA[final Properties myBatisProperties = new Properties();
+myBatisProperties.setProperty("mybatis.environment.id", "test");
+myBatisProperties.setProperty("JDBC.host", "contacts.acme.db");
+myBatisProperties.setProperty("JDBC.port", "6969");
+myBatisProperties.setProperty("JDBC.schema", "contacts_test");
+myBatisProperties.setProperty("JDBC.username", "fooTest");
+myBatisProperties.setProperty("JDBC.password", "barPWD");
+myBatisProperties.setProperty("JDBC.autoCommit", "false");
+
+Injector injector = Guice.createInjector(JdbcHelper.MySQL,
+    new MyBatisModule(PooledDataSourceProvider.class)
+        .addSimpleAliases(Contact.class)
+        .addMapperClasses(ContactMapper.class),
+    new Module() {
+        public void configure(Binder binder) {
+            Names.bindProperties(binder, myBatisProperties);
+        }
+    });]]></programlisting>
+            <calloutlist>
+                <callout arearefs="helper.example.host">
+                    <para>configure the database host</para>
+                </callout>
+                <callout arearefs="helper.example.port">
+                    <para>configure the database port</para>
+                </callout>
+                <callout arearefs="helper.example.schema">
+                    <para>configure the database schema</para>
+                </callout>
+                <callout arearefs="helper.example.bindMySQL">
+                    <para>binds the JDBC connection URL and the Driver class name for MySQL</para>
+                </callout>
+                <callout arearefs="helper.example.bindProperties">
+                    <para>binds the properties configuration; <literal>JDBC.host</literal>,
+                    <literal>JDBC.port</literal> and <literal>JDBC.schema</literal>
+                    will be used to be replaced in the URL Pattern</para>
+                </callout>
+            </calloutlist>
+        </programlistingco>
+        </para>
+    </section>
+</appendix>
