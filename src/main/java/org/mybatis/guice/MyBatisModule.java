@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -264,6 +265,9 @@ public final class MyBatisModule extends AbstractModule {
         if (this.objectFactoryProviderClass != null) {
             this.bind(ObjectFactory.class).toProvider(this.objectFactoryProviderClass).in(Scopes.SINGLETON);
         }
+
+        // The properties converter for JDBC driver properties expressed as string
+        this.binder().convertToTypes(Matchers.only(TypeLiteral.get(Properties.class)), new PropertiesConverter());
     }
 
     private static <T> void bindMapperProvider(Binder binder, Class<T> mapperType) {
