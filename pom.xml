@@ -425,35 +425,23 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <id>gcode-upload</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>python</executable>
-                            <arguments>
-                                <argument>${basedir}/bin/googlecode_upload.py</argument>
-                                <argument>-p</argument>
-                                <argument>mybatis</argument>
-                                <argument>-s</argument>
-                                <argument>Google Guice bridge for MyBatis ${pom.version} release</argument>
-                                <argument>-l</argument>
-                                <argument>Featured,Type-Archive</argument>
-                                <argument>-u</argument>
-                                <argument>${scm.username}</argument>
-                                <argument>-w</argument>
-                                <argument>${scm.password}</argument>
-                                <argument>${basedir}/target/${project.artifactId}-${project.version}-bundle.zip</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>com.googlecode.maven-gcu-plugin</groupId>
+                <artifactId>maven-gcu-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <failsOnError>true</failsOnError>
+                    <projectName>mybatis</projectName>
+                    <uploads>
+                         <upload>
+                            <file>${project.build.directory}/${project.artifactId}-${project.version}-bundle.zip</file>
+                            <summary>Google Guice bridge for MyBatis ${pom.version} release</summary>
+                            <labels>
+                                <label>Featured</label>
+                                <label>Type-Archive</label>
+                            </labels>
+                        </upload>
+                    </uploads>
+                </configuration>
             </plugin>
 
             <plugin>
