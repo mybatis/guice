@@ -69,23 +69,25 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * to prevent memory leaks.
      */
     protected void postCreate() {
-        for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
-            this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
-        }
+        try {
+            for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
+                this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
+            }
 
-        for (Entry<Class<?>, TypeHandler> entry : this.typeHandlers.entrySet()) {
-            this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
-        }
+            for (Entry<Class<?>, TypeHandler> entry : this.typeHandlers.entrySet()) {
+                this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
+            }
 
-        for (Class<?> mapperClass : this.mapperClasses) {
-            this.configuration.addMapper(mapperClass);
-        }
+            for (Class<?> mapperClass : this.mapperClasses) {
+                this.configuration.addMapper(mapperClass);
+            }
 
-        for (Interceptor interceptor : this.plugins) {
-            this.configuration.addInterceptor(interceptor);
+            for (Interceptor interceptor : this.plugins) {
+                this.configuration.addInterceptor(interceptor);
+            }
+        } finally {
+            ErrorContext.instance().reset();
         }
-
-        ErrorContext.instance().reset();
     }
 
     @Inject(optional = true)
