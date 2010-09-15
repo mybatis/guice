@@ -217,12 +217,11 @@ public final class MyBatisModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
-
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
         this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
+        this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
         this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
         this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
 
