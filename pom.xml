@@ -121,6 +121,18 @@
         </developer>
     </developers>
 
+    <contributors>
+        <contributor>
+            <name>Stephen Friedrich</name>
+            <email>stephen.friedrich@fortis-it.eu</email>
+        </contributor>
+
+        <contributor>
+            <name>Marco Speranza</name>
+            <email>marco.speranza79@gmail.com</email>
+        </contributor>
+    </contributors>
+
     <scm>
         <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</url>
         <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>

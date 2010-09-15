@@ -32,6 +32,7 @@ import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
+import org.mybatis.guice.configuration.ConfigurationProviderTypeListener;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
@@ -216,6 +217,8 @@ public final class MyBatisModule extends AbstractModule {
      */
     @Override
     protected void configure() {
+        this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
+
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
         this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);

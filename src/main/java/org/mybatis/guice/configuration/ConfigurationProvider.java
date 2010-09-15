@@ -15,10 +15,12 @@
  */
 package org.mybatis.guice.configuration;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
@@ -43,6 +45,14 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     private final Configuration configuration;
 
+    private Map<String, Class<?>> typeAliases = Collections.emptyMap();
+
+    private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
+
+    private Set<Class<?>> mapperClasses = Collections.emptySet();
+
+    private Set<Interceptor> plugins = Collections.emptySet();
+
     /**
      * Creates a new myBatis Configuration from the Environment.
      *
@@ -51,6 +61,31 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Inject
     public ConfigurationProvider(final Environment environment) {
         this.configuration = new Configuration(environment);
+    }
+
+    /**
+     * Called after injection is done. Listener is set up in {@link org.mybatis.guice.MyBatisModule#configure()}.
+     * Initialization needs to be done in a defined order plus ErrorContext instance must be reset at the end
+     * to prevent memory leaks.
+     */
+    protected void postCreate() {
+        for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
+            this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
+        }
+
+        for (Entry<Class<?>, TypeHandler> entry : this.typeHandlers.entrySet()) {
+            this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
+        }
+
+        for (Class<?> mapperClass : this.mapperClasses) {
+            this.configuration.addMapper(mapperClass);
+        }
+
+        for (Interceptor interceptor : this.plugins) {
+            this.configuration.addInterceptor(interceptor);
+        }
+
+        ErrorContext.instance().reset();
     }
 
     @Inject(optional = true)
@@ -65,21 +100,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerAlias(@TypeAliases final Map<String,Class<?>> typeAliases) {
-        for (Entry<String, Class<?>> entry : typeAliases.entrySet()) {
-            this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
-        }
-    }
-
-    /**
-     * Adds the user defined Mapper classes to the myBatis Configuration.
-     *
-     * @param mapperClasses the user defined Mapper classes.
-     */
-    @Inject(optional = true)
-    public void registerMappers(@Mappers final Set<Class<?>> mapperClasses) {
-        for (Class<?> mapperClass : mapperClasses) {
-            this.configuration.addMapper(mapperClass);
-        }
+        this.typeAliases = typeAliases;
     }
 
     /**
@@ -89,9 +110,17 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerTypeHandlers(final Map<Class<?>, TypeHandler> typeHandlers) {
-        for (Entry<Class<?>, TypeHandler> entry : typeHandlers.entrySet()) {
-            this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
-        }
+        this.typeHandlers = typeHandlers;
+    }
+
+    /**
+     * Adds the user defined Mapper classes to the myBatis Configuration.
+     *
+     * @param mapperClasses the user defined Mapper classes.
+     */
+    @Inject(optional = true)
+    public void registerMappers(@Mappers final Set<Class<?>> mapperClasses) {
+        this.mapperClasses = mapperClasses;
     }
 
     /**
@@ -112,9 +141,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerPlugins(final Set<Interceptor> plugins) {
-        for (Interceptor interceptor : plugins) {
-            this.configuration.addInterceptor(interceptor);
-        }
+        this.plugins = plugins;
     }
 
     /**
