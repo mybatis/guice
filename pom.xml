@@ -26,7 +26,7 @@
     <name>mybatis-guice</name>
     <description>An easy-to-use Google Guice bridge for
     MyBatis sql mapping framework.</description>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RC2</version>
     <packaging>jar</packaging>
     <url>http://www.mybatis.org/</url>
 
@@ -134,9 +134,9 @@
     </contributors>
 
     <scm>
-        <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</url>
-        <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>
-        <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</developerConnection>
+        <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/1.0.0-RC2</url>
+        <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/1.0.0-RC2</connection>
+        <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/1.0.0-RC2</developerConnection>
     </scm>
 
     <reporting>
