@@ -21,15 +21,25 @@
 <document xmlns="http://maven.apache.org/changes/1.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+
     <properties>
         <author>The myBatis Team</author>
         <title>Changes</title>
     </properties>
 
     <body>
-        <release version="1.0" date="TBD" description="1.0 release">
+        <release version="1.0-RC2" date="2010-09-15" description="1.0-RC2 release">
+            <action dev="simone.tripodi" type="fix" issue="104">
+                ErrorContext leaks in ThreadLocal.
+            </action>
             <action dev="simone.tripodi" type="update">
-                Imported the original iBaGuice codebase.
+                Added the JdbcHelper to simplify the JDBC Drivers configuration.
+            </action>
+        </release>
+
+        <release version="1.0-RC1" date="2010-08-22" description="1.0-RC1 release">
+            <action dev="simone.tripodi" type="update">
+                Imported and moved the original iBaGuice codebase.
             </action>
         </release>
     </body>
