@@ -27,8 +27,6 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
@@ -36,12 +34,8 @@ import org.mybatis.guice.configuration.ConfigurationProviderTypeListener;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
-import org.mybatis.guice.transactional.Transactional;
-import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactionfactory.JdbcTransactionFactoryProvider;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
@@ -55,7 +49,7 @@ import com.google.inject.multibindings.Multibinder;
  *
  * @version $Id$
  */
-public final class MyBatisModule extends AbstractModule {
+public final class MyBatisModule extends AbstractMyBatisModule {
 
     /**
      * The DataSource Provider class reference.
@@ -81,11 +75,6 @@ public final class MyBatisModule extends AbstractModule {
      * The user defined Interceptor classes.
      */
     private final Set<Class<? extends Interceptor>> interceptorsClasses = new HashSet<Class<? extends Interceptor>>();
-
-    /**
-     * The user defined mapper classes.
-     */
-    private final Set<Class<?>> mapperClasses = new HashSet<Class<?>>();
 
     /**
      * The ObjectFactory Provider class reference.
@@ -114,6 +103,7 @@ public final class MyBatisModule extends AbstractModule {
      */
     public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
             final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass) {
+        super(SqlSessionFactoryProvider.class);
         if (dataSourceProviderClass == null) {
             throw new IllegalArgumentException("Data Source provider class mustn't be null");
         }
@@ -184,24 +174,6 @@ public final class MyBatisModule extends AbstractModule {
     }
 
     /**
-     * Adds the user defined mapper classes.
-     *
-     * @param mapperClasses the user defined mapper classes.
-     * @return this {@code SqlSessionFactoryModule} instance.
-     * 
-     */
-    public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
-        if (mapperClasses == null || mapperClasses.length == 0) {
-            return this;
-        }
-
-        for (Class<?> mapperClass : mapperClasses) {
-            this.mapperClasses.add(mapperClass);
-        }
-        return this;
-    }
-
-    /**
      * Sets the ObjectFactory provider class.
      *
      * @param objectFactoryProviderClass the ObjectFactory provider class.
@@ -217,17 +189,14 @@ public final class MyBatisModule extends AbstractModule {
      */
     @Override
     protected void configure() {
+        super.configure();
+
+        // needed binding
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
         this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
         this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
-        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
-        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
-
-        TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-        this.binder().requestInjection(interceptor);
-        this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
 
         // optional bindings
 
@@ -254,22 +223,14 @@ public final class MyBatisModule extends AbstractModule {
         }
 
         // mappers
-        if (!this.mapperClasses.isEmpty()) {
-            this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.mapperClasses);
-
-            for (Class<?> mapperType : this.mapperClasses) {
-                bindMapperProvider(this.binder(), mapperType);
-            }
+        if (!this.getMapperClasses().isEmpty()) {
+            this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.getMapperClasses());
         }
 
         // the object factory
         if (this.objectFactoryProviderClass != null) {
             this.bind(ObjectFactory.class).toProvider(this.objectFactoryProviderClass).in(Scopes.SINGLETON);
         }
-    }
-
-    private static <T> void bindMapperProvider(Binder binder, Class<T> mapperType) {
-        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
     }
 
 }
