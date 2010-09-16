@@ -59,6 +59,9 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
     }
 
     public XMLMyBatisModule(String classPathResource, String environmentId, Properties properties) {
+        if (classPathResource == null) {
+            throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
+        }
         this.classPathResource = classPathResource;
         this.environmentId = environmentId;
         this.properties = properties;
