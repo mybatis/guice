@@ -15,25 +15,14 @@
  */
 package org.mybatis.guice;
 
-import java.util.List;
+import org.junit.runner.RunWith;
 
 /**
- * 
+ *
  *
  * @version $Id$
  */
-public interface ContactMapper {
-
-    void brokenAdd(Contact contact);
-
-    void add(Contact contact);
-
-    void update(Contact contact);
-
-    void delete(Integer id);
-
-    Contact getById(Integer id);
-
-    List<Contact> selectAll();
+@RunWith(XMLGuiceTestRunner.class)
+public final class XMLMyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 
 }

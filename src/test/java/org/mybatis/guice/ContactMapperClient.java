@@ -43,7 +43,16 @@ public class ContactMapperClient {
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "Impossible to insert {0} contact"
     )
-    void insert(final Contact contact) throws CustomException {
+    public void brokenInsert(final Contact contact) throws CustomException {
+        this.contactMapper.brokenAdd(contact);
+    }
+
+    @Transactional(
+            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+            rethrowExceptionsAs = CustomException.class,
+            exceptionMessage = "Impossible to insert {0} contact"
+    )
+    public void insert(final Contact contact) throws CustomException {
         this.contactMapper.add(contact);
     }
 
@@ -52,7 +61,7 @@ public class ContactMapperClient {
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "Impossible to delete contact with ID {0}"
     )
-    void delete(final Integer id) throws CustomException {
+    public void delete(final Integer id) throws CustomException {
         this.contactMapper.delete(id);
     }
 
@@ -61,7 +70,7 @@ public class ContactMapperClient {
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when selecting contact with ID {0}"
     )
-    Contact selectById(final Integer id) throws CustomException {
+    public Contact selectById(final Integer id) throws CustomException {
         return this.contactMapper.getById(id);
     }
 
@@ -70,7 +79,7 @@ public class ContactMapperClient {
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when selecting all stored contacts"
     )
-    List<Contact> getAll() throws CustomException {
+    public List<Contact> getAll() throws CustomException {
         return this.contactMapper.selectAll();
     }
 
@@ -79,7 +88,7 @@ public class ContactMapperClient {
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when updating contact {0}"
     )
-    void update(final Contact contact) throws CustomException {
+    public void update(final Contact contact) throws CustomException {
         this.contactMapper.update(contact);
     }
 

@@ -21,14 +21,13 @@
 -->
 <mapper namespace="org.mybatis.guice.ContactMapper">
 
-    <!-- Contact alias: org.mybatis.guice.Contact -->
-    <resultMap type="Contact" id="contactMap">
+    <resultMap type="org.mybatis.guice.Contact" id="contactMap">
         <id column="id" property="id"/>
         <result column="first_name" property="firstName"/>
         <result column="last_name" property="lastName"/>
     </resultMap>
 
-    <insert id="add" parameterType="Contact" useGeneratedKeys="true" keyProperty="id">
+    <insert id="brokenAdd" parameterType="org.mybatis.guice.Contact" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
             contact (
                 first_name,
@@ -38,6 +37,21 @@
             #{firstName},
             #{lastName}
         )
+    </insert>
+
+    <insert id="add" parameterType="org.mybatis.guice.Contact">
+        INSERT INTO
+            contact (
+                first_name,
+                last_name
+            )
+        VALUES (
+            #{firstName},
+            #{lastName}
+        )
+        <selectKey order="AFTER" resultType="int" keyProperty="id">
+            CALL IDENTITY()
+        </selectKey>
     </insert>
 
     <sql id="select">
@@ -54,7 +68,7 @@
             id = #{id}
     </sql>
 
-    <update id="update" parameterType="Contact">
+    <update id="update" parameterType="org.mybatis.guice.Contact">
         UPDATE
             contact
         SET

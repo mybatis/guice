@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.runners.model.InitializationError;
-import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
-import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import com.google.inject.Module;
 
@@ -30,32 +28,23 @@ import com.google.inject.Module;
  *
  * @version $Id$
  */
-public final class GuiceTestRunner extends AbstractGuiceTestRunner {
+public final class XMLGuiceTestRunner extends AbstractGuiceTestRunner {
 
-    public GuiceTestRunner(Class<?> klass) throws InitializationError {
+    public XMLGuiceTestRunner(Class<?> klass) throws InitializationError {
         super(klass);
     }
 
     @Override
     protected List<Module> createMyBatisModule() {
-        List<Module> modules = new ArrayList<Module>(3);
-
-        modules.add(JdbcHelper.HSQLDB_Embedded);
-        modules.add(new MyBatisModule(PooledDataSourceProvider.class)
-                        .addMapperClasses(ContactMapper.class));
-
+        List<Module> modules = new ArrayList<Module>(2);
+        modules.add(new XMLMyBatisModule().addMapperClasses(ContactMapper.class));
         return modules;
     }
 
     @Override
     protected Properties createTestProperties() {
         final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.schema", "mybatis-guice_TEST");
-        myBatisProperties.setProperty("derby.create", "true");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        myBatisProperties.setProperty("mybatis.classpathResource", "org/mybatis/guice/mybatis-config.xml");
         return myBatisProperties;
     }
 
