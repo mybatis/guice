@@ -16,7 +16,7 @@
 package org.mybatis.guice;
 
 import java.io.IOException;
-import java.io.Reader;
+import java.util.Properties;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,35 +34,44 @@ import com.google.inject.name.Named;
 @Singleton
 final class XMLSqlSessionFactoryProvider implements Provider<SqlSessionFactory> {
 
-    /**
-     * The SqlSessionFactory reference.
-     */
-    private final SqlSessionFactory factory;
-
-    /**
-     * Creates a new SqlSessionFactory reading the XML classpath resource
-     * configuration.
-     *
-     * @param resource the XML classpath resource configuration.
-     */
     @Inject
-    public XMLSqlSessionFactoryProvider(@Named("mybatis.classpathResource") final String resource) {
-        try {
-            Reader reader = Resources.getResourceAsReader(this.getClass().getClassLoader(), resource);
-            SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-            this.factory = builder.build(reader);
-        } catch (IOException e) {
-            throw new RuntimeException("Impossible to read classpath resource '"
-                    + resource
-                    + "', see nested exceptions", e);
-        }
+    @Named("mybatis.classpathResource")
+    private String classPathResource;
+
+    @Inject(optional = true)
+    @Named("mybatis.environment.id")
+    private String environmentId;
+
+    @Inject(optional = true)
+    @Named("mybatis.variables")
+    private Properties properties;
+
+    public void setClassPathResource(String classPathResource) {
+        this.classPathResource = classPathResource;
+    }
+
+    public void setEnvironmentId(String environmentId) {
+        this.environmentId = environmentId;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 
     /**
      * {@inheritDoc}
      */
     public SqlSessionFactory get() {
-        return this.factory;
+        try {
+            return new SqlSessionFactoryBuilder().build(
+                    Resources.getResourceAsReader(this.getClass().getClassLoader(), this.classPathResource),
+                    this.environmentId,
+                    this.properties);
+        } catch (IOException e) {
+            throw new RuntimeException("Impossible to read classpath resource '"
+                    + this.classPathResource
+                    + "', see nested exceptions", e);
+        }
     }
 
 }
