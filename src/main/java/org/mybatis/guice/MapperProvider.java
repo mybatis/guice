@@ -15,10 +15,14 @@
  */
 package org.mybatis.guice;
 
+import java.util.Set;
+
 import org.apache.ibatis.session.SqlSessionManager;
 
+import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 
 /**
@@ -29,12 +33,26 @@ import com.google.inject.Singleton;
 @Singleton
 final class MapperProvider<T> implements Provider<T> {
 
+    public static void bind(Binder binder, Set<Class<?>> mapperTypes) {
+        if (mapperTypes.isEmpty()) {
+            return;
+        }
+
+        for (Class<?> mapperType : mapperTypes) {
+            bind(binder, mapperType);
+        }
+    }
+
+    private static <T> void bind(Binder binder, Class<T> mapperType) {
+        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
+    }
+
     private final Class<T> mapperType;
 
     @Inject
     private SqlSessionManager sqlSessionManager;
 
-    public MapperProvider(Class<T> mapperType) {
+    private MapperProvider(Class<T> mapperType) {
         this.mapperType = mapperType;
     }
 

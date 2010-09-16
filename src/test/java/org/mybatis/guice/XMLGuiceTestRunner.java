@@ -37,15 +37,13 @@ public final class XMLGuiceTestRunner extends AbstractGuiceTestRunner {
     @Override
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>(2);
-        modules.add(new XMLMyBatisModule().addMapperClasses(ContactMapper.class));
+        modules.add(new XMLMyBatisModule("org/mybatis/guice/mybatis-config.xml"));
         return modules;
     }
 
     @Override
     protected Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.classpathResource", "org/mybatis/guice/mybatis-config.xml");
-        return myBatisProperties;
+        return new Properties();
     }
 
 }

@@ -27,6 +27,7 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
@@ -82,6 +83,11 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     private Class<? extends Provider<ObjectFactory>> objectFactoryProviderClass;
 
     /**
+     * The user defined mapper classes.
+     */
+    private final Set<Class<?>> mapperClasses = new HashSet<Class<?>>();
+
+    /**
      * Creates a new module that binds all the needed modules to create the
      * SqlSessionFactory, injecting all the required components, using the
      * {@link JdbcTransactionFactoryProvider} as default transaction factory
@@ -103,7 +109,6 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      */
     public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
             final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass) {
-        super(SqlSessionFactoryProvider.class);
         if (dataSourceProviderClass == null) {
             throw new IllegalArgumentException("Data Source provider class mustn't be null");
         }
@@ -185,6 +190,24 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * Adds the user defined mapper classes.
+     *
+     * @param mapperClasses the user defined mapper classes.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
+        if (mapperClasses == null || mapperClasses.length == 0) {
+            return this;
+        }
+
+        for (Class<?> mapperClass : mapperClasses) {
+            this.mapperClasses.add(mapperClass);
+        }
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -197,6 +220,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
         this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
+        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
 
         // optional bindings
 
@@ -223,8 +247,9 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         // mappers
-        if (!this.getMapperClasses().isEmpty()) {
-            this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.getMapperClasses());
+        if (!this.mapperClasses.isEmpty()) {
+            this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.mapperClasses);
+            MapperProvider.bind(this.binder(), this.mapperClasses);
         }
 
         // the object factory

@@ -15,18 +15,11 @@
  */
 package org.mybatis.guice;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Provider;
-import com.google.inject.Scopes;
 import com.google.inject.matcher.Matchers;
 
 /**
@@ -36,68 +29,17 @@ import com.google.inject.matcher.Matchers;
 abstract class AbstractMyBatisModule extends AbstractModule {
 
     /**
-     * The user defined mapper classes.
-     */
-    private final Set<Class<?>> mapperClasses = new HashSet<Class<?>>();
-
-    private final Class<? extends Provider<SqlSessionFactory>> sqlSessionFactoryProviderType;
-
-    public AbstractMyBatisModule(Class<? extends Provider<SqlSessionFactory>> sqlSessionFactoryProviderType) {
-        this.sqlSessionFactoryProviderType = sqlSessionFactoryProviderType;
-    }
-
-    /**
-     * Adds the user defined mapper classes.
-     *
-     * @param mapperClasses the user defined mapper classes.
-     * @return this {@code SqlSessionFactoryModule} instance.
-     * 
-     */
-    public AbstractMyBatisModule addMapperClasses(Class<?>...mapperClasses) {
-        if (mapperClasses == null || mapperClasses.length == 0) {
-            return this;
-        }
-
-        for (Class<?> mapperClass : mapperClasses) {
-            this.mapperClasses.add(mapperClass);
-        }
-        return this;
-    }
-
-    /**
-     * Returns the set mapper classes.
-     *
-     * @return the set mapper classes.
-     */
-    protected Set<Class<?>> getMapperClasses() {
-        return this.mapperClasses;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     protected void configure() {
-        // sql session factory provider
-        this.bind(SqlSessionFactory.class).toProvider(this.sqlSessionFactoryProviderType);
         // sql session manager
         this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
-
-        // mappers
-        if (!this.mapperClasses.isEmpty()) {
-            for (Class<?> mapperType : this.mapperClasses) {
-                bindMapperProvider(this.binder(), mapperType);
-            }
-        }
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
         this.binder().requestInjection(interceptor);
         this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
-    }
-
-    private static <T> void bindMapperProvider(Binder binder, Class<T> mapperType) {
-        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
     }
 
 }
