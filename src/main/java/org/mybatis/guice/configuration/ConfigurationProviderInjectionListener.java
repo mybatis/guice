@@ -28,7 +28,7 @@ final class ConfigurationProviderInjectionListener<I> implements InjectionListen
      * {@inheritDoc}
      */
     public void afterInjection(I configurationProvider) {
-        ((ConfigurationProvider) configurationProvider).postCreate();
+        ((ConfigurationProvider) configurationProvider).init();
     }
 
 }
