@@ -29,8 +29,8 @@ import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.type.TypeHandler;
 
+import com.google.inject.Binder;
 import com.google.inject.spi.Message;
 
 /**
@@ -95,11 +95,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
 
-            @SuppressWarnings("unchecked")
-            Collection<TypeHandler> handlers = (Collection<TypeHandler>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
-            for (TypeHandler handler : handlers) {
-                this.requestInjection(handler);
-            }
+            requestInjection(this.binder(), (Collection<?>) Ognl.getValue(TYPE_HANDLERS, context, configuration));
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
                     + this.classPathResource
@@ -112,6 +108,12 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
                     // close quietly
                 }
             }
+        }
+    }
+
+    private static void requestInjection(Binder binder, Collection<?> injectees) {
+        for (Object injectee : injectees) {
+            binder.requestInjection(injectee);
         }
     }
 
