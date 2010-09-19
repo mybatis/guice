@@ -17,13 +17,14 @@ package org.mybatis.guice;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.ognl.DefaultMemberAccess;
+import org.apache.ibatis.ognl.Ognl;
+import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -36,9 +37,7 @@ import com.google.inject.spi.Message;
  */
 public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
-    private static final String MAPPER_REGISTRY_FIELD = "mapperRegistry";
-
-    private static final String KNOWN_MAPPERS_FIELD = "knownMappers";
+    private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
 
     private final String classPathResource;
 
@@ -75,8 +74,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
         super.configure();
 
         Reader reader = null;
-        Field mapperRegistryField = null;
-        Field knownMappersField = null;
         try {
             reader = Resources.getResourceAsReader(this.getClass().getClassLoader(), this.classPathResource);
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
@@ -86,24 +83,18 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
             Configuration configuration = sessionFactory.getConfiguration();
 
-            mapperRegistryField = configuration.getClass().getDeclaredField(MAPPER_REGISTRY_FIELD);
-            setAccessibility(mapperRegistryField, true);
-
-            MapperRegistry mapperRegistry = (MapperRegistry) mapperRegistryField.get(configuration);
-
-            knownMappersField = mapperRegistry.getClass().getDeclaredField(KNOWN_MAPPERS_FIELD);
-            setAccessibility(knownMappersField, true);
+            OgnlContext context = new OgnlContext();
+            context.setMemberAccess(new DefaultMemberAccess(true, true, true));
+            context.setRoot(sessionFactory);
 
             @SuppressWarnings("unchecked")
-            Set<Class<?>> mapperClasses = (Set<Class<?>>) knownMappersField.get(mapperRegistry);
+            Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
                     + this.classPathResource
                     + "', see nested exceptions", e));
         } finally {
-            setAccessibility(knownMappersField, false);
-            setAccessibility(mapperRegistryField, false);
             if (reader != null) {
                 try {
                     reader.close();
@@ -111,12 +102,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
                     // close quietly
                 }
             }
-        }
-    }
-
-    private static void setAccessibility(Field field, boolean accessible) {
-        if (field != null) {
-            field.setAccessible(accessible);
         }
     }
 
