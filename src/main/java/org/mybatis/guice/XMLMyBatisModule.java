@@ -18,6 +18,7 @@ package org.mybatis.guice;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.spi.Message;
 
@@ -38,6 +40,8 @@ import com.google.inject.spi.Message;
 public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
+
+    private static final String TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
 
     private final String classPathResource;
 
@@ -85,11 +89,17 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
             OgnlContext context = new OgnlContext();
             context.setMemberAccess(new DefaultMemberAccess(true, true, true));
-            context.setRoot(sessionFactory);
+            context.setRoot(configuration);
 
             @SuppressWarnings("unchecked")
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
+
+            @SuppressWarnings("unchecked")
+            Collection<TypeHandler> handlers = (Collection<TypeHandler>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
+            for (TypeHandler handler : handlers) {
+                this.requestInjection(handler);
+            }
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
                     + this.classPathResource
