@@ -34,7 +34,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     @Override
     protected void configure() {
         // sql session manager
-        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class);
+        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).asEagerSingleton();;
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
