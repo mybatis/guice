@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice.configuration;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -44,6 +45,14 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     private final Configuration configuration;
 
+    private Map<String, Class<?>> typeAliases = Collections.emptyMap();
+
+    private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
+
+    private Set<Class<?>> mapperClasses = Collections.emptySet();
+
+    private Set<Interceptor> plugins = Collections.emptySet();
+
     /**
      * Creates a new myBatis Configuration from the Environment.
      *
@@ -60,7 +69,27 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * to prevent memory leaks.
      */
     protected void init() {
-        ErrorContext.instance().reset();
+        try {
+            for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
+                this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
+            }
+
+            for (Entry<Class<?>, TypeHandler> entry : this.typeHandlers.entrySet()) {
+                this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
+            }
+
+            for (Class<?> mapperClass : this.mapperClasses) {
+                if (!this.configuration.hasMapper(mapperClass)) {
+                    this.configuration.addMapper(mapperClass);
+                }
+            }
+
+            for (Interceptor interceptor : this.plugins) {
+                this.configuration.addInterceptor(interceptor);
+            }
+        } finally {
+            ErrorContext.instance().reset();
+        }
     }
 
     @Inject(optional = true)
@@ -75,9 +104,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerAlias(@TypeAliases final Map<String,Class<?>> typeAliases) {
-        for (Entry<String, Class<?>> entry : typeAliases.entrySet()) {
-            this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
-        }
+        this.typeAliases = typeAliases;
     }
 
     /**
@@ -87,9 +114,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerTypeHandlers(final Map<Class<?>, TypeHandler> typeHandlers) {
-        for (Entry<Class<?>, TypeHandler> entry : typeHandlers.entrySet()) {
-            this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
-        }
+        this.typeHandlers = typeHandlers;
     }
 
     /**
@@ -99,11 +124,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerMappers(@Mappers final Set<Class<?>> mapperClasses) {
-        for (Class<?> mapperClass : mapperClasses) {
-            if (!this.configuration.hasMapper(mapperClass)) {
-                this.configuration.addMapper(mapperClass);
-            }
-        }
+        this.mapperClasses = mapperClasses;
     }
 
     /**
@@ -124,9 +145,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     @Inject(optional = true)
     public void registerPlugins(final Set<Interceptor> plugins) {
-        for (Interceptor interceptor : plugins) {
-            this.configuration.addInterceptor(interceptor);
-        }
+        this.plugins = plugins;
     }
 
     /**
