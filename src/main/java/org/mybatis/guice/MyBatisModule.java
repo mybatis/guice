@@ -215,12 +215,12 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         super.configure();
 
         // needed binding
-        this.bind(DataSource.class).toProvider(this.dataSourceProviderClass).asEagerSingleton();;
-        this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass).asEagerSingleton();;
-        this.bind(Environment.class).toProvider(EnvironmentProvider.class).asEagerSingleton();;
-        this.bind(Configuration.class).toProvider(ConfigurationProvider.class).asEagerSingleton();
+        this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
+        this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
+        this.bind(Environment.class).toProvider(EnvironmentProvider.class);
+        this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
         this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
-        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class).asEagerSingleton();;
+        this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
 
         // optional bindings
 
