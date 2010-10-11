@@ -25,9 +25,6 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 /**
- * 
- * 
- * @author Marco Speranza
  * @version $Id$
  */
 public class CustomLongTypeHandler extends BaseTypeHandler {
