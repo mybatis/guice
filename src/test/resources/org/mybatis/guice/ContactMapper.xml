@@ -25,17 +25,20 @@
         <id column="id" property="id"/>
         <result column="first_name" property="firstName"/>
         <result column="last_name" property="lastName"/>
+        <result column="created" property="created"/>
     </resultMap>
 
     <insert id="brokenAdd" parameterType="org.mybatis.guice.Contact" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
             contact (
                 first_name,
-                last_name
+                last_name,
+                created
             )
         VALUES (
             #{firstName},
-            #{lastName}
+            #{lastName},
+            #{created, jdbcType=TIMESTAMP}
         )
     </insert>
 
@@ -43,11 +46,13 @@
         INSERT INTO
             contact (
                 first_name,
-                last_name
+                last_name,
+                created
             )
         VALUES (
             #{firstName},
-            #{lastName}
+            #{lastName},
+            #{created, jdbcType=TIMESTAMP}
         )
         <selectKey order="AFTER" resultType="int" keyProperty="id">
             CALL IDENTITY()
@@ -58,7 +63,8 @@
         SELECT
             id,
             first_name,
-            last_name
+            last_name,
+            created
         FROM
             contact
     </sql>

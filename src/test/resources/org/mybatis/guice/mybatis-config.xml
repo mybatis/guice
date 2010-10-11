@@ -29,6 +29,10 @@
         <setting name="defaultExecutorType" value="REUSE" />
     </settings>
 
+    <typeHandlers>
+        <typeHandler handler="org.mybatis.guice.CustomLongTypeHandler" javaType="org.mybatis.guice.CustomType"/>
+    </typeHandlers>
+    
     <environments default="test">
         <environment id="test">
             <transactionManager type="JDBC" />
@@ -41,8 +45,10 @@
         </environment>
     </environments>
 
+    
     <mappers>
         <mapper resource="org/mybatis/guice/ContactMapper.xml" />
     </mappers>
+    
 
 </configuration>
