@@ -32,6 +32,8 @@ public final class Contact implements Serializable {
 
     private String lastName;
 
+    private CustomType created;
+
     /**
      * @return the id
      */
@@ -75,12 +77,36 @@ public final class Contact implements Serializable {
     }
 
     /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Contact [firstName=" + firstName + ", id=" + id + ", lastName="
+                + lastName + ", created= " +  created + "]";
+    }
+
+    /**
+     * @return the created
+     */
+    public CustomType getCreated() {
+        return created;
+    }
+
+    /**
+     * @param created the created to set
+     */
+    public void setCreated(CustomType created) {
+        this.created = created;
+    }
+
+    /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((created == null) ? 0 : created.hashCode());
         result = prime * result
                 + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -101,6 +127,11 @@ public final class Contact implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Contact other = (Contact) obj;
+        if (created == null) {
+            if (other.created != null)
+                return false;
+        } else if (!created.equals(other.created))
+            return false;
         if (firstName == null) {
             if (other.firstName != null)
                 return false;
@@ -117,15 +148,6 @@ public final class Contact implements Serializable {
         } else if (!lastName.equals(other.lastName))
             return false;
         return true;
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "Contact [firstName=" + firstName + ", id=" + id + ", lastName="
-                + lastName + "]";
     }
 
 }

@@ -42,7 +42,8 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
 
         modules.add(JdbcHelper.HSQLDB_Embedded);
         modules.add(new MyBatisModule(PooledDataSourceProvider.class)
-                        .addMapperClasses(ContactMapper.class));
+                        .addMapperClasses(ContactMapper.class)
+                        .addTypeHandler(CustomType.class, CustomLongTypeHandler.class));
 
         return modules;
     }

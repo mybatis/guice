@@ -17,6 +17,7 @@ package org.mybatis.guice;
 
 import static junit.framework.Assert.assertNotNull;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.junit.Test;
