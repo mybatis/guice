@@ -76,8 +76,8 @@ public final class Contact implements Serializable {
         this.lastName = lastName;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -99,8 +99,8 @@ public final class Contact implements Serializable {
         this.created = created;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -115,8 +115,8 @@ public final class Contact implements Serializable {
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object obj) {
