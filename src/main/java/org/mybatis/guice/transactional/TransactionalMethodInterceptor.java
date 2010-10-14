@@ -100,7 +100,9 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
         Object object = null;
         try {
             object = invocation.proceed();
-            if (!isSessionInherited && !transactional.autoCommit()) {
+            if (!isSessionInherited
+                    && !transactional.rollbackOnly()
+                    && !transactional.autoCommit()) {
                 this.sqlSessionManager.commit(transactional.force());
             }
         } catch (Throwable t) {
@@ -171,7 +173,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                                 + " was in rollbackOnly mode, rolling it back");
                     }
 
-                    this.sqlSessionManager.rollback(transactional.force());
+                    this.sqlSessionManager.rollback(true);
                 }
 
                 if (this.log.isDebugEnabled()) {
