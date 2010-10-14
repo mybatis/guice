@@ -50,7 +50,8 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to insert {0} contact"
+            exceptionMessage = "Impossible to insert {0} contact",
+            rollbackOnly = true
     )
     public void insert(final Contact contact) throws CustomException {
         this.contactMapper.add(contact);
