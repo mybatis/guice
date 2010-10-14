@@ -213,6 +213,12 @@ public final class FooDAOImpl {
                         place holders, intercepted method arguments will be used
                         as message format arguments.</td>
                     </tr>
+                    <tr>
+                        <td>rollbackOnly</td>
+                        <td>false</td>
+                        <td>If true, the transaction will never committed, but rather the rollback will be forced.
+                        That configuration is useful for testing purposes.</td>
+                    </tr>
                 </tbody>
             </table>
         </para>
