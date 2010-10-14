@@ -163,14 +163,25 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
         } finally {
             // skip close when the session is inherited from another Transactional method
             if (!isSessionInherited) {
-                if (this.log.isDebugEnabled()) {
-                    this.log.debug(debugPrefix
-                            + " - SqlSession of thread: "
-                            + Thread.currentThread().getId()
-                            + " terminated his lyfe-cycle, closing it");
-                }
+                if (transactional.rollbackOnly()) {
+                    if (this.log.isDebugEnabled()) {
+                        this.log.debug(debugPrefix
+                                + " - SqlSession of thread: "
+                                + Thread.currentThread().getId()
+                                + " terminated its life-cycle; transaction was in rollbackOnly mode, rolling it back");
+                    }
 
-                this.sqlSessionManager.close();
+                    this.sqlSessionManager.rollback(transactional.force());
+                } else {
+                    if (this.log.isDebugEnabled()) {
+                        this.log.debug(debugPrefix
+                                + " - SqlSession of thread: "
+                                + Thread.currentThread().getId()
+                                + " terminated its life-cycle, closing it");
+                    }
+
+                    this.sqlSessionManager.close();
+                }
             } else if (this.log.isDebugEnabled()) {
                 this.log.debug(debugPrefix
                         + " - SqlSession of thread: "
