@@ -28,7 +28,28 @@
     </properties>
 
     <body>
-        <release version="1.0.0-RC2" date="2010-09-15" description="1.0-RC2 release">
+        <release version="1.0.0-RC3" date="2010-10-14" description="">
+            <action dev="christian.poitras@ircm.qc.ca" type="update">
+                Started developing the XML prototypal support.
+            </action>
+            <action dev="marco.speranza79" type="fix">
+                Avoid ConfigurationProviderInjectionListener.afterInjection() randomically called twice.
+            </action>
+            <action dev="nathan.maves" type="update">
+                Added the @org.mybatis.guice.transactional.Transactional.rollbackOnly parameter.
+            </action>
+            <action dev="nathan.maves" type="update">
+                Added the org.mybatis.guice.MyBatisModule#addSimpleAliases(Collection&lt;Class&lt;?&gt;&gt;.
+            </action>
+            <action dev="nathan.maves" type="update">
+                Added the org.mybatis.guice.MyBatisModule#addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt;.
+            </action>
+            <action dev="nathan.maves" type="update">
+                Added the org.mybatis.guice.MyBatisModule#addMapperClasses(Collection&lt;Class&lt;?&gt;&gt;.
+            </action>
+        </release>
+
+        <release version="1.0.0-RC2" date="2010-09-15" description="1.0.0-RC2 release">
             <action dev="simone.tripodi" type="fix" issue="104">
                 ErrorContext leaks in ThreadLocal.
             </action>
@@ -37,7 +58,7 @@
             </action>
         </release>
 
-        <release version="1.0.0-RC1" date="2010-08-22" description="1.0-RC1 release">
+        <release version="1.0.0-RC1" date="2010-08-22" description="1.0.0-RC1 release">
             <action dev="simone.tripodi" type="update">
                 Imported and moved the original iBaGuice codebase.
             </action>
