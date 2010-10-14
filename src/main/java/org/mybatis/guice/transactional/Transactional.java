@@ -81,11 +81,11 @@ public @interface Transactional {
     String exceptionMessage() default "";
 
     /**
-     * If true, the transaction will never committed, useful for testing purposes.
+     * If true, the transaction will never committed but rather rolled back, useful for testing purposes.
      *
      * This parameter is false by default.
      *
-     * @return if true, the transaction will never committed, useful for testing purposes.
+     * @return if true, the transaction will never committed but rather rolled back, useful for testing purposes.
      */
     boolean rollbackOnly() default false;
 
