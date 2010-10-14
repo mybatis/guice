@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -136,6 +137,21 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * Adding simple aliases means that every specified class will be bound
+     * using the simple class name, i.e.  {@code com.acme.Foo} becomes
+     *  {@code Foo}.
+     *
+     * @param types he specified types have to be bind.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     */
+    public MyBatisModule addSimpleAliases(final Collection<Class<?>> types) {
+        for (Class<?> clazz : types) {
+            this.addAlias(clazz.getSimpleName(), clazz);
+        }
+        return this;
+    }
+
+    /**
      * Add a user defined binding.
      *
      * @param alias the string type alias
@@ -179,6 +195,26 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * Adds the user defined iBatis interceptors plugins types, letting
+     * google-guice creating them.
+     *
+     * @param interceptorsClasses the user defined iBatis interceptors plugins
+     *        types.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addInterceptorsClasses(Collection<Class<? extends Interceptor>> interceptorsClasses) {
+        if (interceptorsClasses == null || interceptorsClasses.isEmpty()) {
+            return this;
+        }
+
+        for (Class<? extends Interceptor> interceptorsClass : interceptorsClasses) {
+            this.interceptorsClasses.add(interceptorsClass);
+        }
+        return this;
+    }
+
+    /**
      * Sets the ObjectFactory provider class.
      *
      * @param objectFactoryProviderClass the ObjectFactory provider class.
@@ -198,6 +234,24 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      */
     public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
         if (mapperClasses == null || mapperClasses.length == 0) {
+            return this;
+        }
+
+        for (Class<?> mapperClass : mapperClasses) {
+            this.mapperClasses.add(mapperClass);
+        }
+        return this;
+    }
+
+    /**
+     * Adds the user defined mapper classes.
+     *
+     * @param mapperClasses the user defined mapper classes.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addMapperClasses(Collection<Class<?>> mapperClasses) {
+        if (mapperClasses == null || mapperClasses.isEmpty()) {
             return this;
         }
 
