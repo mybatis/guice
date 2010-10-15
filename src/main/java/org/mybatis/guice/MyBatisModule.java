@@ -44,6 +44,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
+import org.apache.ibatis.io.ResolverUtil;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -126,7 +127,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes
      *  {@code Foo}.
      *
-     * @param types he specified types have to be bind.
+     * @param types the specified types have to be bind.
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final Class<?>...types) {
@@ -141,7 +142,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes
      *  {@code Foo}.
      *
-     * @param types he specified types have to be bind.
+     * @param types the specified types have to be bind.
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final Collection<Class<?>> types) {
@@ -151,6 +152,39 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         return this;
     }
 
+    /**
+	 * Adds all Classes in the given package as a simple alias.
+     * Adding simple aliases means that every specified class will be bound
+     * using the simple class name, i.e.  {@code com.acme.Foo} becomes
+     *  {@code Foo}.
+     *
+     * @param packageName the specified package to search for classes to alias.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     */
+    public MyBatisModule addSimpleAliases(final String packageName) {
+        for (Class<?> clazz : getClasses(packageName)) {
+            this.addAlias(clazz.getSimpleName(), clazz);
+        }
+        return this;
+    }
+	
+    /**
+	 * Adds all Classes in the given package as a simple alias.
+     * Adding simple aliases means that every specified class will be bound
+     * using the simple class name, i.e.  {@code com.acme.Foo} becomes
+     *  {@code Foo}.
+     *
+     * @param packageName the specified package to search for classes to alias.
+     * @param test a test to run against the objects found in the specified package.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     */
+    public MyBatisModule addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
+        for (Class<?> clazz : getClasses(test, packageName)) {
+            this.addAlias(clazz.getSimpleName(), clazz);
+        }
+        return this;
+    }
+	
     /**
      * Add a user defined binding.
      *
@@ -262,6 +296,35 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * Adds the user defined mapper classes.
+     *
+     * @param packageName the specified package to search for mappers to add.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addMapperClasses(final String packageName) {
+        for (Class<?> mapperClass : getClasses(packageName)) {
+            this.mapperClasses.add(mapperClass);
+        }
+        return this;
+    }
+	
+    /**
+     * Adds the user defined mapper classes.
+     *
+     * @param packageName the specified package to search for mappers to add.
+	 * @param test a test to run against the objects found in the specified package.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addMapperClasses(final String packageName, final ResolverUtil.Test test) {
+        for (Class<?> mapperClass : getClasses(test, packageName)) {
+            this.mapperClasses.add(mapperClass);
+        }
+        return this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -312,4 +375,13 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
     }
 
+	@SuppressWarnings({"unchecked"})
+	private Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
+		return (Set<Class<?>>) new ResolverUtil().find(test, packageName).getClasses();
+	}
+
+	@SuppressWarnings({"unchecked"})
+	private Set<Class<?>> getClasses(String packageName) {
+		return getClasses(new ResolverUtil.IsA(Object.class), packageName);
+	}
 }
