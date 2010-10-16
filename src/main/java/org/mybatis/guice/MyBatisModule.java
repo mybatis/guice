@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -131,10 +132,11 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final Class<?>...types) {
-        for (Class<?> clazz : types) {
-            this.addAlias(clazz.getSimpleName(), clazz);
+        if (types == null || types.length == 0) {
+            return this;
         }
-        return this;
+
+        return this.addSimpleAliases(Arrays.asList(types));
     }
 
     /**
@@ -216,10 +218,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
             return this;
         }
 
-        for (Class<? extends Interceptor> interceptorsClass : interceptorsClasses) {
-            this.interceptorsClasses.add(interceptorsClass);
-        }
-        return this;
+        return this.addInterceptorsClasses(Arrays.asList(interceptorsClasses));
     }
 
     /**
@@ -265,10 +264,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
             return this;
         }
 
-        for (Class<?> mapperClass : mapperClasses) {
-            this.mapperClasses.add(mapperClass);
-        }
-        return this;
+        return this.addMapperClasses(Arrays.asList(mapperClasses));
     }
 
     /**
