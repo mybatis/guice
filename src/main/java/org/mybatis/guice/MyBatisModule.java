@@ -208,7 +208,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * Adds the user defined myBatis interceptors plugins types, letting
      * google-guice creating them.
      *
-     * @param interceptorsClasses the user defined iBatis interceptors plugins
+     * @param interceptorsClasses the user defined MyBatis interceptors plugins
      *        types.
      * @return this {@code SqlSessionFactoryModule} instance.
      * 
@@ -222,10 +222,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * Adds the user defined iBatis interceptors plugins types, letting
+     * Adds the user defined MyBatis interceptors plugins types, letting
      * google-guice creating them.
      *
-     * @param interceptorsClasses the user defined iBatis interceptors plugins
+     * @param interceptorsClasses the user defined MyBatis interceptors plugins
      *        types.
      * @return this {@code SqlSessionFactoryModule} instance.
      * 
@@ -359,9 +359,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
-        return (Set<Class<?>>) new ResolverUtil().find(test, packageName).getClasses();
+        return new ResolverUtil<Object>().find(test, packageName).getClasses();
     }
 
     private static Set<Class<?>> getClasses(String packageName) {
