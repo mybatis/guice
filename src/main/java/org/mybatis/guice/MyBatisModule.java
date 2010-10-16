@@ -24,6 +24,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
@@ -44,7 +45,6 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
-import org.apache.ibatis.io.ResolverUtil;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -153,7 +153,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-	 * Adds all Classes in the given package as a simple alias.
+     * Adds all Classes in the given package as a simple alias.
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes
      *  {@code Foo}.
@@ -162,14 +162,11 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final String packageName) {
-        for (Class<?> clazz : getClasses(packageName)) {
-            this.addAlias(clazz.getSimpleName(), clazz);
-        }
-        return this;
+        return this.addSimpleAliases(getClasses(packageName));
     }
-	
+
     /**
-	 * Adds all Classes in the given package as a simple alias.
+     * Adds all Classes in the given package as a simple alias.
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes
      *  {@code Foo}.
@@ -179,12 +176,9 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
-        for (Class<?> clazz : getClasses(test, packageName)) {
-            this.addAlias(clazz.getSimpleName(), clazz);
-        }
-        return this;
+        return this.addSimpleAliases(getClasses(test, packageName));
     }
-	
+
     /**
      * Add a user defined binding.
      *
@@ -209,7 +203,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * Adds the user defined iBatis interceptors plugins types, letting
+     * Adds the user defined myBatis interceptors plugins types, letting
      * google-guice creating them.
      *
      * @param interceptorsClasses the user defined iBatis interceptors plugins
@@ -303,25 +297,19 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * 
      */
     public MyBatisModule addMapperClasses(final String packageName) {
-        for (Class<?> mapperClass : getClasses(packageName)) {
-            this.mapperClasses.add(mapperClass);
-        }
-        return this;
+        return this.addMapperClasses(getClasses(packageName));
     }
-	
+
     /**
      * Adds the user defined mapper classes.
      *
      * @param packageName the specified package to search for mappers to add.
-	 * @param test a test to run against the objects found in the specified package.
+     * @param test a test to run against the objects found in the specified package.
      * @return this {@code SqlSessionFactoryModule} instance.
      * 
      */
     public MyBatisModule addMapperClasses(final String packageName, final ResolverUtil.Test test) {
-        for (Class<?> mapperClass : getClasses(test, packageName)) {
-            this.mapperClasses.add(mapperClass);
-        }
-        return this;
+        return this.addMapperClasses(getClasses(test, packageName));
     }
 
     /**
@@ -375,13 +363,13 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
     }
 
-	@SuppressWarnings({"unchecked"})
-	private Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
-		return (Set<Class<?>>) new ResolverUtil().find(test, packageName).getClasses();
-	}
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
+        return (Set<Class<?>>) new ResolverUtil().find(test, packageName).getClasses();
+    }
 
-	@SuppressWarnings({"unchecked"})
-	private Set<Class<?>> getClasses(String packageName) {
-		return getClasses(new ResolverUtil.IsA(Object.class), packageName);
-	}
+    private static Set<Class<?>> getClasses(String packageName) {
+        return getClasses(new ResolverUtil.IsA(Object.class), packageName);
+    }
+
 }
