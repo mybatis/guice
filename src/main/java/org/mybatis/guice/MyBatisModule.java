@@ -378,6 +378,12 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
+        if (test == null) {
+            throw new IllegalArgumentException("Parameter 'test' must be not null");
+        }
+        if (packageName == null) {
+            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
+        }
         return new ResolverUtil<Object>().find(test, packageName).getClasses();
     }
 
