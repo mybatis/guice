@@ -242,6 +242,24 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * Adds the user defined MyBatis interceptors plugins types in the given package,
+     * letting google-guice creating them.
+     *
+     * @param packageName.
+     * @return this {@code SqlSessionFactoryModule} instance.
+     * 
+     */
+    public MyBatisModule addInterceptorsClasses(String packageName) {
+        if (packageName == null) {
+            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
+        }
+
+        return this.addInterceptorsClasses(new ResolverUtil<Interceptor>()
+                .find(new ResolverUtil.IsA(Interceptor.class), packageName)
+                .getClasses());
+    }
+
+    /**
      * Sets the ObjectFactory provider class.
      *
      * @param objectFactoryProviderClass the ObjectFactory provider class.
