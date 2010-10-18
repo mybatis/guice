@@ -34,6 +34,8 @@ public final class Contact implements Serializable {
 
     private CustomType created;
 
+    private Address address;
+    
     /**
      * @return the id
      */
@@ -82,7 +84,7 @@ public final class Contact implements Serializable {
     @Override
     public String toString() {
         return "Contact [firstName=" + firstName + ", id=" + id + ", lastName="
-                + lastName + ", created= " +  created + "]";
+                + lastName + ", created= " +  created + ", address=" + address + "]";
     }
 
     /**
@@ -99,6 +101,14 @@ public final class Contact implements Serializable {
         this.created = created;
     }
 
+	public Address getAddress() {
+		return address;
+	}
+	
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
     /**
      * {@inheritDoc}
      */
