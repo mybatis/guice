@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class AddressConverter {
 	public Address convert(String input) throws ParseException {
-		Pattern pattern = Pattern.compile("(\\d+)\\s(\\w)");
+		Pattern pattern = Pattern.compile("(\\d+)\\s([\\w\\s]+)");
 		Matcher matcher = pattern.matcher(input);
 		if (matcher.matches()) {
 			Address address = new Address();

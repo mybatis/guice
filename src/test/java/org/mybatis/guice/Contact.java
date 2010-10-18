@@ -157,6 +157,11 @@ public final class Contact implements Serializable {
                 return false;
         } else if (!lastName.equals(other.lastName))
             return false;
+        if (address == null) {
+            if (other.address != null)
+                return false;
+        } else if (!address.equals(other.address))
+            return false;
         return true;
     }
 

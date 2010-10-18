@@ -30,7 +30,17 @@ public final class XMLMyBatisModuleTestCase extends AbstractMyBatisModuleTestCas
     private Contact contactWithAdress;
     @Inject
     private ContactMapperClient contactMapperClient;
+    @Inject
+    private AddressConverter addressConverter;
     
+    @Test
+    public void testAddressConverter() throws Exception {
+    	Address address = new Address();
+        address.setNumber(1234);
+        address.setStreet("Elm street");
+    	assert "1234 Elm street".equals(addressConverter.convert(address));
+    	assert address.equals(addressConverter.convert("1234 Elm street"));
+    }
     @Test
     public void insertContactWithAddress() throws Exception {
     	Address address = new Address();

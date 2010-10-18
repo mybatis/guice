@@ -40,4 +40,21 @@ public class Address {
 		builder.append(street);
 		return builder.toString();
 	}
+	@Override
+	public int hashCode() {
+		return 2034997181 + number.hashCode() + street.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof Address) {
+			Address other = (Address)obj;
+			boolean equals = this.number.equals(other.number);
+			equals &= this.street.equals(other.street);
+			return equals;
+		}
+		return false;
+	}
 }
