@@ -46,6 +46,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
     private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
 
     private static final String JDBC_TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
+
     private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
 
     private final String classPathResource;
@@ -105,9 +106,9 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             Collection<TypeHandler> typeHandlers = new LinkedList<TypeHandler>();
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
-            	for (TypeHandler typeHandler: mappedTypeHandler.values()) {
-                	typeHandlers.add(typeHandler);
-            	}
+                for (TypeHandler typeHandler: mappedTypeHandler.values()) {
+                    typeHandlers.add(typeHandler);
+                }
             }
             requestInjection(this.binder(), typeHandlers);
         } catch (Exception e) {
