@@ -51,6 +51,14 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
             contact.setLastName("Doe");
             contact.setCreated(new CustomType(System.currentTimeMillis()));
             contact.setAddress(null);
+            final Contact contactWithAddress = new Contact();
+            contactWithAddress.setFirstName("John");
+            contactWithAddress.setLastName("Doe");
+            contactWithAddress.setCreated(new CustomType(System.currentTimeMillis()));
+        	Address address = new Address();
+            address.setNumber(1234);
+            address.setStreet("Elm street");
+            contactWithAddress.setAddress(address);
 
             // bindings
             List<Module> modules = this.createMyBatisModule();
@@ -58,6 +66,7 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
                 public void configure(Binder binder) {
                     Names.bindProperties(binder, createTestProperties());
                     binder.bind(Contact.class).toInstance(contact);
+                    binder.bind(Contact.class).annotatedWith(Names.named("contactWithAddress")).toInstance(contactWithAddress);
                 }
             });
             this.injector = Guice.createInjector(modules);

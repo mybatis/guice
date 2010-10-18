@@ -24,6 +24,8 @@ import java.text.ParseException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
+import com.google.inject.Inject;
+
 public class AddressTypeHandler implements TypeHandler {
 	private AddressConverter addressConverter;
 	public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
@@ -57,6 +59,7 @@ public class AddressTypeHandler implements TypeHandler {
 			}
 		}
 	}
+	@Inject
 	public void setAddressConverter(AddressConverter addressConverter) {
 		this.addressConverter = addressConverter;
 	}

@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -29,6 +31,8 @@ import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Binder;
 import com.google.inject.spi.Message;
@@ -41,7 +45,8 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
 
-    private static final String TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
+    private static final String JDBC_TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
+    private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
 
     private final String classPathResource;
 
@@ -95,7 +100,16 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
 
-            requestInjection(this.binder(), (Collection<?>) Ognl.getValue(TYPE_HANDLERS, context, configuration));
+            requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
+            @SuppressWarnings("unchecked")
+            Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
+            Collection<TypeHandler> typeHandlers = new LinkedList<TypeHandler>();
+            for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
+            	for (TypeHandler typeHandler: mappedTypeHandler.values()) {
+                	typeHandlers.add(typeHandler);
+            	}
+            }
+            requestInjection(this.binder(), typeHandlers);
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
                     + this.classPathResource
