@@ -278,11 +278,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * 
      */
     public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
-        if (mapperClasses == null || mapperClasses.length == 0) {
-            return this;
-        }
-
-        return this.addMapperClasses(Arrays.asList(mapperClasses));
+        if (mapperClasses != null) {
+			this.mapperClasses.addAll(Arrays.asList(mapperClasses));
+		}
+        return this;
     }
 
     /**
@@ -293,13 +292,9 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * 
      */
     public MyBatisModule addMapperClasses(Collection<Class<?>> mapperClasses) {
-        if (mapperClasses == null || mapperClasses.isEmpty()) {
-            return this;
-        }
-
-        for (Class<?> mapperClass : mapperClasses) {
-            this.mapperClasses.add(mapperClass);
-        }
+        if (mapperClasses != null) {
+			this.mapperClasses.addAll(mapperClasses);
+		}
         return this;
     }
 
