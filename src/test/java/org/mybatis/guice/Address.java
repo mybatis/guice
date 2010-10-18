@@ -15,46 +15,58 @@
  */
 package org.mybatis.guice;
 
+/**
+ * 
+ * @version $Id$
+ */
 public class Address {
-	
-	private Integer number;
-	private String street;
-	
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public Integer getNumber() {
-		return number;
-	}
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(String.valueOf(number));
-		builder.append(" ");
-		builder.append(street);
-		return builder.toString();
-	}
-	@Override
-	public int hashCode() {
-		return 2034997181 + number.hashCode() + street.hashCode();
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj instanceof Address) {
-			Address other = (Address)obj;
-			boolean equals = this.number.equals(other.number);
-			equals &= this.street.equals(other.street);
-			return equals;
-		}
-		return false;
-	}
+
+    private Integer number;
+
+    private String street;
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.valueOf(number));
+        builder.append(" ");
+        builder.append(street);
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return 2034997181 + number.hashCode() + street.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Address) {
+            Address other = (Address)obj;
+            boolean equals = this.number.equals(other.number);
+            equals &= this.street.equals(other.street);
+            return equals;
+        }
+        return false;
+    }
+
 }

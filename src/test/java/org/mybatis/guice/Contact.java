@@ -101,14 +101,14 @@ public final class Contact implements Serializable {
         this.created = created;
     }
 
-	public Address getAddress() {
-		return address;
-	}
-	
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     /**
      * {@inheritDoc}
      */

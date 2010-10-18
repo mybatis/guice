@@ -28,30 +28,35 @@ import com.google.inject.name.Named;
  */
 @RunWith(XMLGuiceTestRunner.class)
 public final class XMLMyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
-	@Inject
-	@Named("contactWithAddress")
+
+    @Inject
+    @Named("contactWithAddress")
     private Contact contactWithAdress;
+
     @Inject
     private ContactMapperClient contactMapperClient;
+
     @Inject
     private AddressConverter addressConverter;
-    
+
     @Test
     public void testAddressConverter() throws Exception {
-    	Address address = new Address();
+        Address address = new Address();
         address.setNumber(1234);
         address.setStreet("Elm street");
-    	assert "1234 Elm street".equals(addressConverter.convert(address));
-    	assert address.equals(addressConverter.convert("1234 Elm street"));
+        assert "1234 Elm street".equals(addressConverter.convert(address));
+        assert address.equals(addressConverter.convert("1234 Elm street"));
     }
+
     @Test
     public void insertContactWithAddress() throws Exception {
-    	Address address = new Address();
+        Address address = new Address();
         address.setNumber(1234);
         address.setStreet("Elm street");
         this.contactWithAdress.setAddress(address);
         this.contactMapperClient.insert(this.contactWithAdress);
     }
+
     @Test
     public void selectContactWithAddress() throws Exception {
         Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
@@ -63,4 +68,5 @@ public final class XMLMyBatisModuleTestCase extends AbstractMyBatisModuleTestCas
                                                 + " but found "
                                                 + contact;
     }
+
 }

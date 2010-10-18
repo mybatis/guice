@@ -26,41 +26,51 @@ import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Inject;
 
+/**
+ * 
+ * @version $Id$
+ */
 public class AddressTypeHandler implements TypeHandler {
-	private AddressConverter addressConverter;
-	public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
-		if (parameter == null) {
-			ps.setNull(i, jdbcType.TYPE_CODE);
-		} else {
-			ps.setString(i, addressConverter.convert((Address)parameter));
-		}
-	}
-	public Object getResult(ResultSet rs, String columnName) throws SQLException {
-		String input = rs.getString(columnName);
-		if (rs.wasNull()) {
-			return null;
-		} else {
-			try {
-				return addressConverter.convert(input);
-			} catch (ParseException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-	public Object getResult(CallableStatement cs, int columnIndex) throws SQLException {
-		String input = cs.getString(columnIndex);
-		if (cs.wasNull()) {
-			return null;
-		} else {
-			try {
-				return addressConverter.convert(input);
-			} catch (ParseException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-	@Inject
-	public void setAddressConverter(AddressConverter addressConverter) {
-		this.addressConverter = addressConverter;
-	}
+
+    private AddressConverter addressConverter;
+
+    public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
+        if (parameter == null) {
+            ps.setNull(i, jdbcType.TYPE_CODE);
+        } else {
+            ps.setString(i, addressConverter.convert((Address)parameter));
+        }
+    }
+
+    public Object getResult(ResultSet rs, String columnName) throws SQLException {
+        String input = rs.getString(columnName);
+        if (rs.wasNull()) {
+            return null;
+        } else {
+            try {
+                return addressConverter.convert(input);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public Object getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        String input = cs.getString(columnIndex);
+        if (cs.wasNull()) {
+            return null;
+        } else {
+            try {
+                return addressConverter.convert(input);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Inject
+    public void setAddressConverter(AddressConverter addressConverter) {
+        this.addressConverter = addressConverter;
+    }
+
 }
