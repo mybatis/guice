@@ -132,11 +132,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final Class<?>...types) {
-        if (types == null || types.length == 0) {
-            return this;
+        if (types != null) {
+            return this.addSimpleAliases(Arrays.asList(types));
         }
-
-        return this.addSimpleAliases(Arrays.asList(types));
+        return this;
     }
 
     /**
@@ -148,8 +147,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code SqlSessionFactoryModule} instance.
      */
     public MyBatisModule addSimpleAliases(final Collection<Class<?>> types) {
-        for (Class<?> clazz : types) {
-            this.addAlias(clazz.getSimpleName(), clazz);
+        if (types != null) {
+            for (Class<?> clazz : types) {
+                this.addAlias(clazz.getSimpleName(), clazz);
+            }
         }
         return this;
     }
@@ -214,11 +215,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * 
      */
     public MyBatisModule addInterceptorsClasses(Class<? extends Interceptor>...interceptorsClasses) {
-        if (interceptorsClasses == null || interceptorsClasses.length == 0) {
-            return this;
+        if (interceptorsClasses != null) {
+            return this.addInterceptorsClasses(Arrays.asList(interceptorsClasses));
         }
-
-        return this.addInterceptorsClasses(Arrays.asList(interceptorsClasses));
+        return this;
     }
 
     /**
@@ -231,12 +231,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * 
      */
     public MyBatisModule addInterceptorsClasses(Collection<Class<? extends Interceptor>> interceptorsClasses) {
-        if (interceptorsClasses == null || interceptorsClasses.isEmpty()) {
-            return this;
-        }
-
-        for (Class<? extends Interceptor> interceptorsClass : interceptorsClasses) {
-            this.interceptorsClasses.add(interceptorsClass);
+        if (interceptorsClasses != null) {
+            this.interceptorsClasses.addAll(interceptorsClasses);
         }
         return this;
     }
@@ -279,8 +275,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      */
     public MyBatisModule addMapperClasses(Class<?>...mapperClasses) {
         if (mapperClasses != null) {
-			this.mapperClasses.addAll(Arrays.asList(mapperClasses));
-		}
+            return this.addMapperClasses(Arrays.asList(mapperClasses));
+        }
         return this;
     }
 
@@ -293,8 +289,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      */
     public MyBatisModule addMapperClasses(Collection<Class<?>> mapperClasses) {
         if (mapperClasses != null) {
-			this.mapperClasses.addAll(mapperClasses);
-		}
+            this.mapperClasses.addAll(mapperClasses);
+        }
         return this;
     }
 
