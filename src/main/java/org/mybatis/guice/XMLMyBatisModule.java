@@ -122,7 +122,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
             requestInjection(this.binder(), interceptors);
         } catch (Exception e) {
-            this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
+            this.addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
                     + this.classPathResource
                     + "', see nested exceptions", e));
         } finally {
