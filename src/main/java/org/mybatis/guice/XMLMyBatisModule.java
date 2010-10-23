@@ -28,6 +28,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.ognl.DefaultMemberAccess;
 import org.apache.ibatis.ognl.Ognl;
 import org.apache.ibatis.ognl.OgnlContext;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -48,6 +49,8 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
     private static final String JDBC_TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
 
     private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
+
+    private static final String INTERCEPTORS = "interceptorChain.interceptors";
 
     private final String classPathResource;
 
@@ -97,10 +100,12 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             context.setMemberAccess(new DefaultMemberAccess(true, true, true));
             context.setRoot(configuration);
 
+            // bind mappers
             @SuppressWarnings("unchecked")
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
 
+            // request injection for type handlers
             requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
             @SuppressWarnings("unchecked")
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
@@ -111,6 +116,11 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
                 }
             }
             requestInjection(this.binder(), typeHandlers);
+
+            // request injection for interceptors
+            @SuppressWarnings("unchecked")
+            Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
+            requestInjection(this.binder(), interceptors);
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(),"Impossible to read classpath resource '"
                     + this.classPathResource
