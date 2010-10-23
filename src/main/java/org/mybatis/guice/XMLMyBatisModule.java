@@ -128,8 +128,8 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
         }
     }
 
-    private static void requestInjection(Binder binder, Collection<?> injectees) {
-        for (Object injectee : injectees) {
+    private static <T> void requestInjection(Binder binder, Collection<T> injectees) {
+        for (T injectee : injectees) {
             binder.requestInjection(injectee);
         }
     }
