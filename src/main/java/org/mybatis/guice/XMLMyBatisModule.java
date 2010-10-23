@@ -82,6 +82,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void configure() {
         super.configure();
@@ -101,13 +102,11 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             context.setRoot(configuration);
 
             // bind mappers
-            @SuppressWarnings("unchecked")
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             MapperProvider.bind(this.binder(), mapperClasses);
 
             // request injection for type handlers
             requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
-            @SuppressWarnings("unchecked")
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             Collection<TypeHandler> typeHandlers = new LinkedList<TypeHandler>();
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
@@ -118,9 +117,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             requestInjection(this.binder(), typeHandlers);
 
             // request injection for interceptors
-            @SuppressWarnings("unchecked")
-            Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
-            requestInjection(this.binder(), interceptors);
+            requestInjection(this.binder(), (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration));
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
                     + this.classPathResource
