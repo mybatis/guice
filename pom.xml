@@ -60,7 +60,7 @@
 
     <properties>
         <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
-        <clirr.comparisonVersion>1.0.0-RC4</clirr.comparisonVersion>
+        <clirr.comparisonVersion>1.0.0-RC3</clirr.comparisonVersion>
     </properties>
 
     <dependencies>
