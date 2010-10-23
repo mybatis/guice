@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -108,13 +107,11 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             // request injection for type handlers
             requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
-            Collection<TypeHandler> typeHandlers = new LinkedList<TypeHandler>();
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
                 for (TypeHandler typeHandler: mappedTypeHandler.values()) {
-                    typeHandlers.add(typeHandler);
+                    this.binder().requestInjection(typeHandler);
                 }
             }
-            requestInjection(this.binder(), typeHandlers);
 
             // request injection for interceptors
             requestInjection(this.binder(), (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration));
