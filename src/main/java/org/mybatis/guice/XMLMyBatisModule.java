@@ -108,9 +108,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
-                for (TypeHandler typeHandler: mappedTypeHandler.values()) {
-                    this.binder().requestInjection(typeHandler);
-                }
+                requestInjection(this.binder(), mappedTypeHandler.values());
             }
 
             // request injection for interceptors
