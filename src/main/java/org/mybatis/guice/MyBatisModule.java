@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -88,7 +89,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     /**
      * The user defined mapper classes.
      */
-    private final Set<Class<?>> mapperClasses = new HashSet<Class<?>>();
+    private final Set<Class<?>> mapperClasses = new LinkedHashSet<Class<?>>();
 
     /**
      * Creates a new module that binds all the needed modules to create the
