@@ -81,6 +81,10 @@
             on that MyBatis sub-project, and Marco Speranza, without him that
             project wouldn't exist.
         </para>
+        <para>
+            Special thanks go to Stephen Friedrich for providing an amazing patch
+            and to Poitras Christian who made the XML module a reality.
+        </para>
     </section>
 
 </chapter>
