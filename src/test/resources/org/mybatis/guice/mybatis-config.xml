@@ -30,12 +30,12 @@
     </settings>
 
     <typeHandlers>
-        <typeHandler handler="org.mybatis.guice.CustomLongTypeHandler" javaType="org.mybatis.guice.CustomType"/>
-        <typeHandler handler="org.mybatis.guice.AddressTypeHandler" javaType="org.mybatis.guice.Address"/>
+        <typeHandler handler="org.mybatis.guice.CustomLongTypeHandler" javaType="org.mybatis.guice.CustomType" />
+        <typeHandler handler="org.mybatis.guice.AddressTypeHandler" javaType="org.mybatis.guice.Address" />
     </typeHandlers>
 
     <plugins>
-        <plugin interceptor="org.mybatis.guice.CountUpdateInterceptor"/>
+        <plugin interceptor="org.mybatis.guice.CountUpdateInterceptor" />
     </plugins>
 
     <environments default="test">
