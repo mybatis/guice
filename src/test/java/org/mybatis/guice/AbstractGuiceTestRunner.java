@@ -59,7 +59,8 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
             address.setNumber(1234);
             address.setStreet("Elm street");
             contactWithAddress.setAddress(address);
-
+            final Counter counter = new Counter();
+            
             // bindings
             List<Module> modules = this.createMyBatisModule();
             modules.add(new Module() {
@@ -67,6 +68,7 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
                     Names.bindProperties(binder, createTestProperties());
                     binder.bind(Contact.class).toInstance(contact);
                     binder.bind(Contact.class).annotatedWith(Names.named("contactWithAddress")).toInstance(contactWithAddress);
+                    binder.bind(Counter.class).toInstance(counter);
                 }
             });
             this.injector = Guice.createInjector(modules);

@@ -44,7 +44,8 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
         modules.add(new MyBatisModule(PooledDataSourceProvider.class)
                         .addMapperClasses(ContactMapper.class)
                         .addTypeHandler(CustomType.class, CustomLongTypeHandler.class)
-                        .addTypeHandler(Address.class, AddressTypeHandler.class));
+                        .addTypeHandler(Address.class, AddressTypeHandler.class)
+                        .addInterceptorsClasses(CountUpdateInterceptor.class));
 
         return modules;
     }
