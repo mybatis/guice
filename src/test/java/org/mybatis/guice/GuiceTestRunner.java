@@ -37,6 +37,7 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>(3);
 
