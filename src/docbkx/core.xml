@@ -473,14 +473,18 @@ public final class MyMappersClient {
             A typical use case could be identified in the following code snippet:
             <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml"));]]></programlisting>
             optionally, the <literal>environmentId</literal> can be specified:
-            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml", "production"));]]></programlisting>
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml",
+    "production"));]]></programlisting>
             clients can also omit the <literal>environmentId</literal> and specify also the <literal>java.util.Properties</literal> to fill placeholders in the XML configuration:
             <programlisting language="java"><![CDATA[Properties props = new Properties();
 props.setProperty("JDBC.username", "mybatis-user");
 props.setProperty("JDBC.password", "changeme");
-Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml"), props);]]></programlisting>
+Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml"),
+    props);]]></programlisting>
             or specify all the parameters:
-            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml", "production", props));]]></programlisting>
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml",
+    "production",
+    props));]]></programlisting>
         </para>
     </section>
 
