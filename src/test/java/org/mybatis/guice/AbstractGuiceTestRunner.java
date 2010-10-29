@@ -55,12 +55,12 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
             contactWithAddress.setFirstName("John");
             contactWithAddress.setLastName("Doe");
             contactWithAddress.setCreated(new CustomType(System.currentTimeMillis()));
-        	Address address = new Address();
+            Address address = new Address();
             address.setNumber(1234);
             address.setStreet("Elm street");
             contactWithAddress.setAddress(address);
             final Counter counter = new Counter();
-            
+
             // bindings
             List<Module> modules = this.createMyBatisModule();
             modules.add(new Module() {

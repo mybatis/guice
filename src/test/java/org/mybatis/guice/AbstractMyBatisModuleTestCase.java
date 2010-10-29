@@ -38,7 +38,7 @@ public abstract class AbstractMyBatisModuleTestCase {
 
     @Inject
     private Counter counter;
-    
+
     public void setContact(Contact contact) {
         this.contact = contact;
     }
@@ -88,9 +88,10 @@ public abstract class AbstractMyBatisModuleTestCase {
 
     @Test
     public void testCountInterceptor() throws Exception {
-    	counter.reset();
-    	assert counter.getCount() == 0 : "Expected 0 update in counter, but was " + counter.getCount();
-    	this.contactMapperClient.update(contact);
-    	assert counter.getCount() == 1 : "Expected 1 update in Executor, but was " + counter.getCount();
+        counter.reset();
+        assert 0 == counter.getCount() : "Expected 0 update in counter, but was " + counter.getCount();
+        this.contactMapperClient.update(contact);
+        assert 1 == counter.getCount() : "Expected 1 update in Executor, but was " + counter.getCount();
     }
+
 }
