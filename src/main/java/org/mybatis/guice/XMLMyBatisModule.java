@@ -45,8 +45,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
 
-    private static final String JDBC_TYPE_HANDLERS = "typeHandlerRegistry.JDBC_TYPE_HANDLER_MAP.values()";
-
     private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
 
     private static final String INTERCEPTORS = "interceptorChain.interceptors";
@@ -105,7 +103,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             MapperProvider.bind(this.binder(), mapperClasses);
 
             // request injection for type handlers
-            requestInjection(this.binder(), (Collection<?>) Ognl.getValue(JDBC_TYPE_HANDLERS, context, configuration));
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
                 requestInjection(this.binder(), mappedTypeHandler.values());
