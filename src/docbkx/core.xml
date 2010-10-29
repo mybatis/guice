@@ -454,4 +454,34 @@ public final class MyMappersClient {
         </para>
     </section>
 
+    <section id="core.xmlbootstrap">
+        <title>MyBatis XML Bootstrap</title>
+        <para>
+            Users that want configure the MyBatis via the XML configuration, without loosing any single feature
+            of the <literal>org.mybatis.guice.MyBatisModule</literal>, can create their Injector using the
+            <literal>org.mybatis.guice.XMLMyBatisModule</literal>.
+        </para>
+        <para>
+            <literal>XMLMyBatisModule</literal> clients have just to instantiate it specifying
+            <orderedlist>
+                <listitem><para>the MyBatis XML configuration file, located in the classpath;</para></listitem>
+                <listitem><para>the optional MyBatis <literal>environmentId</literal>;</para></listitem>
+                <listitem><para>the optional <literal>java.util.Properties</literal> to fill placeholders in the MyBatis XML configuration.</para></listitem>
+            </orderedlist>
+        </para>
+        <para>
+            A typical use case could be identified in the following code snippet:
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml"));]]></programlisting>
+            optionally, the <literal>environmentId</literal> can be specified:
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml", "production"));]]></programlisting>
+            clients can also omit the <literal>environmentId</literal> and specify also the <literal>java.util.Properties</literal> to fill placeholders in the XML configuration:
+            <programlisting language="java"><![CDATA[Properties props = new Properties();
+props.setProperty("JDBC.username", "mybatis-user");
+props.setProperty("JDBC.password", "changeme");
+Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml"), props);]]></programlisting>
+            or specify all the parameters:
+            <programlisting language="java"><![CDATA[Injector injector = Guice.createInjector(new XMLMyBatisModule("my/path/to/mybatis-config.xml", "production", props));]]></programlisting>
+        </para>
+    </section>
+
 </chapter>
