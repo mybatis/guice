@@ -13,46 +13,26 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice;
-
-import java.util.Set;
+package org.mybatis.guice.mappers;
 
 import org.apache.ibatis.session.SqlSessionManager;
 
-import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Scopes;
-import com.google.inject.Singleton;
 
 /**
- * 
+ * A generic MyBatis mapper provider.
  *
  * @version $Id$
  */
-@Singleton
-final class MapperProvider<T> implements Provider<T> {
-
-    public static void bind(Binder binder, Set<Class<?>> mapperTypes) {
-        if (mapperTypes.isEmpty()) {
-            return;
-        }
-
-        for (Class<?> mapperType : mapperTypes) {
-            bind(binder, mapperType);
-        }
-    }
-
-    private static <T> void bind(Binder binder, Class<T> mapperType) {
-        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
-    }
+public final class MapperProvider<T> implements Provider<T> {
 
     private final Class<T> mapperType;
 
     @Inject
     private SqlSessionManager sqlSessionManager;
 
-    private MapperProvider(Class<T> mapperType) {
+    public MapperProvider(Class<T> mapperType) {
         this.mapperType = mapperType;
     }
 

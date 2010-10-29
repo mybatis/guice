@@ -39,6 +39,7 @@ import org.mybatis.guice.configuration.ConfigurationProviderTypeListener;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.mappers.MappersBinder;
 import org.mybatis.guice.transactionfactory.JdbcTransactionFactoryProvider;
 
 import com.google.inject.Provider;
@@ -360,7 +361,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         // mappers
         if (!this.mapperClasses.isEmpty()) {
             this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.mapperClasses);
-            MapperProvider.bind(this.binder(), this.mapperClasses);
+            MappersBinder.bind(this.binder(), this.mapperClasses);
         }
 
         // the object factory
