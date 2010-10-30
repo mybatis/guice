@@ -46,6 +46,7 @@
                 in the current Guice <literal>Injector</literal>, with <literal>defaultValue</literal>
                 as its default value, replaced in the pattern if <literal>name</literal>
                 is not found.</para>
+                <para><emphasis role="bold">NOTE</emphasis> this feature doesn't work with XML Module!!!</para>
             </note>
         </para>
     </section>

@@ -27,6 +27,9 @@
         contains an easy-to-use set of classes that makes easier the
         <literal>javax.sql.DataSource</literal> creation using Guice, through
         configurable Data Source Providers.
+        <note>
+            <para><literal>org.mybatis.guice.XMLMyBatisModule</literal> users can skip this section.</para>
+        </note>
     </para>
     <para>
         <emphasis>Configurable</emphasis> means that users are free to bind
