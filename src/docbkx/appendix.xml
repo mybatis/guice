@@ -30,24 +30,23 @@
         DBMS, here it comes the <classname>org.mybatis.guice.datasource.helper.JdbcHelper</classname>
         Module.</para>
         <para>It is an easy to use Google Guice module that makes easy the
-        <literal>JDBC.url</literal> and <literal>JDBC.driver</literal> properties
-        binding needed for the <literal>DataSource</literal> providers.</para>
-        <para>The <classname>org.mybatis.guice.datasource.helper.JdbcHelper</classname>
-        provides a large number of <emphasis>Enumeration</emphasis> values that
-        cover the most popular DBMS (both commercial and open source) that are
-        provided/recommended by the actual database vendor, resumed in the table
-        below:
+            <literal>JDBC.url</literal> and <literal>JDBC.driver</literal> properties
+            binding needed for the <literal>DataSource</literal> providers.</para>
+            <para>The <classname>org.mybatis.guice.datasource.helper.JdbcHelper</classname>
+            provides a large number of <emphasis>Enumeration</emphasis> values that
+            cover the most popular DBMS (both commercial and open source) that are
+            provided/recommended by the actual database vendor, resumed in the table
+            below:
 
-        <note>
-            <title>Variable Format</title>
-            <para>Patterns contain variables in the <emphasis>Apache ANT</emphasis>
-            alike style, in the format <literal>${name|defaultValue}</literal>,
-            where <literal>name</literal> is used as label which will looked for
-            in the current Guice <literal>Injector</literal>, with <literal>defaultValue</literal>
-            as its default value, replaced in the pattern if <literal>name</literal>
-            is not found.</para>
-        </note>
-        </table>
+            <note>
+                <title>Variable Format</title>
+                <para>Patterns contain variables in the <emphasis>Apache ANT</emphasis>
+                alike style, in the format <literal>${name|defaultValue}</literal>,
+                where <literal>name</literal> is used as label which will looked for
+                in the current Guice <literal>Injector</literal>, with <literal>defaultValue</literal>
+                as its default value, replaced in the pattern if <literal>name</literal>
+                is not found.</para>
+            </note>
         </para>
     </section>
 
