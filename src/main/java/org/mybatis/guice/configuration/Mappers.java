@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import com.google.inject.BindingAnnotation;
 
 /**
- *
+ * Marker for mapper interfaces.
  *
  * @version $Id$
  */
