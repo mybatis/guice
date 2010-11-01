@@ -33,6 +33,7 @@ import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.ConfigurationProviderTypeListener;
@@ -40,7 +41,6 @@ import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.mappers.MappersBinder;
-import org.mybatis.guice.transactionfactory.JdbcTransactionFactoryProvider;
 
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
@@ -65,7 +65,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     /**
      * The TransactionFactory Provider class reference.
      */
-    private final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass;
+    private final Class<? extends TransactionFactory> transactionFactoryType;
 
     /**
      * The user defined aliases.
@@ -95,34 +95,34 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     /**
      * Creates a new module that binds all the needed modules to create the
      * SqlSessionFactory, injecting all the required components, using the
-     * {@link JdbcTransactionFactoryProvider} as default transaction factory
+     * JdbcTransactionFactory as default transaction factory
      * provider.
      *
      * @param dataSourceProviderClass the DataSource Provider class reference.
      */
     public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass) {
-        this(dataSourceProviderClass, JdbcTransactionFactoryProvider.class);
+        this(dataSourceProviderClass, JdbcTransactionFactory.class);
     }
 
     /**
      * Creates a new module that binds all the needed modules to create the
      * SqlSessionFactory, injecting all the required components.
      *
-     * @param dataSourceProviderClass the DataSource Provider class reference.
+     * @param dataSourceProviderType the DataSource Provider class reference.
      * @param transactionFactoryProviderClass the TransactionFactory Provider
      *        class reference.
      */
-    public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderClass,
-            final Class<? extends Provider<TransactionFactory>> transactionFactoryProviderClass) {
-        if (dataSourceProviderClass == null) {
+    public MyBatisModule(final Class<? extends Provider<DataSource>> dataSourceProviderType,
+            final Class<? extends TransactionFactory> transactionFactoryType) {
+        if (dataSourceProviderType == null) {
             throw new IllegalArgumentException("Data Source provider class mustn't be null");
         }
-        this.dataSourceProviderClass = dataSourceProviderClass;
+        this.dataSourceProviderClass = dataSourceProviderType;
 
-        if (transactionFactoryProviderClass == null) {
+        if (transactionFactoryType == null) {
             throw new IllegalArgumentException("Transaction Factory provider class mustn't be null");
         }
-        this.transactionFactoryProviderClass = transactionFactoryProviderClass;
+        this.transactionFactoryType = transactionFactoryType;
     }
 
     /**
@@ -328,7 +328,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
 
         // needed binding
         this.bind(DataSource.class).toProvider(this.dataSourceProviderClass);
-        this.bind(TransactionFactory.class).toProvider(this.transactionFactoryProviderClass);
+        this.bind(TransactionFactory.class).to(this.transactionFactoryType).in(Scopes.SINGLETON);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
         this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
