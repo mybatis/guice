@@ -33,7 +33,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.guice.mappers.MappersBinder;
 
 import com.google.inject.Binder;
 import com.google.inject.spi.Message;
@@ -101,7 +100,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
             // bind mappers
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
-            MappersBinder.bind(this.binder(), mapperClasses);
+            bindMappers(this.binder(), mapperClasses);
 
             // request injection for type handlers
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);

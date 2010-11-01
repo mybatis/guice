@@ -15,12 +15,17 @@
  */
 package org.mybatis.guice;
 
+import java.util.Set;
+
 import org.apache.ibatis.session.SqlSessionManager;
+import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Scopes;
 import com.google.inject.matcher.Matchers;
 
 /**
@@ -41,6 +46,27 @@ abstract class AbstractMyBatisModule extends AbstractModule {
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
         this.requestInjection(interceptor);
         this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
+    }
+
+    /**
+     * Binds the input set of MyBatis mapper types in the relative
+     * {@link MapperProvider} provider.
+     *
+     * @param binder the binder instance where configure the binding.
+     * @param mapperTypes the MyBatis mappers types have to be bind.
+     */
+    protected static void bindMappers(Binder binder, Set<Class<?>> mapperTypes) {
+        if (mapperTypes.isEmpty()) {
+            return;
+        }
+
+        for (Class<?> mapperType : mapperTypes) {
+            bindMapper(binder, mapperType);
+        }
+    }
+
+    private static <T> void bindMapper(Binder binder, Class<T> mapperType) {
+        binder.bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
     }
 
 }
