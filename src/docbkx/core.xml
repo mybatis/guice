@@ -81,9 +81,9 @@
                     <area id="start.example.module" coords="13"/>
                     <area id="start.example.retrieve" coords="19"/>
                 </areaspec>
-                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderType = [...];
 
-Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+Class<? extends TransactionFactory> txFactoryProviderClass = [...]; // JdbcTransactionFactory.class by default
 
 Injector injector = Guice.createInjector(
     new Module() {
@@ -93,7 +93,7 @@ Injector injector = Guice.createInjector(
                   .to("development");
         }
     }
-    new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass),
+    new MyBatisModule(dataSourceProviderType, txFactoryType),
     ...
 );
 
@@ -302,11 +302,11 @@ module.setObjectFactoryProviderClass(com.acme.MyObjectFactoryProvider.class);]]>
                 In order to simplify the <literal>org.mybatis.guice.MyBatisModule</literal>
                 creation, <literal>MyBatisModule</literal> methods can be
                 chained like in the example below:
-                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
-Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+                <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderType = [...];
+Class<? extends TransactionFactory> txFactoryType = [...];
 
 Injector injector = Guice.createInjector(
-        new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass)
+        new MyBatisModule(dataSourceProviderType, txFactoryType)
     .addSimpleAliases(com.acme.Foo.class)
     .addAlias("MyBar", com.acme.Bar.class)
     .addTypeHandler(com.acme.Foo.class, com.acme.dao.FooHandler.class)
