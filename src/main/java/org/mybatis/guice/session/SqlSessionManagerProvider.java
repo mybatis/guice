@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice;
+package org.mybatis.guice.session;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionManager;
@@ -27,7 +27,7 @@ import com.google.inject.Singleton;
  * @version $Id$
  */
 @Singleton
-final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
+public final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
 
     private final SqlSessionManager sqlSessionManager;
 

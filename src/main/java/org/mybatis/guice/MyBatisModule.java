@@ -40,6 +40,7 @@ import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.mappers.MappersBinder;
+import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Provider;
 import com.google.inject.Scopes;

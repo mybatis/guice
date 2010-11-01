@@ -16,6 +16,7 @@
 package org.mybatis.guice;
 
 import org.apache.ibatis.session.SqlSessionManager;
+import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
