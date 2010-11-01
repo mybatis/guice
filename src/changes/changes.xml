@@ -38,6 +38,9 @@
             <action dev="simone.tripodi" type="remove">
                 Removed the over engineered 'transactionfactory' package.
             </action>
+            <action dev="simone.tripodi" type="fix">
+                Google Guice extension dependencies moved to 'compile' scope.
+            </action>
         </release>
 
         <release version="1.0.0-RC3" date="2010-10-14" description="1.0.0-RC3 release">
