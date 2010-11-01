@@ -28,7 +28,19 @@
     </properties>
 
     <body>
-        <release version="1.0.0-RC3" date="2010-10-14" description="">
+        <release version="1.0.0" date="TBD" description="1.0.0 release">
+            <action dev="christian.poitras@ircm.qc.ca" type="update">
+                Finalized XML MyBatis configuration support.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Documented XML MyBatis configuration support.
+            </action>
+            <action dev="simone.tripodi" type="remove">
+                Removed the over engineered 'transactionfactory' package.
+            </action>
+        </release>
+
+        <release version="1.0.0-RC3" date="2010-10-14" description="1.0.0-RC3 release">
             <action dev="christian.poitras@ircm.qc.ca" type="update">
                 Started developing the XML prototypal support (undocumented yet).
             </action>
