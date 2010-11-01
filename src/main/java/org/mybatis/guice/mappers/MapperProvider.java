@@ -25,7 +25,7 @@ import com.google.inject.Provider;
  *
  * @version $Id$
  */
-public final class MapperProvider<T> implements Provider<T> {
+final class MapperProvider<T> implements Provider<T> {
 
     private final Class<T> mapperType;
 
