@@ -38,7 +38,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-        this.binder().requestInjection(interceptor);
+        this.requestInjection(interceptor);
         this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
     }
 
