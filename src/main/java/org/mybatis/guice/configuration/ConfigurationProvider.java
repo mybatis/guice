@@ -68,7 +68,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * Initialization needs to be done in a defined order plus ErrorContext instance must be reset at the end
      * to prevent memory leaks.
      */
-    protected void init() {
+    public void init() {
         try {
             for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
                 this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());

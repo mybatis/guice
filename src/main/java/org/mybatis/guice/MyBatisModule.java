@@ -36,7 +36,6 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.ConfigurationProvider;
-import org.mybatis.guice.configuration.ConfigurationProviderTypeListener;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
@@ -48,6 +47,9 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.spi.InjectionListener;
+import com.google.inject.spi.TypeEncounter;
+import com.google.inject.spi.TypeListener;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -331,7 +333,15 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         this.bind(TransactionFactory.class).to(this.transactionFactoryType).in(Scopes.SINGLETON);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
-        this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new ConfigurationProviderTypeListener());
+        this.bindListener(Matchers.only(new TypeLiteral<ConfigurationProvider>(){}), new TypeListener() {
+            public <I> void hear(TypeLiteral<I> injectableType, TypeEncounter<I> encounter) {
+                encounter.register(new InjectionListener<I>() {
+                    public void afterInjection(I injectee) {
+                        ((ConfigurationProvider) injectee).init();
+                    }
+                });
+            }
+        });
         this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
 
         // optional bindings
