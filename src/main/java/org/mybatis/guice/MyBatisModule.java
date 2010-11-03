@@ -183,6 +183,13 @@ public final class MyBatisModule extends AbstractMyBatisModule {
 
     /**
      * The {@link MyBatisModule} Builder.
+     *
+     * By default the Builder uses the following settings:
+     * <ul>
+     * <li>DataSource Provider type: {@link UnpooledDataSourceProvider};</li>
+     * <li>TransactionFactory type: org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;</li>
+     * <li>ObjectFactory type: org.apache.ibatis.reflection.factory.ObjectFactory.</li>
+     * </ul>
      */
     public static final class Builder {
 
