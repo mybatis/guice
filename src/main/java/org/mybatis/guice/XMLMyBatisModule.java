@@ -126,6 +126,13 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
         }
     }
 
+    /**
+     * Request dependencies injections of the given objects collection via the input binder.
+     *
+     * @param <T> the generic collection type.
+     * @param binder the binder to request injections.
+     * @param injectees the collection of objects that need to request injection.
+     */
     private static <T> void requestInjection(Binder binder, Collection<T> injectees) {
         for (T injectee : injectees) {
             binder.requestInjection(injectee);
