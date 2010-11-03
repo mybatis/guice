@@ -182,7 +182,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     * The {@link MyBatisModule} Builder.
      */
     public static final class Builder {
 
@@ -222,15 +222,30 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         private final Set<Class<?>> mapperClasses = new LinkedHashSet<Class<?>>();
 
         /**
-         * 
+         * Set the DataSource Provider type has to be bound.
          *
-         * @param dataSourceProviderType
+         * @param dataSourceProviderType the DataSource Provider type.
+         * @return this {@code Builder} instance.
          */
         public Builder setDataSourceProviderType(Class<? extends Provider<DataSource>> dataSourceProviderType) {
             if (dataSourceProviderType == null) {
-                throw new IllegalArgumentException("Data Source provider class mustn't be null");
+                throw new IllegalArgumentException("Parameter 'dataSourceProviderType' must not be null");
             }
             this.dataSourceProviderType = dataSourceProviderType;
+            return this;
+        }
+
+        /**
+         * Set the TransactionFactory type has to be bound.
+         *
+         * @param transactionFactoryType the TransactionFactory type.
+         * @return this {@code Builder} instance.
+         */
+        public Builder setTransactionFactoryType(Class<? extends TransactionFactory> transactionFactoryType) {
+            if (transactionFactoryType == null) {
+                throw new IllegalArgumentException("Parameter 'transactionFactoryType' must not be null");
+            }
+            this.transactionFactoryType = transactionFactoryType;
             return this;
         }
 
