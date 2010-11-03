@@ -127,6 +127,9 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     /**
      * The {@link XMLMyBatisModule} Builder.
+     *
+     * By default the builder looks for {@code mybatis-config.xml} resource in the root class path,
+     * {@code development} as environment id and an empty variables definition.
      */
     public static final class Builder {
 
