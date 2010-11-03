@@ -229,7 +229,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
          */
         public Builder setDataSourceProviderType(Class<? extends Provider<DataSource>> dataSourceProviderType) {
             if (dataSourceProviderType == null) {
-                throw new IllegalArgumentException("Parameter 'dataSourceProviderType' must not be null");
+                throw new IllegalArgumentException("Parameter 'dataSourceProviderType' must be not null");
             }
             this.dataSourceProviderType = dataSourceProviderType;
             return this;
@@ -243,7 +243,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
          */
         public Builder setTransactionFactoryType(Class<? extends TransactionFactory> transactionFactoryType) {
             if (transactionFactoryType == null) {
-                throw new IllegalArgumentException("Parameter 'transactionFactoryType' must not be null");
+                throw new IllegalArgumentException("Parameter 'transactionFactoryType' must be not null");
             }
             this.transactionFactoryType = transactionFactoryType;
             return this;
@@ -444,9 +444,10 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         /**
-         * 
+         * Create a new {@link MyBatisModule} instance based on this {@link Builder}
+         * instance configuration.
          *
-         * @return
+         * @return a new {@link MyBatisModule} instance.
          */
         public Module create() {
             return new MyBatisModule(this.dataSourceProviderType,
@@ -459,21 +460,22 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         /**
-         * 
+         * Return a set of all classes contained in the given package.
          *
-         * @param packageName
-         * @return
+         * @param packageName the package has to be analyzed.
+         * @return a set of all classes contained in the given package.
          */
         private static Set<Class<?>> getClasses(String packageName) {
             return getClasses(new ResolverUtil.IsA(Object.class), packageName);
         }
 
         /**
-         * 
+         * Return a set of all classes contained in the given package that match with
+         * the given test requirement.
          *
-         * @param test
-         * @param packageName
-         * @return
+         * @param test the class filter on the given package.
+         * @param packageName the package has to be analyzed.
+         * @return a set of all classes contained in the given package.
          */
         private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
             if (test == null) {
