@@ -35,6 +35,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Binder;
+import com.google.inject.Module;
 import com.google.inject.spi.Message;
 
 /**
@@ -53,24 +54,9 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private final String environmentId;
 
-    private Properties properties;
+    private final Properties properties;
 
-    public XMLMyBatisModule(String classPathResource) {
-        this(classPathResource, null, null);
-    }
-
-    public XMLMyBatisModule(String classPathResource, String environmentId) {
-        this(classPathResource, environmentId, null);
-    }
-
-    public XMLMyBatisModule(String classPathResource, Properties properties) {
-        this(classPathResource, null, properties);
-    }
-
-    public XMLMyBatisModule(String classPathResource, String environmentId, Properties properties) {
-        if (classPathResource == null) {
-            throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
-        }
+    private XMLMyBatisModule(String classPathResource, String environmentId, Properties properties) {
         this.classPathResource = classPathResource;
         this.environmentId = environmentId;
         this.properties = properties;
@@ -137,6 +123,74 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
         for (T injectee : injectees) {
             binder.requestInjection(injectee);
         }
+    }
+
+    /**
+     * The {@link XMLMyBatisModule} Builder.
+     */
+    public static final class Builder {
+
+        private static final String DEFAULT_CONFIG_RESOURCE = "mybatis-config.xml";
+
+        private static final String DEFAULT_ENVIRONMENT_ID = "development";
+
+        private String classPathResource = DEFAULT_CONFIG_RESOURCE;
+
+        private String environmentId = DEFAULT_ENVIRONMENT_ID;
+
+        private Properties properties = new Properties();
+
+        /**
+         * Set the MyBatis configuration class path resource.
+         *
+         * @param classPathResource the MyBatis configuration class path resource.
+         * @return this {@code Builder} instance.
+         */
+        public Builder setClassPathResource(String classPathResource) {
+            if (classPathResource == null) {
+                throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
+            }
+            this.classPathResource = classPathResource;
+            return this;
+        }
+
+        /**
+         * Set the MyBatis configuration environment id.
+         *
+         * @param environmentId the MyBatis configuration environment id.
+         * @return this {@code Builder} instance.
+         */
+        public Builder setEnvironmentId(String environmentId) {
+            if (environmentId == null) {
+                throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
+            }
+            this.environmentId = environmentId;
+            return this;
+        }
+
+        /**
+         * Add the variables will be used to replace placeholders in the MyBatis configuration.
+         *
+         * @param properties the variables will be used to replace placeholders in the MyBatis configuration.
+         * @return this {@code Builder} instance.
+         */
+        public Builder addProperties(Properties properties) {
+            if (properties != null) {
+                this.properties.putAll(properties);
+            }
+            return this;
+        }
+
+        /**
+         * Create a new {@link XMLMyBatisModule} instance based on this {@link Builder}
+         * instance configuration.
+         *
+         * @return a new {@link XMLMyBatisModule} instance.
+         */
+        public Module create() {
+            return new XMLMyBatisModule(this.classPathResource, this.environmentId, this.properties);
+        }
+
     }
 
 }
