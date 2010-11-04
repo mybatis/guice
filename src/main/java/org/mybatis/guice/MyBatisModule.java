@@ -258,8 +258,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
 
         /**
          * Adding simple aliases means that every specified class will be bound
-         * using the simple class name, i.e.  {@code com.acme.Foo} becomes
-         *  {@code Foo}.
+         * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
          *
          * @param types the specified types have to be bind.
          * @return this {@code Builder} instance.
@@ -290,8 +289,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         /**
          * Adds all Classes in the given package as a simple alias.
          * Adding simple aliases means that every specified class will be bound
-         * using the simple class name, i.e.  {@code com.acme.Foo} becomes
-         *  {@code Foo}.
+         * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
          *
          * @param packageName the specified package to search for classes to alias.
          * @return this {@code Builder} instance.
@@ -303,8 +301,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         /**
          * Adds all Classes in the given package as a simple alias.
          * Adding simple aliases means that every specified class will be bound
-         * using the simple class name, i.e.  {@code com.acme.Foo} becomes
-         *  {@code Foo}.
+         * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
          *
          * @param packageName the specified package to search for classes to alias.
          * @param test a test to run against the objects found in the specified package.
