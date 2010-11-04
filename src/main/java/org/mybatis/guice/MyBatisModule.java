@@ -68,7 +68,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
     private final Class<? extends Provider<DataSource>> dataSourceProviderType;
 
     /**
-     * The TransactionFactory Provider class reference.
+     * The TransactionFactory class reference.
      */
     private final Class<? extends TransactionFactory> transactionFactoryType;
 
@@ -101,13 +101,13 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * Creates a new module that binds all the needed modules to create the
      * SqlSessionFactory, injecting all the required components.
      *
-     * @param dataSourceProviderType
-     * @param transactionFactoryType
-     * @param aliases
-     * @param handlers
-     * @param interceptorsClasses
-     * @param objectFactoryProviderClass
-     * @param mapperClasses
+     * @param dataSourceProviderType the DataSource Provider class reference.
+     * @param transactionFactoryType the TransactionFactory class reference.
+     * @param aliases the user defined aliases.
+     * @param handlers the user defined type handlers.
+     * @param interceptorsClasses the user defined Interceptor classes.
+     * @param objectFactoryProviderClass the ObjectFactory class reference.
+     * @param mapperClasses the user defined mapper classes.
      */
     private MyBatisModule(
             Class<? extends Provider<DataSource>> dataSourceProviderType,
@@ -199,7 +199,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         private Class<? extends Provider<DataSource>> dataSourceProviderType = UnpooledDataSourceProvider.class;
 
         /**
-         * The TransactionFactory Provider class reference.
+         * The TransactionFactory class reference.
          */
         private Class<? extends TransactionFactory> transactionFactoryType = JdbcTransactionFactory.class;
 
