@@ -113,11 +113,11 @@ public final class FooDAO {
     <section id="transactional.annotation">
         <title>The @Transactional annotation</title>
         <para>
-            Annottaing methods with the <literal>org.mybatis.guice.transactional.Transactional</literal>
+            Annotating methods with the <literal>org.mybatis.guice.transactional.Transactional</literal>
             annotation, users can eliminate recursive code patterns.
         </para>
         <para>
-            First of all, let's have a look at the injector thet will create the
+            First of all, let's have a look at the injector that will create the
             previous <literal>FooDAO</literal> instance:
             <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
 Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
