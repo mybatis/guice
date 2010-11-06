@@ -22,7 +22,7 @@ import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
 /**
- * 
+ * Helper to bind <code>JDBC.driver</code> and <code>JDBC.url</code> properties.
  *
  * @version $Id$
  */
