@@ -96,7 +96,7 @@ Injector injector = Guice.createInjector(
     new MyBatisModule.Builder()
         .setDataSourceProviderType(dataSourceProviderType)
         .setTransactionFactoryType(txFactoryClass)
-        .create(txFactoryProviderClass),
+        .create(),
     ...
 );
 
@@ -208,7 +208,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
 
                 <programlisting language="java"><![CDATA[Class<? extends org.apache.ibatis.transaction.TransactionFactory> txFactoryType = ...
 
-    Module module = new MyBatisModule.Builder().setTransactionFactoryType(txFactoryType).create;]]></programlisting>
+Module module = new MyBatisModule.Builder().setTransactionFactoryType(txFactoryType).create;]]></programlisting>
             </para>
         </section>
 
@@ -225,12 +225,12 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
             <para>
                 We found very useful adding simple aliases because helped us a
                 lot to reduce the errors during our development time; just call:
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule.Builder builder = [...]
+                <programlisting language="java"><![CDATA[MyBatisModule.Builder builder = new MyBatisModule.Builder();
 builder.addSimpleAliases(com.acme.Foo.class, com.acme.Bar.class, ...);]]></programlisting>
             </para>
             <para>
                 If users prefeer instead using you own custom aliases, just invoke
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule.Builder builder = [...]
+                <programlisting language="java"><![CDATA[MyBatisModule.Builder builder = new MyBatisModule.Builder();
 builder.addAlias("MyFoo", com.acme.Foo.class)
 builder.addAlias("MyBar", com.acme.Bar.class);
 ...]]></programlisting>
@@ -244,7 +244,7 @@ builder.addAlias("MyBar", com.acme.Bar.class);
                 type handlers: given the <literal>com.acme.Foo</literal> type,
                 that has to be handled by the type handler
                 <literal>com.acme.dao.FooHandler</literal>, just invoke:
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule.Builder builder = [...]
+                <programlisting language="java"><![CDATA[MyBatisModule.Builder builder = new MyBatisModule.Builder();
 builder.addTypeHandler(com.acme.Foo.class, com.acme.dao.FooHandler.class);
 builder.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
 ...]]></programlisting>
@@ -258,7 +258,7 @@ builder.addTypeHandler(com.acme.Bar.class, com.acme.dao.BarHandler.class);
             <para>
                 Users can easily add their preferred <literal>org.apache.ibatis.plugin.Interceptor</literal>
                 simply invoking:
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule.Builder builder = [...]
+                <programlisting language="java"><![CDATA[MyBatisModule.Builder builder = new MyBatisModule.Builder();
 builder.addInterceptorsClasses(com.acme.dao.FooInterceptor.class,
     com.acme.dao.BarInterceptor.class,
     ...);]]></programlisting>
@@ -272,7 +272,7 @@ builder.addInterceptorsClasses(com.acme.dao.FooInterceptor.class,
             <para>
                 Users can add the <emphasis>Mappers</emphasis> classes adding
                 them to the module:
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule .Builder builder = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule .Builder builder = new MyBatisModule.Builder();
 builder.addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.class, ...);]]></programlisting>
                 and let Google Guice creating the mappers instance and bind them to be injected to MyBatis components.
             </para>
@@ -283,7 +283,7 @@ builder.addMapperClasses(com.acme.dao.FooMapper.class, com.acme.dao.BarMapper.cl
             <para>
                 Just simply define your own <literal>org.apache.ibatis.reflection.factory.ObjectFactory</literal>
                 and communicate it to the module and let Google Guice create it:
-                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule .Builder builder = [...]
+                <programlisting language="java"><![CDATA[org.mybatis.guice.MyBatisModule .Builder builder = new MyBatisModule.Builder();
 builder.setObjectFactoryType(com.acme.MyObjectFactory.class);]]></programlisting>
             </para>
         </section>
@@ -292,7 +292,7 @@ builder.setObjectFactoryType(com.acme.MyObjectFactory.class);]]></programlisting
             <title>Chaining methods</title>
             <para>
                 In order to simplify the <literal>org.mybatis.guice.MyBatisModule</literal>
-                creation, <literal>MyBatisModuleBuilder</literal> methods can be
+                creation, <literal>MyBatisModule.Builder</literal> methods can be
                 chained like in the example below:
                 <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderType = [...];
 Class<? extends TransactionFactory> txFactoryType = [...];
