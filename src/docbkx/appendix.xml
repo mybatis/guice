@@ -199,9 +199,11 @@ myBatisProperties.setProperty("JDBC.password", "barPWD");
 myBatisProperties.setProperty("JDBC.autoCommit", "false");
 
 Injector injector = Guice.createInjector(JdbcHelper.MySQL,
-    new MyBatisModule(PooledDataSourceProvider.class)
+    new MyBatisModule.Builder()
+        .setDataSourceProviderType(PooledDataSourceProvider.class)
         .addSimpleAliases(Contact.class)
-        .addMapperClasses(ContactMapper.class),
+        .addMapperClasses(ContactMapper.class)
+        .create(),
     new Module() {
         public void configure(Binder binder) {
             Names.bindProperties(binder, myBatisProperties);
