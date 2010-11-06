@@ -22,6 +22,7 @@ import java.util.StringTokenizer;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
+import com.google.inject.util.Providers;
 
 /**
  * 
@@ -34,27 +35,26 @@ final class Formatter implements Provider<String> {
 
     private static final String PIPE_SEPARATOR = "|";
 
-    private final List<Appender> appenders = new ArrayList<Appender>();
+    private final List<Provider<String>> appenders = new ArrayList<Provider<String>>();
 
-    @Inject
-    private Injector injector;
+    private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
 
     public Formatter(final String pattern) {
         int prev = 0;
         int pos;
         while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
             if (pos > 0) {
-                this.appenders.add(new TextAppender(pattern.substring(prev, pos)));
+                this.appenders.add(Providers.of(pattern.substring(prev, pos)));
             }
             if (pos == pattern.length() - 1) {
-                this.appenders.add(new TextAppender(VAR_BEGIN));
+                this.appenders.add(Providers.of(VAR_BEGIN));
                 prev = pos + 1;
             } else if (pattern.charAt(pos + 1) != '{') {
                 if (pattern.charAt(pos + 1) == '$') {
-                    this.appenders.add(new TextAppender(VAR_BEGIN));
+                    this.appenders.add(Providers.of(VAR_BEGIN));
                     prev = pos + 2;
                 } else {
-                    this.appenders.add(new TextAppender(pattern.substring(pos, pos + 2)));
+                    this.appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
                     prev = pos + 2;
                 }
             } else {
@@ -68,17 +68,22 @@ final class Formatter implements Provider<String> {
                 if (keyTokenizer.hasMoreTokens()) {
                     defaultValue = keyTokenizer.nextToken();
                 }
-                this.appenders.add(new KeyAppender(key, defaultValue));
+                KeyResolver resolver = new KeyResolver(key, defaultValue);
+                this.appenders.add(resolver);
+                this.resolvers.add(resolver);
                 prev = endName + 1;
             }
         }
         if (prev < pattern.length()) {
-            this.appenders.add(new TextAppender(pattern.substring(prev)));
+            this.appenders.add(Providers.of(pattern.substring(prev)));
         }
     }
 
+    @Inject
     public void setInjector(Injector injector) {
-        this.injector = injector;
+        for (KeyResolver resolver : this.resolvers) {
+            resolver.setInjector(injector);
+        }
     }
 
     /**
@@ -86,8 +91,8 @@ final class Formatter implements Provider<String> {
      */
     public String get() {
         StringBuilder buffer = new StringBuilder();
-        for (Appender appender : this.appenders) {
-            appender.append(buffer, this.injector);
+        for (Provider<String> appender : this.appenders) {
+            buffer.append(appender.get());
         }
         return buffer.toString();
     }

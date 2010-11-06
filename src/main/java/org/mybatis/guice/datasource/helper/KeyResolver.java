@@ -15,8 +15,10 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Provider;
 import com.google.inject.name.Names;
 
 /**
@@ -24,7 +26,7 @@ import com.google.inject.name.Names;
  *
  * @version $Id$
  */
-final class KeyAppender implements Appender {
+final class KeyResolver implements Provider<String> {
 
     private final Key<String> key;
 
@@ -32,21 +34,30 @@ final class KeyAppender implements Appender {
 
     private final String toString;
 
-    public KeyAppender(final String key, final String defaultValue) {
+    @Inject
+    private Injector injector;
+
+    public KeyResolver(final String key, final String defaultValue) {
         this.key = Key.get(String.class, Names.named(key));
         this.defaultValue = defaultValue;
         this.toString = "${" + key + "}";
     }
 
-    public void append(StringBuilder buffer, Injector injector) {
+    public void setInjector(Injector injector) {
+        this.injector = injector;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String get() {
         try {
-            buffer.append(injector.getInstance(this.key));
+            return this.injector.getInstance(this.key);
         } catch (Throwable e) {
             if (this.defaultValue != null) {
-                buffer.append(this.defaultValue);
-            } else {
-                buffer.append(this.toString);
+                return this.defaultValue;
             }
+            return this.toString;
         }
     }
 
