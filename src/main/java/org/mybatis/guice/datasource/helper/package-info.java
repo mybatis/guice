@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains helper classes to build and bind <code>JDBC.driver</code> and <code>JDBC.url/code>
+ * Contains helper classes to build and bind <code>JDBC.driver</code> and <code>JDBC.url</code>
  * properties.
  *
  * @version $Id$
