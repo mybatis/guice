@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis-parent</artifactId>
-        <version>5</version>
+        <version>6</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -61,6 +61,7 @@
     <properties>
         <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
         <clirr.comparisonVersion>1.0.0-RC3</clirr.comparisonVersion>
+        <gcu.product>Guice</gcu.product>
     </properties>
 
     <dependencies>
