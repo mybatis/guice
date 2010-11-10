@@ -65,8 +65,7 @@
         <title>Requirements</title>
         <para>
             Before starting reading the manual, it is very important you're
-            familiar with both MyBatis and Google Guice framework and therminology,
-            otherwise it would be very difficult to understand the described context.
+            familiar with both MyBatis and Google Guice framework and therminology.
         </para>
         <para>
             Like MyBatis and Google Guice, mybatis-guice requires Java 5 or higher.
