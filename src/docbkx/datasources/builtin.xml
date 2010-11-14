@@ -35,7 +35,7 @@
             and helps users to configure it.
         </para>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider::
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider properties</caption>
                 <thead>
@@ -94,7 +94,7 @@
             and helps users to configure it.
         </para>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider:
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider properties</caption>
                 <thead>
@@ -188,7 +188,7 @@
             and helps users to configure it.
         </para>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider::
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider properties</caption>
                 <thead>

@@ -34,7 +34,7 @@
         </para>
     </note>
     <para>
-        Follows below the resume table of supported properties; for more
+        The table below contains all of the available properties for the Provider:; for more
         details please consult the
         <ulink url="http://www.mchange.com/projects/c3p0/index.html#configuration">Official reference</ulink>.
         <table>

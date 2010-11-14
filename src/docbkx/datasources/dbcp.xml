@@ -42,7 +42,7 @@
             and helps users to configure it.
         </para>
         <para>
-            Follows below the resume table of supported properties; for more
+            The table below contains all of the available properties for the Provider; for more
             details please consult the
             <ulink url="http://commons.apache.org/dbcp/configuration.html">Official reference</ulink>.
             <table>
@@ -193,7 +193,7 @@
             </para>
         </note>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider:
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider properties</caption>
                 <thead>
@@ -318,7 +318,7 @@
             </para>
         </note>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider:
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider properties</caption>
                 <thead>
@@ -536,7 +536,7 @@ Injector injector = Guice.createInjector(
             <literal>javax.sql.ConnectionPoolDataSource</literal>.
         </para>
         <para>
-            Follows below the resume table of supported properties:
+            The table below contains all of the available properties for the Provider:
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider properties</caption>
                 <thead>
