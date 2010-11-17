@@ -61,6 +61,7 @@
     <properties>
         <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
         <clirr.comparisonVersion>1.0.0-RC3</clirr.comparisonVersion>
+        <guice.version>2.0</guice.version>
         <gcu.product>Guice</gcu.product>
     </properties>
 
@@ -76,14 +77,14 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>2.0</version>
+            <version>${guice.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
-            <version>2.0</version>
+            <version>${guice.version}</version>
             <scope>compile</scope>
         </dependency>
 
