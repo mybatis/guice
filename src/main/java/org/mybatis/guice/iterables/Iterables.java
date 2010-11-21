@@ -33,23 +33,23 @@ public final class Iterables {
         // do nothing
     }
 
-    public static <K, V> Do<Entry<K, V>> foreach(Map<K, V> map) {
+    public static <K, V> ItemHandler<Entry<K, V>> foreach(Map<K, V> map) {
         if (map == null) {
             return foreachEmpty();
         }
         return foreach(map.entrySet());
     }
 
-    public static <T> Do<T> foreach(Iterable<T> iterable) {
+    public static <T> ItemHandler<T> foreach(Iterable<T> iterable) {
         if (iterable == null) {
             return foreachEmpty();
         }
-        return new Do<T>(iterable);
+        return new ItemHandler<T>(iterable);
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> Do<T> foreachEmpty() {
-        return new Do<T>(Collections.EMPTY_LIST);
+    private static <T> ItemHandler<T> foreachEmpty() {
+        return new ItemHandler<T>(Collections.EMPTY_LIST);
     }
 
 }

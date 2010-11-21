@@ -20,11 +20,11 @@ package org.mybatis.guice.iterables;
  *
  * @version $Id$
  */
-public final class Do<T> {
+public final class ItemHandler<T> {
 
     private final Iterable<T> iterable;
 
-    protected Do(Iterable<T> iterable) {
+    protected ItemHandler(Iterable<T> iterable) {
         this.iterable = iterable;
     }
 
