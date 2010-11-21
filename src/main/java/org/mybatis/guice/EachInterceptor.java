@@ -34,6 +34,9 @@ final class EachInterceptor extends AbstractBinderEach<Class<? extends Intercept
         super(binder);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void doHandle(Class<? extends Interceptor> interceptorType) {
         if (this.interceptorsMultibinder == null) {
             this.interceptorsMultibinder = Multibinder.newSetBinder(this.getBinder(), Interceptor.class);

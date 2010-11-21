@@ -31,6 +31,9 @@ final class EachMapper extends AbstractBinderEach<Class<?>> {
         super(binder);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void doHandle(Class<?> mapperType) {
         this.bindMapper(mapperType);
     }

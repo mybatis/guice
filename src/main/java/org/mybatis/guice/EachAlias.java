@@ -37,6 +37,9 @@ final class EachAlias extends AbstractBinderEach<Entry<Class<?>, Class<? extends
         super(binder);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void doHandle(Entry<Class<?>, Class<? extends TypeHandler>> entry) {
         if (this.handlerBinder == null) {
             this.handlerBinder =

@@ -28,6 +28,9 @@ final class EachRequestInjection<T> extends AbstractBinderEach<T> {
         super(binder);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void doHandle(T instance) {
         this.getBinder().requestInjection(instance);
     }
