@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.configuration;
 
-import static org.mybatis.guice.utils.IterableUtils.iterate;
+import static org.mybatis.guice.iterables.IterableUtils.iterate;
 
 import java.util.Collections;
 import java.util.Map;

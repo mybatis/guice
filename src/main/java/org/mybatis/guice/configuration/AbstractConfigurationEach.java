@@ -16,7 +16,7 @@
 package org.mybatis.guice.configuration;
 
 import org.apache.ibatis.session.Configuration;
-import org.mybatis.guice.utils.Each;
+import org.mybatis.guice.iterables.Each;
 
 /**
  * 

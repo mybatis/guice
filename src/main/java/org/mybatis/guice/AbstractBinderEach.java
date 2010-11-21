@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice;
 
-import org.mybatis.guice.utils.Each;
+import org.mybatis.guice.iterables.Each;
 
 import com.google.inject.Binder;
 
