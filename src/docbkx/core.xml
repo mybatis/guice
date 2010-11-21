@@ -142,39 +142,63 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                 environment users are building the application.
             </para>
             <para>
-                <orderedlist>
-                    <listitem>
-                        <para>
-                            <literal>mybatis.environment.id</literal> (required):
-                            the <literal>org.apache.ibatis.mapping.Environment</literal>
-                            needs to know the <emphasis>environment id</emphasis>,
-                            so users have to take care of setting the <literal>mybatis.environment.id</literal>
-                            property as a Guice constant, for example:
-                            <programlisting language="java"><![CDATA[binder.bindConstant()
-    .annotatedWith(Names.named("mybatis.environment.id"))
-    .to("production");]]></programlisting>
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            <literal>mybatis.configuration.lazyLoadingEnabled</literal>
-                            (optional): if users need to enable the <emphasis>lazy loading</emphasis>
-                            in the MyBatis <literal>org.apache.ibatis.session.Configuration</literal>,
-                            then they have to bind the named property <literal>MyBatis.configuration.lazyLoadingEnabled</literal>
-                            with the required boolean value.
-                        </para>
-                        <para>
-                            By default, if <literal>mybatis.configuration.lazyLoadingEnabled</literal>
-                            is not specified, the property will be ignored and
-                            MyBatis will take care about proper default <emphasis>lazy loading</emphasis>
-                            initialization.
-                            <programlisting language="java"><![CDATA[binder.bindConstant()
-    .annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
-    .to(true);]]></programlisting>
-                        </para>
-                    </listitem>
-                </orderedlist>
+                By default, if a configuration property is not specified, it will be ignored and
+                MyBatis will take care about proper default initialization. Users can initialize
+                properties using the following method:
+                <programlisting language="java"><![CDATA[binder.bindConstant()
+    .annotatedWith(Names.named("mybatis.configuration.XXX"))
+    .to(XXXvalue);]]></programlisting>
             </para>
+            <para>
+            The MyBatis module supports the following parameters:
+            <table>
+                <caption>org.mybatis.guice.MyBatisModule properties</caption>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>mybatis.environment.id</td>
+                        <td>Not set, it is required</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.lazyLoadingEnabled</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.aggressiveLazyLoading</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.multipleResultSetsEnabled</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.useGeneratedKeys</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.useColumnLabel</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.cacheEnabled</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.defaultExecutorType</td>
+                        <td>ExecutorType.SIMPLE</td>
+                    </tr>
+                    <tr>
+                        <td>mybatis.configuration.autoMappingBehavior</td>
+                        <td>AutoMappingBehavior.PARTIAL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </para>
         </section>
 
         <section id="core.datasource">
