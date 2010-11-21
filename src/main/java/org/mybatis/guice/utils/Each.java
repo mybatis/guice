@@ -13,28 +13,17 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice.configuration;
-
-import java.util.Map.Entry;
-
-import org.apache.ibatis.session.Configuration;
+package org.mybatis.guice.utils;
 
 /**
  * 
- *
+ * @param <T>
  * @version $Id$
  */
-final class EachAlias extends AbstractConfigurationEach<Entry<String, Class<?>>> {
+public interface Each<T> {
 
-    public EachAlias(final Configuration configuration) {
-        super(configuration);
-    }
+    void init();
 
-    /**
-     * {@inheritDoc}
-     */
-    public void doHandle(Entry<String, Class<?>> alias) {
-        this.getConfiguration().getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
-    }
+    void doHandle(T t);
 
 }

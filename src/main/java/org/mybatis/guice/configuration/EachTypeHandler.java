@@ -25,7 +25,7 @@ import org.apache.ibatis.type.TypeHandler;
  *
  * @version $Id$
  */
-final class EachTypeHandler extends Each<Entry<Class<?>, TypeHandler>> {
+final class EachTypeHandler extends AbstractConfigurationEach<Entry<Class<?>, TypeHandler>> {
 
     public EachTypeHandler(final Configuration configuration) {
         super(configuration);
@@ -34,7 +34,7 @@ final class EachTypeHandler extends Each<Entry<Class<?>, TypeHandler>> {
     /**
      * {@inheritDoc}
      */
-    public void each(Entry<Class<?>, TypeHandler> typeHandler) {
+    public void doHandle(Entry<Class<?>, TypeHandler> typeHandler) {
         this.getConfiguration().getTypeHandlerRegistry().register(typeHandler.getKey(), typeHandler.getValue());
     }
 

@@ -13,28 +13,27 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice.configuration;
+package org.mybatis.guice;
 
-import java.util.Map.Entry;
+import org.mybatis.guice.utils.Each;
 
-import org.apache.ibatis.session.Configuration;
+import com.google.inject.Binder;
 
 /**
  * 
  *
  * @version $Id$
  */
-final class EachAlias extends AbstractConfigurationEach<Entry<String, Class<?>>> {
+abstract class AbstractBinderEach<T> implements Each<T> {
 
-    public EachAlias(final Configuration configuration) {
-        super(configuration);
+    private final Binder binder;
+
+    public AbstractBinderEach(final Binder binder) {
+        this.binder = binder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void doHandle(Entry<String, Class<?>> alias) {
-        this.getConfiguration().getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+    protected Binder getBinder() {
+        return this.binder;
     }
 
 }

@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice;
 
+import static org.mybatis.guice.utils.IterableUtils.iterate;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -86,7 +88,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
             // bind mappers
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
-            bindMappers(this.binder(), mapperClasses);
+            iterate(mapperClasses, new EachMapper(this.binder()));
 
             // request injection for type handlers
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);

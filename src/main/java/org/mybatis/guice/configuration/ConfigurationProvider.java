@@ -15,9 +15,10 @@
  */
 package org.mybatis.guice.configuration;
 
+import static org.mybatis.guice.utils.IterableUtils.iterate;
+
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.ibatis.executor.ErrorContext;
@@ -181,20 +182,6 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         }
 
         return configuration;
-    }
-
-    private static <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each) {
-        if (map != null) {
-            iterate(map.entrySet(), each);
-        }
-    }
-
-    private static <T> void iterate(Iterable<T> iterable, Each<T> each) {
-        if (iterable != null) {
-            for (T t : iterable) {
-                each.each(t);
-            }
-        }
     }
 
 }

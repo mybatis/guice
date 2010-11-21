@@ -15,26 +15,28 @@
  */
 package org.mybatis.guice.configuration;
 
-import java.util.Map.Entry;
-
 import org.apache.ibatis.session.Configuration;
+import org.mybatis.guice.utils.Each;
 
 /**
  * 
- *
+ * @param <T>
  * @version $Id$
  */
-final class EachAlias extends AbstractConfigurationEach<Entry<String, Class<?>>> {
+abstract class AbstractConfigurationEach<T> implements Each<T> {
 
-    public EachAlias(final Configuration configuration) {
-        super(configuration);
+    private final Configuration configuration;
+
+    public AbstractConfigurationEach(final Configuration configuration) {
+        this.configuration = configuration;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void doHandle(Entry<String, Class<?>> alias) {
-        this.getConfiguration().getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+    protected Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void init() {
+        // do nothing
     }
 
 }

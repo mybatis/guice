@@ -13,27 +13,34 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice.configuration;
+package org.mybatis.guice;
 
-import org.apache.ibatis.session.Configuration;
+import org.mybatis.guice.mappers.MapperProvider;
+
+import com.google.inject.Binder;
+import com.google.inject.Scopes;
 
 /**
  * 
- * @param <T>
+ *
  * @version $Id$
  */
-abstract class Each<T> {
+final class EachMapper extends AbstractBinderEach<Class<?>> {
 
-    private final Configuration configuration;
-
-    public Each(final Configuration configuration) {
-        this.configuration = configuration;
+    public EachMapper(Binder binder) {
+        super(binder);
     }
 
-    protected Configuration getConfiguration() {
-        return configuration;
+    public void init() {
+        // do nothing
     }
 
-    abstract void each(T t);
+    public void doHandle(Class<?> mapperType) {
+        this.bindMapper(mapperType);
+    }
+
+    private <T> void bindMapper(Class<T> mapperType) {
+        this.getBinder().bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
+    }
 
 }

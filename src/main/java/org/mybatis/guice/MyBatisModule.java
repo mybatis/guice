@@ -15,13 +15,14 @@
  */
 package org.mybatis.guice;
 
+import static org.mybatis.guice.utils.IterableUtils.iterate;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -47,8 +48,6 @@ import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -145,26 +144,15 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         // type handlers
-        if (!this.handlers.isEmpty()) {
-            MapBinder<Class<?>, TypeHandler> handlerBinder =
-                MapBinder.newMapBinder(this.binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
-            for (Entry<Class<?>, Class<? extends TypeHandler>> entry : this.handlers.entrySet()) {
-                handlerBinder.addBinding(entry.getKey()).to(entry.getValue()).in(Scopes.SINGLETON);
-            }
-        }
+        iterate(this.handlers, new EachAlias(this.binder()));
 
         // interceptors plugin
-        if (!this.interceptorsClasses.isEmpty()) {
-            Multibinder<Interceptor> cacheMultibinder = Multibinder.newSetBinder(this.binder(), Interceptor.class);
-            for (Class<? extends Interceptor> interceptorClass : this.interceptorsClasses) {
-                cacheMultibinder.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
-            }
-        }
+        iterate(this.interceptorsClasses, new EachInterceptor(this.binder()));
 
         // mappers
         if (!this.mapperClasses.isEmpty()) {
             this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.mapperClasses);
-            bindMappers(this.binder(), this.mapperClasses);
+            iterate(this.mapperClasses, new EachMapper(this.binder()));
         }
     }
 

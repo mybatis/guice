@@ -13,27 +13,33 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice.configuration;
+package org.mybatis.guice;
 
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.Configuration;
+
+import com.google.inject.Binder;
+import com.google.inject.Scopes;
+import com.google.inject.multibindings.Multibinder;
 
 /**
  * 
  *
  * @version $Id$
  */
-final class EachInterceptor extends AbstractConfigurationEach<Interceptor> {
+final class EachInterceptor extends AbstractBinderEach<Class<? extends Interceptor>> {
 
-    public EachInterceptor(final Configuration configuration) {
-        super(configuration);
+    private Multibinder<Interceptor> interceptorsMultibinder;
+
+    public EachInterceptor(final Binder binder) {
+        super(binder);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void doHandle(Interceptor interceptor) {
-        this.getConfiguration().addInterceptor(interceptor);
+    public void init() {
+        this.interceptorsMultibinder = Multibinder.newSetBinder(this.getBinder(), Interceptor.class);
+    }
+
+    public void doHandle(Class<? extends Interceptor> interceptorType) {
+        this.interceptorsMultibinder.addBinding().to(interceptorType).in(Scopes.SINGLETON);
     }
 
 }

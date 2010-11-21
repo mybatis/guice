@@ -22,7 +22,7 @@ import org.apache.ibatis.session.Configuration;
  *
  * @version $Id$
  */
-final class EachMapper extends Each<Class<?>> {
+final class EachMapper extends AbstractConfigurationEach<Class<?>> {
 
     public EachMapper(final Configuration configuration) {
         super(configuration);
@@ -31,7 +31,7 @@ final class EachMapper extends Each<Class<?>> {
     /**
      * {@inheritDoc}
      */
-    public void each(Class<?> mapperClass) {
+    public void doHandle(Class<?> mapperClass) {
         if (!this.getConfiguration().hasMapper(mapperClass)) {
             this.getConfiguration().addMapper(mapperClass);
         }
