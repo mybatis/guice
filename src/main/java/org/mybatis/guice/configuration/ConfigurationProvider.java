@@ -24,7 +24,9 @@ import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Inject;
@@ -50,6 +52,34 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Inject(optional = true)
     @Named("mybatis.configuration.lazyLoadingEnabled")
     private boolean lazyLoadingEnabled = false;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.aggressiveLazyLoading")
+    private boolean aggressiveLazyLoading = true;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.multipleResultSetsEnabled")
+    private boolean multipleResultSetsEnabled = true;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.useGeneratedKeys")
+    private boolean useGeneratedKeys = false;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.useColumnLabel")
+    private boolean useColumnLabel = true;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.cacheEnabled")
+    private boolean cacheEnabled = true;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.defaultExecutorType")
+    private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
+
+    @Inject(optional = true)
+    @Named("mybatis.configuration.autoMappingBehavior")
+    private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
     @Inject
     private ObjectFactory objectFactory;
@@ -131,6 +161,13 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
         try {
             configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
+            configuration.setAggressiveLazyLoading(this.aggressiveLazyLoading);
+            configuration.setMultipleResultSetsEnabled(this.multipleResultSetsEnabled);
+            configuration.setUseGeneratedKeys(this.useGeneratedKeys);
+            configuration.setUseColumnLabel(this.useColumnLabel);
+            configuration.setCacheEnabled(this.cacheEnabled);
+            configuration.setDefaultExecutorType(this.defaultExecutorType);
+            configuration.setAutoMappingBehavior(this.autoMappingBehavior);
             configuration.setObjectFactory(this.objectFactory);
 
             iterate(this.typeAliases, new EachAlias(), configuration);
