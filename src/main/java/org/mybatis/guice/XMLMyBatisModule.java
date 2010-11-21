@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice;
 
-import static org.mybatis.guice.iterables.IterableUtils.iterate;
+import static org.mybatis.guice.iterables.Iterables.iterate;
 
 import java.io.IOException;
 import java.io.Reader;

@@ -23,12 +23,12 @@ import java.util.Map.Entry;
  *
  * @version $Id$
  */
-public final class IterableUtils {
+public final class Iterables {
 
     /**
      * This class cannot be instantiated
      */
-    private IterableUtils() {
+    private Iterables() {
         // do nothing
     }
 
