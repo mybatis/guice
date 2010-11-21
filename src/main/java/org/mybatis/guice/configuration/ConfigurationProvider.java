@@ -29,6 +29,7 @@ import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.ProvisionException;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
@@ -43,59 +44,36 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     /**
      * The myBatis Configuration reference.
      */
-    private final Configuration configuration;
-
-    private Map<String, Class<?>> typeAliases = Collections.emptyMap();
-
-    private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
-
-    private Set<Class<?>> mapperClasses = Collections.emptySet();
-
-    private Set<Interceptor> plugins = Collections.emptySet();
-
-    /**
-     * Creates a new myBatis Configuration from the Environment.
-     *
-     * @param environment the needed myBatis Environment.
-     */
     @Inject
-    public ConfigurationProvider(final Environment environment) {
-        this.configuration = new Configuration(environment);
-    }
-
-    /**
-     * Called after injection is done. Listener is set up in {@link org.mybatis.guice.MyBatisModule#configure()}.
-     * Initialization needs to be done in a defined order plus ErrorContext instance must be reset at the end
-     * to prevent memory leaks.
-     */
-    public void init() {
-        try {
-            this.iterate(this.typeAliases, new EachAlias());
-            this.iterate(this.typeHandlers, new EachTypeHandler());
-            this.iterate(this.mapperClasses, new EachMapper());
-            this.iterate(this.plugins, new EachInterceptor());
-        } finally {
-            ErrorContext.instance().reset();
-        }
-    }
-
-    private <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each) {
-        if (map != null) {
-            this.iterate(map.entrySet(), each);
-        }
-    }
-
-    private <T> void iterate(Iterable<T> iterable, Each<T> each) {
-        if (iterable != null) {
-            for (T t : iterable) {
-                each.each(this.configuration, t);
-            }
-        }
-    }
+    private Environment environment;
 
     @Inject(optional = true)
-    public void setLazyLoadingEnabled(@Named("mybatis.configuration.lazyLoadingEnabled") boolean lazyLoadingEnabled) {
-        this.configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
+    @Named("mybatis.configuration.lazyLoadingEnabled")
+    private boolean lazyLoadingEnabled = false;
+
+    @Inject
+    private ObjectFactory objectFactory;
+
+    @Inject(optional = true)
+    @TypeAliases
+    private Map<String, Class<?>> typeAliases;
+
+    @Inject(optional = true)
+    private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
+
+    @Inject(optional = true)
+    @Mappers
+    private Set<Class<?>> mapperClasses = Collections.emptySet();
+
+    @Inject(optional = true)
+    private Set<Interceptor> plugins = Collections.emptySet();
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
+    public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
+        this.lazyLoadingEnabled = lazyLoadingEnabled;
     }
 
     /**
@@ -103,8 +81,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      *
      * @param typeAliases the user defined type aliases.
      */
-    @Inject(optional = true)
-    public void registerAlias(@TypeAliases final Map<String,Class<?>> typeAliases) {
+    public void setTypeAliases(Map<String, Class<?>> typeAliases) {
         this.typeAliases = typeAliases;
     }
 
@@ -123,8 +100,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      *
      * @param mapperClasses the user defined Mapper classes.
      */
-    @Inject(optional = true)
-    public void registerMappers(@Mappers final Set<Class<?>> mapperClasses) {
+    public void setMapperClasses(Set<Class<?>> mapperClasses) {
         this.mapperClasses = mapperClasses;
     }
 
@@ -133,9 +109,8 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      *
      * @param objectFactory
      */
-    @Inject(optional = true)
     public void setObjectFactory(final ObjectFactory objectFactory) {
-        this.configuration.setObjectFactory(objectFactory);
+        this.objectFactory = objectFactory;
     }
 
     /**
@@ -144,8 +119,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      *
      * @param plugins the user defined plugins interceptors.
      */
-    @Inject(optional = true)
-    public void registerPlugins(final Set<Interceptor> plugins) {
+    public void setPlugins(Set<Interceptor> plugins) {
         this.plugins = plugins;
     }
 
@@ -153,7 +127,37 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * {@inheritDoc}
      */
     public Configuration get() {
-        return this.configuration;
+        Configuration configuration = new Configuration(this.environment);
+
+        try {
+            configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
+            configuration.setObjectFactory(this.objectFactory);
+
+            iterate(this.typeAliases, new EachAlias(), configuration);
+            iterate(this.typeHandlers, new EachTypeHandler(), configuration);
+            iterate(this.mapperClasses, new EachMapper(), configuration);
+            iterate(this.plugins, new EachInterceptor(), configuration);
+        } catch (Throwable cause) {
+            throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
+        } finally {
+            ErrorContext.instance().reset();
+        }
+
+        return configuration;
+    }
+
+    private static <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each, Configuration configuration) {
+        if (map != null) {
+            iterate(map.entrySet(), each, configuration);
+        }
+    }
+
+    private static <T> void iterate(Iterable<T> iterable, Each<T> each, Configuration configuration) {
+        if (iterable != null) {
+            for (T t : iterable) {
+                each.each(configuration, t);
+            }
+        }
     }
 
 }

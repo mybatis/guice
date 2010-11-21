@@ -29,7 +29,7 @@ import com.google.inject.BindingAnnotation;
  */
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
+@Target(ElementType.FIELD)
 public @interface Mappers {
 
 }
