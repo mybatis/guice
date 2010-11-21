@@ -36,7 +36,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.spi.Message;
 
@@ -93,12 +92,12 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             // request injection for type handlers
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
-                requestInjection(this.binder(), mappedTypeHandler.values());
+                iterate(mappedTypeHandler.values(), new EachRequestInjection<TypeHandler>(this.binder()));
             }
 
             // request injection for interceptors
             Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
-            requestInjection(this.binder(), interceptors);
+            iterate(interceptors, new EachRequestInjection<Interceptor>(this.binder()));
         } catch (Exception e) {
             this.addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
                     + this.classPathResource
@@ -111,19 +110,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
                     // close quietly
                 }
             }
-        }
-    }
-
-    /**
-     * Request dependencies injections of the given objects collection via the input binder.
-     *
-     * @param <T> the generic collection type.
-     * @param binder the binder to request injections.
-     * @param injectees the collection of objects that need to request injection.
-     */
-    private static <T> void requestInjection(Binder binder, Iterable<T> injectees) {
-        for (T injectee : injectees) {
-            binder.requestInjection(injectee);
         }
     }
 
