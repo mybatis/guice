@@ -70,25 +70,26 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     public void init() {
         try {
-            for (Entry<String, Class<?>> entry : this.typeAliases.entrySet()) {
-                this.configuration.getTypeAliasRegistry().registerAlias(entry.getKey(), entry.getValue());
-            }
-
-            for (Entry<Class<?>, TypeHandler> entry : this.typeHandlers.entrySet()) {
-                this.configuration.getTypeHandlerRegistry().register(entry.getKey(), entry.getValue());
-            }
-
-            for (Class<?> mapperClass : this.mapperClasses) {
-                if (!this.configuration.hasMapper(mapperClass)) {
-                    this.configuration.addMapper(mapperClass);
-                }
-            }
-
-            for (Interceptor interceptor : this.plugins) {
-                this.configuration.addInterceptor(interceptor);
-            }
+            this.iterate(this.typeAliases, new EachAlias());
+            this.iterate(this.typeHandlers, new EachTypeHandler());
+            this.iterate(this.mapperClasses, new EachMapper());
+            this.iterate(this.plugins, new EachInterceptor());
         } finally {
             ErrorContext.instance().reset();
+        }
+    }
+
+    private <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each) {
+        if (map != null) {
+            this.iterate(map.entrySet(), each);
+        }
+    }
+
+    private <T> void iterate(Iterable<T> iterable, Each<T> each) {
+        if (iterable != null) {
+            for (T t : iterable) {
+                each.each(this.configuration, t);
+            }
         }
     }
 
