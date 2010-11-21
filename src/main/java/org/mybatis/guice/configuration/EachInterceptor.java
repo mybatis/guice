@@ -23,13 +23,17 @@ import org.apache.ibatis.session.Configuration;
  *
  * @version $Id$
  */
-final class EachInterceptor implements Each<Interceptor> {
+final class EachInterceptor extends Each<Interceptor> {
+
+    public EachInterceptor(final Configuration configuration) {
+        super(configuration);
+    }
 
     /**
      * {@inheritDoc}
      */
-    public void each(Configuration configuration, Interceptor interceptor) {
-        configuration.addInterceptor(interceptor);
+    public void each(Interceptor interceptor) {
+        this.getConfiguration().addInterceptor(interceptor);
     }
 
 }

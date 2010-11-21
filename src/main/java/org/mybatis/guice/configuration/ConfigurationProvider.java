@@ -170,10 +170,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
             configuration.setAutoMappingBehavior(this.autoMappingBehavior);
             configuration.setObjectFactory(this.objectFactory);
 
-            iterate(this.typeAliases, new EachAlias(), configuration);
-            iterate(this.typeHandlers, new EachTypeHandler(), configuration);
-            iterate(this.mapperClasses, new EachMapper(), configuration);
-            iterate(this.plugins, new EachInterceptor(), configuration);
+            iterate(this.typeAliases, new EachAlias(configuration));
+            iterate(this.typeHandlers, new EachTypeHandler(configuration));
+            iterate(this.mapperClasses, new EachMapper(configuration));
+            iterate(this.plugins, new EachInterceptor(configuration));
         } catch (Throwable cause) {
             throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
         } finally {
@@ -183,16 +183,16 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         return configuration;
     }
 
-    private static <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each, Configuration configuration) {
+    private static <K, V> void iterate(Map<K, V> map, Each<Entry<K, V>> each) {
         if (map != null) {
-            iterate(map.entrySet(), each, configuration);
+            iterate(map.entrySet(), each);
         }
     }
 
-    private static <T> void iterate(Iterable<T> iterable, Each<T> each, Configuration configuration) {
+    private static <T> void iterate(Iterable<T> iterable, Each<T> each) {
         if (iterable != null) {
             for (T t : iterable) {
-                each.each(configuration, t);
+                each.each(t);
             }
         }
     }

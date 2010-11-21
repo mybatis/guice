@@ -24,13 +24,17 @@ import org.apache.ibatis.session.Configuration;
  *
  * @version $Id$
  */
-final class EachAlias implements Each<Entry<String, Class<?>>> {
+final class EachAlias extends Each<Entry<String, Class<?>>> {
+
+    public EachAlias(final Configuration configuration) {
+        super(configuration);
+    }
 
     /**
      * {@inheritDoc}
      */
-    public void each(Configuration configuration, Entry<String, Class<?>> alias) {
-        configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+    public void each(Entry<String, Class<?>> alias) {
+        this.getConfiguration().getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
     }
 
 }

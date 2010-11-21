@@ -22,8 +22,18 @@ import org.apache.ibatis.session.Configuration;
  * @param <T>
  * @version $Id$
  */
-interface Each<T> {
+abstract class Each<T> {
 
-    void each(Configuration configuration, T t);
+    private final Configuration configuration;
+
+    public Each(final Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    protected Configuration getConfiguration() {
+        return configuration;
+    }
+
+    abstract void each(T t);
 
 }
