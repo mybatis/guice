@@ -279,11 +279,11 @@ public final class MyBatisModule extends AbstractMyBatisModule {
          * @return this {@code Builder} instance.
          */
         public Builder addSimpleAliases(final Collection<Class<?>> types) {
-            if (types != null) {
-                for (Class<?> clazz : types) {
-                    this.addAlias(clazz.getSimpleName(), clazz);
+            foreach(types).handle(new Each<Class<?>>() {
+                public void doHandle(Class<?> clazz) {
+                    addAlias(clazz.getSimpleName(), clazz);
                 }
-            }
+            });
             return this;
         }
 
