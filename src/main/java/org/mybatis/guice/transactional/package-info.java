@@ -15,7 +15,7 @@
  */
 
 /**
- * Contains classes to build DAOs on top of myBatis and Google Guice.
+ * Contains classes to mark and handle transactional methods.
  *
  * @version $Id$
  */
