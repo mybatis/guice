@@ -159,18 +159,17 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     public Configuration get() {
         Configuration configuration = new Configuration(this.environment);
+        configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
+        configuration.setAggressiveLazyLoading(this.aggressiveLazyLoading);
+        configuration.setMultipleResultSetsEnabled(this.multipleResultSetsEnabled);
+        configuration.setUseGeneratedKeys(this.useGeneratedKeys);
+        configuration.setUseColumnLabel(this.useColumnLabel);
+        configuration.setCacheEnabled(this.cacheEnabled);
+        configuration.setDefaultExecutorType(this.defaultExecutorType);
+        configuration.setAutoMappingBehavior(this.autoMappingBehavior);
+        configuration.setObjectFactory(this.objectFactory);
 
         try {
-            configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
-            configuration.setAggressiveLazyLoading(this.aggressiveLazyLoading);
-            configuration.setMultipleResultSetsEnabled(this.multipleResultSetsEnabled);
-            configuration.setUseGeneratedKeys(this.useGeneratedKeys);
-            configuration.setUseColumnLabel(this.useColumnLabel);
-            configuration.setCacheEnabled(this.cacheEnabled);
-            configuration.setDefaultExecutorType(this.defaultExecutorType);
-            configuration.setAutoMappingBehavior(this.autoMappingBehavior);
-            configuration.setObjectFactory(this.objectFactory);
-
             iterate(this.typeAliases, new EachAlias(configuration));
             iterate(this.typeHandlers, new EachTypeHandler(configuration));
             iterate(this.mapperClasses, new EachMapper(configuration));
