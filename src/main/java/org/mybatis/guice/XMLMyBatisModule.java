@@ -119,7 +119,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
      * @param binder the binder to request injections.
      * @param injectees the collection of objects that need to request injection.
      */
-    private static <T> void requestInjection(Binder binder, Collection<T> injectees) {
+    private static <T> void requestInjection(Binder binder, Iterable<T> injectees) {
         for (T injectee : injectees) {
             binder.requestInjection(injectee);
         }
