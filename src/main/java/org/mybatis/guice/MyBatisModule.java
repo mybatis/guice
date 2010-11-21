@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
@@ -42,12 +43,15 @@ import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.iterables.Each;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -144,10 +148,32 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         // type handlers
-        foreach(this.handlers).handle(new EachAlias(this.binder()));
+        foreach(this.handlers).handle(new Each<Map.Entry<Class<?>,Class<? extends TypeHandler>>>() {
+
+            private MapBinder<Class<?>, TypeHandler> handlerBinder;
+
+            public void doHandle(Entry<Class<?>, Class<? extends TypeHandler>> alias) {
+                if (this.handlerBinder == null) {
+                    this.handlerBinder =
+                        MapBinder.newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
+                }
+
+                this.handlerBinder.addBinding(alias.getKey()).to(alias.getValue()).in(Scopes.SINGLETON);
+            }
+        });
 
         // interceptors plugin
-        foreach(this.interceptorsClasses).handle(new EachInterceptor(this.binder()));
+        foreach(this.interceptorsClasses).handle(new Each<Class<? extends Interceptor>>() {
+
+            private Multibinder<Interceptor> interceptorsMultibinder;
+
+            public void doHandle(Class<? extends Interceptor> interceptorType) {
+                if (this.interceptorsMultibinder == null) {
+                    this.interceptorsMultibinder = Multibinder.newSetBinder(binder(), Interceptor.class);
+                }
+                this.interceptorsMultibinder.addBinding().to(interceptorType).in(Scopes.SINGLETON);
+            }
+        });
 
         // mappers
         if (!this.mapperClasses.isEmpty()) {
