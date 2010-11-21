@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.configuration;
 
-import static org.mybatis.guice.iterables.Iterables.iterate;
+import static org.mybatis.guice.iterables.Iterables.foreach;
 
 import java.util.Collections;
 import java.util.Map;
@@ -170,10 +170,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setObjectFactory(this.objectFactory);
 
         try {
-            iterate(this.typeAliases, new EachAlias(configuration));
-            iterate(this.typeHandlers, new EachTypeHandler(configuration));
-            iterate(this.mapperClasses, new EachMapper(configuration));
-            iterate(this.plugins, new EachInterceptor(configuration));
+            foreach(this.typeAliases).handle(new EachAlias(configuration));
+            foreach(this.typeHandlers).handle(new EachTypeHandler(configuration));
+            foreach(this.mapperClasses).handle(new EachMapper(configuration));
+            foreach(this.plugins).handle(new EachInterceptor(configuration));
         } catch (Throwable cause) {
             throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
         } finally {

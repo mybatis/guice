@@ -15,41 +15,27 @@
  */
 package org.mybatis.guice.iterables;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-
 /**
  * 
  *
  * @version $Id$
  */
-public final class Iterables {
+public final class Do<T> {
 
-    /**
-     * This class cannot be instantiated
-     */
-    private Iterables() {
-        // do nothing
+    private final Iterable<T> iterable;
+
+    protected Do(Iterable<T> iterable) {
+        this.iterable = iterable;
     }
 
-    public static <K, V> Do<Entry<K, V>> foreach(Map<K, V> map) {
-        if (map == null) {
-            return foreachEmpty();
+    public void handle(Each<T> each) {
+        if (each == null) {
+            throw new IllegalArgumentException("Parameter 'each' must be not null");
         }
-        return foreach(map.entrySet());
-    }
 
-    public static <T> Do<T> foreach(Iterable<T> iterable) {
-        if (iterable == null) {
-            return foreachEmpty();
+        for (T t : this.iterable) {
+            each.doHandle(t);
         }
-        return new Do<T>(iterable);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> Do<T> foreachEmpty() {
-        return new Do<T>(Collections.EMPTY_LIST);
     }
 
 }

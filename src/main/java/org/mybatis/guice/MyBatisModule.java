@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice;
 
-import static org.mybatis.guice.iterables.Iterables.iterate;
+import static org.mybatis.guice.iterables.Iterables.foreach;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -144,15 +144,15 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         }
 
         // type handlers
-        iterate(this.handlers, new EachAlias(this.binder()));
+        foreach(this.handlers).handle(new EachAlias(this.binder()));
 
         // interceptors plugin
-        iterate(this.interceptorsClasses, new EachInterceptor(this.binder()));
+        foreach(this.interceptorsClasses).handle(new EachInterceptor(this.binder()));
 
         // mappers
         if (!this.mapperClasses.isEmpty()) {
             this.bind(new TypeLiteral<Set<Class<?>>>() {}).annotatedWith(Mappers.class).toInstance(this.mapperClasses);
-            iterate(this.mapperClasses, new EachMapper(this.binder()));
+            foreach(this.mapperClasses).handle(new EachMapper(this.binder()));
         }
     }
 
