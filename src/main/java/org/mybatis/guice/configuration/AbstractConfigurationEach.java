@@ -35,8 +35,4 @@ abstract class AbstractConfigurationEach<T> implements Each<T> {
         return configuration;
     }
 
-    public void ifOverNotEmptyIterator() {
-        // do nothing
-    }
-
 }

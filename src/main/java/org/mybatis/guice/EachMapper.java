@@ -31,10 +31,6 @@ final class EachMapper extends AbstractBinderEach<Class<?>> {
         super(binder);
     }
 
-    public void ifOverNotEmptyIterator() {
-        // do nothing
-    }
-
     public void doHandle(Class<?> mapperType) {
         this.bindMapper(mapperType);
     }

@@ -28,10 +28,6 @@ final class EachRequestInjection<T> extends AbstractBinderEach<T> {
         super(binder);
     }
 
-    public void ifOverNotEmptyIterator() {
-        // do nothing
-    }
-
     public void doHandle(T instance) {
         this.getBinder().requestInjection(instance);
     }

@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice.iterables;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,16 +40,8 @@ public final class IterableUtils {
 
     public static <T> void iterate(Iterable<T> iterable, Each<T> each) {
         if (iterable != null) {
-            Iterator<T> iterator = iterable.iterator();
-            boolean hasNext = iterator.hasNext();
-
-            if (hasNext) {
-                each.ifOverNotEmptyIterator();
-
-                while (hasNext) {
-                    each.doHandle(iterator.next());
-                    hasNext = iterator.hasNext();
-                }
+            for (T t : iterable) {
+                each.doHandle(t);
             }
         }
     }

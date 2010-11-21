@@ -34,11 +34,10 @@ final class EachInterceptor extends AbstractBinderEach<Class<? extends Intercept
         super(binder);
     }
 
-    public void ifOverNotEmptyIterator() {
-        this.interceptorsMultibinder = Multibinder.newSetBinder(this.getBinder(), Interceptor.class);
-    }
-
     public void doHandle(Class<? extends Interceptor> interceptorType) {
+        if (this.interceptorsMultibinder == null) {
+            this.interceptorsMultibinder = Multibinder.newSetBinder(this.getBinder(), Interceptor.class);
+        }
         this.interceptorsMultibinder.addBinding().to(interceptorType).in(Scopes.SINGLETON);
     }
 

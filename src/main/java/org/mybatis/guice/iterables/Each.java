@@ -17,13 +17,17 @@ package org.mybatis.guice.iterables;
 
 /**
  * 
+ *
  * @param <T>
  * @version $Id$
  */
 public interface Each<T> {
 
-    void ifOverNotEmptyIterator();
-
+    /**
+     * Event called when iterating over an {@literal Iterable<T>} to catch the i-th element.
+     *
+     * @param t the i-th element when iterating over the {@literal Iterable<T>}.
+     */
     void doHandle(T t);
 
 }

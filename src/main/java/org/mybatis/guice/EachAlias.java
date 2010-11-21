@@ -37,12 +37,12 @@ final class EachAlias extends AbstractBinderEach<Entry<Class<?>, Class<? extends
         super(binder);
     }
 
-    public void ifOverNotEmptyIterator() {
-        this.handlerBinder =
-            MapBinder.newMapBinder(this.getBinder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
-    }
-
     public void doHandle(Entry<Class<?>, Class<? extends TypeHandler>> entry) {
+        if (this.handlerBinder == null) {
+            this.handlerBinder =
+                MapBinder.newMapBinder(this.getBinder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
+        }
+
         this.handlerBinder.addBinding(entry.getKey()).to(entry.getValue()).in(Scopes.SINGLETON);
     }
 
