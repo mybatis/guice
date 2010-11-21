@@ -34,29 +34,35 @@ import com.google.inject.name.Named;
 public final class EnvironmentProvider implements Provider<Environment> {
 
     /**
-     * The Environment reference.
-     */
-    private final Environment environment;
-
-    /**
-     * Creates a new myBatis Environment Provider.
-     *
-     * @param id the environment id.
-     * @param transactionFactory the myBatis TransactionFactory.
-     * @param dataSource the DataSource.
+     * The environment id.
      */
     @Inject
-    public EnvironmentProvider(@Named("mybatis.environment.id") final String id,
-            final TransactionFactory transactionFactory,
-            final DataSource dataSource) {
-        this.environment = new Environment(id, transactionFactory, dataSource);
+    @Named("mybatis.environment.id")
+    private String id;
+
+    @Inject
+    private TransactionFactory transactionFactory;
+
+    @Inject
+    private DataSource dataSource;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTransactionFactory(TransactionFactory transactionFactory) {
+        this.transactionFactory = transactionFactory;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**
      * {@inheritDoc}
      */
     public Environment get() {
-        return this.environment;
+        return new Environment(this.id, this.transactionFactory, this.dataSource);
     }
 
 }
