@@ -20,6 +20,7 @@ import static org.mybatis.guice.iterables.Iterables.foreach;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
@@ -29,6 +30,7 @@ import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
+import org.mybatis.guice.iterables.Each;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -158,7 +160,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * {@inheritDoc}
      */
     public Configuration get() {
-        Configuration configuration = new Configuration(this.environment);
+        final Configuration configuration = new Configuration(this.environment);
         configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
         configuration.setAggressiveLazyLoading(this.aggressiveLazyLoading);
         configuration.setMultipleResultSetsEnabled(this.multipleResultSetsEnabled);
@@ -170,10 +172,28 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setObjectFactory(this.objectFactory);
 
         try {
-            foreach(this.typeAliases).handle(new EachAlias(configuration));
-            foreach(this.typeHandlers).handle(new EachTypeHandler(configuration));
-            foreach(this.mapperClasses).handle(new EachMapper(configuration));
-            foreach(this.plugins).handle(new EachInterceptor(configuration));
+            foreach(this.typeAliases).handle(new Each<Map.Entry<String,Class<?>>>() {
+                public void doHandle(Entry<String, Class<?>> alias) {
+                    configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+                }
+            });
+            foreach(this.typeHandlers).handle(new Each<Map.Entry<Class<?>,TypeHandler>>() {
+                public void doHandle(Entry<Class<?>, TypeHandler> typeHandler) {
+                    configuration.getTypeHandlerRegistry().register(typeHandler.getKey(), typeHandler.getValue());
+                }
+            });
+            foreach(this.mapperClasses).handle(new Each<Class<?>>() {
+                public void doHandle(Class<?> mapperClass) {
+                    if (!configuration.hasMapper(mapperClass)) {
+                        configuration.addMapper(mapperClass);
+                    }
+                }
+            });
+            foreach(this.plugins).handle(new Each<Interceptor>() {
+                public void doHandle(Interceptor interceptor) {
+                    configuration.addInterceptor(interceptor);
+                }
+            });
         } catch (Throwable cause) {
             throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
         } finally {
