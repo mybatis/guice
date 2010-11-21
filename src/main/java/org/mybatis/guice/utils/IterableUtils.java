@@ -45,7 +45,7 @@ public final class IterableUtils {
             boolean hasNext = iterator.hasNext();
 
             if (hasNext) {
-                each.init();
+                each.ifOverNotEmptyIterator();
 
                 while (hasNext) {
                     each.doHandle(iterator.next());

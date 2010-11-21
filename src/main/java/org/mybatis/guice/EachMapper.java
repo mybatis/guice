@@ -31,7 +31,7 @@ final class EachMapper extends AbstractBinderEach<Class<?>> {
         super(binder);
     }
 
-    public void init() {
+    public void ifOverNotEmptyIterator() {
         // do nothing
     }
 

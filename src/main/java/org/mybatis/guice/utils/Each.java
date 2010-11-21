@@ -22,7 +22,7 @@ package org.mybatis.guice.utils;
  */
 public interface Each<T> {
 
-    void init();
+    void ifOverNotEmptyIterator();
 
     void doHandle(T t);
 

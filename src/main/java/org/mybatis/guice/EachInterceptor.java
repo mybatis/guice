@@ -34,7 +34,7 @@ final class EachInterceptor extends AbstractBinderEach<Class<? extends Intercept
         super(binder);
     }
 
-    public void init() {
+    public void ifOverNotEmptyIterator() {
         this.interceptorsMultibinder = Multibinder.newSetBinder(this.getBinder(), Interceptor.class);
     }
 
