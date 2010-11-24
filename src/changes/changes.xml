@@ -28,7 +28,14 @@
     </properties>
 
     <body>
-        <release version="1.0.0-RC4" date="TBD" description="1.0.0-RC4 release">
+        <release version="1.0.0" date="TBD" description="1.0.0-GA release">
+            <action dev="" type="update">
+                Added missing SqlSession -> SqlSessionManager binding,
+                so users can request SqlSession injections.
+            </action>
+        </release>
+
+        <release version="1.0.0-RC4" date="2010-11-18" description="1.0.0-RC4 release">
             <action dev="christian.poitras@ircm.qc.ca" type="update">
                 Finalized XML MyBatis configuration support.
             </action>

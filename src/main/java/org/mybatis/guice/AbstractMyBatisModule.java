@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
@@ -36,6 +37,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     protected void configure() {
         // sql session manager
         this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).asEagerSingleton();
+        this.bind(SqlSession.class).to(SqlSessionManager.class);
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
