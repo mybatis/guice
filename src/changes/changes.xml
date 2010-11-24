@@ -31,7 +31,7 @@
         <release version="1.0.0" date="TBD" description="1.0.0-GA release">
             <action dev="eduardo.macarron" type="update">
                 Added missing SqlSession -> SqlSessionManager binding,
-                so users can request SqlSession injections.
+                so users can request managed SqlSession injections.
             </action>
         </release>
 
