@@ -31,31 +31,14 @@
             <literal>com.google.inject.Module</literal>s that
             alleviate users the task to create MyBatis objects.
         </para>
-        <para>
-            Installing the mybatis-guice module it is very easy, just put the
-            <literal>mybatis-guice-<?eval ${project.version}?>.jar</literal> and
-            dependencies in the classpath!
-        </para>
-        <para>
-            Apache Maven users instead can easily adding the following dependency
-            in their POMs :
-            <programlisting language="xml"><![CDATA[<dependencies>
-    ...
-    <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis-guice</artifactId>
-        <version>]]><?eval ${project.version}?><![CDATA[</version>
-    </dependency>
-    ...
-</dependencies>]]></programlisting>
-        </para>
     </section>
 
     <section id="core.bootstrap">
         <title>MyBatis Bootstrap</title>
         <para>
             MyBatis offers an excellent APIs layer for the Bootstrap configuration that makes
-            it easy to write custom bootstrap - by default MyBatis comes with the XML loader - and integrating 3rd part components.
+            it easy to write custom bootstrap - by default MyBatis comes with the XML loader -
+            and integrating 3rd part components.
         </para>
         <para>
             The core component of the Guice approach is represented by the
@@ -337,65 +320,6 @@ Injector injector = Guice.createInjector(new MyBatisModule.Builder()
                 </note>
             </para>
         </section>
-    </section>
-
-    <section>
-        <title>Requesting Injections</title>
-        <para>Once the MyBatis module has been set-up, clients are ready to request
-        MyBatis components injections.</para>
-        <para>Clients are free to request the injection of the <classname>SqlSessionFactory</classname>:
-        <programlisting language="java"><![CDATA[@Singleton
-public final class MySqlSessionFactoryClient {
-
-    private final SqlSessionFactory sqlSessionFactory;
-
-    @Inject
-    public MySqlSessionFactoryClient(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
-    }
-
-    ...
-
-}]]></programlisting>
-        </para>
-        <para>Or the powerful <classname>SqlSessionManager</classname>:
-        <programlisting language="java"><![CDATA[@Singleton
-public final class MySqlSessionManagerClient {
-
-    @Inject
-    private SqlSessionManager sqlSessionManager;
-
-    public void setSqlSessionManager(SqlSessionManager sqlSessionManager) {
-        this.sqlSessionManager = sqlSessionManager;
-    }
-
-    ...
-
-}]]></programlisting>
-        </para>
-        <para>Or, even better, users can request directly the configured
-        Mapper interfaces:
-        <programlisting language="java"><![CDATA[@Singleton
-public final class MyMappersClient {
-
-    @Inject
-    private PeopleMapper peopleMapper;
-
-    @Inject
-    private ContactsMapper contactsMapper;
-
-    public void setPeopleMapper(PeopleMapper peopleMapper) {
-        this.peopleMapper = peopleMapper;
-    }
-
-    public void setContactsMapper(ContactsMapper contactsMapper) {
-        this.contactsMapper = contactsMapper;
-    }
-
-    ...
-
-}]]></programlisting>
-        </para>
     </section>
 
     <section id="core.multipledatasource">

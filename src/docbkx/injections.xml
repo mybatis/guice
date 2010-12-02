@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+    Copyright 2010 The myBatis Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    version: $Id$
+-->
+<chapter id="injections">
+  <title>Requesting Injections</title>
+
+  <section>
+    <title>Getting a SqlSession</title>
+      <para>
+        In MyBatis you use the <literal>SqlSessionFactory</literal> to create an
+        <literal>SqlSession</literal>. Once you have a session, you use it to
+        execute your mapped statements, get mappers,  commit or rollback connections and
+        finally, when it is no longer needed, you close the session. With
+        MyBatis-Guice you don't need to use <literal>SqlSessionFactory</literal>
+        directly because your beans can be injected with a thread safe
+        <literal>SqlSession</literal> that automatically commits, rollbacks and
+        closes the session based on @Transactional annotation.
+
+        <programlisting language="java"><![CDATA[public class UserDaoImpl implements UserDao {
+
+    @Inject private SqlSession sqlSession;
+
+    public User getUser(String userId) {
+        return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
+    }
+
+}]]></programlisting>
+        </para>
+    </section>
+
+    <section>
+      <title>Getting Mappers</title>
+        <para>
+          Rather than code data access objects (DAOs) manually using
+          <literal>SqlSession</literal>, Mybatis-Guice is able to inject
+          data mapper interfaces directly into your service beans. When using mappers
+          you simply call them as you have always called your DAOs, but you won't
+          need to code any DAO implementation because MyBatis-Guice will create a
+          proxy for you. When using mappers you will not even see the inner
+          <literal>SqlSession</literal>, but not worries, it will just work.
+
+    <programlisting language="java"><![CDATA[@Singleton
+public class FooServiceMapperImpl implements FooService {
+
+    @Inject
+    private UserMapper userMapper;
+
+    @Transactional
+    public User doSomeBusinessStuff(String userId) {
+        return this.userMapper.getUser(userId);
+    }
+
+}]]></programlisting>
+
+    </para>
+  </section>
+
+</chapter>
