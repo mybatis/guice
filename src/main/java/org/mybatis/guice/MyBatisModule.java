@@ -135,8 +135,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         // needed binding
         this.bind(DataSource.class).toProvider(this.dataSourceProviderType);
         this.bind(TransactionFactory.class).to(this.transactionFactoryType).in(Scopes.SINGLETON);
-        this.bind(Environment.class).toProvider(EnvironmentProvider.class);
-        this.bind(Configuration.class).toProvider(ConfigurationProvider.class);
+        this.bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
+        this.bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
         this.bind(ObjectFactory.class).to(this.objectFactoryType).in(Scopes.SINGLETON);
         this.bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class);
 

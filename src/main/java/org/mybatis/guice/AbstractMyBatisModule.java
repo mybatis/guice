@@ -22,6 +22,7 @@ import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
 import com.google.inject.matcher.Matchers;
 
 /**
@@ -36,8 +37,8 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     @Override
     protected void configure() {
         // sql session manager
-        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).asEagerSingleton();
-        this.bind(SqlSession.class).to(SqlSessionManager.class);
+        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
+        this.bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
