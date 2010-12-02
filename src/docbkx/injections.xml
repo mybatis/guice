@@ -36,10 +36,12 @@
 
         <programlisting language="java"><![CDATA[public class UserDaoImpl implements UserDao {
 
-    @Inject private SqlSession sqlSession;
+    @Inject
+    private SqlSession sqlSession;
 
     public User getUser(String userId) {
-        return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
+        return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser",
+        userId);
     }
 
 }]]></programlisting>
