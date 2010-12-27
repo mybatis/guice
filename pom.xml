@@ -63,6 +63,8 @@
         <clirr.comparisonVersion>1.0.0-RC4</clirr.comparisonVersion>
         <guice.version>2.0</guice.version>
         <gcu.product>Guice</gcu.product>
+        <osgi.import>com.mchange.v2.c3p0;resolution:=optional,org.apache.commons.dbcp;resolution:=optional,
+        org.apache.commons.dbcp.cpdsadapter;resolution:=optional,org.apache.commons.dbcp.datasources;resolution:=optional,*</osgi.import>
     </properties>
 
     <dependencies>
