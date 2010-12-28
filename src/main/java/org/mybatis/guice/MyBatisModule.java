@@ -105,7 +105,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
      * @param aliases the user defined aliases.
      * @param handlers the user defined type handlers.
      * @param interceptorsClasses the user defined Interceptor classes.
-     * @param objectFactoryProviderClass the ObjectFactory class reference.
+     * @param objectFactoryType the ObjectFactory class reference.
      * @param mapperClasses the user defined mapper classes.
      */
     private MyBatisModule(
