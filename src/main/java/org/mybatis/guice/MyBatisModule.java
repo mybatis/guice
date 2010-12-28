@@ -354,8 +354,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
          * Adds the user defined MyBatis interceptors plugins types, letting
          * google-guice creating them.
          *
-         * @param interceptorsClasses the user defined MyBatis interceptors plugins
-         *        types.
+         * @param interceptorsClasses the user defined MyBatis Interceptors plugins types.
          * @return this {@code Builder} instance.
          * 
          */
@@ -370,9 +369,8 @@ public final class MyBatisModule extends AbstractMyBatisModule {
          * Adds the user defined MyBatis interceptors plugins types in the given package,
          * letting google-guice creating them.
          *
-         * @param packageName.
+         * @param packageName the package where looking for Interceptors plugins types.
          * @return this {@code Builder} instance.
-         * 
          */
         public Builder addInterceptorsClasses(String packageName) {
             if (packageName == null) {
