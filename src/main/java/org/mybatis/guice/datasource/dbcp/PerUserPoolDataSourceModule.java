@@ -33,17 +33,32 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
 
     private static final TypeLiteral<Map<String, Integer>> STRING_INTEGER_MAP = new TypeLiteral<Map<String, Integer>>(){};
 
-    private Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass;
+    private final Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass;
 
-    private Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass;
+    private final Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass;
 
-    private Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass;
+    private final Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass;
 
-    private Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass;
+    private final Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass;
 
-    private Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass;
+    private final Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass;
 
-    private Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass;
+    private final Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass;
+
+    private PerUserPoolDataSourceModule(
+            Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass,
+            Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass,
+            Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass,
+            Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass,
+            Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass,
+            Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass) {
+        this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;
+        this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;
+        this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;
+        this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;
+        this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;
+        this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;
+    }
 
     @Override
     protected void configure() {
@@ -64,58 +79,83 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
         }
     }
 
-    /**
-     * @param perUserDefaultAutoCommitProviderClass the perUserDefaultAutoCommitProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserDefaultAutoCommitProviderClass(
-            Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass) {
-        this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;
-        return this;
-    }
+    public static final class Builder {
 
-    /**
-     * @param perUserDefaultReadOnlyProviderClass the perUserDefaultReadOnlyProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserDefaultReadOnlyProviderClass(
-            Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass) {
-        this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;
-        return this;
-    }
+        private Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass;
 
-    /**
-     * @param perUserDefaultTransactionIsolationProviderClass the perUserDefaultTransactionIsolationProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserDefaultTransactionIsolationProviderClass(
-            Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass) {
-        this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;
-        return this;
-    }
+        private Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass;
 
-    /**
-     * @param perUserMaxActiveProviderClass the perUserMaxActiveProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserMaxActiveProviderClass(
-            Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass) {
-        this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;
-        return this;
-    }
+        private Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass;
 
-    /**
-     * @param perUserMaxIdleProviderClass the perUserMaxIdleProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserMaxIdleProviderClass(
-            Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass) {
-        this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;
-        return this;
-    }
+        private Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass;
 
-    /**
-     * @param perUserMaxWaitProviderClass the perUserMaxWaitProviderClass to set
-     */
-    public PerUserPoolDataSourceModule setPerUserMaxWaitProviderClass(
-            Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass) {
-        this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;
-        return this;
+        private Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass;
+
+        private Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass;
+
+        /**
+         * @param perUserDefaultAutoCommitProviderClass the perUserDefaultAutoCommitProviderClass to set
+         */
+        public Builder setPerUserDefaultAutoCommitProviderClass(
+                Class<Provider<Map<String, Boolean>>> perUserDefaultAutoCommitProviderClass) {
+            this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;
+            return this;
+        }
+
+        /**
+         * @param perUserDefaultReadOnlyProviderClass the perUserDefaultReadOnlyProviderClass to set
+         */
+        public Builder setPerUserDefaultReadOnlyProviderClass(
+                Class<Provider<Map<String, Boolean>>> perUserDefaultReadOnlyProviderClass) {
+            this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;
+            return this;
+        }
+
+        /**
+         * @param perUserDefaultTransactionIsolationProviderClass the perUserDefaultTransactionIsolationProviderClass to set
+         */
+        public Builder setPerUserDefaultTransactionIsolationProviderClass(
+                Class<Provider<Map<String, Integer>>> perUserDefaultTransactionIsolationProviderClass) {
+            this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;
+            return this;
+        }
+
+        /**
+         * @param perUserMaxActiveProviderClass the perUserMaxActiveProviderClass to set
+         */
+        public Builder setPerUserMaxActiveProviderClass(
+                Class<Provider<Map<String, Integer>>> perUserMaxActiveProviderClass) {
+            this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;
+            return this;
+        }
+
+        /**
+         * @param perUserMaxIdleProviderClass the perUserMaxIdleProviderClass to set
+         */
+        public Builder setPerUserMaxIdleProviderClass(
+                Class<Provider<Map<String, Integer>>> perUserMaxIdleProviderClass) {
+            this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;
+            return this;
+        }
+
+        /**
+         * @param perUserMaxWaitProviderClass the perUserMaxWaitProviderClass to set
+         */
+        public Builder setPerUserMaxWaitProviderClass(
+                Class<Provider<Map<String, Integer>>> perUserMaxWaitProviderClass) {
+            this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;
+            return this;
+        }
+
+        public PerUserPoolDataSourceModule create() {
+            return new PerUserPoolDataSourceModule(this.perUserDefaultAutoCommitProviderClass,
+                    this.perUserDefaultReadOnlyProviderClass,
+                    this.perUserDefaultTransactionIsolationProviderClass,
+                    this.perUserMaxActiveProviderClass,
+                    this.perUserMaxIdleProviderClass,
+                    this.perUserMaxWaitProviderClass);
+        }
+
     }
 
 }
