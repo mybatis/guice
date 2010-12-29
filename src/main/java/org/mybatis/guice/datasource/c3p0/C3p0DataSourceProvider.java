@@ -22,7 +22,6 @@ import javax.sql.DataSource;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -31,7 +30,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  *
  * @version $Id$
  */
-@Singleton
 public final class C3p0DataSourceProvider implements Provider<DataSource> {
 
     /**

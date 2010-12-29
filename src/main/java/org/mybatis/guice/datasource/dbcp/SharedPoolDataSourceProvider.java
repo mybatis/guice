@@ -22,7 +22,6 @@ import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
@@ -30,7 +29,6 @@ import com.google.inject.name.Named;
  *
  * @version $Id$
  */
-@Singleton
 public final class SharedPoolDataSourceProvider implements Provider<DataSource> {
 
     private final SharedPoolDataSource dataSource = new SharedPoolDataSource();

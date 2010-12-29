@@ -21,7 +21,6 @@ import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
@@ -29,7 +28,6 @@ import com.google.inject.name.Named;
  *
  * @version $Id$
  */
-@Singleton
 public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolDataSource> {
 
     private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();

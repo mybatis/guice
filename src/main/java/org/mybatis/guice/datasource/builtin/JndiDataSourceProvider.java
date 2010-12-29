@@ -23,7 +23,6 @@ import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
@@ -31,7 +30,6 @@ import com.google.inject.name.Named;
  *
  * @version $Id$
  */
-@Singleton
 public final class JndiDataSourceProvider implements Provider<DataSource> {
 
     /**

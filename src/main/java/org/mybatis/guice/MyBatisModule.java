@@ -133,7 +133,7 @@ public final class MyBatisModule extends AbstractMyBatisModule {
         super.configure();
 
         // needed binding
-        this.bind(DataSource.class).toProvider(this.dataSourceProviderType);
+        this.bind(DataSource.class).toProvider(this.dataSourceProviderType).in(Scopes.SINGLETON);
         this.bind(TransactionFactory.class).to(this.transactionFactoryType).in(Scopes.SINGLETON);
         this.bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
         this.bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
