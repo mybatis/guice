@@ -115,7 +115,7 @@
                 <executions>
                     <execution>
                         <id>jarjar-classes</id>
-                        <phase>process-test-classes</phase>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>jarjar</goal>
                         </goals>
