@@ -40,6 +40,8 @@ import com.google.inject.Module;
 import com.google.inject.spi.Message;
 
 /**
+ * Easy to use helper Module that alleviates users to write the boilerplate
+ * google-guice bindings to create the SqlSessionFactory, via XML configuration.
  *
  * @version $Id$
  */
