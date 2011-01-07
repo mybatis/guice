@@ -50,7 +50,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * The myBatis Configuration reference.
      */
     @Inject
-    private Environment environment;
+    private final Environment environment;
 
     @Inject(optional = true)
     @Named("mybatis.configuration.lazyLoadingEnabled")
@@ -105,8 +105,17 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Inject(optional = true)
     private Set<Interceptor> plugins = Collections.emptySet();
 
-    public void setEnvironment(Environment environment) {
+    /**
+     * @since 1.0.1
+     */
+    public ConfigurationProvider(final Environment environment) {
         this.environment = environment;
+    }
+
+    @Deprecated
+    public void setEnvironment(Environment environment) {
+        // this.environment = environment;
+        throw new IllegalAccessError("");
     }
 
     public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
