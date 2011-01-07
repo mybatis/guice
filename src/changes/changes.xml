@@ -28,6 +28,12 @@
     </properties>
 
     <body>
+        <release version="1.0.1" date="TBD" description="bugfix release">
+            <action dev="simone.tripodi" type="update" issue="179">
+                Remove mapper order restriction when referencing SQL fragment in another file.
+            </action>
+        </release>
+
         <release version="1.0.0" date="2010-12-31" description="1.0.0-GA release">
             <action dev="eduardo.macarron" type="update">
                 Added missing SqlSession -> SqlSessionManager binding,
