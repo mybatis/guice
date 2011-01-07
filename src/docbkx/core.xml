@@ -179,6 +179,10 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                         <td>mybatis.configuration.autoMappingBehavior</td>
                         <td>AutoMappingBehavior.PARTIAL</td>
                     </tr>
+                    <tr>
+                        <td>mybatis.configuration.failFast</td>
+                        <td>true</td>
+                    </tr>
                 </tbody>
             </table>
         </para>
