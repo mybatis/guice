@@ -181,7 +181,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.failFast</td>
-                        <td>true</td>
+                        <td>false</td>
                     </tr>
                 </tbody>
             </table>

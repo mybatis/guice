@@ -84,6 +84,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Named("mybatis.configuration.autoMappingBehavior")
     private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
+    @Inject(optional = true)
+    @Named("mybatis.configuration.failFast")
+    private boolean failFast = false;
+
     @Inject
     private ObjectFactory objectFactory;
 
@@ -101,16 +105,22 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Inject(optional = true)
     private Set<Interceptor> plugins = Collections.emptySet();
 
-    @Inject(optional = true)
-    @Named("mybatis.configuration.failFast")
-    private boolean failFast = true;
-
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
 
     public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
         this.lazyLoadingEnabled = lazyLoadingEnabled;
+    }
+
+    /**
+     * Flag to check all statements are completed.
+     *
+     * @param failFast flag to check all statements are completed
+     * @since 1.0.1
+     */
+    public void setFailFast(boolean failFast) {
+        this.failFast = failFast;
     }
 
     /**
@@ -158,16 +168,6 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     public void setPlugins(Set<Interceptor> plugins) {
         this.plugins = plugins;
-    }
-
-    /**
-     * Flag to check all statements are completed.
-     *
-     * @param failFast flag to check all statements are completed
-     * @since 1.0.1
-     */
-    public void setFailFast(boolean failFast) {
-        this.failFast = failFast;
     }
 
     /**
