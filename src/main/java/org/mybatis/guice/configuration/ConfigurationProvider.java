@@ -118,8 +118,60 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         throw new IllegalAccessError("");
     }
 
+    /**
+     * @since 1.0.1
+     */
     public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
         this.lazyLoadingEnabled = lazyLoadingEnabled;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setAggressiveLazyLoading(boolean aggressiveLazyLoading) {
+        this.aggressiveLazyLoading = aggressiveLazyLoading;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setMultipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
+        this.multipleResultSetsEnabled = multipleResultSetsEnabled;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setUseGeneratedKeys(boolean useGeneratedKeys) {
+        this.useGeneratedKeys = useGeneratedKeys;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setUseColumnLabel(boolean useColumnLabel) {
+        this.useColumnLabel = useColumnLabel;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setCacheEnabled(boolean cacheEnabled) {
+        this.cacheEnabled = cacheEnabled;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setDefaultExecutorType(ExecutorType defaultExecutorType) {
+        this.defaultExecutorType = defaultExecutorType;
+    }
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setAutoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
+        this.autoMappingBehavior = autoMappingBehavior;
     }
 
     /**
