@@ -49,7 +49,6 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     /**
      * The myBatis Configuration reference.
      */
-    @Inject
     private final Environment environment;
 
     @Inject(optional = true)
@@ -108,6 +107,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     /**
      * @since 1.0.1
      */
+    @Inject
     public ConfigurationProvider(final Environment environment) {
         this.environment = environment;
     }
