@@ -101,6 +101,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Inject(optional = true)
     private Set<Interceptor> plugins = Collections.emptySet();
 
+    @Inject(optional = true)
+    @Named("mybatis.configuration.failFast")
+    private boolean failFast = true;
+
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
@@ -157,6 +161,16 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
+     * Flag to check all statements are completed.
+     *
+     * @param failFast flag to check all statements are completed
+     * @since 1.0.1
+     */
+    public void setFailFast(boolean failFast) {
+        this.failFast = failFast;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public Configuration get() {
@@ -194,6 +208,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
                     configuration.addInterceptor(interceptor);
                 }
             });
+
+            if (this.failFast) {
+                configuration.buildAllStatements();
+            }
         } catch (Throwable cause) {
             throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
         } finally {
