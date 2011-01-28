@@ -19,6 +19,7 @@ import org.mybatis.guice.mappers.MapperProvider;
 
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
+import com.google.inject.util.Providers;
 
 /**
  * 
@@ -39,7 +40,7 @@ final class EachMapper extends AbstractBinderEach<Class<?>> {
     }
 
     private <T> void bindMapper(Class<T> mapperType) {
-        this.getBinder().bind(mapperType).toProvider(new MapperProvider<T>(mapperType)).in(Scopes.SINGLETON);
+        this.getBinder().bind(mapperType).toProvider(Providers.guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
     }
 
 }

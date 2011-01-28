@@ -15,10 +15,10 @@
  */
 package org.mybatis.guice.mappers;
 
-import org.apache.ibatis.session.SqlSessionManager;
+import javax.inject.Inject;
+import javax.inject.Provider;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import org.apache.ibatis.session.SqlSessionManager;
 
 /**
  * A generic MyBatis mapper provider.
