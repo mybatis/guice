@@ -271,7 +271,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
             });
 
             if (this.failFast) {
-                configuration.buildAllStatements();
+                configuration.getMappedStatementNames();
             }
         } catch (Throwable cause) {
             throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration", cause);
