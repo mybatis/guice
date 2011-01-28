@@ -35,7 +35,7 @@ public final class Contact implements Serializable {
     private CustomType created;
 
     private Address address;
-    
+
     /**
      * @return the id
      */

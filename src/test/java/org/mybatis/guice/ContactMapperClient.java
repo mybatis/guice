@@ -17,11 +17,11 @@ package org.mybatis.guice;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.mybatis.guice.transactional.Transactional;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * 

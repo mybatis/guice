@@ -27,7 +27,6 @@ import org.apache.ibatis.type.TypeHandler;
 import com.google.inject.Inject;
 
 /**
- * 
  * @version $Id$
  */
 public class AddressTypeHandler implements TypeHandler {

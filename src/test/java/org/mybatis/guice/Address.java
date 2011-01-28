@@ -16,7 +16,6 @@
 package org.mybatis.guice;
 
 /**
- * 
  * @version $Id$
  */
 public class Address {

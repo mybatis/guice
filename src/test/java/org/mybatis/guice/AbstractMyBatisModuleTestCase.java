@@ -19,9 +19,9 @@ import static junit.framework.Assert.assertNotNull;
 
 import java.util.List;
 
-import org.junit.Test;
+import javax.inject.Inject;
 
-import com.google.inject.Inject;
+import org.junit.Test;
 
 /**
  *

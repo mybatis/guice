@@ -17,6 +17,8 @@ package org.mybatis.guice;
 
 import java.util.Properties;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
@@ -25,15 +27,13 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 
-import com.google.inject.Inject;
-
 /**
  *
  *
  * @version $Id$
  */
 @Intercepts({
-  @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
+    @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class })
 })
 public class CountUpdateInterceptor implements Interceptor {
 
