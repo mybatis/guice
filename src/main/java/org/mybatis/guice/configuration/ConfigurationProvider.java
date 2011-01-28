@@ -19,8 +19,13 @@ import static org.mybatis.guice.iterables.Iterables.foreach;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
@@ -32,11 +37,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.iterables.Each;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.ProvisionException;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 
 /**
  * Provides the myBatis Configuration.
@@ -51,63 +52,63 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      */
     private final Environment environment;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.lazyLoadingEnabled")
     private boolean lazyLoadingEnabled = false;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.aggressiveLazyLoading")
     private boolean aggressiveLazyLoading = true;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.multipleResultSetsEnabled")
     private boolean multipleResultSetsEnabled = true;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.useGeneratedKeys")
     private boolean useGeneratedKeys = false;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.useColumnLabel")
     private boolean useColumnLabel = true;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.cacheEnabled")
     private boolean cacheEnabled = true;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.defaultExecutorType")
     private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.autoMappingBehavior")
     private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.failFast")
     private boolean failFast = false;
 
     @Inject
     private ObjectFactory objectFactory;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @TypeAliases
     private Map<String, Class<?>> typeAliases;
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     @Mappers
     private Set<Class<?>> mapperClasses = Collections.emptySet();
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     private Set<Interceptor> plugins = Collections.emptySet();
 
     /**
      * @since 1.0.1
      */
-    @Inject
+    @com.google.inject.Inject
     public ConfigurationProvider(final Environment environment) {
         this.environment = environment;
     }
@@ -198,7 +199,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      *
      * @param typeHandlers the user defined type handlers.
      */
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void registerTypeHandlers(final Map<Class<?>, TypeHandler> typeHandlers) {
         this.typeHandlers = typeHandlers;
     }
