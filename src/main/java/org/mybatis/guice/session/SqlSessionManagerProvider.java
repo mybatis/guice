@@ -31,11 +31,23 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
 
     private SqlSessionManager sqlSessionManager;
 
+    /**
+     * @since 1.0.1
+     */
+    public SqlSessionManagerProvider() {
+        // do nothing
+    }
+
     @Deprecated
     public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
     }
 
+    /**
+     * 
+     * @param sqlSessionFactory
+     * @since 1.0.1
+     */
     @Inject
     public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);

@@ -37,6 +37,13 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
     private SqlSessionFactory sqlSessionFactory;
 
     /**
+     * @since 1.0.1
+     */
+    public SqlSessionFactoryProvider() {
+        
+    }
+
+    /**
      * Creates a new SqlSessionFactory from the specified configuration.
      *
      * @param configuration the specified configration.
@@ -49,7 +56,8 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
     /**
      * Creates a new SqlSessionFactory from the specified configuration.
      *
-     * @param configuration the specified configration.
+     * @param configuration the specified configuration.
+     * @since 1.0.1
      */
     @Inject
     public void createNewSqlSessionFactory(final Configuration configuration) {
