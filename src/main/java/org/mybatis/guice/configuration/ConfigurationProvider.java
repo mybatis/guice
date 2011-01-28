@@ -115,8 +115,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
     @Deprecated
     public void setEnvironment(Environment environment) {
-        // this.environment = environment;
-        throw new IllegalAccessError("");
+        // do nothing
     }
 
     /**
