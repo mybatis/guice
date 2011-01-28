@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.session;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionManager;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 
 /**
  *
@@ -29,10 +29,15 @@ import com.google.inject.Singleton;
 @Singleton
 public final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
 
-    private final SqlSessionManager sqlSessionManager;
+    private SqlSessionManager sqlSessionManager;
+
+    @Deprecated
+    public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
+    }
 
     @Inject
-    public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
+    public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
     }
 
