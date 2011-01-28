@@ -15,13 +15,13 @@
  */
 package org.mybatis.guice.session;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 
 /**
  * Builds the SqlSessionFactory ant let google-guice injects his components.
@@ -41,8 +41,18 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
      *
      * @param configuration the specified configration.
      */
-    @Inject
+    @Deprecated
     public SqlSessionFactoryProvider(final Configuration configuration) {
+        // do nothing
+    }
+
+    /**
+     * Creates a new SqlSessionFactory from the specified configuration.
+     *
+     * @param configuration the specified configration.
+     */
+    @Inject
+    public void createNewSqlSessionFactory(final Configuration configuration) {
         this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
     }
 
