@@ -146,7 +146,9 @@
     </properties>
 
     <dependencies>
-        <!-- Provided dependencies -->
+        <!--
+         | Provided dependencies
+        -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -161,6 +163,9 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--
+         | Compile dependencies
+        -->
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
@@ -175,6 +180,9 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--
+         | Optional dependencies
+        -->
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
@@ -189,7 +197,9 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Test dependencies -->
+        <!--
+         | Test dependencies
+        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
