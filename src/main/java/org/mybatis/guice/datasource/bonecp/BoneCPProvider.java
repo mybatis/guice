@@ -18,9 +18,11 @@ package org.mybatis.guice.datasource.bonecp;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
 
+import com.google.inject.Inject;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.jolbox.bonecp.hooks.ConnectionHook;
 
@@ -33,139 +35,171 @@ public final class BoneCPProvider implements Provider<DataSource> {
 
     private final BoneCPConfig config = new BoneCPConfig();
 
-    public void setAcquireIncrement(int acquireIncrement) {
+    @Inject(optional = true)
+    public void setAcquireIncrement(@Named("bonecp.acquireIncrement") int acquireIncrement) {
         this.config.setAcquireIncrement(acquireIncrement);
     }
 
-    public void setAcquireRetryAttempts(int acquireRetryAttempts) {
+    @Inject(optional = true)
+    public void setAcquireRetryAttempts(@Named("bonecp.acquireRetryAttempts") int acquireRetryAttempts) {
         this.config.setAcquireRetryAttempts(acquireRetryAttempts);
     }
 
-    public void setClassLoader(ClassLoader classLoader) {
+    @Inject(optional = true)
+    public void setClassLoader(@Named("bonecp.classLoader") ClassLoader classLoader) {
         this.config.setClassLoader(classLoader);
     }
 
-    public void setCloseConnectionWatch(boolean closeConnectionWatch) {
+    @Inject(optional = true)
+    public void setCloseConnectionWatch(@Named("bonecp.closeConnectionWatch") boolean closeConnectionWatch) {
         this.config.setCloseConnectionWatch(closeConnectionWatch);
     }
 
-    public void setConfigFile(String configFile) {
-        this.config.setConfigFile(configFile);
-    }
-
-    public void setConnectionHook(ConnectionHook connectionHook) {
+    @Inject(optional = true)
+    public void setConnectionHook(@Named("bonecp.connectionHook") ConnectionHook connectionHook) {
         this.config.setConnectionHook(connectionHook);
     }
 
-    public void setConnectionHookClassName(String connectionHookClassName) {
+    @Inject(optional = true)
+    public void setConnectionHookClassName(@Named("bonecp.connectionHookClassName") String connectionHookClassName) {
         this.config.setConnectionHookClassName(connectionHookClassName);
     }
 
-    public void setConnectionTestStatement(String connectionTestStatement) {
+    @Inject(optional = true)
+    public void setConnectionTestStatement(@Named("bonecp.connectionTestStatement") String connectionTestStatement) {
         this.config.setConnectionTestStatement(connectionTestStatement);
     }
 
-    public void setDisableConnectionTracking(boolean disableConnectionTracking) {
+    @Inject(optional = true)
+    public void setDisableConnectionTracking(@Named("bonecp.disableConnectionTracking") boolean disableConnectionTracking) {
         this.config.setDisableConnectionTracking(disableConnectionTracking);
     }
 
-    public void setDisableJMX(boolean disableJMX) {
+    @Inject(optional = true)
+    public void setDisableJMX(@Named("bonecp.disableJMX") boolean disableJMX) {
         this.config.setDisableJMX(disableJMX);
     }
 
-    public void setDriverProperties(Properties driverProperties) {
+    @Inject(optional = true)
+    public void setDriverProperties(@Named("bonecp.driverProperties") Properties driverProperties) {
         this.config.setDriverProperties(driverProperties);
     }
 
-    public void setIdleConnectionTestPeriod(long idleConnectionTestPeriod, TimeUnit timeUnit) {
+    @Inject(optional = true)
+    public void setIdleConnectionTestPeriod(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod,
+            @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.config.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);
     }
 
-    public void setIdleConnectionTestPeriodInMinutes(long idleConnectionTestPeriod) {
+    @Inject(optional = true)
+    public void setIdleConnectionTestPeriodInMinutes(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
         this.config.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);
     }
 
-    public void setIdleConnectionTestPeriodInSeconds(long idleConnectionTestPeriod) {
+    @Inject(optional = true)
+    public void setIdleConnectionTestPeriodInSeconds(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
         this.config.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);
     }
 
-    public void setIdleMaxAge(long idleMaxAge, TimeUnit timeUnit) {
+    @Inject(optional = true)
+    public void setIdleMaxAge(@Named("bonecp.idleMaxAge") long idleMaxAge, @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.config.setIdleMaxAge(idleMaxAge, timeUnit);
     }
 
-    public void setInitSQL(String initSQL) {
+    @Inject(optional = true)
+    public void setInitSQL(@Named("bonecp.initSQL") String initSQL) {
         this.config.setInitSQL(initSQL);
     }
 
-    public void setJdbcUrl(String jdbcUrl) {
+    @Inject
+    public void setJdbcUrl(@Named("JDBC.url") String jdbcUrl) {
         this.config.setJdbcUrl(jdbcUrl);
     }
 
-    public void setLazyInit(boolean lazyInit) {
+    @Inject(optional = true)
+    public void setLazyInit(@Named("bonecp.lazyInit") boolean lazyInit) {
         this.config.setLazyInit(lazyInit);
     }
 
-    public void setLogStatementsEnabled(boolean logStatementsEnabled) {
+    @Inject(optional = true)
+    public void setLogStatementsEnabled(@Named("bonecp.logStatementsEnabled") boolean logStatementsEnabled) {
         this.config.setLogStatementsEnabled(logStatementsEnabled);
     }
 
-    public void setMaxConnectionAge(long maxConnectionAge, TimeUnit timeUnit) {
+    @Inject(optional = true)
+    public void setMaxConnectionAge(@Named("bonecp.maxConnectionAge") long maxConnectionAge,
+            @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.config.setMaxConnectionAge(maxConnectionAge, timeUnit);
     }
 
-    public void setMaxConnectionAgeInSeconds(long maxConnectionAgeInSeconds) {
+    @Inject(optional = true)
+    public void setMaxConnectionAgeInSeconds(@Named("bonecp.maxConnectionAgeInSeconds") long maxConnectionAgeInSeconds) {
         this.config.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);
     }
 
-    public void setMaxConnectionsPerPartition(int maxConnectionsPerPartition) {
+    @Inject(optional = true)
+    public void setMaxConnectionsPerPartition(@Named("bonecp.maxConnectionsPerPartition") int maxConnectionsPerPartition) {
         this.config.setMaxConnectionsPerPartition(maxConnectionsPerPartition);
     }
 
-    public void setMinConnectionsPerPartition(int minConnectionsPerPartition) {
+    @Inject(optional = true)
+    public void setMinConnectionsPerPartition(@Named("bonecp.minConnectionsPerPartition") int minConnectionsPerPartition) {
         this.config.setMinConnectionsPerPartition(minConnectionsPerPartition);
     }
 
-    public void setPartitionCount(int partitionCount) {
+    @Inject(optional = true)
+    public void setPartitionCount(@Named("bonecp.partitionCount") int partitionCount) {
         this.config.setPartitionCount(partitionCount);
     }
 
-    public void setPassword(String password) {
+    @Inject
+    public void setPassword(@Named("JDBC.password") String password) {
         this.config.setPassword(password);
     }
 
-    public void setPoolAvailabilityThreshold(int poolAvailabilityThreshold) {
+    @Inject(optional = true)
+    public void setPoolAvailabilityThreshold(@Named("bonecp.poolAvailabilityThreshold") int poolAvailabilityThreshold) {
         this.config.setPoolAvailabilityThreshold(poolAvailabilityThreshold);
     }
 
-    public void setPoolName(String poolName) {
+    @Inject(optional = true)
+    public void setPoolName(@Named("bonecp.poolName") String poolName) {
         this.config.setPoolName(poolName);
     }
 
-    public void setQueryExecuteTimeLimit(int queryExecuteTimeLimit, TimeUnit timeUnit) {
+    @Inject(optional = true)
+    public void setQueryExecuteTimeLimit(@Named("bonecp.queryExecuteTimeLimit") int queryExecuteTimeLimit,
+            @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.config.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);
     }
 
-    public void setReleaseHelperThreads(int releaseHelperThreads) {
+    @Inject(optional = true)
+    public void setReleaseHelperThreads(@Named("bonecp.releaseHelperThreads") int releaseHelperThreads) {
         this.config.setReleaseHelperThreads(releaseHelperThreads);
     }
 
-    public void setServiceOrder(String serviceOrder) {
+    @Inject(optional = true)
+    public void setServiceOrder(@Named("bonecp.serviceOrder") String serviceOrder) {
         this.config.setServiceOrder(serviceOrder);
     }
 
-    public void setStatementReleaseHelperThreads(int statementReleaseHelperThreads) {
+    @Inject(optional = true)
+    public void setStatementReleaseHelperThreads(@Named("bonecp.statementReleaseHelperThreads") int statementReleaseHelperThreads) {
         this.config.setStatementReleaseHelperThreads(statementReleaseHelperThreads);
     }
 
-    public void setStatementsCacheSize(int statementsCacheSize) {
+    @Inject(optional = true)
+    public void setStatementsCacheSize(@Named("bonecp.statementsCacheSize") int statementsCacheSize) {
         this.config.setStatementsCacheSize(statementsCacheSize);
     }
 
-    public void setTransactionRecoveryEnabled(boolean transactionRecoveryEnabled) {
+    @Inject(optional = true)
+    public void setTransactionRecoveryEnabled(@Named("bonecp.transactionRecoveryEnabled") boolean transactionRecoveryEnabled) {
         this.config.setTransactionRecoveryEnabled(transactionRecoveryEnabled);
     }
 
-    public void setUsername(String username) {
+    @Inject
+    public void setUsername(@Named("JDBC.username") String username) {
         this.config.setUsername(username);
     }
 
@@ -173,7 +207,6 @@ public final class BoneCPProvider implements Provider<DataSource> {
      * {@inheritDoc}
      */
     public DataSource get() {
-        // TODO Auto-generated method stub
         return null;
     }
 
