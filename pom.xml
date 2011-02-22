@@ -197,6 +197,13 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.7.1-rc3</version>
+            <optional>true</optional>
+        </dependency>
+
         <!--
          | Test dependencies
         -->
