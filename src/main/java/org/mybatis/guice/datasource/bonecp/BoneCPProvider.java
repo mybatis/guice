@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 
 import com.google.inject.Inject;
 import com.jolbox.bonecp.BoneCPConfig;
+import com.jolbox.bonecp.BoneCPDataSource;
 import com.jolbox.bonecp.hooks.ConnectionHook;
 
 /**
@@ -207,7 +208,7 @@ public final class BoneCPProvider implements Provider<DataSource> {
      * {@inheritDoc}
      */
     public DataSource get() {
-        return null;
+        return new BoneCPDataSource(this.config);
     }
 
 }
