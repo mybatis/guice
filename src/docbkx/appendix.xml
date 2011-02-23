@@ -84,6 +84,24 @@
             <literal>org.mybatis.guice.datasource.helper.JdbcHelper.HSQLDB_Embedded</literal>
             <screen>jdbc:hsqldb:${JDBC.schema}</screen>
 
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_IN_MEMORY_PRIVATE</literal>
+            <screen>jdbc:h2:mem"</screen>
+
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_IN_MEMORY_NAMED</literal>
+            <screen>jdbc:h2:mem:${JDBC.schema}"</screen>
+
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_SERVER_TCP</literal>
+            <screen>jdbc:h2:tcp://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}"</screen>
+
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_SERVER_SSL</literal>
+            <screen>jdbc:h2:ssl://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}"</screen>
+
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_FILE</literal>
+            <screen>jdbc:h2:file://${JDBC.schema}"</screen>
+
+            <literal>org.mybatis.guice.datasource.helper.JdbcHelper.H2_EMBEDDED</literal>
+            <screen>jdbc:h2:${JDBC.schema}"</screen>
+
             <literal>org.mybatis.guice.datasource.helper.JdbcHelper.Informix</literal>
             <screen>jdbc:informix-sqli://${JDBC.host|localhost}:${JDBC.port|1533}/${JDBC.schema}:
 informixserver=${dbservername}</screen>

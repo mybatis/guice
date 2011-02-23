@@ -48,6 +48,18 @@ public enum JdbcHelper implements Module {
 
     HSQLDB_Embedded("jdbc:hsqldb:${JDBC.schema}", "org.hsqldb.jdbcDriver"),
 
+    H2_IN_MEMORY_PRIVATE("jdbc:h2:mem", "org.h2.Driver"),
+
+    H2_IN_MEMORY_NAMED("jdbc:h2:mem:${JDBC.schema}", "org.h2.Driver"),
+
+    H2_SERVER_TCP("jdbc:h2:tcp://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}", "org.h2.Driver"),
+
+    H2_SERVER_SSL("jdbc:h2:ssl://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}", "org.h2.Driver"),
+
+    H2_FILE("jdbc:h2:file://${JDBC.schema}", "org.h2.Driver"),
+
+    H2_EMBEDDED("jdbc:h2:${JDBC.schema}", "org.h2.Driver"),
+
     Informix("jdbc:informix-sqli://${JDBC.host|localhost}:${JDBC.port|1533}/${JDBC.schema}:informixserver=${dbservername}", "com.informix.jdbc.IfxDriver"),
 
     Informix_DataDirect("jdbc:datadirect:informix://${JDBC.host|localhost}:${JDBC.port|1533};InformixServer=${informixserver};DatabaseServer=${JDBC.schema}", "com.ddtek.jdbc.informix.InformixDriver"),
