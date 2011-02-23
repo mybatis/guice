@@ -42,7 +42,7 @@
                 Modules are JSR330'ed.
             </action>
             <action dev="simone.tripodi" type="add">
-                Added BonCP in the supported datasource providers.
+                Added BoneCP in the supported datasource providers.
             </action>
             <action dev="simone.tripodi" type="add">
                 Added H2DB in the supported JDBC Helpers.
