@@ -41,7 +41,7 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to insert {0} contact"
+            exceptionMessage = "Impossible to insert %s contact"
     )
     public void brokenInsert(final Contact contact) throws CustomException {
         this.contactMapper.brokenAdd(contact);
@@ -50,7 +50,7 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to insert {0} contact"
+            exceptionMessage = "Impossible to insert %s contact"
     )
     public void insert(final Contact contact) throws CustomException {
         this.contactMapper.add(contact);
@@ -59,7 +59,7 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to delete contact with ID {0}"
+            exceptionMessage = "Impossible to delete contact with ID %s"
     )
     public void delete(final Integer id) throws CustomException {
         this.contactMapper.delete(id);
@@ -68,7 +68,7 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "An error occurred when selecting contact with ID {0}"
+            exceptionMessage = "An error occurred when selecting contact with ID %s"
     )
     public Contact selectById(final Integer id) throws CustomException {
         return this.contactMapper.getById(id);
@@ -86,7 +86,7 @@ public class ContactMapperClient {
     @Transactional(
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "An error occurred when updating contact {0}"
+            exceptionMessage = "An error occurred when updating contact %s"
     )
     public void update(final Contact contact) throws CustomException {
         this.contactMapper.update(contact);

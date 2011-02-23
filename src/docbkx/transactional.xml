@@ -209,7 +209,7 @@ public final class FooDAOImpl {
                         <td>exceptionMessage</td>
                         <td>empty string</td>
                         <td>A custom error message when throwing the custom exception;
-                        it supports <literal>java.text.MessageFormat</literal>
+                        it supports <literal>java.util.Formatter</literal>
                         place holders, intercepted method arguments will be used
                         as message format arguments.</td>
                     </tr>

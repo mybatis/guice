@@ -17,7 +17,6 @@ package org.mybatis.guice.transactional;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -124,7 +123,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
             Class<?>[] initargsType;
 
             if (transactional.exceptionMessage().length() != 0) {
-                errorMessage = MessageFormat.format(transactional.exceptionMessage(), invocation.getArguments());
+                errorMessage = String.format(transactional.exceptionMessage(), invocation.getArguments());
                 initargs = new Object[]{ errorMessage, t };
                 initargsType = MESSAGE_CAUSE_TYPES;
             } else {
