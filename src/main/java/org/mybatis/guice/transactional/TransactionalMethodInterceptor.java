@@ -69,25 +69,22 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
 
         String debugPrefix = null;
         if (this.log.isDebugEnabled()) {
-            debugPrefix = "[Intercepted method: "
-                + interceptedMethod.toGenericString()
-                + "]";
+            debugPrefix = String.format("[Intercepted method: %s]", interceptedMethod.toGenericString());
         }
 
         boolean isSessionInherited = this.sqlSessionManager.isManagedSessionStarted();
 
         if (isSessionInherited) {
             if (this.log.isDebugEnabled()) {
-                this.log.debug(debugPrefix
-                        + " - SqlSession already set for thread: "
-                        + Thread.currentThread().getId());
+                this.log.debug(String.format("%s - SqlSession already set for thread: %s",
+                        debugPrefix,
+                        Thread.currentThread().getId()));
             }
         } else {
             if (this.log.isDebugEnabled()) {
-                this.log.debug(debugPrefix
-                        + " - SqlSession not set for thread: "
-                        + Thread.currentThread().getId()
-                        + ", creating a new one");
+                this.log.debug(String.format("%s - SqlSession not set for thread: %s, creating a new one",
+                        debugPrefix,
+                        Thread.currentThread().getId()));
             }
 
             if (TransactionIsolationLevel.NONE == transactional.isolationLevel()) {
@@ -141,22 +138,17 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                 try {
                     rethrowEx = exceptionConstructor.newInstance(initargs);
                 } catch (Exception e) {
-                    errorMessage = "Impossible to re-throw '"
-                        + transactional.rethrowExceptionsAs().getName()
-                        + "', it needs the constructor with "
-                        + Arrays.toString(initargsType)
-                        + " argument(s).";
+                    errorMessage = String.format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
+                            transactional.rethrowExceptionsAs().getName(),
+                            Arrays.toString(initargsType));
                     this.log.error(errorMessage, e);
                     rethrowEx = new RuntimeException(errorMessage, e);
                 }
             } else {
-                errorMessage = "Impossible to re-throw '"
-                    + transactional.rethrowExceptionsAs().getName()
-                    + "', it needs the constructor with "
-                    + Arrays.toString(CAUSE_TYPES)
-                    + " or "
-                    + Arrays.toString(MESSAGE_CAUSE_TYPES)
-                    + " arguments.";
+                errorMessage = String.format("Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).",
+                        transactional.rethrowExceptionsAs().getName(),
+                        Arrays.toString(CAUSE_TYPES),
+                        Arrays.toString(MESSAGE_CAUSE_TYPES));
                 this.log.error(errorMessage);
                 rethrowEx = new RuntimeException(errorMessage);
             }
@@ -177,18 +169,16 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                 }
 
                 if (this.log.isDebugEnabled()) {
-                    this.log.debug(debugPrefix
-                            + " - SqlSession of thread: "
-                            + Thread.currentThread().getId()
-                            + " terminated its life-cycle, closing it");
+                    this.log.debug(String.format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
+                            debugPrefix,
+                            Thread.currentThread().getId()));
                 }
 
                 this.sqlSessionManager.close();
             } else if (this.log.isDebugEnabled()) {
-                this.log.debug(debugPrefix
-                        + " - SqlSession of thread: "
-                        + Thread.currentThread().getId()
-                        + " is inherited, skipped close operation");
+                this.log.debug(String.format("%s - SqlSession of thread: %s is inherited, skipped close operation",
+                        debugPrefix,
+                        Thread.currentThread().getId()));
             }
         }
 
