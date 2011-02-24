@@ -76,7 +76,7 @@ public @interface Transactional {
      * arguments will be used as message format arguments.
      *
      * @return a custom error message when throwing the custom exception.
-     * @see java.text.MessageFormat#format(String, Object...)
+     * @see java.util.Formatter#format(String, Object...)
      */
     String exceptionMessage() default "";
 
