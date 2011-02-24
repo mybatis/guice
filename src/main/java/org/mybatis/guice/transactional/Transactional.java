@@ -72,7 +72,7 @@ public @interface Transactional {
     /**
      * A custom error message when throwing the custom exception.
      *
-     * It supports java.text.MessageFormat place holders, intercepted method
+     * It supports java.util.Formatter place holders, intercepted method
      * arguments will be used as message format arguments.
      *
      * @return a custom error message when throwing the custom exception.
