@@ -47,6 +47,9 @@
             <listitem>
                 <para><ulink url="http://www.mchange.com/projects/c3p0/index.html">C3P0</ulink>.</para>
             </listitem>
+            <listitem>
+                <para><ulink url="http://jolbox.com/">BoneCP</ulink>.</para>
+            </listitem>
         </orderedlist>
     </para>
 
