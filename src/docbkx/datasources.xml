@@ -51,6 +51,7 @@
     </para>
 
     <xi:include href="datasources/builtin.xml" />
+    <xi:include href="datasources/bonecp.xml" />
     <xi:include href="datasources/c3p0.xml" />
     <xi:include href="datasources/dbcp.xml" />
 
