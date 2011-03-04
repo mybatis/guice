@@ -69,7 +69,7 @@
                         <configuration>
                             <excludes>
                                 <!--
-                                 | compile|provided dependencies
+                                 | compile|provided and transitive dependencies
                                 -->
                                 <exclude>org.mybatis:mybatis</exclude>
                                 <exclude>com.google.inject:guice</exclude>
@@ -78,6 +78,9 @@
                                 <exclude>c3p0:c3p0</exclude>
                                 <exclude>commons-dbcp:commons-dbcp</exclude>
                                 <exclude>commons-pool:commons-pool</exclude>
+                                <exclude>com.jolbox:bonecp</exclude>
+                                <exclude>com.google.guava:guava</exclude>
+                                <exclude>org.slf4j:slf4j-api</exclude>
                                 <!--
                                  | test dependencies
                                 -->
