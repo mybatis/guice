@@ -28,7 +28,13 @@
     </properties>
 
     <body>
-        <release version="1.1.0" date="TBD" description="bugfix release">
+        <release version="1.1.1" date="2011-03-TBD" description="bugfix release">
+            <action dev="simone.tripodi" type="fix">
+                Fixed Provider&lt;DatSource&gt; type, must be JSR330'ed, thanks to Marzia Forli
+            </action>
+        </release>
+
+        <release version="1.1.0" date="2011-03-04" description="bugfix release">
             <action dev="simone.tripodi" type="update" issue="179">
                 Remove mapper order restriction when referencing SQL fragment in another file.
             </action>

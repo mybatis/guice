@@ -18,13 +18,13 @@ package org.mybatis.guice.datasource.dbcp;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 /**

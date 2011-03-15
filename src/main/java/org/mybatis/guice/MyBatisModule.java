@@ -23,9 +23,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.io.ResolverUtil;
@@ -47,7 +48,6 @@ import org.mybatis.guice.iterables.Each;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Module;
-import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;

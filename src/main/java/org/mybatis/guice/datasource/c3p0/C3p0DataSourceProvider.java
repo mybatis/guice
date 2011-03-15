@@ -18,10 +18,10 @@ package org.mybatis.guice.datasource.c3p0;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 

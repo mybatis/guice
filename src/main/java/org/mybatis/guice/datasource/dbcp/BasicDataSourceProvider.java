@@ -19,12 +19,12 @@ import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 /**

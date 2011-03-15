@@ -17,12 +17,12 @@ package org.mybatis.guice.datasource.builtin;
 
 import java.util.Properties;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 /**

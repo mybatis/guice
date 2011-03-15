@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
+import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 /**

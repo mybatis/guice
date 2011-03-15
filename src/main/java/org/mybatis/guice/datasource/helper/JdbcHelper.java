@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import static com.google.inject.util.Providers.guicify;
+
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Module;
@@ -129,7 +131,7 @@ public enum JdbcHelper implements Module {
 
     public void configure(Binder binder) {
         binder.bindConstant().annotatedWith(JDBC_DRIVER).to(this.driverClass);
-        binder.bind(Key.get(String.class, JDBC_URL)).toProvider(new Formatter(this.urlTemplate));
+        binder.bind(Key.get(String.class, JDBC_URL)).toProvider(guicify(new Formatter(this.urlTemplate)));
     }
 
 }

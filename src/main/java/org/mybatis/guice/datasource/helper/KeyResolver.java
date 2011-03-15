@@ -15,10 +15,11 @@
  */
 package org.mybatis.guice.datasource.helper;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Provider;
 import com.google.inject.name.Names;
 
 /**
