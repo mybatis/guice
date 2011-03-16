@@ -15,8 +15,11 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.util.Providers.guicify;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
+import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
@@ -62,6 +65,10 @@ abstract class AbstractMyBatisModule implements Module {
         } finally {
             this.binder = null;
         }
+    }
+
+    protected final <T> void bindMapper(Class<T> mapperType) {
+        binder().bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
     }
 
     /**

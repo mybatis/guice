@@ -17,7 +17,6 @@ package org.mybatis.guice;
 
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static com.google.inject.util.Providers.guicify;
 import static java.util.Arrays.asList;
 
 import java.util.Collection;
@@ -43,7 +42,6 @@ import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider;
 import org.mybatis.guice.environment.EnvironmentProvider;
-import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Scopes;
@@ -315,13 +313,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         for (Class<?> mapperClass : mapperClasses) {
+            mappers.addBinding().toInstance(mapperClass);
             bindMapper(mapperClass);
         }
-    }
-
-    private <T> void bindMapper(Class<T> mapperType) {
-        mappers.addBinding().toInstance(mapperType);
-        binder().bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
     }
 
     /**

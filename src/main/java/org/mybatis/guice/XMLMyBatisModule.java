@@ -15,8 +15,6 @@
  */
 package org.mybatis.guice;
 
-import static org.mybatis.guice.iterables.Iterables.foreach;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -121,19 +119,25 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
             // bind mappers
             @SuppressWarnings("unchecked")
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
-            foreach(mapperClasses).handle(new EachMapper(this.binder()));
+            for (Class<?> mapperType : mapperClasses) {
+                bindMapper(mapperType);
+            }
 
             // request injection for type handlers
             @SuppressWarnings("unchecked")
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
-                foreach(mappedTypeHandler.values()).handle(new EachRequestInjection<TypeHandler>(this.binder()));
+                for (TypeHandler handler : mappedTypeHandler.values()) {
+                    binder().requestInjection(handler);
+                }
             }
 
             // request injection for interceptors
             @SuppressWarnings("unchecked")
             Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
-            foreach(interceptors).handle(new EachRequestInjection<Interceptor>(this.binder()));
+            for (Interceptor interceptor : interceptors) {
+                binder().requestInjection(interceptor);
+            }
         } catch (Exception e) {
             binder().addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
                     + this.classPathResource
