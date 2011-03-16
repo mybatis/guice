@@ -19,7 +19,6 @@ import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.util.Providers.guicify;
 import static java.util.Arrays.asList;
-import static org.mybatis.guice.iterables.Iterables.foreach;
 
 import java.util.Collection;
 import java.util.Set;
@@ -44,7 +43,6 @@ import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider;
 import org.mybatis.guice.environment.EnvironmentProvider;
-import org.mybatis.guice.iterables.Each;
 import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
@@ -195,11 +193,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @return this {@code Builder} instance.
      */
     protected final void addSimpleAliases(final Collection<Class<?>> types) {
-        foreach(types).handle(new Each<Class<?>>() {
-            public void doHandle(Class<?> clazz) {
-                addAlias(clazz.getSimpleName()).to(clazz);
-            }
-        });
+        if (types == null) {
+            throw new IllegalArgumentException("Parameter 'types' must be not null");
+        }
+
+        for (Class<?> type : types) {
+            addAlias(type.getSimpleName()).to(type);
+        }
     }
 
     /**
