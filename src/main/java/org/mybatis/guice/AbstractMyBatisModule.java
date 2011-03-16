@@ -21,7 +21,8 @@ import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
-import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 import com.google.inject.Scopes;
 import com.google.inject.matcher.Matchers;
 
@@ -29,21 +30,55 @@ import com.google.inject.matcher.Matchers;
  *
  * @version $Id$
  */
-abstract class AbstractMyBatisModule extends AbstractModule {
+abstract class AbstractMyBatisModule implements Module {
+
+    private Binder binder;
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void configure() {
+    public void configure(Binder binder) {
+        if (this.binder != null) {
+            throw new IllegalArgumentException("Re-entry is not allowed");
+        }
+
+        if (binder == null) {
+            throw new IllegalArgumentException("Parameter 'binder' must be not null");
+        }
+
+        this.binder = binder;
+
         // sql session manager
-        this.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
-        this.bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
+        binder.bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
+        binder.bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-        this.requestInjection(interceptor);
-        this.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
+        binder.requestInjection(interceptor);
+        binder.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
+
+        try {
+            this.internalConfigure();
+        } finally {
+            this.binder = null;
+        }
+    }
+
+    /**
+     * Configures a {@link Binder} via the exposed methods.
+     */
+    protected abstract void internalConfigure();
+
+    /**
+     * Configures a {@link Binder} via the exposed methods.
+     */
+    protected abstract void configure();
+
+    /**
+     * Gets direct access to the underlying {@code Binder}.
+     */
+    protected final Binder binder() {
+        return this.binder;
     }
 
 }

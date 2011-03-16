@@ -82,10 +82,15 @@ public class SampleSqlSessionTest {
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>();
         modules.add(JdbcHelper.HSQLDB_Embedded);
-        modules.add(new MyBatisModule.Builder()
-            .setDataSourceProviderType(PooledDataSourceProvider.class)
-            .addMapperClasses(UserMapper.class)
-            .create());
+        modules.add(new MyBatisModule() {
+
+            @Override
+            protected void configure() {
+                setDataSourceProviderType(PooledDataSourceProvider.class);
+                addMapperClasses(UserMapper.class);
+            }
+
+        });
 //        modules.add(new XMLMyBatisModule.Builder()
 //            .setEnvironmentId("test")
 //            .setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml")

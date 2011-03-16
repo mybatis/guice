@@ -61,14 +61,21 @@ public class SampleBasicTest {
         this.injector = Guice.createInjector(
                 JdbcHelper.HSQLDB_Embedded,
                 new Module() {
+
                     public void configure(Binder binder) {
                         Names.bindProperties(binder, createTestProperties());
                         binder.bind(FooService.class).to(FooServiceMapperImpl.class);
                     }
+
                 },
-                new MyBatisModule.Builder()
-                    .addMapperClasses(UserMapper.class)
-                    .create()
+                new MyBatisModule() {
+
+                    @Override
+                    protected void configure() {
+                        addMapperClasses(UserMapper.class);
+                    }
+
+                }
         );
 
         // prepare the test db

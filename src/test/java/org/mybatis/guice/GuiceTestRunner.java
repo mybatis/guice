@@ -42,13 +42,18 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
         List<Module> modules = new ArrayList<Module>(3);
 
         modules.add(JdbcHelper.HSQLDB_Embedded);
-        modules.add(new MyBatisModule.Builder()
-                        .setDataSourceProviderType(PooledDataSourceProvider.class)
-                        .addMapperClasses(ContactMapper.class)
-                        .addTypeHandler(CustomType.class, CustomLongTypeHandler.class)
-                        .addTypeHandler(Address.class, AddressTypeHandler.class)
-                        .addInterceptorsClasses(CountUpdateInterceptor.class)
-                        .create());
+        modules.add(new MyBatisModule() {
+
+            @Override
+            protected void configure() {
+                setDataSourceProviderType(PooledDataSourceProvider.class);
+                addMapperClasses(ContactMapper.class);
+                handleType(CustomType.class).with(CustomLongTypeHandler.class);
+                handleType(Address.class).with(AddressTypeHandler.class);
+                addInterceptorsClasses(CountUpdateInterceptor.class);
+            }
+
+        });
 
         return modules;
     }

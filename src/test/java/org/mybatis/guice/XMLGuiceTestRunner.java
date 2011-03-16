@@ -37,7 +37,14 @@ public final class XMLGuiceTestRunner extends AbstractGuiceTestRunner {
     @Override
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>(2);
-        modules.add(new XMLMyBatisModule.Builder().setEnvironmentId("test").create());
+        modules.add(new XMLMyBatisModule() {
+
+            @Override
+            protected void configure() {
+                setEnvironmentId("test");
+            }
+
+        });
         return modules;
     }
 

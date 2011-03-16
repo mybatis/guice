@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice;
 
-import static org.mybatis.guice.iterables.Iterables.*;
+import static org.mybatis.guice.iterables.Iterables.foreach;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -36,7 +36,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.google.inject.Module;
 import com.google.inject.spi.Message;
 
 /**
@@ -45,7 +44,11 @@ import com.google.inject.spi.Message;
  *
  * @version $Id$
  */
-public final class XMLMyBatisModule extends AbstractMyBatisModule {
+public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
+
+    private static final String DEFAULT_CONFIG_RESOURCE = "mybatis-config.xml";
+
+    private static final String DEFAULT_ENVIRONMENT_ID = "development";
 
     private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
 
@@ -53,25 +56,53 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String INTERCEPTORS = "interceptorChain.interceptors";
 
-    private final String classPathResource;
+    private String classPathResource = DEFAULT_CONFIG_RESOURCE;
 
-    private final String environmentId;
+    private String environmentId = DEFAULT_ENVIRONMENT_ID;
 
-    private final Properties properties;
+    private Properties properties = new Properties();
 
-    private XMLMyBatisModule(String classPathResource, String environmentId, Properties properties) {
+    /**
+     * Set the MyBatis configuration class path resource.
+     *
+     * @param classPathResource the MyBatis configuration class path resource
+     */
+    protected final void setClassPathResource(String classPathResource) {
+        if (classPathResource == null) {
+            throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
+        }
         this.classPathResource = classPathResource;
+    }
+
+    /**
+     * Set the MyBatis configuration environment id.
+     *
+     * @param environmentId the MyBatis configuration environment id
+     */
+    protected final void setEnvironmentId(String environmentId) {
+        if (environmentId == null) {
+            throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
+        }
         this.environmentId = environmentId;
-        this.properties = properties;
+    }
+
+    /**
+     * Add the variables will be used to replace placeholders in the MyBatis configuration.
+     *
+     * @param properties the variables will be used to replace placeholders in the MyBatis configuration
+     */
+    protected final void addProperties(Properties properties) {
+        if (properties != null) {
+            this.properties.putAll(properties);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
-    protected void configure() {
-        super.configure();
+    protected final void internalConfigure() {
+        this.configure();
 
         Reader reader = null;
         try {
@@ -79,7 +110,7 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
                     this.environmentId,
                     this.properties);
-            this.bind(SqlSessionFactory.class).toInstance(sessionFactory);
+            binder().bind(SqlSessionFactory.class).toInstance(sessionFactory);
 
             Configuration configuration = sessionFactory.getConfiguration();
 
@@ -88,20 +119,23 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
             context.setRoot(configuration);
 
             // bind mappers
+            @SuppressWarnings("unchecked")
             Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
             foreach(mapperClasses).handle(new EachMapper(this.binder()));
 
             // request injection for type handlers
+            @SuppressWarnings("unchecked")
             Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
                 foreach(mappedTypeHandler.values()).handle(new EachRequestInjection<TypeHandler>(this.binder()));
             }
 
             // request injection for interceptors
+            @SuppressWarnings("unchecked")
             Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
             foreach(interceptors).handle(new EachRequestInjection<Interceptor>(this.binder()));
         } catch (Exception e) {
-            this.addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
+            binder().addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
                     + this.classPathResource
                     + "', see nested exceptions", e));
         } finally {
@@ -113,77 +147,6 @@ public final class XMLMyBatisModule extends AbstractMyBatisModule {
                 }
             }
         }
-    }
-
-    /**
-     * The {@link XMLMyBatisModule} Builder.
-     *
-     * By default the builder looks for {@code mybatis-config.xml} resource in the root class path,
-     * {@code development} as environment id and an empty variables definition.
-     */
-    public static final class Builder {
-
-        private static final String DEFAULT_CONFIG_RESOURCE = "mybatis-config.xml";
-
-        private static final String DEFAULT_ENVIRONMENT_ID = "development";
-
-        private String classPathResource = DEFAULT_CONFIG_RESOURCE;
-
-        private String environmentId = DEFAULT_ENVIRONMENT_ID;
-
-        private Properties properties = new Properties();
-
-        /**
-         * Set the MyBatis configuration class path resource.
-         *
-         * @param classPathResource the MyBatis configuration class path resource.
-         * @return this {@code Builder} instance.
-         */
-        public Builder setClassPathResource(String classPathResource) {
-            if (classPathResource == null) {
-                throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
-            }
-            this.classPathResource = classPathResource;
-            return this;
-        }
-
-        /**
-         * Set the MyBatis configuration environment id.
-         *
-         * @param environmentId the MyBatis configuration environment id.
-         * @return this {@code Builder} instance.
-         */
-        public Builder setEnvironmentId(String environmentId) {
-            if (environmentId == null) {
-                throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
-            }
-            this.environmentId = environmentId;
-            return this;
-        }
-
-        /**
-         * Add the variables will be used to replace placeholders in the MyBatis configuration.
-         *
-         * @param properties the variables will be used to replace placeholders in the MyBatis configuration.
-         * @return this {@code Builder} instance.
-         */
-        public Builder addProperties(Properties properties) {
-            if (properties != null) {
-                this.properties.putAll(properties);
-            }
-            return this;
-        }
-
-        /**
-         * Create a new {@link XMLMyBatisModule} instance based on this {@link Builder}
-         * instance configuration.
-         *
-         * @return a new {@link XMLMyBatisModule} instance.
-         */
-        public Module create() {
-            return new XMLMyBatisModule(this.classPathResource, this.environmentId, this.properties);
-        }
-
     }
 
 }
