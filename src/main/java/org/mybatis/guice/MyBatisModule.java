@@ -176,8 +176,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
      *
-     * @param types the specified types have to be bind.
-     * @return this {@code Builder} instance.
+     * @param types the specified types have to be bind
      */
     protected final void addSimpleAliases(final Class<?>...types) {
         if (types != null) {
@@ -189,8 +188,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
      *
-     * @param types the specified types have to be bind.
-     * @return this {@code Builder} instance.
+     * @param types the specified types have to be bind
      */
     protected final void addSimpleAliases(final Collection<Class<?>> types) {
         if (types == null) {
@@ -208,8 +206,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
      *
      * @param packageName the specified package to search for classes to alias.
-     * @param test a test to run against the objects found in the specified package.
-     * @return this {@code Builder} instance.
+     * @param test a test to run against the objects found in the specified package
      */
     protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
         this.addSimpleAliases(getClasses(test, packageName));
@@ -220,8 +217,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
      *
-     * @param packageName the specified package to search for classes to alias.
-     * @return this {@code Builder} instance.
+     * @param packageName the specified package to search for classes to alias
      */
     protected final void addSimpleAliases(final String packageName) {
         this.addSimpleAliases(getClasses(packageName));
@@ -256,9 +252,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adds the user defined myBatis interceptors plugins types, letting
      * google-guice creating them.
      *
-     * @param interceptorsClasses the user defined MyBatis interceptors plugins types.
-     * @return this {@code Builder} instance.
-     * 
+     * @param interceptorsClasses the user defined MyBatis interceptors plugins types
      */
     protected final void addInterceptorsClasses(Class<? extends Interceptor>...interceptorsClasses) {
         if (interceptorsClasses != null) {
@@ -270,9 +264,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adds the user defined MyBatis interceptors plugins types, letting
      * google-guice creating them.
      *
-     * @param interceptorsClasses the user defined MyBatis Interceptors plugins types.
-     * @return this {@code Builder} instance.
-     * 
+     * @param interceptorsClasses the user defined MyBatis Interceptors plugins types
      */
     protected final void addInterceptorsClasses(Collection<Class<? extends Interceptor>> interceptorsClasses) {
         if (interceptorsClasses == null) {
