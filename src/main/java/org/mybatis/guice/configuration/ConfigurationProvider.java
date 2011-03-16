@@ -15,11 +15,8 @@
  */
 package org.mybatis.guice.configuration;
 
-import static org.mybatis.guice.iterables.Iterables.foreach;
-
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -35,7 +32,6 @@ import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.guice.iterables.Each;
 
 import com.google.inject.ProvisionException;
 
@@ -247,28 +243,23 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setObjectFactory(this.objectFactory);
 
         try {
-            foreach(this.typeAliases).handle(new Each<Map.Entry<String,Class<?>>>() {
-                public void doHandle(Entry<String, Class<?>> alias) {
-                    configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+            for (Map.Entry<String,Class<?>> alias : this.typeAliases.entrySet()) {
+                configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
+            }
+
+            for (Map.Entry<Class<?>,TypeHandler> typeHandler : this.typeHandlers.entrySet()) {
+                configuration.getTypeHandlerRegistry().register(typeHandler.getKey(), typeHandler.getValue());
+            }
+
+            for (Class<?> mapperClass : this.mapperClasses) {
+                if (!configuration.hasMapper(mapperClass)) {
+                    configuration.addMapper(mapperClass);
                 }
-            });
-            foreach(this.typeHandlers).handle(new Each<Map.Entry<Class<?>,TypeHandler>>() {
-                public void doHandle(Entry<Class<?>, TypeHandler> typeHandler) {
-                    configuration.getTypeHandlerRegistry().register(typeHandler.getKey(), typeHandler.getValue());
-                }
-            });
-            foreach(this.mapperClasses).handle(new Each<Class<?>>() {
-                public void doHandle(Class<?> mapperClass) {
-                    if (!configuration.hasMapper(mapperClass)) {
-                        configuration.addMapper(mapperClass);
-                    }
-                }
-            });
-            foreach(this.plugins).handle(new Each<Interceptor>() {
-                public void doHandle(Interceptor interceptor) {
-                    configuration.addInterceptor(interceptor);
-                }
-            });
+            }
+
+            for (Interceptor interceptor : this.plugins) {
+                configuration.addInterceptor(interceptor);
+            }
 
             if (this.failFast) {
                 configuration.getMappedStatementNames();
