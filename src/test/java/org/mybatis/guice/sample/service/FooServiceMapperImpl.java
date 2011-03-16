@@ -19,7 +19,7 @@ import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.sample.mapper.UserMapper;
 import org.mybatis.guice.transactional.Transactional;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 /**
  * Impl of the FooService.

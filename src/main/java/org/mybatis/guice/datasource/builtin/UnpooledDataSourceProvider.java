@@ -18,13 +18,12 @@ package org.mybatis.guice.datasource.builtin;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import javax.inject.Named;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.
@@ -59,7 +58,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
      *
      * @param autoCommit
      */
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
         this.unpooledDataSource.setAutoCommit(autoCommit);
     }
@@ -69,7 +68,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
      *
      * @param loginTimeout
      */
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
         try {
             this.unpooledDataSource.setLoginTimeout(loginTimeout);
@@ -80,7 +79,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
         }
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named("JDBC.driverProperties") final Properties driverProperties) {
         this.unpooledDataSource.setDriverProperties(driverProperties);
     }

@@ -26,7 +26,7 @@ import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 /**
  * Method interceptor for {@link Transactional} annotation.

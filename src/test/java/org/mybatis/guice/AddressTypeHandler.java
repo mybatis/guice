@@ -24,7 +24,7 @@ import java.text.ParseException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 /**
  * @version $Id$

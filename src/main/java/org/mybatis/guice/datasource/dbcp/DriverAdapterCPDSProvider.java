@@ -15,13 +15,12 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
-
-import com.google.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.
@@ -49,47 +48,47 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
         this.adapter.setPassword(password);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDescription(@Named("DBCP.description") String description) {
         this.adapter.setDescription(description);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") int seconds) {
         this.adapter.setLoginTimeout(seconds);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxActive(@Named("DBCP.maxActive") int maxActive) {
         this.adapter.setMaxActive(maxActive);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxIdle(@Named("DBCP.maxIdle") int maxIdle) {
         this.adapter.setMaxIdle(maxIdle);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxPreparedStatements(@Named("DBCP.maxOpenPreparedStatements") int maxPreparedStatements) {
         this.adapter.setMaxPreparedStatements(maxPreparedStatements);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
         this.adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
         this.adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") boolean poolPreparedStatements) {
         this.adapter.setPoolPreparedStatements(poolPreparedStatements);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setTimeBetweenEvictionRunsMillis(@Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
         this.adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
     }

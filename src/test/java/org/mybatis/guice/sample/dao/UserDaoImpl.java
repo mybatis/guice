@@ -18,7 +18,7 @@ package org.mybatis.guice.sample.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.guice.sample.domain.User;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 /**
  * 

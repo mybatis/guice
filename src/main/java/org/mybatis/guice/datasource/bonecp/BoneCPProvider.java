@@ -18,11 +18,11 @@ package org.mybatis.guice.datasource.bonecp;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
 
-import com.google.inject.Inject;
 import com.jolbox.bonecp.BoneCPDataSource;
 import com.jolbox.bonecp.hooks.ConnectionHook;
 
@@ -35,47 +35,47 @@ public final class BoneCPProvider implements Provider<DataSource> {
 
     private final BoneCPDataSource dataSource = new BoneCPDataSource();
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setAcquireIncrement(@Named("bonecp.acquireIncrement") int acquireIncrement) {
         this.dataSource.setAcquireIncrement(acquireIncrement);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setAcquireRetryAttempts(@Named("bonecp.acquireRetryAttempts") int acquireRetryAttempts) {
         this.dataSource.setAcquireRetryAttempts(acquireRetryAttempts);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setClassLoader(@Named("bonecp.classLoader") ClassLoader classLoader) {
         this.dataSource.setClassLoader(classLoader);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setCloseConnectionWatch(@Named("bonecp.closeConnectionWatch") boolean closeConnectionWatch) {
         this.dataSource.setCloseConnectionWatch(closeConnectionWatch);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setConnectionHook(@Named("bonecp.connectionHook") ConnectionHook connectionHook) {
         this.dataSource.setConnectionHook(connectionHook);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setConnectionHookClassName(@Named("bonecp.connectionHookClassName") String connectionHookClassName) {
         this.dataSource.setConnectionHookClassName(connectionHookClassName);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setConnectionTestStatement(@Named("bonecp.connectionTestStatement") String connectionTestStatement) {
         this.dataSource.setConnectionTestStatement(connectionTestStatement);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDisableConnectionTracking(@Named("bonecp.disableConnectionTracking") boolean disableConnectionTracking) {
         this.dataSource.setDisableConnectionTracking(disableConnectionTracking);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDisableJMX(@Named("bonecp.disableJMX") boolean disableJMX) {
         this.dataSource.setDisableJMX(disableJMX);
     }
@@ -85,33 +85,33 @@ public final class BoneCPProvider implements Provider<DataSource> {
         this.dataSource.setDriverClass(driverClass);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named("bonecp.driverProperties") Properties driverProperties) {
         this.dataSource.setDriverProperties(driverProperties);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriod(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInMinutes(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
         this.dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInSeconds(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
         this.dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setIdleMaxAge(@Named("bonecp.idleMaxAge") long idleMaxAge, @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.dataSource.setIdleMaxAge(idleMaxAge, timeUnit);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setInitSQL(@Named("bonecp.initSQL") String initSQL) {
         this.dataSource.setInitSQL(initSQL);
     }
@@ -121,38 +121,38 @@ public final class BoneCPProvider implements Provider<DataSource> {
         this.dataSource.setJdbcUrl(jdbcUrl);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setLazyInit(@Named("bonecp.lazyInit") boolean lazyInit) {
         this.dataSource.setLazyInit(lazyInit);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setLogStatementsEnabled(@Named("bonecp.logStatementsEnabled") boolean logStatementsEnabled) {
         this.dataSource.setLogStatementsEnabled(logStatementsEnabled);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAge(@Named("bonecp.maxConnectionAge") long maxConnectionAge,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.dataSource.setMaxConnectionAge(maxConnectionAge, timeUnit);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAgeInSeconds(@Named("bonecp.maxConnectionAgeInSeconds") long maxConnectionAgeInSeconds) {
         this.dataSource.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMaxConnectionsPerPartition(@Named("bonecp.maxConnectionsPerPartition") int maxConnectionsPerPartition) {
         this.dataSource.setMaxConnectionsPerPartition(maxConnectionsPerPartition);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setMinConnectionsPerPartition(@Named("bonecp.minConnectionsPerPartition") int minConnectionsPerPartition) {
         this.dataSource.setMinConnectionsPerPartition(minConnectionsPerPartition);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setPartitionCount(@Named("bonecp.partitionCount") int partitionCount) {
         this.dataSource.setPartitionCount(partitionCount);
     }
@@ -162,43 +162,43 @@ public final class BoneCPProvider implements Provider<DataSource> {
         this.dataSource.setPassword(password);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setPoolAvailabilityThreshold(@Named("bonecp.poolAvailabilityThreshold") int poolAvailabilityThreshold) {
         this.dataSource.setPoolAvailabilityThreshold(poolAvailabilityThreshold);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setPoolName(@Named("bonecp.poolName") String poolName) {
         this.dataSource.setPoolName(poolName);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setQueryExecuteTimeLimit(@Named("bonecp.queryExecuteTimeLimit") int queryExecuteTimeLimit,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
         this.dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setReleaseHelperThreads(@Named("bonecp.releaseHelperThreads") int releaseHelperThreads) {
         this.dataSource.setReleaseHelperThreads(releaseHelperThreads);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setServiceOrder(@Named("bonecp.serviceOrder") String serviceOrder) {
         this.dataSource.setServiceOrder(serviceOrder);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setStatementReleaseHelperThreads(@Named("bonecp.statementReleaseHelperThreads") int statementReleaseHelperThreads) {
         this.dataSource.setStatementReleaseHelperThreads(statementReleaseHelperThreads);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setStatementsCacheSize(@Named("bonecp.statementsCacheSize") int statementsCacheSize) {
         this.dataSource.setStatementsCacheSize(statementsCacheSize);
     }
 
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setTransactionRecoveryEnabled(@Named("bonecp.transactionRecoveryEnabled") boolean transactionRecoveryEnabled) {
         this.dataSource.setTransactionRecoveryEnabled(transactionRecoveryEnabled);
     }

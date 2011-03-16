@@ -17,13 +17,11 @@ package org.mybatis.guice.datasource.builtin;
 
 import java.util.Properties;
 
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
-
-import com.google.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Provides the myBatis built-in JndiDataSourceFactory.
@@ -42,7 +40,7 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
      *
      * @param initialContext
      */
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setInitialContext(@Named("jndi.initialContext") final String initialContext) {
         this.properties.setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, initialContext);
     }
@@ -52,7 +50,7 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
      *
      * @param dataSource
      */
-    @Inject(optional = true)
+    @com.google.inject.Inject(optional = true)
     public void setDataSource(@Named("jndi.dataSource") final String dataSource) {
         this.properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
     }
