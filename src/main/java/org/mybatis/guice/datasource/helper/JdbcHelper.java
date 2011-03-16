@@ -15,13 +15,12 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Module;
-import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 /**
  * Helper to bind <code>JDBC.driver</code> and <code>JDBC.url</code> properties.
@@ -116,9 +115,9 @@ public enum JdbcHelper implements Module {
 
     Sybase_DataDirect("jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}", "com.ddtek.jdbc.sybase.SybaseDriver");
 
-    private static final Named JDBC_DRIVER = Names.named("JDBC.driver");
+    private static final String JDBC_DRIVER = "JDBC.driver";
 
-    private static final Named JDBC_URL = Names.named("JDBC.url");
+    private static final String JDBC_URL = "JDBC.url";
 
     private final String urlTemplate;
 
@@ -130,8 +129,8 @@ public enum JdbcHelper implements Module {
     }
 
     public void configure(Binder binder) {
-        binder.bindConstant().annotatedWith(JDBC_DRIVER).to(this.driverClass);
-        binder.bind(Key.get(String.class, JDBC_URL)).toProvider(guicify(new Formatter(this.urlTemplate)));
+        binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(this.driverClass);
+        binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new Formatter(this.urlTemplate)));
     }
 
 }

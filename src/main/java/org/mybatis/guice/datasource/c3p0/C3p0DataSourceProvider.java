@@ -22,7 +22,7 @@ import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**

@@ -21,7 +21,7 @@ import javax.sql.ConnectionPoolDataSource;
 import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.

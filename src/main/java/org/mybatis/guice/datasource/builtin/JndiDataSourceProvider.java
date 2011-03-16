@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 
 /**
  * Provides the myBatis built-in JndiDataSourceFactory.

@@ -24,7 +24,7 @@ import org.apache.ibatis.datasource.pooled.PooledDataSource;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 
 /**
  * Provides the myBatis built-in PooledDataSource.
