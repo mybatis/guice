@@ -30,7 +30,9 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
@@ -123,6 +125,90 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
             throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
         }
         binder().bindConstant().annotatedWith(named(ENVIRONMENT_ID)).to(environmentId);
+    }
+
+    /**
+     * 
+     * @param lazyLoadingEnabled
+     */
+    protected final void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
+        bindBoolean("mybatis.configuration.lazyLoadingEnabled", lazyLoadingEnabled);
+    }
+
+    /**
+     * 
+     * @param aggressiveLazyLoading
+     */
+    protected final void setAggressiveLazyLoading(boolean aggressiveLazyLoading) {
+        bindBoolean("mybatis.configuration.aggressiveLazyLoading", aggressiveLazyLoading);
+    }
+
+    /**
+     * 
+     * @param multipleResultSetsEnabled
+     */
+    protected final void setMultipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
+        bindBoolean("mybatis.configuration.multipleResultSetsEnabled", multipleResultSetsEnabled);
+    }
+
+    /**
+     * 
+     * @param useGeneratedKeys
+     */
+    protected final void setUseGeneratedKeys(boolean useGeneratedKeys) {
+        bindBoolean("mybatis.configuration.useGeneratedKeys", useGeneratedKeys);
+    }
+
+    /**
+     * 
+     * @param useColumnLabel
+     */
+    protected final void setUseColumnLabel(boolean useColumnLabel) {
+        bindBoolean("mybatis.configuration.useColumnLabel", useColumnLabel);
+    }
+
+    /**
+     * 
+     * @param useCacheEnabled
+     */
+    protected final void setUseCacheEnabled(boolean useCacheEnabled) {
+        bindBoolean("mybatis.configuration.cacheEnabled", useCacheEnabled);
+    }
+
+    /**
+     * 
+     * @param failFast
+     */
+    protected final void setFailFast(boolean failFast) {
+        bindBoolean("mybatis.configuration.failFast", failFast);
+    }
+
+    private final void bindBoolean(String name, boolean value) {
+        binder().bindConstant().annotatedWith(named(name)).to(value);
+    }
+
+    /**
+     * 
+     *
+     * @param executorType
+     */
+    protected final void setExecutorType(ExecutorType executorType) {
+        if (executorType == null) {
+            throw new IllegalArgumentException("Parameter 'executorType' must be not null");
+        }
+        binder().bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
+    }
+
+    /**
+     * Set the MyBatis configuration environment id.
+     *
+     * @param environmentId the MyBatis configuration environment id
+     */
+    protected final void setAutoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
+        if (autoMappingBehavior == null) {
+            throw new IllegalArgumentException("Parameter 'autoMappingBehavior' must be not null");
+        }
+        binder().bindConstant().annotatedWith(named("mybatis.configuration.autoMappingBehavior")).to(autoMappingBehavior);
     }
 
     /**
