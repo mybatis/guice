@@ -67,14 +67,21 @@ abstract class AbstractMyBatisModule implements Module {
         }
     }
 
-    protected final <T> void bindMapper(Class<T> mapperType) {
-        binder().bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+    /**
+     * Set the MyBatis configuration environment id.
+     *
+     * @param environmentId the MyBatis configuration environment id
+     */
+    protected abstract void setEnvironmentId(String environmentId);
+
+    final <T> void bindMapper(Class<T> mapperType) {
+        binder.bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
     }
 
     /**
      * Configures a {@link Binder} via the exposed methods.
      */
-    protected abstract void internalConfigure();
+    abstract void internalConfigure();
 
     /**
      * Configures a {@link Binder} via the exposed methods.
@@ -84,7 +91,7 @@ abstract class AbstractMyBatisModule implements Module {
     /**
      * Gets direct access to the underlying {@code Binder}.
      */
-    protected final Binder binder() {
+    final Binder binder() {
         return this.binder;
     }
 

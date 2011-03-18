@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice;
 
+import static org.apache.ibatis.io.Resources.getResourceAsReader;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -23,7 +25,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.ognl.DefaultMemberAccess;
 import org.apache.ibatis.ognl.Ognl;
 import org.apache.ibatis.ognl.OgnlContext;
@@ -77,6 +78,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      *
      * @param environmentId the MyBatis configuration environment id
      */
+    @Override
     protected final void setEnvironmentId(String environmentId) {
         if (environmentId == null) {
             throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
@@ -99,12 +101,12 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      * {@inheritDoc}
      */
     @Override
-    protected final void internalConfigure() {
+    final void internalConfigure() {
         this.configure();
 
         Reader reader = null;
         try {
-            reader = Resources.getResourceAsReader(this.getClass().getClassLoader(), this.classPathResource);
+            reader = getResourceAsReader(this.getClass().getClassLoader(), this.classPathResource);
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
                     this.environmentId,
                     this.properties);

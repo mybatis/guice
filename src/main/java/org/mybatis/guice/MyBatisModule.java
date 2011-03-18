@@ -17,7 +17,7 @@ package org.mybatis.guice;
 
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static java.util.Arrays.asList;
+import static com.google.inject.name.Names.named;
 
 import java.util.Collection;
 import java.util.Set;
@@ -57,6 +57,8 @@ import com.google.inject.multibindings.Multibinder;
  */
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 
+    private static final String ENVIRONMENT_ID = "mybatis.environment.id";
+
     /**
      * The DataSource Provider class reference.
      */
@@ -84,7 +86,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * {@inheritDoc}
      */
     @Override
-    protected final void internalConfigure() {
+    final void internalConfigure() {
         this.aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
         this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
         this.interceptors = newSetBinder(binder(), Interceptor.class);
@@ -108,6 +110,19 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         binder().bind(DataSource.class).toProvider(this.dataSourceProviderType).in(Scopes.SINGLETON);
         binder().bind(TransactionFactory.class).to(this.transactionFactoryType).in(Scopes.SINGLETON);
         binder().bind(ObjectFactory.class).to(this.objectFactoryType).in(Scopes.SINGLETON);
+    }
+
+    /**
+     * Set the MyBatis configuration environment id.
+     *
+     * @param environmentId the MyBatis configuration environment id
+     */
+    @Override
+    protected final void setEnvironmentId(String environmentId) {
+        if (environmentId == null) {
+            throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
+        }
+        binder().bindConstant().annotatedWith(named(ENVIRONMENT_ID)).to(environmentId);
     }
 
     /**
@@ -176,10 +191,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      *
      * @param types the specified types have to be bind
      */
-    protected final void addSimpleAliases(final Class<?>...types) {
-        if (types != null) {
-            addSimpleAliases(asList(types));
+    protected final void addSimpleAlias(final Class<?> type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Parameter 'type' must be not null");
         }
+
+        addAlias(type.getSimpleName()).to(type);
     }
 
     /**
@@ -194,7 +211,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         for (Class<?> type : types) {
-            addAlias(type.getSimpleName()).to(type);
+            addSimpleAlias(type);
         }
     }
 
@@ -247,15 +264,17 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * Adds the user defined myBatis interceptors plugins types, letting
-     * google-guice creating them.
+     * Adds the user defined myBatis interceptor plugins type, letting
+     * google-guice creating it.
      *
-     * @param interceptorsClasses the user defined MyBatis interceptors plugins types
+     * @param interceptorClasse The user defined MyBatis interceptor plugin type
      */
-    protected final void addInterceptorsClasses(Class<? extends Interceptor>...interceptorsClasses) {
-        if (interceptorsClasses != null) {
-            this.addInterceptorsClasses(asList(interceptorsClasses));
+    protected final void addInterceptorClass(Class<? extends Interceptor> interceptorClass) {
+        if (interceptorClass == null) {
+            throw new IllegalArgumentException("Parameter 'interceptorsClass' must not be null");
         }
+
+        interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
     }
 
     /**
@@ -270,7 +289,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         for (Class<? extends Interceptor> interceptorClass : interceptorsClasses) {
-            interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
+            addInterceptorClass(interceptorClass);
         }
     }
 
@@ -294,12 +313,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      *
      * @param mapperClasses the user defined mapper classes.
      */
-    protected final void addMapperClasses(Class<?>...mapperClasses) {
-        if (mapperClasses == null) {
-            throw new IllegalArgumentException("Parameter 'mapperClasses' must not be null");
+    protected final void addMapperClass(Class<?> mapperClass) {
+        if (mapperClass == null) {
+            throw new IllegalArgumentException("Parameter 'mapperClass' must not be null");
         }
 
-        this.addMapperClasses(asList(mapperClasses));
+        mappers.addBinding().toInstance(mapperClass);
+        bindMapper(mapperClass);
     }
 
     /**
@@ -313,8 +333,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         for (Class<?> mapperClass : mapperClasses) {
-            mappers.addBinding().toInstance(mapperClass);
-            bindMapper(mapperClass);
+            addMapperClass(mapperClass);
         }
     }
 
