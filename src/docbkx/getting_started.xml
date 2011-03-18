@@ -122,16 +122,17 @@ Injector injector = Guice.createInjector(
       <programlisting language="java"><![CDATA[public interface UserMapper {
 ...
 Injector injector = Guice.createInjector(
-    JdbcHelper.HSQLDB_Embedded,
-    new Module() {
-        public void configure(Binder binder) {
+    new MyBatisModule() {
+
+        @Override
+        protected void initialize() {
+            install(JdbcHelper.HSQLDB_Embedded);
             Names.bindProperties(binder, createTestProperties());
-            binder.bind(FooService.class).to(FooServiceMapperImpl.class);
+            addMapperClasses(UserMapper.class);
+            bind(FooService.class).to(FooServiceMapperImpl.class);
         }
-    },
-    new MyBatisModule.Builder()
-        .addMapperClasses(UserMapper.class)
-        .create()
+
+    }
 );]]></programlisting>
    </para>
 

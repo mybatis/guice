@@ -122,9 +122,17 @@ public final class FooDAO {
             <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
 Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
 
-Injector injector = Guice.createInjector(
-    new MyBatisModule(dataSourceProviderClass, txFactoryProviderClass)
-        .addMapperClasses(FooMapper.class, BarMapper.class));
+Injector injector = Guice.createInjector(new MyBatisModule() {
+
+        @Override
+        protected void initialize() {
+            setEnvironmentId("development");
+            setDataSourceProviderType(dataSourceProviderType);
+            addMapperClass(FooMapper.class);
+            addMapperClass(BarMapper.class);
+        }
+
+    }
 );
 
 FooDAO fooDAO = injector.getInstance(FooDAO.class);]]></programlisting>
@@ -133,7 +141,7 @@ FooDAO fooDAO = injector.getInstance(FooDAO.class);]]></programlisting>
             Where <literal>FooDAO</literal> definition is:
             <programlisting language="java"><![CDATA[package com.acme;
 
-import com.google.inject.*;
+import javax.inject.*;
 import org.apache.ibatis.session.*;
 import org.mybatis.guice.transactional.*;
 
