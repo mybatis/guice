@@ -15,6 +15,11 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.Guice.createInjector;
+import static com.google.inject.name.Names.bindProperties;
+import static com.google.inject.name.Names.named;
+import static java.lang.System.currentTimeMillis;
+
 import java.io.StringReader;
 import java.util.List;
 import java.util.Properties;
@@ -28,10 +33,8 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
 import com.google.inject.Binder;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.name.Names;
 
 /**
  * 
@@ -49,29 +52,32 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
             final Contact contact = new Contact();
             contact.setFirstName("John");
             contact.setLastName("Doe");
-            contact.setCreated(new CustomType(System.currentTimeMillis()));
+            contact.setCreated(new CustomType(currentTimeMillis()));
             contact.setAddress(null);
+
             final Contact contactWithAddress = new Contact();
             contactWithAddress.setFirstName("John");
             contactWithAddress.setLastName("Doe");
-            contactWithAddress.setCreated(new CustomType(System.currentTimeMillis()));
+            contactWithAddress.setCreated(new CustomType(currentTimeMillis()));
+
             Address address = new Address();
             address.setNumber(1234);
             address.setStreet("Elm street");
             contactWithAddress.setAddress(address);
+
             final Counter counter = new Counter();
 
             // bindings
             List<Module> modules = this.createMyBatisModule();
             modules.add(new Module() {
                 public void configure(Binder binder) {
-                    Names.bindProperties(binder, createTestProperties());
+                    bindProperties(binder, createTestProperties());
                     binder.bind(Contact.class).toInstance(contact);
-                    binder.bind(Contact.class).annotatedWith(Names.named("contactWithAddress")).toInstance(contactWithAddress);
+                    binder.bind(Contact.class).annotatedWith(named("contactWithAddress")).toInstance(contactWithAddress);
                     binder.bind(Counter.class).toInstance(counter);
                 }
             });
-            this.injector = Guice.createInjector(modules);
+            this.injector = createInjector(modules);
 
             // prepare the test db
             Environment environment = this.injector.getInstance(SqlSessionFactory.class).getConfiguration().getEnvironment();

@@ -87,7 +87,7 @@ public class SampleSqlSessionTest {
             @Override
             protected void configure() {
                 setDataSourceProviderType(PooledDataSourceProvider.class);
-                addMapperClasses(UserMapper.class);
+                addMapperClass(UserMapper.class);
             }
 
         });

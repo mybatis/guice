@@ -31,10 +31,10 @@ import org.mybatis.guice.transactional.Transactional;
 @Singleton
 public class ContactMapperClient {
 
-    private final ContactMapper contactMapper;
-
     @Inject
-    public ContactMapperClient(ContactMapper contactMapper) {
+    private ContactMapper contactMapper;
+
+    public void setContactMapper(ContactMapper contactMapper) {
         this.contactMapper = contactMapper;
     }
 

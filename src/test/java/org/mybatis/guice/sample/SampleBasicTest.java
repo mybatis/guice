@@ -15,6 +15,9 @@
  */
 package org.mybatis.guice.sample;
 
+import static com.google.inject.Guice.createInjector;
+import static com.google.inject.name.Names.bindProperties;
+import static org.apache.ibatis.io.Resources.getResourceAsReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -22,7 +25,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -36,10 +38,8 @@ import org.mybatis.guice.sample.service.FooService;
 import org.mybatis.guice.sample.service.FooServiceMapperImpl;
 
 import com.google.inject.Binder;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.name.Names;
 
 /**
  * Example of MyBatis-Guice basic integration usage.
@@ -58,21 +58,23 @@ public class SampleBasicTest {
     public void setupMyBatisGuice() throws Exception {
 
         // bindings
-        this.injector = Guice.createInjector(
+        this.injector = createInjector(
                 JdbcHelper.HSQLDB_Embedded,
+
                 new Module() {
 
                     public void configure(Binder binder) {
-                        Names.bindProperties(binder, createTestProperties());
+                        bindProperties(binder, createTestProperties());
                         binder.bind(FooService.class).to(FooServiceMapperImpl.class);
                     }
 
                 },
+
                 new MyBatisModule() {
 
                     @Override
                     protected void configure() {
-                        addMapperClasses(UserMapper.class);
+                        addMapperClass(UserMapper.class);
                     }
 
                 }
@@ -84,8 +86,8 @@ public class SampleBasicTest {
         ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
         runner.setAutoCommit(true);
         runner.setStopOnError(true);
-        runner.runScript(Resources.getResourceAsReader("org/mybatis/guice/sample/db/database-schema.sql"));
-        runner.runScript(Resources.getResourceAsReader("org/mybatis/guice/sample/db/database-test-data.sql"));
+        runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-schema.sql"));
+        runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-test-data.sql"));
         runner.closeConnection();
 
         this.fooService = this.injector.getInstance(FooService.class);

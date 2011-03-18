@@ -37,7 +37,6 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>(3);
 
@@ -47,10 +46,10 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
             @Override
             protected void configure() {
                 setDataSourceProviderType(PooledDataSourceProvider.class);
-                addMapperClasses(ContactMapper.class);
+                addMapperClass(ContactMapper.class);
                 handleType(CustomType.class).with(CustomLongTypeHandler.class);
                 handleType(Address.class).with(AddressTypeHandler.class);
-                addInterceptorsClasses(CountUpdateInterceptor.class);
+                addInterceptorClass(CountUpdateInterceptor.class);
             }
 
         });
