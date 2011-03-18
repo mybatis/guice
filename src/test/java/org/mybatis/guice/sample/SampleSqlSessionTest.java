@@ -32,6 +32,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mybatis.guice.MyBatisModule;
+// import org.mybatis.guice.XMLMyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 import org.mybatis.guice.sample.dao.UserDao;
@@ -91,10 +92,15 @@ public class SampleSqlSessionTest {
             }
 
         });
-//        modules.add(new XMLMyBatisModule.Builder()
-//            .setEnvironmentId("test")
-//            .setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml")
-//            .create());
+        /* modules.add(new XMLMyBatisModule() {
+
+            @Override
+            protected void initialize() {
+                setEnvironmentId("test");
+                setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml");
+            }
+
+        }); */
         modules.add(new Module() {
             public void configure(Binder binder) {
                 bindProperties(binder, createTestProperties());
