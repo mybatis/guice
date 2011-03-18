@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
 import static com.google.inject.util.Providers.guicify;
 
 import org.apache.ibatis.session.SqlSession;
@@ -27,7 +29,6 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
-import com.google.inject.matcher.Matchers;
 
 /**
  *
@@ -47,7 +48,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
         binder().requestInjection(interceptor);
-        binder().bindInterceptor(Matchers.any(), Matchers.annotatedWith(Transactional.class), interceptor);
+        binder().bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
 
         internalConfigure();
     }
