@@ -16,17 +16,16 @@
 package org.mybatis.guice;
 
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
+import static org.apache.ibatis.ognl.Ognl.getValue;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import org.apache.ibatis.ognl.DefaultMemberAccess;
-import org.apache.ibatis.ognl.Ognl;
 import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
@@ -34,8 +33,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-
-import com.google.inject.spi.Message;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -120,14 +117,14 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
             // bind mappers
             @SuppressWarnings("unchecked")
-            Set<Class<?>> mapperClasses = (Set<Class<?>>) Ognl.getValue(KNOWN_MAPPERS, context, configuration);
+            Set<Class<?>> mapperClasses = (Set<Class<?>>) getValue(KNOWN_MAPPERS, context, configuration);
             for (Class<?> mapperType : mapperClasses) {
                 bindMapper(mapperType);
             }
 
             // request injection for type handlers
             @SuppressWarnings("unchecked")
-            Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) Ognl.getValue(TYPE_HANDLERS, context, configuration);
+            Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
                 for (TypeHandler handler : mappedTypeHandler.values()) {
                     binder().requestInjection(handler);
@@ -136,14 +133,14 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
             // request injection for interceptors
             @SuppressWarnings("unchecked")
-            Collection<Interceptor> interceptors = (Collection<Interceptor>) Ognl.getValue(INTERCEPTORS, context, configuration);
+            Collection<Interceptor> interceptors = (Collection<Interceptor>) getValue(INTERCEPTORS, context, configuration);
             for (Interceptor interceptor : interceptors) {
                 binder().requestInjection(interceptor);
             }
         } catch (Exception e) {
-            binder().addError(new Message(new ArrayList<Object>(), "Impossible to read classpath resource '"
-                    + this.classPathResource
-                    + "', see nested exceptions", e));
+            binder().addError("sible to read classpath resource '%s', see nested exceptions: %s",
+                    classPathResource,
+                    e.getMessage());
         } finally {
             if (reader != null) {
                 try {
