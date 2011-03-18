@@ -16,14 +16,14 @@
 package org.mybatis.guice.binder;
 
 /**
- * 
+ * Allows bind a {@code Class} to an already defined type alias.
  */
 public interface AliasBinder {
 
     /**
-     * 
+     * Binds a {@code Class} to an already defined type alias.
      *
-     * @param type
+     * @param type The {@code Class} has to be bound to the alias
      */
     void to(Class<?> type);
 

@@ -18,14 +18,14 @@ package org.mybatis.guice.binder;
 import org.apache.ibatis.type.TypeHandler;
 
 /**
- * 
+ * Bind the given {@code TypeHandler} to an already defined type.
  */
 public interface TypeHandlerBinder {
 
     /**
-     * 
+     * Bind the given {@code TypeHandler} to an already defined type.
      *
-     * @param handler
+     * @param handler The {@code TypeHandler} has to be bound
      */
     void with(Class<? extends TypeHandler> handler);
 
