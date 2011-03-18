@@ -59,8 +59,6 @@ import com.google.inject.multibindings.Multibinder;
  */
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 
-    private static final String ENVIRONMENT_ID = "mybatis.environment.id";
-
     /**
      * The DataSource Provider class reference.
      */
@@ -124,7 +122,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (environmentId == null) {
             throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
         }
-        binder().bindConstant().annotatedWith(named(ENVIRONMENT_ID)).to(environmentId);
+        binder().bindConstant().annotatedWith(named("mybatis.environment.id")).to(environmentId);
     }
 
     /**
