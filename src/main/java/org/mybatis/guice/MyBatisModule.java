@@ -93,7 +93,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         this.mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
 
         try {
-            this.configure();
+            this.configureMyBatis();
         } finally {
             this.aliases = null;
             this.handlers = null;

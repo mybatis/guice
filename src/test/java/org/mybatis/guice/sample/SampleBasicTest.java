@@ -73,7 +73,7 @@ public class SampleBasicTest {
                 new MyBatisModule() {
 
                     @Override
-                    protected void configure() {
+                    protected void configureMyBatis() {
                         addMapperClass(UserMapper.class);
                     }
 

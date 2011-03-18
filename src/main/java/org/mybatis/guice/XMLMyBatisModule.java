@@ -102,7 +102,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      */
     @Override
     final void internalConfigure() {
-        this.configure();
+        this.configureMyBatis();
 
         Reader reader = null;
         try {

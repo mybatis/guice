@@ -40,7 +40,7 @@ public final class XMLGuiceTestRunner extends AbstractGuiceTestRunner {
         modules.add(new XMLMyBatisModule() {
 
             @Override
-            protected void configure() {
+            protected void configureMyBatis() {
                 setEnvironmentId("test");
             }
 

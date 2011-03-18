@@ -44,7 +44,7 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
         modules.add(new MyBatisModule() {
 
             @Override
-            protected void configure() {
+            protected void configureMyBatis() {
                 setDataSourceProviderType(PooledDataSourceProvider.class);
                 addMapperClass(ContactMapper.class);
                 handleType(CustomType.class).with(CustomLongTypeHandler.class);
