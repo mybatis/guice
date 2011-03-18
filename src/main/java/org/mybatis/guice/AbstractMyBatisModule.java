@@ -76,6 +76,6 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     /**
      * 
      */
-    protected abstract void configureMyBatis();
+    protected abstract void initialize();
 
 }

@@ -85,7 +85,7 @@ public class SampleSqlSessionTest {
         modules.add(new MyBatisModule() {
 
             @Override
-            protected void configureMyBatis() {
+            protected void initialize() {
                 setDataSourceProviderType(PooledDataSourceProvider.class);
                 addMapperClass(UserMapper.class);
             }
