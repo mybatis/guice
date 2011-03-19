@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.runners.model.InitializationError;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
@@ -45,7 +46,8 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
 
             @Override
             protected void initialize() {
-                setDataSourceProviderType(PooledDataSourceProvider.class);
+                bindDataSourceProviderType(PooledDataSourceProvider.class);
+                bindTransactionFactoryType(JdbcTransactionFactory.class);
                 addMapperClass(ContactMapper.class);
                 handleType(CustomType.class).with(CustomLongTypeHandler.class);
                 handleType(Address.class).with(AddressTypeHandler.class);

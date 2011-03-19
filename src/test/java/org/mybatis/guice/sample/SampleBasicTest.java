@@ -28,18 +28,18 @@ import javax.sql.DataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mybatis.guice.MyBatisModule;
+import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.sample.mapper.UserMapper;
 import org.mybatis.guice.sample.service.FooService;
 import org.mybatis.guice.sample.service.FooServiceMapperImpl;
 
-import com.google.inject.Binder;
 import com.google.inject.Injector;
-import com.google.inject.Module;
 
 /**
  * Example of MyBatis-Guice basic integration usage.
@@ -58,23 +58,18 @@ public class SampleBasicTest {
     public void setupMyBatisGuice() throws Exception {
 
         // bindings
-        this.injector = createInjector(
-                JdbcHelper.HSQLDB_Embedded,
-
-                new Module() {
-
-                    public void configure(Binder binder) {
-                        bindProperties(binder, createTestProperties());
-                        binder.bind(FooService.class).to(FooServiceMapperImpl.class);
-                    }
-
-                },
-
-                new MyBatisModule() {
+        this.injector = createInjector(new MyBatisModule() {
 
                     @Override
                     protected void initialize() {
+                        install(JdbcHelper.HSQLDB_Embedded);
+
+                        bindDataSourceProviderType(PooledDataSourceProvider.class);
+                        bindTransactionFactoryType(JdbcTransactionFactory.class);
                         addMapperClass(UserMapper.class);
+
+                        bindProperties(binder(), createTestProperties());
+                        bind(FooService.class).to(FooServiceMapperImpl.class);
                     }
 
                 }

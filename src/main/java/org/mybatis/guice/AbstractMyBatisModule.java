@@ -58,7 +58,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
      *
      * @param environmentId the MyBatis configuration environment id
      */
-    protected abstract void setEnvironmentId(String environmentId);
+    protected abstract void environmentId(String environmentId);
 
     /**
      * 

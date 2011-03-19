@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mybatis.guice.MyBatisModule;
@@ -87,7 +88,8 @@ public class SampleSqlSessionTest {
 
             @Override
             protected void initialize() {
-                setDataSourceProviderType(PooledDataSourceProvider.class);
+                bindDataSourceProviderType(PooledDataSourceProvider.class);
+                bindTransactionFactoryType(JdbcTransactionFactory.class);
                 addMapperClass(UserMapper.class);
             }
 
