@@ -87,6 +87,19 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     @Override
     final void internalConfigure() {
+        if (this.aliases != null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
+        }
+        if (this.handlers != null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
+        }
+        if (this.interceptors == null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
+        }
+        if (this.mappers == null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
+        }
+
         this.aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
         this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
         this.interceptors = newSetBinder(binder(), Interceptor.class);
