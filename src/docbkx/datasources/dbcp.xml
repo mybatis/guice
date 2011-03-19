@@ -305,7 +305,7 @@
     </section>
 
     <section id="datasources.dbcp.peruser">
-        <title>Shared Pool Data Source</title>
+        <title>Per User Pool Data Source</title>
         <para>
             The <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider</literal>
             is the provider that builds the <literal>org.apache.commons.dbcp.datasources.PerUserPoolDataSource</literal>
