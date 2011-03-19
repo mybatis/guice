@@ -62,19 +62,17 @@
                     <area id="start.example.retrieve" coords="24"/>
                 </areaspec>
                 <programlisting language="java"><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderType = [...];
-    // org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider.class by default
 
 Class<? extends TransactionFactory> txFactoryClass = [...];
-    // org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory.class by default
 
 Injector injector = Guice.createInjector(
     new MyBatisModule() {
 
         @Override
         protected void initialize() {
-            setEnvironmentId("development");
-            setDataSourceProviderType(dataSourceProviderType);
-            setTransactionFactoryType(txFactoryClass);
+            environmentId("development");
+            bindDataSourceProviderType(dataSourceProviderType);
+            bindTransactionFactoryType(txFactoryClass);
         }
 
     },
@@ -145,52 +143,52 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
                 <tbody>
                     <tr>
                         <td>mybatis.environment.id</td>
-                        <td>setEnvironmentId</td>
+                        <td>environmentId(String)</td>
                         <td>Not set, it is required</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.lazyLoadingEnabled</td>
-                        <td>setLazyLoadingEnabled</td>
+                        <td>lazyLoadingEnabled(boolean)</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.aggressiveLazyLoading</td>
-                        <td>setAggressiveLazyLoading</td>
+                        <td>aggressiveLazyLoading(boolean)</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.multipleResultSetsEnabled</td>
-                        <td>setMultipleResultSetsEnabled</td>
+                        <td>multipleResultSetsEnabled(boolean)</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.useGeneratedKeys</td>
-                        <td>setUseGeneratedKeys</td>
+                        <td>useGeneratedKeys(boolean)</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.useColumnLabel</td>
-                        <td>setUseColumnLabel</td>
+                        <td>useColumnLabel(boolean)</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.cacheEnabled</td>
-                        <td>setUseCacheEnabled</td>
+                        <td>useCacheEnabled(boolean)</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.defaultExecutorType</td>
-                        <td>setExecutorType</td>
+                        <td>executorType(ExecutorType)</td>
                         <td>ExecutorType.SIMPLE</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.autoMappingBehavior</td>
-                        <td>setAutoMappingBehavior</td>
+                        <td>autoMappingBehavior(AutoMappingBehavior)</td>
                         <td>AutoMappingBehavior.PARTIAL</td>
                     </tr>
                     <tr>
                         <td>mybatis.configuration.failFast</td>
-                        <td>setFailFast</td>
+                        <td>failFast(boolean)</td>
                         <td>false</td>
                     </tr>
                 </tbody>
@@ -222,9 +220,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></programlisting>
         <section id="core.txfactory">
             <title>The Transaction Factory</title>
             <para>
-                By default the <literal>MyBatisModule</literal> uses the
-                <literal>org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory</literal>, but users aree free
-                to plug their preferred <literal>org.apache.ibatis.transaction.TransactionFactory</literal>:
+                Users are free to plug their preferred <literal>org.apache.ibatis.transaction.TransactionFactory</literal>:
 
                 <programlisting language="java"><![CDATA[Class<? extends org.apache.ibatis.transaction.TransactionFactory> txFactoryType = ...
 
@@ -233,7 +229,7 @@ Module module = new MyBatisModule() {
     @Override
     protected void initialize() {
         ...
-        setTransactionFactoryType(txFactoryType);
+        bindTransactionFactoryType(txFactoryType);
         ...
     }
 
@@ -352,7 +348,7 @@ Module module = new MyBatisModule() {
     @Override
     protected void initialize() {
         ...
-        setObjectFactoryType(com.acme.MyObjectFactory.class);
+        bindObjectFactoryType(com.acme.MyObjectFactory.class);
         ...
     }
 
@@ -388,9 +384,10 @@ Module module = new MyBatisModule() {
 
                 @Override
                 protected void initialize() {
-                    setDataSourceProviderType(PooledDataSourceProvider.class);
+                    bindDataSourceProviderType(PooledDataSourceProvider.class);
+                    bindTransactionFactoryType(JdbcTransactionFactory.class);
+                    addMapperClass(ContactMapper.class);
                     addSimpleAlias(Contact.class);
-                    addMapperClasses(ContactMapper.class);
                 }
 
             });
@@ -411,7 +408,8 @@ Module module = new MyBatisModule() {
 
                 @Override
                 protected void initialize() {
-                    setDataSourceProviderType(PooledDataSourceProvider.class);
+                    bindDataSourceProviderType(PooledDataSourceProvider.class);
+                    bindTransactionFactoryType(JdbcTransactionFactory.class);
                 }
 
             });

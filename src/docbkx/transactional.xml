@@ -126,8 +126,9 @@ Injector injector = Guice.createInjector(new MyBatisModule() {
 
         @Override
         protected void initialize() {
-            setEnvironmentId("development");
-            setDataSourceProviderType(dataSourceProviderType);
+            environmentId("test");
+            bindDataSourceProviderType(dataSourceProviderType);
+            bindTransactionFactoryType(txFactoryClass);
             addMapperClass(FooMapper.class);
             addMapperClass(BarMapper.class);
         }

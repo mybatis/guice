@@ -127,8 +127,12 @@ Injector injector = Guice.createInjector(
         @Override
         protected void initialize() {
             install(JdbcHelper.HSQLDB_Embedded);
+
+            bindDataSourceProviderType(PooledDataSourceProvider.class);
+            bindTransactionFactoryType(JdbcTransactionFactory.class);
+            addMapperClass(UserMapper.class);
+
             Names.bindProperties(binder, createTestProperties());
-            addMapperClasses(UserMapper.class);
             bind(FooService.class).to(FooServiceMapperImpl.class);
         }
 
