@@ -75,8 +75,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      *
      * @param environmentId the MyBatis configuration environment id
      */
-    @Override
-    protected final void environmentId(String environmentId) {
+    protected final void setEnvironmentId(String environmentId) {
         if (environmentId == null) {
             throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
         }
