@@ -444,7 +444,7 @@
         <para>
             Let's take a look at an example that shows how to set the
             <literal>perUserDefaultAutoCommit</literal> properties; first of all,
-            let's implement the provider that communicates he user bindings:
+            let's implement the provider that communicates the user bindings:
             <programlisting language="java"><![CDATA[import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
