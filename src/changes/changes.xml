@@ -28,7 +28,7 @@
     </properties>
 
     <body>
-        <release version="2.0.0" date="2011-03-TBD" description="major release">
+        <release version="3.0" date="2011-04-09" description="major release">
             <action dev="simone.tripodi" type="update">
                 (XML)MyBatisModule now works as proper Guice module
             </action>
