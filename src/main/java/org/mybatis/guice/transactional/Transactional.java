@@ -41,6 +41,14 @@ public @interface Transactional {
     ExecutorType executorType() default ExecutorType.SIMPLE;
 
     /**
+     * Returns the constant indicating the transaction management.
+     *
+     * @return the constant indicating the transaction management.
+     * @since 3.1
+     */
+    TransactionManagement transactionManagement() default TransactionManagement.MyBatis;
+
+    /**
      * Returns the constant indicating the transaction isolation level.
      *
      * @return the constant indicating the transaction isolation level.
