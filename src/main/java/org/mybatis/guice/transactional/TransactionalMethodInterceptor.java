@@ -19,14 +19,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSessionManager;
-import org.apache.ibatis.session.TransactionIsolationLevel;
-
-import javax.inject.Inject;
 
 /**
  * Method interceptor for {@link Transactional} annotation.
@@ -86,10 +85,22 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                         Thread.currentThread().getId()));
             }
 
-            if (TransactionIsolationLevel.NONE == transactional.isolationLevel()) {
-                this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.autoCommit());
-            } else {
-                this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
+            switch (transactional.transactionManagement()) {
+                case MyBatis:
+                    this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.autoCommit());
+                    break;
+
+                case Managed:
+                    this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
+                    break;
+
+                default:
+                    /*
+                     * this should be forbidden by the compiler, but users could create @Transactional
+                     * and TransactionManagement via proxies, so...
+                     */
+                    throw new IllegalArgumentException(String.format("TransactionManagement '%s' not supported",
+                            transactional.transactionManagement()));
             }
         }
 
