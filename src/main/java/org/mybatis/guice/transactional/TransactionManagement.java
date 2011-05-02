@@ -24,7 +24,6 @@ package org.mybatis.guice.transactional;
 public enum TransactionManagement {
 
     MyBatis,
-    Managed,
-    External;
+    Managed;
 
 }
