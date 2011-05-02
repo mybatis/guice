@@ -158,6 +158,7 @@ public final class FooDAOImpl {
     // let's assume setters here
 
     @Transactional(
+        transactionManagement = TransactionManagement.Managed,
         executorType = ExecutorType.BATCH,
         isolationLevel = TransactionIsolationLevel.READ_UNCOMMITTED,
         rethrowExceptionsAs = MyDaoException.class,
@@ -187,6 +188,11 @@ public final class FooDAOImpl {
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>transactionManagement</td>
+                        <td>MyBatis</td>
+                        <td>the transaction management policy</td>
+                    </tr>
                     <tr>
                         <td>autoCommit</td>
                         <td>false</td>
@@ -233,11 +239,14 @@ public final class FooDAOImpl {
         </para>
         <para>
             When configuring the <literal>@Transactional</literal> annotation
-            take care that if <literal>isolationLevel()</literal>
-            is equals to <literal>TransactionIsolationLevel.NONE</literal>,
+            pay attention on configuring <literal>transactionManagement()</literal>:
+            if it is equal to <literal>TransactionManagement.MyBatis</literal>,
             then the <literal>SqlSession</literal>
             will be started using the <literal>executorType()</literal>
-            and <literal>autoCommit()</literal> values.
+            and <literal>autoCommit()</literal> values; otherwise it if it is equal to
+            <literal>TransactionManagement.Managed</literal>, <literal>SqlSession</literal>
+            will be started using the <literal>executorType()</literal>
+            and <literal>isolationLevel()</literal> values.
         </para>
         <para>
             When specifying <literal>rethrowExceptionsAs</literal> parameter,
