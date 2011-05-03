@@ -40,7 +40,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "Impossible to insert %s contact"
@@ -50,7 +50,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "Impossible to insert %s contact"
@@ -60,7 +60,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "Impossible to delete contact with ID %s"
@@ -70,7 +70,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when selecting contact with ID %s"
@@ -80,7 +80,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when selecting all stored contacts"
@@ -90,7 +90,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.Managed,
+            transactionManagement = TransactionManagement.MyBatis,
             isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
             rethrowExceptionsAs = CustomException.class,
             exceptionMessage = "An error occurred when updating contact %s"

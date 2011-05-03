@@ -86,11 +86,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
             }
 
             switch (transactional.transactionManagement()) {
-                case MyBatis:
+                case AutoCommit:
                     this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.autoCommit());
                     break;
 
-                case Managed:
+                case MyBatis:
                     this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
                     break;
 

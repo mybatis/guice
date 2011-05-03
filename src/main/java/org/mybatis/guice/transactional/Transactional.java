@@ -46,7 +46,7 @@ public @interface Transactional {
      * @return the constant indicating the transaction management.
      * @since 3.1
      */
-    TransactionManagement transactionManagement() default TransactionManagement.MyBatis;
+    TransactionManagement transactionManagement() default TransactionManagement.AutoCommit;
 
     /**
      * Returns the constant indicating the transaction isolation level.
