@@ -240,11 +240,11 @@ public final class FooDAOImpl {
         <para>
             When configuring the <literal>@Transactional</literal> annotation
             pay attention on configuring <literal>transactionManagement()</literal>:
-            if it is equal to <literal>TransactionManagement.MyBatis</literal>,
+            if it is equal to <literal>TransactionManagement.AutoCommit</literal>,
             then the <literal>SqlSession</literal>
             will be started using the <literal>executorType()</literal>
             and <literal>autoCommit()</literal> values; otherwise it if it is equal to
-            <literal>TransactionManagement.Managed</literal>, <literal>SqlSession</literal>
+            <literal>TransactionManagement.MyBatis</literal>, <literal>SqlSession</literal>
             will be started using the <literal>executorType()</literal>
             and <literal>isolationLevel()</literal> values.
         </para>
