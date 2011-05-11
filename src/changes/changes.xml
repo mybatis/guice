@@ -28,6 +28,12 @@
     </properties>
 
     <body>
+        <release version="3.1" date="TBD" description="maintenance release">
+            <action dev="simone.tripodi" type="update">
+                Simplified @Transactional behavior, deprecated @Transactional#autoCommit()
+            </action>
+        </release>
+
         <release version="3.0" date="2011-04-09" description="major release">
             <action dev="simone.tripodi" type="update">
                 (XML)MyBatisModule now works as proper Guice module

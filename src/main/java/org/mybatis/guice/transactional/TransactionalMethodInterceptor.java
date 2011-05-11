@@ -85,31 +85,14 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                         Thread.currentThread().getId()));
             }
 
-            switch (transactional.transactionManagement()) {
-                case AutoCommit:
-                    this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.autoCommit());
-                    break;
-
-                case MyBatis:
-                    this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
-                    break;
-
-                default:
-                    /*
-                     * this should be forbidden by the compiler, but users could create @Transactional
-                     * and TransactionManagement via proxies, so...
-                     */
-                    throw new IllegalArgumentException(String.format("TransactionManagement '%s' not supported",
-                            transactional.transactionManagement()));
-            }
+            this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
         }
 
         Object object = null;
         try {
             object = invocation.proceed();
-            if (!isSessionInherited
-                    && !transactional.rollbackOnly()
-                    && !transactional.autoCommit()) {
+
+            if (!isSessionInherited && !transactional.rollbackOnly()) {
                 this.sqlSessionManager.commit(transactional.force());
             }
         } catch (Throwable t) {

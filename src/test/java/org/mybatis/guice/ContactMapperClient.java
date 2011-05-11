@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.ibatis.session.TransactionIsolationLevel;
-import org.mybatis.guice.transactional.TransactionManagement;
 import org.mybatis.guice.transactional.Transactional;
 
 /**
@@ -40,60 +39,54 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to insert %s contact"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "Impossible to insert %s contact"
     )
     public void brokenInsert(final Contact contact) throws CustomException {
         this.contactMapper.brokenAdd(contact);
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to insert %s contact"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "Impossible to insert %s contact"
     )
     public void insert(final Contact contact) throws CustomException {
         this.contactMapper.add(contact);
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "Impossible to delete contact with ID %s"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "Impossible to delete contact with ID %s"
     )
     public void delete(final Integer id) throws CustomException {
         this.contactMapper.delete(id);
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "An error occurred when selecting contact with ID %s"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "An error occurred when selecting contact with ID %s"
     )
     public Contact selectById(final Integer id) throws CustomException {
         return this.contactMapper.getById(id);
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "An error occurred when selecting all stored contacts"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "An error occurred when selecting all stored contacts"
     )
     public List<Contact> getAll() throws CustomException {
         return this.contactMapper.selectAll();
     }
 
     @Transactional(
-            transactionManagement = TransactionManagement.MyBatis,
-            isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
-            rethrowExceptionsAs = CustomException.class,
-            exceptionMessage = "An error occurred when updating contact %s"
+        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "An error occurred when updating contact %s"
     )
     public void update(final Contact contact) throws CustomException {
         this.contactMapper.update(contact);

@@ -41,14 +41,6 @@ public @interface Transactional {
     ExecutorType executorType() default ExecutorType.SIMPLE;
 
     /**
-     * Returns the constant indicating the transaction management.
-     *
-     * @return the constant indicating the transaction management.
-     * @since 3.1
-     */
-    TransactionManagement transactionManagement() default TransactionManagement.AutoCommit;
-
-    /**
      * Returns the constant indicating the transaction isolation level.
      *
      * @return the constant indicating the transaction isolation level.
@@ -66,7 +58,10 @@ public @interface Transactional {
      * Flag to indicate the auto commit policy.
      *
      * @return false by default, user defined otherwise.
+     *
+     * @deprecated Users that intend auto commit can achieve it by simply not using {@literal @Transactional}
      */
+    @Deprecated
     boolean autoCommit() default false;
 
     /**

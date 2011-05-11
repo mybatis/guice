@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice.sample.service;
 
+import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.sample.mapper.UserMapper;
 import org.mybatis.guice.transactional.Transactional;
@@ -37,7 +38,7 @@ public class FooServiceMapperImpl implements FooService {
         this.userMapper = userMapper;
     }
 
-    @Transactional
+    @Transactional(isolationLevel = TransactionIsolationLevel.SERIALIZABLE)
     public User doSomeBusinessStuff(String userId) {
         return this.userMapper.getUser(userId);
     }
