@@ -15,9 +15,9 @@
  */
 package org.mybatis.guice.sample.service;
 
-import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.mybatis.guice.sample.dao.UserDao;
 import org.mybatis.guice.sample.domain.User;
+import org.mybatis.guice.transactional.Isolation;
 import org.mybatis.guice.transactional.Transactional;
 
 import javax.inject.Inject;
@@ -38,7 +38,7 @@ public class FooServiceDaoImpl implements FooService {
         this.userDao = userDao;
     }
 
-    @Transactional(isolationLevel = TransactionIsolationLevel.SERIALIZABLE)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public User doSomeBusinessStuff(String userId) {
         return this.userDao.getUser(userId);
     }

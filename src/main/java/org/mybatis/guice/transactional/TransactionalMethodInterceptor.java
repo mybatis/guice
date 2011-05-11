@@ -85,7 +85,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                         Thread.currentThread().getId()));
             }
 
-            this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolationLevel());
+            if (transactional.isolation() == Isolation.DEFAULT) {
+            	this.sqlSessionManager.startManagedSession(transactional.executorType());
+            } else {
+            	this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());
+            }
         }
 
         Object object = null;

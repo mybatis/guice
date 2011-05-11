@@ -21,7 +21,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
  * Any method or class marked with this annotation will be considered for
@@ -45,7 +44,7 @@ public @interface Transactional {
      *
      * @return the constant indicating the transaction isolation level.
      */
-    TransactionIsolationLevel isolationLevel() default TransactionIsolationLevel.NONE;
+    Isolation isolation() default Isolation.DEFAULT;
 
     /**
      * Flag to indicate that myBatis has to force the transaction {@code commit().}

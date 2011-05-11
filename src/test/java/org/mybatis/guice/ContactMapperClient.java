@@ -20,7 +20,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.apache.ibatis.session.TransactionIsolationLevel;
+import org.mybatis.guice.transactional.Isolation;
 import org.mybatis.guice.transactional.Transactional;
 
 /**
@@ -39,7 +39,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "Impossible to insert %s contact"
     )
@@ -48,7 +48,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "Impossible to insert %s contact"
     )
@@ -57,7 +57,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "Impossible to delete contact with ID %s"
     )
@@ -66,7 +66,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "An error occurred when selecting contact with ID %s"
     )
@@ -75,7 +75,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "An error occurred when selecting all stored contacts"
     )
@@ -84,7 +84,7 @@ public class ContactMapperClient {
     }
 
     @Transactional(
-        isolationLevel = TransactionIsolationLevel.SERIALIZABLE,
+        isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "An error occurred when updating contact %s"
     )
