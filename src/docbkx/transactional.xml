@@ -159,7 +159,7 @@ public final class FooDAOImpl {
 
     @Transactional(
         executorType = ExecutorType.BATCH,
-        isolationLevel = TransactionIsolationLevel.READ_UNCOMMITTED,
+        isolation = Isolation.READ_UNCOMMITTED,
         rethrowExceptionsAs = MyDaoException.class,
         exceptionMessage = "Something went wrong"
     )
@@ -188,19 +188,16 @@ public final class FooDAOImpl {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>transactionManagement</td>
-                        <td>MyBatis</td>
-                        <td>the transaction management policy</td>
-                    </tr>
-                    <tr>
                         <td>executorType</td>
                         <td>ExecutorType.SIMPLE</td>
                         <td>the MyBatis executor type</td>
                     </tr>
                     <tr>
-                        <td>isolationLevel</td>
-                        <td>TransactionIsolationLevel.NONE</td>
-                        <td>the transaction isolation level</td>
+                        <td>isolation</td>
+                        <td>Isolation.DEFAULT</td>
+                        <td>the transaction isolation level.  The default value will
+                          cause MyBatis to use the default isolation level from the
+                          data source.</td>
                     </tr>
                     <tr>
                         <td>force</td>
