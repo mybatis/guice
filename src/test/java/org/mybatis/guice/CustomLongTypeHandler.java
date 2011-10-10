@@ -33,15 +33,13 @@ public class CustomLongTypeHandler extends BaseTypeHandler<CustomType> {
     public void setNonNullParameter(PreparedStatement ps, int i,
             CustomType parameter, JdbcType jdbcType) throws SQLException {
         if (jdbcType == JdbcType.TIMESTAMP) {
-            ps.setTimestamp(i,
-                    new Timestamp(parameter.getValue()));
+            ps.setTimestamp(i, new Timestamp(parameter.getValue()));
         }
     }
 
     @Override
     public CustomType getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        
         Object value = rs.getObject(columnName);
         if (value instanceof Timestamp) {
             CustomType t = new CustomType();
