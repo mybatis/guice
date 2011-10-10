@@ -125,7 +125,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param lazyLoadingEnabled
      */
     protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
@@ -133,7 +133,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param aggressiveLazyLoading
      */
     protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
@@ -141,7 +141,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param multipleResultSetsEnabled
      */
     protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
@@ -149,7 +149,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param useGeneratedKeys
      */
     protected final void useGeneratedKeys(boolean useGeneratedKeys) {
@@ -157,7 +157,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param useColumnLabel
      */
     protected final void useColumnLabel(boolean useColumnLabel) {
@@ -165,7 +165,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param useCacheEnabled
      */
     protected final void useCacheEnabled(boolean useCacheEnabled) {
@@ -173,7 +173,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param failFast
      */
     protected final void failFast(boolean failFast) {
@@ -181,7 +181,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      * @param name
      * @param value
      */
@@ -190,7 +190,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param executorType
      */
@@ -202,7 +202,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param autoMappingBehavior
      */
@@ -226,7 +226,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param dataSourceProvider
      */
@@ -238,7 +238,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param dataSourceProvider
      */
@@ -262,7 +262,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param transactionFactoryProvider
      */
@@ -274,7 +274,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
-     * 
+     *
      *
      * @param transactionFactoryProvider
      */
@@ -380,14 +380,14 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param type the specified type has to be handled.
      * @param handler the handler type.
      */
-    protected final TypeHandlerBinder handleType(final Class<?> type) {
+    protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
         if (type == null) {
             throw new IllegalArgumentException("Parameter 'type' must not be null");
         }
 
-        return new TypeHandlerBinder() {
+        return new TypeHandlerBinder<T>() {
 
-            public void with(final Class<? extends TypeHandler<?>> handler) {
+            public void with(final Class<? extends TypeHandler<? extends T>> handler) {
                 if (handler == null) {
                     throw new IllegalArgumentException(
                             String.format("TypeHandler must not be null for '%s'", type.getName()));
