@@ -45,12 +45,12 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         String input = rs.getString(columnName);
         if (rs.wasNull()) {
             return null;
-        } else {
-            try {
-                return addressConverter.convert(input);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+        }
+
+        try {
+            return addressConverter.convert(input);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -58,12 +58,12 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         String input = cs.getString(columnIndex);
         if (cs.wasNull()) {
             return null;
-        } else {
-            try {
-                return addressConverter.convert(input);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+        }
+
+        try {
+            return addressConverter.convert(input);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 
