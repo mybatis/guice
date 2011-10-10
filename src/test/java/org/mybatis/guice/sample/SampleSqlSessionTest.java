@@ -83,7 +83,7 @@ public class SampleSqlSessionTest {
 
     protected List<Module> createMyBatisModule() {
         List<Module> modules = new ArrayList<Module>();
-        modules.add(JdbcHelper.HSQLDB_Embedded);
+        modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
         modules.add(new MyBatisModule() {
 
             @Override
@@ -117,8 +117,6 @@ public class SampleSqlSessionTest {
     protected static Properties createTestProperties() {
         final Properties myBatisProperties = new Properties();
         myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.schema", "mybatis-guice_TEST");
-        myBatisProperties.setProperty("derby.create", "true");
         myBatisProperties.setProperty("JDBC.username", "sa");
         myBatisProperties.setProperty("JDBC.password", "");
         myBatisProperties.setProperty("JDBC.autoCommit", "false");

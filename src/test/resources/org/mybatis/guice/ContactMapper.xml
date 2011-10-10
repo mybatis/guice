@@ -31,7 +31,7 @@
 
     <insert id="brokenAdd" parameterType="org.mybatis.guice.Contact" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-            contact (
+            contact (id,
                 first_name,
                 last_name,
                 created,

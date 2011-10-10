@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
-    PUBLIC "-//www.mybatis.org//DTD Config 3.0//EN"
-    "http://www.mybatis.org/dtd/mybatis-3-config.dtd">
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--
     Copyright 2010 The myBatis Team
 
@@ -43,7 +43,7 @@
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="org.hsqldb.jdbcDriver" />
-                <property name="url" value="jdbc:hsqldb:mybatis-guice_TEST" />
+                <property name="url" value="jdbc:hsqldb:mem:aname" />
                 <property name="username" value="sa" />
                 <property name="password" value="" />
             </dataSource>

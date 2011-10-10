@@ -49,6 +49,8 @@ public enum JdbcHelper implements Module {
 
     HSQLDB_Embedded("jdbc:hsqldb:${JDBC.schema}", "org.hsqldb.jdbcDriver"),
 
+    HSQLDB_IN_MEMORY_NAMED("jdbc:hsqldb:mem:${JDBC.schema|aname}", "org.hsqldb.jdbcDriver"),
+
     H2_IN_MEMORY_PRIVATE("jdbc:h2:mem", "org.h2.Driver"),
 
     H2_IN_MEMORY_NAMED("jdbc:h2:mem:${JDBC.schema}", "org.h2.Driver"),
