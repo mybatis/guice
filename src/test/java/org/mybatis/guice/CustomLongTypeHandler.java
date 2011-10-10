@@ -27,21 +27,19 @@ import org.apache.ibatis.type.JdbcType;
 /**
  * @version $Id$
  */
-public class CustomLongTypeHandler extends BaseTypeHandler {
+public class CustomLongTypeHandler extends BaseTypeHandler<CustomType> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i,
-            Object parameter, JdbcType jdbcType) throws SQLException {
+            CustomType parameter, JdbcType jdbcType) throws SQLException {
         if (jdbcType == JdbcType.TIMESTAMP) {
-            if (parameter instanceof CustomType) {
-                ps.setTimestamp(i,
-                        new Timestamp(((CustomType) parameter).getValue()));
-            }
+            ps.setTimestamp(i,
+                    new Timestamp(parameter.getValue()));
         }
     }
 
     @Override
-    public Object getNullableResult(ResultSet rs, String columnName)
+    public CustomType getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         
         Object value = rs.getObject(columnName);
@@ -54,7 +52,7 @@ public class CustomLongTypeHandler extends BaseTypeHandler {
     }
 
     @Override
-    public Object getNullableResult(CallableStatement cs, int columnIndex)
+    public CustomType getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Object value = cs.getObject(columnIndex);
         if (value instanceof Timestamp) {

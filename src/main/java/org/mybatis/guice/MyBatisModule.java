@@ -65,7 +65,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
     private MapBinder<String, Class<?>> aliases;
 
-    private MapBinder<Class<?>, TypeHandler> handlers;
+    private MapBinder<Class<?>, TypeHandler<?>> handlers;
 
     private Multibinder<Interceptor> interceptors;
 
@@ -90,7 +90,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         this.aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
-        this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler>(){});
+        this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
         this.interceptors = newSetBinder(binder(), Interceptor.class);
         this.mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
 
@@ -387,7 +387,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         return new TypeHandlerBinder() {
 
-            public void with(final Class<? extends TypeHandler> handler) {
+            public void with(final Class<? extends TypeHandler<?>> handler) {
                 if (handler == null) {
                     throw new IllegalArgumentException(
                             String.format("TypeHandler must not be null for '%s'", type.getName()));

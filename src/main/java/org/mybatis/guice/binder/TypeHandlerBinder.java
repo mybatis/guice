@@ -27,6 +27,6 @@ public interface TypeHandlerBinder {
      *
      * @param handler The {@code TypeHandler} has to be bound
      */
-    void with(Class<? extends TypeHandler> handler);
+    void with(Class<? extends TypeHandler<?>> handler);
 
 }

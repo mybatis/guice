@@ -123,9 +123,9 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
             // request injection for type handlers
             @SuppressWarnings("unchecked")
-            Collection<Map<JdbcType, TypeHandler>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler>>) getValue(TYPE_HANDLERS, context, configuration);
-            for (Map<JdbcType, TypeHandler> mappedTypeHandler: mappedTypeHandlers) {
-                for (TypeHandler handler : mappedTypeHandler.values()) {
+            Collection<Map<JdbcType, TypeHandler<?>>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler<?>>>) getValue(TYPE_HANDLERS, context, configuration);
+            for (Map<JdbcType, TypeHandler<?>> mappedTypeHandler: mappedTypeHandlers) {
+                for (TypeHandler<?> handler : mappedTypeHandler.values()) {
                     binder().requestInjection(handler);
                 }
             }

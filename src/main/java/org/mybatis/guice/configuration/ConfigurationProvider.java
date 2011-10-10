@@ -92,7 +92,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     private Map<String, Class<?>> typeAliases;
 
     @com.google.inject.Inject(optional = true)
-    private Map<Class<?>, TypeHandler> typeHandlers = Collections.emptyMap();
+    private Map<Class<?>, TypeHandler<?>> typeHandlers = Collections.emptyMap();
 
     @com.google.inject.Inject(optional = true)
     @Mappers
@@ -195,7 +195,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * @param typeHandlers the user defined type handlers.
      */
     @com.google.inject.Inject(optional = true)
-    public void registerTypeHandlers(final Map<Class<?>, TypeHandler> typeHandlers) {
+    public void registerTypeHandlers(final Map<Class<?>, TypeHandler<?>> typeHandlers) {
         this.typeHandlers = typeHandlers;
     }
 
@@ -247,7 +247,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
                 configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
             }
 
-            for (Map.Entry<Class<?>,TypeHandler> typeHandler : this.typeHandlers.entrySet()) {
+            for (Map.Entry<Class<?>,TypeHandler<?>> typeHandler : this.typeHandlers.entrySet()) {
                 configuration.getTypeHandlerRegistry().register(typeHandler.getKey(), typeHandler.getValue());
             }
 

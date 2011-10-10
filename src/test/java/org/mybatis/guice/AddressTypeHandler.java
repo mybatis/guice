@@ -29,19 +29,19 @@ import javax.inject.Inject;
 /**
  * @version $Id$
  */
-public class AddressTypeHandler implements TypeHandler {
+public class AddressTypeHandler implements TypeHandler<Address> {
 
     private AddressConverter addressConverter;
 
-    public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
+    public void setParameter(PreparedStatement ps, int i, Address parameter, JdbcType jdbcType) throws SQLException {
         if (parameter == null) {
             ps.setNull(i, jdbcType.TYPE_CODE);
         } else {
-            ps.setString(i, addressConverter.convert((Address)parameter));
+            ps.setString(i, addressConverter.convert(parameter));
         }
     }
 
-    public Object getResult(ResultSet rs, String columnName) throws SQLException {
+    public Address getResult(ResultSet rs, String columnName) throws SQLException {
         String input = rs.getString(columnName);
         if (rs.wasNull()) {
             return null;
@@ -54,7 +54,7 @@ public class AddressTypeHandler implements TypeHandler {
         }
     }
 
-    public Object getResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public Address getResult(CallableStatement cs, int columnIndex) throws SQLException {
         String input = cs.getString(columnIndex);
         if (cs.wasNull()) {
             return null;
@@ -71,5 +71,4 @@ public class AddressTypeHandler implements TypeHandler {
     public void setAddressConverter(AddressConverter addressConverter) {
         this.addressConverter = addressConverter;
     }
-
 }
