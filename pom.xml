@@ -95,7 +95,8 @@
                                  | test dependencies
                                 -->
                                 <exclude>junit:junit</exclude>
-                                <exclude>hsqldb:hsqldb</exclude>
+                                <exclude>org.hamcrest:hamcrest-core</exclude>
+                                <exclude>org.hsqldb:hsqldb</exclude>
                                 <exclude>log4j:log4j</exclude>
                             </excludes>
                             <rules>
@@ -143,6 +144,8 @@
     </profiles>
 
     <properties>
+        <javac.src.version>1.5</javac.src.version>
+        <javac.target.version>1.5</javac.target.version>
         <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
         <clirr.comparisonVersion>1.0.0</clirr.comparisonVersion>
         <guice.version>3.0</guice.version>
