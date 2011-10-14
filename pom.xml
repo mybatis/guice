@@ -30,7 +30,7 @@
     <artifactId>mybatis-guice</artifactId>
     <name>MyBatis Guice</name>
     <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
-    <version>3.2-SNAPSHOT</version>
+    <version>3.2</version>
     <packaging>jar</packaging>
 
     <contributors>
@@ -51,9 +51,9 @@
     </contributors>
 
     <scm>
-        <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</url>
-        <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>
-        <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</developerConnection>
+        <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.2</url>
+        <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.2</connection>
+        <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.2</developerConnection>
     </scm>
 
     <build>
