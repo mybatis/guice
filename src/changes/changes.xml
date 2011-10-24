@@ -1,142 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright 2010 The myBatis Team
+  Copyright 2010 The myBatis Team
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 -->
 
 <!--
-    version: $Id$
+  version: $Id$
 -->
 <document xmlns="http://maven.apache.org/changes/1.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
 
-    <properties>
-        <author>The MyBatis Team</author>
-        <title>Changes</title>
-    </properties>
+  <properties>
+    <author>The MyBatis Team</author>
+    <title>Changes</title>
+  </properties>
 
-    <body>
-        <release version="3.2" date="2011-10-14" description="maintenance release">
-            <action dev="jeffgbutler" type="fix">
-                Remove useless dependencies in the final artifact.
-            </action>
-        </release>
+  <body>
+    <release version="3.2" date="2011-10-14" description="maintenance release">
+      <action dev="jeffgbutler" type="fix">
+        Remove useless dependencies in the final artifact.
+      </action>
+    </release>
 
-        <release version="3.1" date="2011-10-11" description="maintenance release">
-            <action dev="simone.tripodi" type="update">
-                Simplified @Transactional behavior, deprecated @Transactional#autoCommit()
-            </action>
-        </release>
+    <release version="3.1" date="2011-10-11" description="maintenance release">
+      <action dev="simone.tripodi" type="update">
+        Simplified @Transactional behavior, deprecated @Transactional#autoCommit()
+      </action>
+    </release>
 
-        <release version="3.0" date="2011-04-09" description="major release">
-            <action dev="simone.tripodi" type="update">
-                (XML)MyBatisModule now works as proper Guice module
-            </action>
-            <action dev="simone.tripodi" type="fix">
-                Fixed Provider&lt;DatSource&gt; type, must be JSR330'ed, thanks to Marzia Forli
-            </action>
-        </release>
+    <release version="3.0" date="2011-04-09" description="major release">
+      <action dev="simone.tripodi" type="update">
+        (XML)MyBatisModule now works as proper Guice module
+      </action>
+      <action dev="simone.tripodi" type="fix">
+        Fixed Provider&lt;DatSource&gt; type, must be JSR330'ed, thanks to Marzia Forli
+      </action>
+    </release>
 
-        <release version="1.1.0" date="2011-03-04" description="bugfix release">
-            <action dev="simone.tripodi" type="update" issue="179">
-                Remove mapper order restriction when referencing SQL fragment in another file.
-            </action>
-            <action dev="simone.tripodi" type="fix">
-                Fixed org.mybatis.guice.configuration.ConfigurationProvider injections point, added missing setters.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                Guice dependency upgrated to 3.0.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                Modules are JSR330'ed.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                Added BoneCP in the supported datasource providers.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                Added H2DB in the supported JDBC Helpers.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                @org.mybatis.guice.transactional.Transactional#exceptionMessage() expressed using java.util.Formatter
-                pattern and no more with java.text.MessageFormat#format().
-            </action>
-        </release>
+    <release version="1.1.0" date="2011-03-04" description="bugfix release">
+      <action dev="simone.tripodi" type="update" issue="179">
+        Remove mapper order restriction when referencing SQL fragment in another file.
+      </action>
+      <action dev="simone.tripodi" type="fix">
+        Fixed org.mybatis.guice.configuration.ConfigurationProvider injections point, added missing setters.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        Guice dependency upgrated to 3.0.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        Modules are JSR330'ed.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        Added BoneCP in the supported datasource providers.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        Added H2DB in the supported JDBC Helpers.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        @org.mybatis.guice.transactional.Transactional#exceptionMessage() expressed using java.util.Formatter
+        pattern and no more with java.text.MessageFormat#format().
+      </action>
+    </release>
 
-        <release version="1.0.0" date="2010-12-31" description="1.0.0-GA release">
-            <action dev="eduardo.macarron" type="update">
-                Added missing SqlSession -> SqlSessionManager binding,
-                so users can request managed SqlSession injections.
-            </action>
-            <action dev="simone.tripodi" type="update">
-                Hidden internal APIs
-            </action>
-        </release>
+    <release version="1.0.0" date="2010-12-31" description="1.0.0-GA release">
+      <action dev="eduardo.macarron" type="update">
+        Added missing SqlSession -> SqlSessionManager binding,
+        so users can request managed SqlSession injections.
+      </action>
+      <action dev="simone.tripodi" type="update">
+        Hidden internal APIs
+      </action>
+    </release>
 
-        <release version="1.0.0-RC4" date="2010-11-18" description="1.0.0-RC4 release">
-            <action dev="christian.poitras@ircm.qc.ca" type="update">
-                Finalized XML MyBatis configuration support.
-            </action>
-            <action dev="simone.tripodi" type="update">
-                Documented XML MyBatis configuration support.
-            </action>
-            <action dev="simone.tripodi" type="remove">
-                Removed the over engineered 'transactionfactory' package.
-            </action>
-            <action dev="simone.tripodi" type="fix">
-                Google Guice extension dependencies moved to 'compile' scope.
-            </action>
-            <action dev="simone.tripodi" type="add">
-                MyBatis dependency upgrated to 3.0.3
-            </action>
-        </release>
+    <release version="1.0.0-RC4" date="2010-11-18" description="1.0.0-RC4 release">
+      <action dev="christian.poitras@ircm.qc.ca" type="update">
+        Finalized XML MyBatis configuration support.
+      </action>
+      <action dev="simone.tripodi" type="update">
+        Documented XML MyBatis configuration support.
+      </action>
+      <action dev="simone.tripodi" type="remove">
+        Removed the over engineered 'transactionfactory' package.
+      </action>
+      <action dev="simone.tripodi" type="fix">
+        Google Guice extension dependencies moved to 'compile' scope.
+      </action>
+      <action dev="simone.tripodi" type="add">
+        MyBatis dependency upgrated to 3.0.3
+      </action>
+    </release>
 
-        <release version="1.0.0-RC3" date="2010-10-14" description="1.0.0-RC3 release">
-            <action dev="christian.poitras@ircm.qc.ca" type="update">
-                Started developing the XML prototypal support (undocumented yet).
-            </action>
-            <action dev="marco.speranza79" type="fix">
-                Avoid ConfigurationProviderInjectionListener.afterInjection() randomically called twice.
-            </action>
-            <action dev="nathan.maves" type="update">
-                Added the @org.mybatis.guice.transactional.Transactional.rollbackOnly parameter.
-            </action>
-            <action dev="nathan.maves" type="update">
-                Added the org.mybatis.guice.MyBatisModule#addSimpleAliases(Collection&lt;Class&lt;?&gt;&gt;).
-            </action>
-            <action dev="nathan.maves" type="update">
-                Added the org.mybatis.guice.MyBatisModule#addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt;).
-            </action>
-            <action dev="nathan.maves" type="update">
-                Added the org.mybatis.guice.MyBatisModule#addMapperClasses(Collection&lt;Class&lt;?&gt;&gt;).
-            </action>
-        </release>
+    <release version="1.0.0-RC3" date="2010-10-14" description="1.0.0-RC3 release">
+      <action dev="christian.poitras@ircm.qc.ca" type="update">
+        Started developing the XML prototypal support (undocumented yet).
+      </action>
+      <action dev="marco.speranza79" type="fix">
+        Avoid ConfigurationProviderInjectionListener.afterInjection() randomically called twice.
+      </action>
+      <action dev="nathan.maves" type="update">
+        Added the @org.mybatis.guice.transactional.Transactional.rollbackOnly parameter.
+      </action>
+      <action dev="nathan.maves" type="update">
+        Added the org.mybatis.guice.MyBatisModule#addSimpleAliases(Collection&lt;Class&lt;?&gt;&gt;).
+      </action>
+      <action dev="nathan.maves" type="update">
+        Added the org.mybatis.guice.MyBatisModule#addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt;).
+      </action>
+      <action dev="nathan.maves" type="update">
+        Added the org.mybatis.guice.MyBatisModule#addMapperClasses(Collection&lt;Class&lt;?&gt;&gt;).
+      </action>
+    </release>
 
-        <release version="1.0.0-RC2" date="2010-09-15" description="1.0.0-RC2 release">
-            <action dev="simone.tripodi" type="fix" issue="104">
-                ErrorContext leaks in ThreadLocal.
-            </action>
-            <action dev="simone.tripodi" type="update">
-                Added the JdbcHelper to simplify the JDBC Drivers configuration.
-            </action>
-        </release>
+    <release version="1.0.0-RC2" date="2010-09-15" description="1.0.0-RC2 release">
+      <action dev="simone.tripodi" type="fix" issue="104">
+        ErrorContext leaks in ThreadLocal.
+      </action>
+      <action dev="simone.tripodi" type="update">
+        Added the JdbcHelper to simplify the JDBC Drivers configuration.
+      </action>
+    </release>
 
-        <release version="1.0.0-RC1" date="2010-08-22" description="1.0.0-RC1 release">
-            <action dev="simone.tripodi" type="update">
-                Imported and moved the original iBaGuice codebase.
-            </action>
-        </release>
-    </body>
+    <release version="1.0.0-RC1" date="2010-08-22" description="1.0.0-RC1 release">
+      <action dev="simone.tripodi" type="update">
+        Imported and moved the original iBaGuice codebase.
+      </action>
+    </release>
+  </body>
 
 </document>
