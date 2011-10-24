@@ -28,6 +28,12 @@
   </properties>
 
   <body>
+    <release version="3.2" date="201?-??-??" description="maintenance release">
+      <action dev="simone.tripodi" type="fix" due-to="422">
+        Missing mapUnderscoreToCamelCase property in mybatis-guice.
+      </action>
+    </release>
+
     <release version="3.2" date="2011-10-14" description="maintenance release">
       <action dev="jeffgbutler" type="fix">
         Remove useless dependencies in the final artifact.

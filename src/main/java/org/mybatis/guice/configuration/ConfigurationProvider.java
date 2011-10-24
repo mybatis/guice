@@ -101,6 +101,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @com.google.inject.Inject(optional = true)
     private Set<Interceptor> plugins = Collections.emptySet();
 
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.mapUnderscoreToCamelCase")
+    private boolean mapUnderscoreToCamelCase = false;
+
     /**
      * @since 1.0.1
      */
@@ -228,6 +232,15 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
+     * @since 3.3
+     * @param mapUnderscoreToCamelCase
+     */
+    public void mapUnderscoreToCamelCase( boolean mapUnderscoreToCamelCase )
+    {
+        this.mapUnderscoreToCamelCase = mapUnderscoreToCamelCase;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public Configuration get() {
@@ -241,6 +254,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDefaultExecutorType(this.defaultExecutorType);
         configuration.setAutoMappingBehavior(this.autoMappingBehavior);
         configuration.setObjectFactory(this.objectFactory);
+        configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
 
         try {
             for (Map.Entry<String,Class<?>> alias : this.typeAliases.entrySet()) {
