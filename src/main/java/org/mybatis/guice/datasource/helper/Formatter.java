@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2010-2011 The MyBatis Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import com.google.inject.Injector;
 import com.google.inject.util.Providers;
 
 /**
- * 
+ *
  *
  * @version $Id$
  */
