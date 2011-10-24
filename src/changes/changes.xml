@@ -28,7 +28,13 @@
     </properties>
 
     <body>
-        <release version="3.1" date="TBD" description="maintenance release">
+        <release version="3.2" date="2011-10-14" description="maintenance release">
+            <action dev="jeffgbutler" type="fix">
+                Remove useless dependencies in the final artifact.
+            </action>
+        </release>
+
+        <release version="3.1" date="2011-10-11" description="maintenance release">
             <action dev="simone.tripodi" type="update">
                 Simplified @Transactional behavior, deprecated @Transactional#autoCommit()
             </action>
