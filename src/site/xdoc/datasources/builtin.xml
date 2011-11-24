@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <!--
-    Copyright 2010-2011 The MyBatis Team
+  Copyright 2010-2011 The myBatis Team
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 -->
 
 <!--
-    version: $Id$
+  version: $Id$
 -->
-<section id="datasources.builtin">
-    <title>MyBatis Builtin Data Source Provider</title>
-    <para>
-        The <literal>org.mybatis.guice.datasource.builtin</literal> package
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Guice | DataSources | Built-in</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="MyBatis Builtin Data Source Provider">
+    <p>
+        The <code>org.mybatis.guice.datasource.builtin</code> package
         contains the Google Guice Providers to build the MyBatis builtin
         DataSources.
-    </para>
+    </p>
+    </section>
 
-    <section id="datasources.builtin.unpooled">
-        <title>Unpooled Data Source Provider</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.ibatis.datasource.unpooled.UnpooledDataSource</literal>
+    <section name="Unpooled Data Source Provider">
+        <p>
+            The <code>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.ibatis.datasource.unpooled.UnpooledDataSource</code>
             and helps users to configure it.
-        </para>
-        <para>
-            The table below contains all of the available properties for the Provider::
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider properties</caption>
                 <thead>
@@ -83,18 +91,16 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
     </section>
 
-    <section id="datasources.builtin.pooled">
-        <title>Pooled Data Source Provider</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.ibatis.datasource.pooled.PooledDataSource</literal>
+    <section name="Pooled Data Source Provider">
+        <p>
+            The <code>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.ibatis.datasource.pooled.PooledDataSource</code>
             and helps users to configure it.
-        </para>
-        <para>
-            The table below contains all of the available properties for the Provider:
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.PooledDataSourceProvider properties</caption>
                 <thead>
@@ -177,18 +183,16 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
     </section>
 
-    <section id="datasources.builtin.jndi">
-        <title>JNDI Data Source Provider</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.ibatis.datasource.jndi.JndiDataSourceFactory</literal>
+    <section name="JNDI Data Source Provider">
+        <p>
+            The <code>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.ibatis.datasource.jndi.JndiDataSourceFactory</code>
             and helps users to configure it.
-        </para>
-        <para>
-            The table below contains all of the available properties for the Provider::
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.builtin.JndiDataSourceProvider properties</caption>
                 <thead>
@@ -211,7 +215,9 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
     </section>
 
-</section>
+</body>
+
+</document>
+
