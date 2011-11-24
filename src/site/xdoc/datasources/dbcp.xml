@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <!--
-    Copyright 2010-2011 The MyBatis Team
+  Copyright 2010-2011 The myBatis Team
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 -->
 
 <!--
-    version: $Id$
+  version: $Id$
 -->
-<section id="datasources.dbcp">
-    <title>Apache Commons DBCP Provider</title>
-    <para>
-        The <literal>org.mybatis.guice.datasource.dbcp</literal> package
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Guice | DataSources | DBCP</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="Apache Commons DBCP Provider">
+    <p>
+        The <code>org.mybatis.guice.datasource.dbcp</code> package
         contains Google Guice providers for Apache Commons DBCP Data Source
         implementations.
-    </para>
-    <note>
-        <title>for Apache Maven users</title>
-        <para>
-            the Apache Commons DBCP dependency is not transitive, so they have
-            to take care about including it in their applications.
-        </para>
-    </note>
+    </p>
+    <p>
+        <span class="label notice">for Apache Maven users</span>
+        the Apache Commons DBCP dependency is not transitive, so they have
+        to take care about including it in their applications.
+    </p>
 
-    <section id="datasources.dbcp.basic">
-        <title>Basic Data Source Provider</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.commons.dbcp.BasicDataSource</literal>
+    <subsection name="Basic Data Source Provider">
+        <p>
+            The <code>org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.commons.dbcp.BasicDataSource</code>
             and helps users to configure it.
-        </para>
-        <para>
+        </p>
+        <p>
             The table below contains all of the available properties for the Provider; for more
             details please consult the
-            <ulink url="http://commons.apache.org/dbcp/configuration.html">Official reference</ulink>.
+            <a href="http://commons.apache.org/dbcp/configuration.html">Official reference</a>.</p>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider properties</caption>
                 <thead>
@@ -176,24 +181,21 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
-    </section>
+    </subsection>
 
-    <section id="datasources.dbcp.shared">
-        <title>Shared Pool Data Source</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.commons.dbcp.datasources.SharedPoolDataSource</literal>
+    <subsection name="Shared Pool Data Source">
+        <p>
+            The <code>org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.commons.dbcp.datasources.SharedPoolDataSource</code>
             and helps users to configure it.
-        </para>
-        <note>
-            <para>
-                this provider requires a <literal>javax.sql.ConnectionPoolDataSource</literal>
-                existing binding in order to be instantiated.
-            </para>
-        </note>
-        <para>
-            The table below contains all of the available properties for the Provider:
+        </p>
+        <p>
+            <span class="label warning">Warning</span>
+            this provider requires a <code>javax.sql.ConnectionPoolDataSource</code>
+            existing binding in order to be instantiated.
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider properties</caption>
                 <thead>
@@ -301,24 +303,21 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
-    </section>
+    </subsection>
 
-    <section id="datasources.dbcp.peruser">
-        <title>Per User Pool Data Source</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider</literal>
-            is the provider that builds the <literal>org.apache.commons.dbcp.datasources.PerUserPoolDataSource</literal>
+    <subsection name="Per User Pool Data Source">
+        <p>
+            The <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider</code>
+            is the provider that builds the <code>org.apache.commons.dbcp.datasources.PerUserPoolDataSource</code>
             and helps users to configure it.
-        </para>
-        <note>
-            <para>
-                this provider requires a <literal>javax.sql.ConnectionPoolDataSource</literal>
-                existing binding in order to be instantiated.
-            </para>
-        </note>
-        <para>
-            The table below contains all of the available properties for the Provider:
+        </p>
+        <p>
+            <span class="label warning">Warning</span>
+            this provider requires a <code>javax.sql.ConnectionPoolDataSource</code>
+            existing binding in order to be instantiated.
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider properties</caption>
                 <thead>
@@ -426,26 +425,25 @@
                     </tr>
                 </tbody>
             </table>
-        </para>
-        <para>
+        <p>
             Since all these settings can't be easily covered using
-            <literal>com.google.inject.name.Named</literal> annotations,
+            <code>com.google.inject.name.Named</code> annotations,
             and we don't want to put a limit on how users can retrieve these
             informations, the library provides the
-            <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
-            module that alleviates the task of binding <emphasis>per users</emphasis> properties.
-        </para>
-        <para>
-            So, developers have to write their own <literal>com.google.inject.Provider</literal>
+            <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</code>
+            module that alleviates the task of binding <i>per users</i> properties.
+        </p>
+        <p>
+            So, developers have to write their own <code>com.google.inject.Provider</code>
             for mapped properties and binding them through the module;
-            keep in mind that every provider is <emphasis>optional</emphasis> so,
+            keep in mind that every provider is <i>optional</i> so,
             if not specified, properties won't be set.
-        </para>
-        <para>
+        </p>
+        <p>
             Let's take a look at an example that shows how to set the
-            <literal>perUserDefaultAutoCommit</literal> properties; first of all,
+            <code>perUserDefaultAutoCommit</code> properties; first of all,
             let's implement the provider that communicates the user bindings:
-            <programlisting language="java"><![CDATA[import com.google.inject.Provider;
+            <source><![CDATA[import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 class MyPerUserDefaultAutoCommit implements Provider<Map<String, Boolean>> {
@@ -461,12 +459,12 @@ class MyPerUserDefaultAutoCommit implements Provider<Map<String, Boolean>> {
         return this.perUserDefaultAutoCommitMap;
     }
 
-}]]></programlisting>
-        </para>
-        <para>
-            then, create the <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
+}]]></source>
+        </p>
+        <p>
+            then, create the <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</code>
             and create the context:
-            <programlisting language="java"><![CDATA[import org.mybatis.guice.core.SqlSessionFactoryModule;
+            <source><![CDATA[import org.mybatis.guice.core.SqlSessionFactoryModule;
 import org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule;
 import org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider;
 
@@ -475,20 +473,18 @@ Injector injector = Guice.createInjector(
     new PerUserPoolDataSourceModule()
         .setPerUserDefaultAutoCommitProviderClass(
             MyPerUserDefaultAutoCommit.class);
-);]]></programlisting>
-        </para>
-        <para>
+);]]></source>
+        </p>
+        <p>
             That's all :)
-        </para>
-        <para>
-            <note>
-                <para>
-                    it's strongly reccommended to use the same
-                    <literal>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</literal>
-                    instance to set also the other <emphasis>per user</emphasis>
-                    bindings, resumed in the following table
-                </para>
-            </note>
+        </p>
+            <p>
+                <span class="label warning">Warning</span>
+                it's strongly reccommended to use the same
+                <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</code>
+                instance to set also the other <i>per user</i>
+                bindings, resumed in the following table
+            </p>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule properties</caption>
                 <thead>
@@ -524,19 +520,17 @@ Injector injector = Guice.createInjector(
                     </tr>
                 </tbody>
             </table>
-        </para>
-    </section>
+    </subsection>
 
-    <section id="datasources.dbcp.driveadapter">
-        <title>Connection Pool Data Source driver adapter</title>
-        <para>
-            The <literal>org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider</literal>
-            provides the <literal>org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS</literal>
+    <subsection name="Connection Pool Data Source driver adapter">
+        <p>
+            The <code>org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider</code>
+            provides the <code>org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS</code>
             adapter for jdbc drivers that do not include an implementation of
-            <literal>javax.sql.ConnectionPoolDataSource</literal>.
-        </para>
-        <para>
-            The table below contains all of the available properties for the Provider:
+            <code>javax.sql.ConnectionPoolDataSource</code>.
+        </p>
+        <p>
+            The table below contains all of the available properties for the Provider:</p>
             <table>
                 <caption>org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider properties</caption>
                 <thead>
@@ -614,7 +608,10 @@ Injector injector = Guice.createInjector(
                     </tr>
                 </tbody>
             </table>
-        </para>
-    </section>
+    </subsection>
 
 </section>
+
+</body>
+
+</document>
