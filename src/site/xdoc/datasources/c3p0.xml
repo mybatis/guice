@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <!--
-    Copyright 2010-2011 The MyBatis Team
+  Copyright 2010-2011 The myBatis Team
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 -->
 
 <!--
-    version: $Id$
+  version: $Id$
 -->
-<section id="datasources.c3p0">
-    <title>C3P0 Data Source Provider</title>
-    <para>
-        The <literal>org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider</literal>
-        is the provider that builds the <literal>com.mchange.v2.c3p0.ComboPooledDataSource</literal>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Guice | DataSources | C3P0</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="C3P0 Data Source Provider">
+    <p>
+        The <code>org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider</code>
+        is the provider that builds the <code>com.mchange.v2.c3p0.ComboPooledDataSource</code>
         and helps users to configure it.
-    </para>
-    <note>
-        <title>for Apache Maven users</title>
-        <para>
-            the C3P0 dependency is not transitive, so they have to take care
-            about including it in their applications.
-        </para>
-    </note>
-    <para>
-        The table below contains all of the available properties for the Provider:; for more
+    </p>
+    <p>
+        <span class="label notice">for Apache Maven users</span>
+        the C3P0 dependency is not transitive, so they have to take care
+        about including it in their applications.
+    </p>
+    <p>
+        The table below contains all of the available properties for the Provider; for more
         details please consult the
-        <ulink url="http://www.mchange.com/projects/c3p0/index.html#configuration">Official reference</ulink>.
+        <a href="http://www.mchange.com/projects/c3p0/index.html#configuration">Official reference</a>.</p>
         <table>
             <caption>org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider properties</caption>
             <thead>
@@ -198,5 +204,8 @@
                 </tr>
             </tbody>
         </table>
-    </para>
 </section>
+
+</body>
+
+</document>
