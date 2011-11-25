@@ -34,6 +34,7 @@
         <item name="BoneCP" href="datasources/bonecp.html"/>
       </item>
       <item name="Injections" href="injections.html"/>
+      <item name="@Transactional" href="transactional.html"/>
     </menu>
 
     <menu ref="reports"/>
