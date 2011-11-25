@@ -27,6 +27,12 @@
       <item name="Introduction" href="index.html"/>
       <item name="Getting Started" href="getting_started.html"/>
       <item name="Core components" href="core.html"/>
+      <item name="Data Sources" href="datasources.html">
+        <item name="MyBatis built-in" href="datasources/builtin.html"/>
+        <item name="Apache Commons DBCP" href="datasources/dbcp.html"/>
+        <item name="C3P0" href="datasources/c3p0.html"/>
+        <item name="BoneCP" href="datasources/bonecp.html"/>
+      </item>
     </menu>
 
     <menu ref="reports"/>
