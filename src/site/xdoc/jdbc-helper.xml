@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2010-2011 The myBatis Team
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+  version: $Id$
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Guice | JDBC Helper</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="JDBC Helper">
+
+    <subsection name="Bind automatically JDBC Connection URL and Driver">
+
+        <p>For those users (like me!!!) don't have a dictionary to quickly
+        retrieve the JDBC url pattern and the driver class name for a specific
+        DBMS, here it comes the <code>org.mybatis.guice.datasource.helper.JdbcHelper</code>
+        Module.</p>
+        <p>It is an easy to use Google Guice module that makes easy the
+            <code>JDBC.url</code> and <code>JDBC.driver</code> properties
+            binding needed for the <code>DataSource</code> providers.</p>
+            <p>The <code>org.mybatis.guice.datasource.helper.JdbcHelper</code>
+            provides a large number of <i>Enumeration</i> values that
+            cover the most popular DBMS (both commercial and open source) that are
+            provided/recommended by the actual database vendor, resumed in the table
+            below.
+         </p>
+
+            <p>
+                <span class="label notice">Variable Format</span>
+                Patterns contain variables in the <i>Apache ANT</i>
+                alike style, in the format <code>${name|defaultValue}</code>,
+                where <code>name</code> is used as label which will looked for
+                in the current Guice <code>Injector</code>, with <code>defaultValue</code>
+                as its default value, replaced in the pattern if <code>name</code>
+                is not found.</p>
+            <p><span class="label important">NOTE</span> this feature doesn't work with XML Module!!!</p>
+    </subsection>
+
+    <subsection name="Supported DBMS">
+        <table>
+                <thead>
+                    <tr>
+                        <th>DBMS</th>
+                        <th>URL pattern</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Cache</code></td>
+                        <td><code>jdbc:Cache://${JDBC.host|localhost}:${JDBC.port|1972}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Daffodil_DB</code></td>
+                        <td><code>jdbc:daffodilDB://${JDBC.host|localhost}:${JDBC.port|3456}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.DB2</code></td>
+                        <td><code>jdbc:db2://${JDBC.host|localhost}:${JDBC.port|50000}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.DB2_DataDirect</code></td>
+                        <td><code>jdbc:datadirect:db2://${JDBC.host|localhost}:${JDBC.port|50000}/DatabaseName=${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.DB2_AS400_JTOpen</code></td>
+                        <td><code>jdbc:as400://${JDBC.host|localhost}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Firebird</code></td>
+                        <td><code>jdbc:firebirdsql:${JDBC.host|localhost}/${JDBC.port|3050}:${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.FrontBase</code></td>
+                        <td><code>jdbc:FrontBase://${JDBC.host|localhost}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.HP_Neoview</code></td>
+                        <td><code>jdbc:hpt4jdbc://${neoview.system}:${JDBC.port}/:</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.HSQLDB_Server</code></td>
+                        <td><code>jdbc:hsqldb:hsql://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.HSQLDB_Embedded</code></td>
+                        <td><code>jdbc:hsqldb:${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_IN_MEMORY_PRIVATE</code></td>
+                        <td><code>jdbc:h2:mem"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_IN_MEMORY_NAMED</code></td>
+                        <td><code>jdbc:h2:mem:${JDBC.schema}"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_SERVER_TCP</code></td>
+                        <td><code>jdbc:h2:tcp://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_SERVER_SSL</code></td>
+                        <td><code>jdbc:h2:ssl://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_FILE</code></td>
+                        <td><code>jdbc:h2:file://${JDBC.schema}"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.H2_EMBEDDED</code></td>
+                        <td><code>jdbc:h2:${JDBC.schema}"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Informix</code></td>
+                        <td><code>jdbc:informix-sqli://${JDBC.host|localhost}:${JDBC.port|1533}/${JDBC.schema}:
+informixserver=${dbservername}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Informix_DataDirect</code></td>
+                        <td><code>jdbc:datadirect:informix://${JDBC.host|localhost}:${JDBC.port|1533};
+InformixServer=${informixserver};DatabaseServer=${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Derby_Server</code></td>
+                        <td><code>jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Derby_Embedded</code></td>
+                        <td><code>jdbc:derby:${JDBC.schema};create=${derby.create|false}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.JDataStore</code></td>
+                        <td><code>jdbc:borland:dslocal:${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.JDBC_ODBC_Bridge</code></td>
+                        <td><code>jdbc:odbc:${ODBC.datasource}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.MaxDB</code></td>
+                        <td><code>jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.McKoi</code></td>
+                        <td><code>jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Mimer</code></td>
+                        <td><code>jdbc:mimer:${mimer.protocol}://${JDBC.host|localhost}:${JDBC.port|1360}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.MySQL</code></td>
+                        <td><code>jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Netezza</code></td>
+                        <td><code>jdbc:netezza://${JDBC.host|localhost}:${JDBC.port|5480}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Oracle_Thin</code></td>
+                        <td><code>jdbc:oracle:thin:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Oracle_OCI</code></td>
+                        <td><code>jdbc:oracle:oci:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Oracle_DataDirect</code></td>
+                        <td><code>jdbc:datadirect:oracle://${JDBC.host|localhost}:${JDBC.port|1521};
+ServiceName=${oracle.servicename|ORCL}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Pervasive</code></td>
+                        <td><code>jdbc:pervasive://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Pointbase_Embedded</code></td>
+                        <td><code>jdbc:pointbase:embedded:${JDBC.schema},database.home=${pointbase.home}
+,create=${pointbase.create|false}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Pointbase_Server</code></td>
+                        <td><code>jdbc:pointbase:server://${JDBC.host|localhost}:${JDBC.port|9092}/${JDBC.schema}
+,database.home=${pointbase.home},create=${pointbase.create|false}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.PostgreSQL</code></td>
+                        <td><code>jdbc:postgresql://${JDBC.host|localhost}:${JDBC.port|5432}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Progress</code></td>
+                        <td><code>jdbc:jdbcProgress:T:${JDBC.host|localhost}:${JDBC.port|2055}:${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.SQL_Server_DataDirect</code></td>
+                        <td><code>jdbc:datadirect:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};
+DatabaseName=${JDBC.schema|Northwind}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.SQL_Server_jTDS</code></td>
+                        <td><code>jdbc:jtds:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};
+DatabaseName=${JDBC.schema|Northwind};domain=${sqlserver.domain}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.SQL_Server_MS_Driver</code></td>
+                        <td><code>jdbc:microsoft:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};
+DatabaseName=${JDBC.schema|Northwind}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.SQL_Server_2005_MS_Driver</code></td>
+                        <td><code>jdbc:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Sybase_ASE_jTDS</code></td>
+                        <td><code>jdbc:jtds:sybase://${JDBC.host|localhost}:${JDBC.port|5000};DatabaseName=${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Sybase_ASE_JConnect</code></td>
+                        <td><code>jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|5000}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Sybase_SQL_Anywhere_JConnect</code></td>
+                        <td><code>jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|2638}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>org.mybatis.guice.datasource.helper.JdbcHelper.Sybase_DataDirect</code></td>
+                        <td><code>jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}</code></td>
+                    </tr>
+                </tbody>
+            </table>
+    </subsection>
+
+    <subsection name="Usage Example">
+        <p>Using the helper is simpler than explain how it works, let's have a look at the code
+        below that configures the <code>PooledDataSourceProvider</code> for
+        <i>MySQL</i>:
+
+            <source><![CDATA[final Properties myBatisProperties = new Properties();
+myBatisProperties.setProperty("mybatis.environment.id", "test");
+// configure the database host
+myBatisProperties.setProperty("JDBC.host", "contacts.acme.db");
+// configure the database port
+myBatisProperties.setProperty("JDBC.port", "6969");
+// configure the database schema
+myBatisProperties.setProperty("JDBC.schema", "contacts_test");
+myBatisProperties.setProperty("JDBC.username", "fooTest");
+myBatisProperties.setProperty("JDBC.password", "barPWD");
+myBatisProperties.setProperty("JDBC.autoCommit", "false");
+// binds the JDBC connection URL and the Driver class name for MySQL
+Injector injector = Guice.createInjector(JdbcHelper.MySQL,
+    new MyBatisModule() {
+        public void configure(Binder binder) {
+            setDataSourceProviderType(PooledDataSourceProvider.class);
+            addSimpleAliases(Contact.class);
+            addMapperClasses(ContactMapper.class);
+        }
+    },
+    new Module() {
+        public void configure(Binder binder) {
+            /* binds the properties configuration; JDBC.host,
+             * JDBC.port and JDBC.schema will be used to be
+             * replaced in the URL Pattern Names.bindProperties(binder, myBatisProperties);
+             */
+        }
+    });]]></source>
+        </p>
+    </subsection>
+
+</section>
+
+</body>
+
+</document>
