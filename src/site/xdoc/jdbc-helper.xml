@@ -279,8 +279,9 @@ Injector injector = Guice.createInjector(JdbcHelper.MySQL,
         public void configure(Binder binder) {
             /* binds the properties configuration; JDBC.host,
              * JDBC.port and JDBC.schema will be used to be
-             * replaced in the URL Pattern Names.bindProperties(binder, myBatisProperties);
+             * replaced in the URL Pattern
              */
+            Names.bindProperties(binder, myBatisProperties);
         }
     });]]></source>
         </p>
