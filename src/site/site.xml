@@ -33,6 +33,7 @@
         <item name="C3P0" href="datasources/c3p0.html"/>
         <item name="BoneCP" href="datasources/bonecp.html"/>
       </item>
+      <item name="Injections" href="injections.html"/>
     </menu>
 
     <menu ref="reports"/>
