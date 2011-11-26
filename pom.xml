@@ -70,7 +70,6 @@
 
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
-    <clirr.comparisonVersion>3.2</clirr.comparisonVersion>
     <guice.version>3.0</guice.version>
     <gcu.product>Guice</gcu.product>
     <osgi.import>com.mchange.v2.c3p0;resolution:=optional,org.apache.commons.dbcp;resolution:=optional,
