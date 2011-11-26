@@ -55,6 +55,13 @@
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>
     <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</developerConnection>
   </scm>
+  <distributionManagement>
+    <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
+    <site>
+      <id>mybatis.site</id>
+      <url>ftp://${mybatis.host}/guice</url>
+    </site>
+  </distributionManagement>
 
   <build>
     <plugins>
