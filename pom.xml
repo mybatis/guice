@@ -59,7 +59,7 @@
     <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
     <site>
       <id>mybatis.site</id>
-      <url>ftp://${mybatis.host}/guice</url>
+      <url>ftp://${mybatis.host}/guice/${project.version}</url>
     </site>
   </distributionManagement>
 
