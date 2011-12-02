@@ -32,13 +32,13 @@
 
   <subsection name="Getting a SqlSession">
       <p>
-        In MyBatis you use the <literal>SqlSessionFactory</literal> to create an
-        <literal>SqlSession</literal>. Once you have a session, you use it to
+        In MyBatis you use the <code>SqlSessionFactory</code> to create an
+        <code>SqlSession</code>. Once you have a session, you use it to
         execute your mapped statements, get mappers,  commit or rollback connections and
         finally, when it is no longer needed, you close the session. With
-        MyBatis-Guice you don't need to use <literal>SqlSessionFactory</literal>
+        MyBatis-Guice you don't need to use <code>SqlSessionFactory</code>
         directly because your beans can be injected with a thread safe
-        <literal>SqlSession</literal> that automatically commits, rollbacks and
+        <code>SqlSession</code> that automatically commits, rollbacks and
         closes the session based on @Transactional annotation.
 
         <source><![CDATA[public class UserDaoImpl implements UserDao {
