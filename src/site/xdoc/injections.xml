@@ -30,7 +30,7 @@
   <body>
     <section name="Requesting Injections">
 
-  <subsection name="Getting a SqlSession">
+  <subsection name="Getting an SqlSession">
       <p>
         In MyBatis you use the <code>SqlSessionFactory</code> to create an
         <code>SqlSession</code>. Once you have a session, you use it to
