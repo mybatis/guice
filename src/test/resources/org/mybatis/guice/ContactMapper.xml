@@ -28,6 +28,13 @@
     <result column="created" property="created"/>
     <result column="address" property="address"/>
   </resultMap>
+  <resultMap type="org.mybatis.guice.Contact" id="contactWithTypeHandler">
+    <id column="id" property="id"/>
+    <result column="first_name" property="firstName" typeHandler="org.mybatis.guice.ContactNameTypeHandler"/>
+    <result column="last_name" property="lastName" typeHandler="org.mybatis.guice.ContactNameTypeHandler"/>
+    <result column="created" property="created"/>
+    <result column="address" property="address"/>
+  </resultMap>
 
   <insert id="brokenAdd" parameterType="org.mybatis.guice.Contact" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO
@@ -98,6 +105,12 @@
   <select id="getById" parameterType="java.lang.Integer" resultMap="contactMap">
     <include refid="select"/>
     <include refid="where"/>
+  </select>
+
+  <select id="getByIdWithTypeHandler" parameterType="java.lang.Integer" resultMap="contactWithTypeHandler">
+    <include refid="select"/>
+    WHERE
+      id = #{id,typeHandler=org.mybatis.guice.ContactIdTypeHandler}
   </select>
 
   <select id="selectAll" resultMap="contactMap">

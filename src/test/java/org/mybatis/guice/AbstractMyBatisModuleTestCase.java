@@ -81,6 +81,18 @@ public abstract class AbstractMyBatisModuleTestCase {
                                                 + contact;
     }
 
+    @Test
+    public void selectContactWithTypeHandler() throws Exception {
+        Contact contact = this.contactMapperClient.selectByIdWithTypeHandler(this.contact.getId());
+        assert contact != null : "impossible to retrieve Contact with id '"
+                                + this.contact.getId()
+                                + "'";
+        assert this.contact.equals(contact) : "Expected "
+                                                + this.contact
+                                                + " but found "
+                                                + contact;
+    }
+
     @Test(expected = CustomException.class)
     public void catchSQLException() throws Exception {
         this.contactMapperClient.brokenInsert(this.contact);

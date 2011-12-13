@@ -41,6 +41,7 @@ import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.Mappers;
+import org.mybatis.guice.configuration.MappingTypeHandlers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
@@ -67,6 +68,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
     private MapBinder<Class<?>, TypeHandler<?>> handlers;
 
+    private Multibinder<TypeHandler<?>> mappingTypeHandlers;
+
     private Multibinder<Interceptor> interceptors;
 
     private Multibinder<Class<?>> mappers;
@@ -92,6 +95,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         this.aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
         this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
         this.interceptors = newSetBinder(binder(), Interceptor.class);
+        this.mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>(){}, MappingTypeHandlers.class);
         this.mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
 
         try {
@@ -397,6 +401,51 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
             }
 
         };
+    }
+
+    /**
+     * Adds the user defined MyBatis type handler, letting
+     * google-guice creating it.
+     *
+     * @param handlerClass the handler type.
+     */
+    protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
+        if (handlerClass == null) {
+            throw new IllegalArgumentException("Parameter 'handlerClass' must not be null");
+        }
+
+    	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
+    }
+
+    /**
+     * Adds the user defined MyBatis type handlers, letting
+     * google-guice creating it.
+     *
+     * @param handlerClass the handler type.
+     */
+    protected final void addTypeHandlersClasses(Collection<Class<? extends TypeHandler<?>>> handlersClasses) {
+        if (handlersClasses == null) {
+            throw new IllegalArgumentException("Parameter 'handlersClasses' must not be null");
+        }
+
+        for (Class<? extends TypeHandler<?>> handlerClass : handlersClasses) {
+        	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
+        }
+    }
+
+    /**
+     * Adds the user defined MyBatis type handlers in the given package, letting
+     * google-guice creating it.
+     * 
+     * @param packageName the package where looking for type handlers.
+     */
+    protected final void addTypeHandlerClasses(String packageName) {
+        if (packageName == null) {
+            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
+        }
+        this.addTypeHandlersClasses(new ResolverUtil<TypeHandler<?>>()
+                .find(new ResolverUtil.IsA(TypeHandler.class), packageName)
+                .getClasses());
     }
 
     /**

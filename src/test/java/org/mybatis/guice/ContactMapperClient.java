@@ -77,6 +77,15 @@ public class ContactMapperClient {
     @Transactional(
         isolation = Isolation.SERIALIZABLE,
         rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "An error occurred when selecting contact with ID %s"
+    )
+    public Contact selectByIdWithTypeHandler(final Integer id) throws CustomException {
+        return this.contactMapper.getByIdWithTypeHandler(id);
+    }
+
+    @Transactional(
+        isolation = Isolation.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
         exceptionMessage = "An error occurred when selecting all stored contacts"
     )
     public List<Contact> getAll() throws CustomException {

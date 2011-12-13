@@ -52,6 +52,8 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
                 handleType(CustomType.class).with(CustomLongTypeHandler.class);
                 handleType(Address.class).with(AddressTypeHandler.class);
                 addInterceptorClass(CountUpdateInterceptor.class);
+                addTypeHandlerClass(ContactIdTypeHandler.class);
+                addTypeHandlerClass(ContactNameTypeHandler.class);
             }
 
         });

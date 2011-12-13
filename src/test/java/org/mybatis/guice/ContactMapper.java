@@ -34,6 +34,8 @@ public interface ContactMapper {
 
     Contact getById(Integer id);
 
+    Contact getByIdWithTypeHandler(Integer id);
+
     List<Contact> selectAll();
 
 }

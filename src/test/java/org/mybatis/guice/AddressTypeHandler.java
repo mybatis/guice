@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeHandler;
 
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 /**
  * @version $Id$
  */
+@MappedTypes(Address.class)
 public class AddressTypeHandler implements TypeHandler<Address> {
 
     private AddressConverter addressConverter;
@@ -67,7 +69,20 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         }
     }
 
-    @Inject
+    public Address getResult(ResultSet rs, int columnIndex) throws SQLException {
+        String input = rs.getString(columnIndex);
+        if (rs.wasNull()) {
+            return null;
+        }
+
+        try {
+            return addressConverter.convert(input);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+	}
+
+	@Inject
     public void setAddressConverter(AddressConverter addressConverter) {
         this.addressConverter = addressConverter;
     }

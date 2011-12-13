@@ -23,10 +23,12 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 
 /**
  * @version $Id$
  */
+@MappedTypes(CustomType.class)
 public class CustomLongTypeHandler extends BaseTypeHandler<CustomType> {
 
     @Override
@@ -61,4 +63,14 @@ public class CustomLongTypeHandler extends BaseTypeHandler<CustomType> {
         return null;
     }
 
+	@Override
+	public CustomType getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+        Object value = rs.getObject(columnIndex);
+        if (value instanceof Timestamp) {
+            CustomType t = new CustomType();
+            t.setValue(((Timestamp) value).getTime());
+            return t;
+        }
+        return null;
+	}
 }

@@ -50,6 +50,8 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
 
+    private static final String ALL_TYPE_HANDLERS = "typeHandlerRegistry.ALL_TYPE_HANDLERS_MAP.values()";
+
     private static final String INTERCEPTORS = "interceptorChain.interceptors";
 
     private String classPathResource = DEFAULT_CONFIG_RESOURCE;
@@ -128,6 +130,11 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
                 for (TypeHandler<?> handler : mappedTypeHandler.values()) {
                     binder().requestInjection(handler);
                 }
+            }
+            @SuppressWarnings("unchecked")
+            Collection<TypeHandler<?>> allTypeHandlers = (Collection<TypeHandler<?>>) getValue(ALL_TYPE_HANDLERS, context, configuration);
+            for (TypeHandler<?> handler: allTypeHandlers) {
+                binder().requestInjection(handler);
             }
 
             // request injection for interceptors
