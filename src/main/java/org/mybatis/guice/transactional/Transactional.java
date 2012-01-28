@@ -24,7 +24,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
- * Any method or class marked with this annotation will be considered for
+ * Any method marked with this annotation will be considered for
  * transactionality.
  *
  * @version $Id$
