@@ -62,12 +62,12 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        doBind(this.binder(), this.perUserDefaultAutoCommitProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultAutoCommit.class);
-        doBind(this.binder(), this.perUserDefaultReadOnlyProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultReadOnly.class);
-        doBind(this.binder(), this.perUserDefaultTransactionIsolationProviderClass, STRING_INTEGER_MAP, PerUserDefaultTransactionIsolation.class);
-        doBind(this.binder(), this.perUserMaxActiveProviderClass, STRING_INTEGER_MAP, PerUserMaxActive.class);
-        doBind(this.binder(), this.perUserMaxIdleProviderClass, STRING_INTEGER_MAP, PerUserMaxIdle.class);
-        doBind(this.binder(), this.perUserMaxWaitProviderClass, STRING_INTEGER_MAP, PerUserMaxWait.class);
+        doBind(binder(), perUserDefaultAutoCommitProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultAutoCommit.class);
+        doBind(binder(), perUserDefaultReadOnlyProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultReadOnly.class);
+        doBind(binder(), perUserDefaultTransactionIsolationProviderClass, STRING_INTEGER_MAP, PerUserDefaultTransactionIsolation.class);
+        doBind(binder(), perUserMaxActiveProviderClass, STRING_INTEGER_MAP, PerUserMaxActive.class);
+        doBind(binder(), perUserMaxIdleProviderClass, STRING_INTEGER_MAP, PerUserMaxIdle.class);
+        doBind(binder(), perUserMaxWaitProviderClass, STRING_INTEGER_MAP, PerUserMaxWait.class);
     }
 
     private static <T> void doBind(Binder binder, Class<Provider<T>> providerClass, TypeLiteral<T> typeLiteral, Class<? extends Annotation> annotation) {
@@ -148,12 +148,12 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
         }
 
         public PerUserPoolDataSourceModule create() {
-            return new PerUserPoolDataSourceModule(this.perUserDefaultAutoCommitProviderClass,
-                    this.perUserDefaultReadOnlyProviderClass,
-                    this.perUserDefaultTransactionIsolationProviderClass,
-                    this.perUserMaxActiveProviderClass,
-                    this.perUserMaxIdleProviderClass,
-                    this.perUserMaxWaitProviderClass);
+            return new PerUserPoolDataSourceModule(perUserDefaultAutoCommitProviderClass,
+                    perUserDefaultReadOnlyProviderClass,
+                    perUserDefaultTransactionIsolationProviderClass,
+                    perUserMaxActiveProviderClass,
+                    perUserMaxIdleProviderClass,
+                    perUserMaxWaitProviderClass);
         }
 
     }
