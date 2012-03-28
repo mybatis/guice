@@ -23,7 +23,7 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 /**
- * 
+ *
  *
  * @version $Id$
  */
@@ -41,7 +41,7 @@ final class KeyResolver implements Provider<String> {
     public KeyResolver(final String key, final String defaultValue) {
         this.key = Key.get(String.class, Names.named(key));
         this.defaultValue = defaultValue;
-        this.toString = "${" + key + "}";
+        toString = "${" + key + "}";
     }
 
     public void setInjector(Injector injector) {
@@ -53,18 +53,18 @@ final class KeyResolver implements Provider<String> {
      */
     public String get() {
         try {
-            return this.injector.getInstance(this.key);
+            return injector.getInstance(key);
         } catch (Throwable e) {
-            if (this.defaultValue != null) {
-                return this.defaultValue;
+            if (defaultValue != null) {
+                return defaultValue;
             }
-            return this.toString;
+            return toString;
         }
     }
 
     @Override
     public String toString() {
-        return this.toString;
+        return toString;
     }
 
 }
