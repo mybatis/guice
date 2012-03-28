@@ -40,7 +40,7 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
      * @since 1.0.1
      */
     public SqlSessionFactoryProvider() {
-        
+
     }
 
     /**
@@ -68,7 +68,7 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
      * {@inheritDoc}
      */
     public SqlSessionFactory get() {
-        return this.sqlSessionFactory;
+        return sqlSessionFactory;
     }
 
 }
