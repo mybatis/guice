@@ -32,6 +32,9 @@
       <action dev="simone.tripodi" type="fix" due-to="422">
         Missing mapUnderscoreToCamelCase property in mybatis-guice.
       </action>
+      <action dev="simone.tripodi" type="update">
+        Internal code polishing.
+      </action>
     </release>
 
     <release version="3.2" date="2011-10-14" description="maintenance release">
