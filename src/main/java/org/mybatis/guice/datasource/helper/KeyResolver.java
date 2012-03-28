@@ -15,12 +15,13 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import static com.google.inject.name.Names.named;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.name.Names;
 
 /**
  *
@@ -39,7 +40,7 @@ final class KeyResolver implements Provider<String> {
     private Injector injector;
 
     public KeyResolver(final String key, final String defaultValue) {
-        this.key = Key.get(String.class, Names.named(key));
+        this.key = Key.get(String.class, named(key));
         this.defaultValue = defaultValue;
         toString = "${" + key + "}";
     }
