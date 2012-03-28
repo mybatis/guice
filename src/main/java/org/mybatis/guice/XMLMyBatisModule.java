@@ -104,10 +104,10 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
         Reader reader = null;
         try {
-            reader = getResourceAsReader(this.getClass().getClassLoader(), this.classPathResource);
+            reader = getResourceAsReader(this.getClass().getClassLoader(), classPathResource);
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
-                    this.environmentId,
-                    this.properties);
+                    environmentId,
+                    properties);
             binder().bind(SqlSessionFactory.class).toInstance(sessionFactory);
 
             Configuration configuration = sessionFactory.getConfiguration();
