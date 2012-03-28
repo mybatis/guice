@@ -61,7 +61,7 @@ public final class EnvironmentProvider implements Provider<Environment> {
      * {@inheritDoc}
      */
     public Environment get() {
-        return new Environment(this.id, this.transactionFactory, this.dataSource);
+        return new Environment(id, transactionFactory, dataSource);
     }
 
 }
