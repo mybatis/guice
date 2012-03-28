@@ -61,6 +61,7 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
     /**
      *
      * @param username
+     * @since 3.3
      */
     @com.google.inject.Inject(optional = true)
     public void setUser(@Named("JDBC.username") final String username) {
@@ -70,6 +71,7 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
     /**
      *
      * @param password
+     * @since 3.3
      */
     @com.google.inject.Inject(optional = true)
     public void setPassword(@Named("JDBC.password") final String password) {
