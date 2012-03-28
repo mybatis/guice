@@ -19,7 +19,6 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
@@ -62,17 +61,17 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        doBind(binder(), perUserDefaultAutoCommitProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultAutoCommit.class);
-        doBind(binder(), perUserDefaultReadOnlyProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultReadOnly.class);
-        doBind(binder(), perUserDefaultTransactionIsolationProviderClass, STRING_INTEGER_MAP, PerUserDefaultTransactionIsolation.class);
-        doBind(binder(), perUserMaxActiveProviderClass, STRING_INTEGER_MAP, PerUserMaxActive.class);
-        doBind(binder(), perUserMaxIdleProviderClass, STRING_INTEGER_MAP, PerUserMaxIdle.class);
-        doBind(binder(), perUserMaxWaitProviderClass, STRING_INTEGER_MAP, PerUserMaxWait.class);
+        doBind(perUserDefaultAutoCommitProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultAutoCommit.class);
+        doBind(perUserDefaultReadOnlyProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultReadOnly.class);
+        doBind(perUserDefaultTransactionIsolationProviderClass, STRING_INTEGER_MAP, PerUserDefaultTransactionIsolation.class);
+        doBind(perUserMaxActiveProviderClass, STRING_INTEGER_MAP, PerUserMaxActive.class);
+        doBind(perUserMaxIdleProviderClass, STRING_INTEGER_MAP, PerUserMaxIdle.class);
+        doBind(perUserMaxWaitProviderClass, STRING_INTEGER_MAP, PerUserMaxWait.class);
     }
 
-    private static <T> void doBind(Binder binder, Class<Provider<T>> providerClass, TypeLiteral<T> typeLiteral, Class<? extends Annotation> annotation) {
+    private <T> void doBind(Class<Provider<T>> providerClass, TypeLiteral<T> typeLiteral, Class<? extends Annotation> annotation) {
         if (providerClass != null) {
-            binder.bind(typeLiteral)
+            bind(typeLiteral)
                   .annotatedWith(annotation)
                   .toProvider(providerClass)
                   .in(Scopes.SINGLETON);
