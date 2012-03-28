@@ -37,182 +37,182 @@ public final class BoneCPProvider implements Provider<DataSource> {
 
     @com.google.inject.Inject(optional = true)
     public void setAcquireIncrement(@Named("bonecp.acquireIncrement") int acquireIncrement) {
-        this.dataSource.setAcquireIncrement(acquireIncrement);
+        dataSource.setAcquireIncrement(acquireIncrement);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setAcquireRetryAttempts(@Named("bonecp.acquireRetryAttempts") int acquireRetryAttempts) {
-        this.dataSource.setAcquireRetryAttempts(acquireRetryAttempts);
+        dataSource.setAcquireRetryAttempts(acquireRetryAttempts);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setClassLoader(@Named("bonecp.classLoader") ClassLoader classLoader) {
-        this.dataSource.setClassLoader(classLoader);
+        dataSource.setClassLoader(classLoader);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setCloseConnectionWatch(@Named("bonecp.closeConnectionWatch") boolean closeConnectionWatch) {
-        this.dataSource.setCloseConnectionWatch(closeConnectionWatch);
+        dataSource.setCloseConnectionWatch(closeConnectionWatch);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionHook(@Named("bonecp.connectionHook") ConnectionHook connectionHook) {
-        this.dataSource.setConnectionHook(connectionHook);
+        dataSource.setConnectionHook(connectionHook);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionHookClassName(@Named("bonecp.connectionHookClassName") String connectionHookClassName) {
-        this.dataSource.setConnectionHookClassName(connectionHookClassName);
+        dataSource.setConnectionHookClassName(connectionHookClassName);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionTestStatement(@Named("bonecp.connectionTestStatement") String connectionTestStatement) {
-        this.dataSource.setConnectionTestStatement(connectionTestStatement);
+        dataSource.setConnectionTestStatement(connectionTestStatement);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDisableConnectionTracking(@Named("bonecp.disableConnectionTracking") boolean disableConnectionTracking) {
-        this.dataSource.setDisableConnectionTracking(disableConnectionTracking);
+        dataSource.setDisableConnectionTracking(disableConnectionTracking);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDisableJMX(@Named("bonecp.disableJMX") boolean disableJMX) {
-        this.dataSource.setDisableJMX(disableJMX);
+        dataSource.setDisableJMX(disableJMX);
     }
 
     @Inject
     public void setDriverClass(@Named("JDBC.driver") final String driverClass) {
-        this.dataSource.setDriverClass(driverClass);
+        dataSource.setDriverClass(driverClass);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named("bonecp.driverProperties") Properties driverProperties) {
-        this.dataSource.setDriverProperties(driverProperties);
+        dataSource.setDriverProperties(driverProperties);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriod(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
-        this.dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);
+        dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInMinutes(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
-        this.dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);
+        dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInSeconds(@Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
-        this.dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);
+        dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setIdleMaxAge(@Named("bonecp.idleMaxAge") long idleMaxAge, @Named("bonecp.timeUnit") TimeUnit timeUnit) {
-        this.dataSource.setIdleMaxAge(idleMaxAge, timeUnit);
+        dataSource.setIdleMaxAge(idleMaxAge, timeUnit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setInitSQL(@Named("bonecp.initSQL") String initSQL) {
-        this.dataSource.setInitSQL(initSQL);
+        dataSource.setInitSQL(initSQL);
     }
 
     @Inject
     public void setJdbcUrl(@Named("JDBC.url") String jdbcUrl) {
-        this.dataSource.setJdbcUrl(jdbcUrl);
+        dataSource.setJdbcUrl(jdbcUrl);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setLazyInit(@Named("bonecp.lazyInit") boolean lazyInit) {
-        this.dataSource.setLazyInit(lazyInit);
+        dataSource.setLazyInit(lazyInit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setLogStatementsEnabled(@Named("bonecp.logStatementsEnabled") boolean logStatementsEnabled) {
-        this.dataSource.setLogStatementsEnabled(logStatementsEnabled);
+        dataSource.setLogStatementsEnabled(logStatementsEnabled);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAge(@Named("bonecp.maxConnectionAge") long maxConnectionAge,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
-        this.dataSource.setMaxConnectionAge(maxConnectionAge, timeUnit);
+        dataSource.setMaxConnectionAge(maxConnectionAge, timeUnit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAgeInSeconds(@Named("bonecp.maxConnectionAgeInSeconds") long maxConnectionAgeInSeconds) {
-        this.dataSource.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);
+        dataSource.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionsPerPartition(@Named("bonecp.maxConnectionsPerPartition") int maxConnectionsPerPartition) {
-        this.dataSource.setMaxConnectionsPerPartition(maxConnectionsPerPartition);
+        dataSource.setMaxConnectionsPerPartition(maxConnectionsPerPartition);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMinConnectionsPerPartition(@Named("bonecp.minConnectionsPerPartition") int minConnectionsPerPartition) {
-        this.dataSource.setMinConnectionsPerPartition(minConnectionsPerPartition);
+        dataSource.setMinConnectionsPerPartition(minConnectionsPerPartition);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setPartitionCount(@Named("bonecp.partitionCount") int partitionCount) {
-        this.dataSource.setPartitionCount(partitionCount);
+        dataSource.setPartitionCount(partitionCount);
     }
 
     @Inject
     public void setPassword(@Named("JDBC.password") String password) {
-        this.dataSource.setPassword(password);
+        dataSource.setPassword(password);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setPoolAvailabilityThreshold(@Named("bonecp.poolAvailabilityThreshold") int poolAvailabilityThreshold) {
-        this.dataSource.setPoolAvailabilityThreshold(poolAvailabilityThreshold);
+        dataSource.setPoolAvailabilityThreshold(poolAvailabilityThreshold);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setPoolName(@Named("bonecp.poolName") String poolName) {
-        this.dataSource.setPoolName(poolName);
+        dataSource.setPoolName(poolName);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setQueryExecuteTimeLimit(@Named("bonecp.queryExecuteTimeLimit") int queryExecuteTimeLimit,
             @Named("bonecp.timeUnit") TimeUnit timeUnit) {
-        this.dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);
+        dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setReleaseHelperThreads(@Named("bonecp.releaseHelperThreads") int releaseHelperThreads) {
-        this.dataSource.setReleaseHelperThreads(releaseHelperThreads);
+        dataSource.setReleaseHelperThreads(releaseHelperThreads);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setServiceOrder(@Named("bonecp.serviceOrder") String serviceOrder) {
-        this.dataSource.setServiceOrder(serviceOrder);
+        dataSource.setServiceOrder(serviceOrder);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setStatementReleaseHelperThreads(@Named("bonecp.statementReleaseHelperThreads") int statementReleaseHelperThreads) {
-        this.dataSource.setStatementReleaseHelperThreads(statementReleaseHelperThreads);
+        dataSource.setStatementReleaseHelperThreads(statementReleaseHelperThreads);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setStatementsCacheSize(@Named("bonecp.statementsCacheSize") int statementsCacheSize) {
-        this.dataSource.setStatementsCacheSize(statementsCacheSize);
+        dataSource.setStatementsCacheSize(statementsCacheSize);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTransactionRecoveryEnabled(@Named("bonecp.transactionRecoveryEnabled") boolean transactionRecoveryEnabled) {
-        this.dataSource.setTransactionRecoveryEnabled(transactionRecoveryEnabled);
+        dataSource.setTransactionRecoveryEnabled(transactionRecoveryEnabled);
     }
 
     @Inject
     public void setUsername(@Named("JDBC.username") String username) {
-        this.dataSource.setUsername(username);
+        dataSource.setUsername(username);
     }
 
     /**
      * {@inheritDoc}
      */
     public DataSource get() {
-        return this.dataSource;
+        return dataSource;
     }
 
 }
