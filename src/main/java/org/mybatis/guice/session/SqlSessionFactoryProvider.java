@@ -40,7 +40,7 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
      * @since 1.0.1
      */
     public SqlSessionFactoryProvider() {
-
+        // do nothing
     }
 
     /**
