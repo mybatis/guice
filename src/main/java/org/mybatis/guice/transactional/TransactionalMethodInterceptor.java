@@ -15,6 +15,9 @@
  */
 package org.mybatis.guice.transactional;
 
+import static java.lang.String.format;
+import static java.lang.Thread.currentThread;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -67,22 +70,22 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
 
         String debugPrefix = null;
         if (this.log.isDebugEnabled()) {
-            debugPrefix = String.format("[Intercepted method: %s]", interceptedMethod.toGenericString());
+            debugPrefix = format("[Intercepted method: %s]", interceptedMethod.toGenericString());
         }
 
         boolean isSessionInherited = this.sqlSessionManager.isManagedSessionStarted();
 
         if (isSessionInherited) {
             if (log.isDebugEnabled()) {
-                log.debug(String.format("%s - SqlSession already set for thread: %s",
+                log.debug(format("%s - SqlSession already set for thread: %s",
                         debugPrefix,
-                        Thread.currentThread().getId()));
+                        currentThread().getId()));
             }
         } else {
             if (log.isDebugEnabled()) {
-                log.debug(String.format("%s - SqlSession not set for thread: %s, creating a new one",
+                log.debug(format("%s - SqlSession not set for thread: %s, creating a new one",
                         debugPrefix,
-                        Thread.currentThread().getId()));
+                        currentThread().getId()));
             }
 
             sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());
@@ -117,7 +120,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
             Class<?>[] initargsType;
 
             if (transactional.exceptionMessage().length() != 0) {
-                errorMessage = String.format(transactional.exceptionMessage(), invocation.getArguments());
+                errorMessage = format(transactional.exceptionMessage(), invocation.getArguments());
                 initargs = new Object[]{ errorMessage, t };
                 initargsType = MESSAGE_CAUSE_TYPES;
             } else {
@@ -131,14 +134,14 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                 try {
                     rethrowEx = exceptionConstructor.newInstance(initargs);
                 } catch (Exception e) {
-                    errorMessage = String.format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
+                    errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
                             transactional.rethrowExceptionsAs().getName(),
                             Arrays.toString(initargsType));
                     log.error(errorMessage, e);
                     rethrowEx = new RuntimeException(errorMessage, e);
                 }
             } else {
-                errorMessage = String.format("Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).",
+                errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).",
                         transactional.rethrowExceptionsAs().getName(),
                         Arrays.toString(CAUSE_TYPES),
                         Arrays.toString(MESSAGE_CAUSE_TYPES));
@@ -154,7 +157,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                     if (log.isDebugEnabled()) {
                         log.debug(debugPrefix
                                 + " - SqlSession of thread: "
-                                + Thread.currentThread().getId()
+                                + currentThread().getId()
                                 + " was in rollbackOnly mode, rolling it back");
                     }
 
@@ -162,16 +165,16 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                 }
 
                 if (log.isDebugEnabled()) {
-                    log.debug(String.format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
+                    log.debug(format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
                             debugPrefix,
-                            Thread.currentThread().getId()));
+                            currentThread().getId()));
                 }
 
                 sqlSessionManager.close();
             } else if (log.isDebugEnabled()) {
-                log.debug(String.format("%s - SqlSession of thread: %s is inherited, skipped close operation",
+                log.debug(format("%s - SqlSession of thread: %s is inherited, skipped close operation",
                         debugPrefix,
-                        Thread.currentThread().getId()));
+                        currentThread().getId()));
             }
         }
 
