@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice.session;
 
+import static org.apache.ibatis.session.SqlSessionManager.newInstance;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -40,7 +42,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
 
     @Deprecated
     public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
+        this.sqlSessionManager = newInstance(sqlSessionFactory);
     }
 
     /**
@@ -50,7 +52,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
      */
     @Inject
     public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionManager = SqlSessionManager.newInstance(sqlSessionFactory);
+        this.sqlSessionManager = newInstance(sqlSessionFactory);
     }
 
     public SqlSessionManager get() {
