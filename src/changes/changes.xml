@@ -36,6 +36,9 @@
         Made C3P0 username/password optionals (users can specify them in the JDBC URL).
       </action>
       <action dev="simone.tripodi" type="update">
+        Made BasicDataSource username/password optional (users can specify them in the JDBC URL).
+      </action>
+      <action dev="simone.tripodi" type="update">
         Internal code polishing.
       </action>
     </release>

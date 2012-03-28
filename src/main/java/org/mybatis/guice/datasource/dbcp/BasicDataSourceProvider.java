@@ -48,13 +48,29 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public BasicDataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url,
-            @Named("JDBC.username") final String username,
-            @Named("JDBC.password") final String password) {
+            @Named("JDBC.url") final String url) {
         this.dataSource.setDriverClassName(driver);
         this.dataSource.setUrl(url);
-        this.dataSource.setUsername(username);
-        this.dataSource.setPassword(password);
+    }
+
+    /**
+     *
+     * @param username
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named("JDBC.username") final String username) {
+        dataSource.setUsername(username);
+    }
+
+    /**
+     *
+     * @param password
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named("JDBC.password") final String password) {
+        dataSource.setPassword(password);
     }
 
     /**
