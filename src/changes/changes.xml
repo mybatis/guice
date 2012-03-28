@@ -45,6 +45,10 @@
         (users can specify them in the JDBC URL).
       </action>
       <action dev="simone.tripodi" type="update">
+        Made org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider username/password optional
+        (users can specify them in the JDBC URL).
+      </action>
+      <action dev="simone.tripodi" type="update">
         Internal code polishing.
       </action>
     </release>

@@ -47,14 +47,32 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public UnpooledDataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url,
-            @Named("JDBC.username") final String username,
-            @Named("JDBC.password") final String password) {
-        this.unpooledDataSource = new UnpooledDataSource(this.getClass().getClassLoader(), driver, url, username, password);
+            @Named("JDBC.url") final String url) {
+        this.unpooledDataSource = new UnpooledDataSource(this.getClass().getClassLoader(), driver, url, null, null);
     }
 
     /**
-     * 
+     *
+     * @param username
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named("JDBC.username") final String username) {
+        unpooledDataSource.setUsername(username);
+    }
+
+    /**
+     *
+     * @param password
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named("JDBC.password") final String password) {
+        unpooledDataSource.setPassword(password);
+    }
+
+    /**
+     *
      *
      * @param autoCommit
      */
@@ -64,7 +82,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
     }
 
     /**
-     * 
+     *
      *
      * @param loginTimeout
      */
