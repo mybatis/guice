@@ -97,7 +97,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @com.google.inject.Inject(optional = true)
     @MappingTypeHandlers
     private Set<TypeHandler<?>> mappingTypeHandlers = Collections.emptySet();
-    
+
     @com.google.inject.Inject(optional = true)
     @Mappers
     private Set<Class<?>> mapperClasses = Collections.emptySet();
@@ -266,9 +266,9 @@ public final class ConfigurationProvider implements Provider<Configuration> {
             }
 
             for (Map.Entry<Class<?>,TypeHandler<?>> typeHandler : this.typeHandlers.entrySet()) {
-            	registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());
+                registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());
             }
-            
+
             for (TypeHandler<?> typeHandler : this.mappingTypeHandlers) {
                 configuration.getTypeHandlerRegistry().register(typeHandler);
             }
@@ -294,8 +294,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
         return configuration;
     }
+
     @SuppressWarnings("unchecked")
     private <T> void registerTypeHandler(Configuration configuration, Class<?> type, TypeHandler<?> handler) {
-    	configuration.getTypeHandlerRegistry().register((Class<T>)type, (TypeHandler<T>)handler);
+        configuration.getTypeHandlerRegistry().register((Class<T>)type, (TypeHandler<T>)handler);
     }
+
 }
