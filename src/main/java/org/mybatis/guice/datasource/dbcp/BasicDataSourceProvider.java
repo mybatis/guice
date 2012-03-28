@@ -49,8 +49,8 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
     @Inject
     public BasicDataSourceProvider(@Named("JDBC.driver") final String driver,
             @Named("JDBC.url") final String url) {
-        this.dataSource.setDriverClassName(driver);
-        this.dataSource.setUrl(url);
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
     }
 
     /**
@@ -80,7 +80,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
-        this.dataSource.setDefaultAutoCommit(autoCommit);
+        dataSource.setDefaultAutoCommit(autoCommit);
     }
 
     /**
@@ -91,7 +91,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
         try {
-            this.dataSource.setLoginTimeout(loginTimeout);
+            dataSource.setLoginTimeout(loginTimeout);
         } catch (SQLException e) {
             throw new RuntimeException("Impossible to set DBCP login timeout '"
                     + loginTimeout
@@ -108,7 +108,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
         for (Entry<Object, Object> property : driverProperties.entrySet()) {
             String name = property.getKey().toString();
             String value = property.getValue().toString();
-            this.dataSource.addConnectionProperty(name, value);
+            dataSource.addConnectionProperty(name, value);
         }
     }
 
@@ -119,7 +119,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setAccessToUnderlyingConnectionAllowed(@Named("DBCP.accessToUnderlyingConnectionAllowed") final boolean allow) {
-        this.dataSource.setAccessToUnderlyingConnectionAllowed(allow);
+        dataSource.setAccessToUnderlyingConnectionAllowed(allow);
     }
 
     /**
@@ -129,7 +129,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setDefaultCatalog(@Named("DBCP.defaultCatalog") final String defaultCatalog) {
-        this.dataSource.setDefaultCatalog(defaultCatalog);
+        dataSource.setDefaultCatalog(defaultCatalog);
     }
 
     /**
@@ -139,7 +139,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setDefaultReadOnly(@Named("DBCP.defaultReadOnly") final boolean defaultReadOnly) {
-        this.dataSource.setDefaultReadOnly(defaultReadOnly);
+        dataSource.setDefaultReadOnly(defaultReadOnly);
     }
 
     /**
@@ -149,7 +149,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setDefaultTransactionIsolation(@Named("DBCP.defaultTransactionIsolation") final int defaultTransactionIsolation) {
-        this.dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);
+        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);
     }
 
     /**
@@ -159,7 +159,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setInitialSize(@Named("DBCP.initialSize") final int initialSize) {
-        this.dataSource.setInitialSize(initialSize);
+        dataSource.setInitialSize(initialSize);
     }
 
     /**
@@ -169,7 +169,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
-        this.dataSource.setMaxActive(maxActive);
+        dataSource.setMaxActive(maxActive);
     }
 
     /**
@@ -179,7 +179,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxIdle(@Named("DBCP.maxIdle") final int maxIdle) {
-        this.dataSource.setMaxIdle(maxIdle);
+        dataSource.setMaxIdle(maxIdle);
     }
 
     /**
@@ -189,7 +189,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxOpenPreparedStatements(@Named("DBCP.maxOpenPreparedStatements") final int maxOpenPreparedStatements) {
-        this.dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);
+        dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);
     }
 
     /**
@@ -199,7 +199,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxWait(@Named("DBCP.maxWait") final long maxWait) {
-        this.dataSource.setMaxWait(maxWait);
+        dataSource.setMaxWait(maxWait);
     }
 
     /**
@@ -209,7 +209,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") final long minEvictableIdleTimeMillis) {
-        this.dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
     }
 
     /**
@@ -219,7 +219,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setMinIdle(@Named("DBCP.minIdle") final int minIdle) {
-        this.dataSource.setMinIdle(minIdle);
+        dataSource.setMinIdle(minIdle);
     }
 
     /**
@@ -229,7 +229,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") final int numTestsPerEvictionRun) {
-        this.dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+        dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
     }
 
     /**
@@ -239,7 +239,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") final boolean poolPreparedStatements) {
-        this.dataSource.setPoolPreparedStatements(poolPreparedStatements);
+        dataSource.setPoolPreparedStatements(poolPreparedStatements);
     }
 
     /**
@@ -249,7 +249,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setTestOnBorrow(@Named("DBCP.testOnBorrow") final boolean testOnBorrow) {
-        this.dataSource.setTestOnBorrow(testOnBorrow);
+        dataSource.setTestOnBorrow(testOnBorrow);
     }
 
     /**
@@ -259,7 +259,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setTestOnReturn(@Named("DBCP.testOnReturn") final boolean testOnReturn) {
-        this.dataSource.setTestOnReturn(testOnReturn);
+        dataSource.setTestOnReturn(testOnReturn);
     }
 
     /**
@@ -269,7 +269,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setTestWhileIdle(@Named("DBCP.testWhileIdle") final boolean testWhileIdle) {
-        this.dataSource.setTestWhileIdle(testWhileIdle);
+        dataSource.setTestWhileIdle(testWhileIdle);
     }
 
     /**
@@ -279,14 +279,14 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setValidationQuery(@Named("DBCP.validationQuery") final String validationQuery) {
-        this.dataSource.setValidationQuery(validationQuery);
+        dataSource.setValidationQuery(validationQuery);
     }
 
     /**
      * {@inheritDoc}
      */
     public DataSource get() {
-        return this.dataSource;
+        return dataSource;
     }
 
 }
