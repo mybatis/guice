@@ -41,7 +41,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
     /**
      * This class logger.
      */
-    private final Log log = LogFactory.getLog(this.getClass());
+    private final Log log = LogFactory.getLog(getClass());
 
     /**
      * The {@code SqlSessionManager} reference.
@@ -73,19 +73,19 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
         boolean isSessionInherited = this.sqlSessionManager.isManagedSessionStarted();
 
         if (isSessionInherited) {
-            if (this.log.isDebugEnabled()) {
-                this.log.debug(String.format("%s - SqlSession already set for thread: %s",
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("%s - SqlSession already set for thread: %s",
                         debugPrefix,
                         Thread.currentThread().getId()));
             }
         } else {
-            if (this.log.isDebugEnabled()) {
-                this.log.debug(String.format("%s - SqlSession not set for thread: %s, creating a new one",
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("%s - SqlSession not set for thread: %s, creating a new one",
                         debugPrefix,
                         Thread.currentThread().getId()));
             }
 
-            this.sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());
+            sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());
         }
 
         Object object = null;
@@ -93,11 +93,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
             object = invocation.proceed();
 
             if (!isSessionInherited && !transactional.rollbackOnly()) {
-                this.sqlSessionManager.commit(transactional.force());
+                sqlSessionManager.commit(transactional.force());
             }
         } catch (Throwable t) {
             // rollback the transaction
-            this.sqlSessionManager.rollback(transactional.force());
+            sqlSessionManager.rollback(transactional.force());
 
             // check the caught exception is declared in the invoked method
             for (Class<?> exceptionClass : interceptedMethod.getExceptionTypes()) {
@@ -134,7 +134,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                     errorMessage = String.format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
                             transactional.rethrowExceptionsAs().getName(),
                             Arrays.toString(initargsType));
-                    this.log.error(errorMessage, e);
+                    log.error(errorMessage, e);
                     rethrowEx = new RuntimeException(errorMessage, e);
                 }
             } else {
@@ -142,7 +142,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                         transactional.rethrowExceptionsAs().getName(),
                         Arrays.toString(CAUSE_TYPES),
                         Arrays.toString(MESSAGE_CAUSE_TYPES));
-                this.log.error(errorMessage);
+                log.error(errorMessage);
                 rethrowEx = new RuntimeException(errorMessage);
             }
 
@@ -151,25 +151,25 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
             // skip close when the session is inherited from another Transactional method
             if (!isSessionInherited) {
                 if (transactional.rollbackOnly()) {
-                    if (this.log.isDebugEnabled()) {
-                        this.log.debug(debugPrefix
+                    if (log.isDebugEnabled()) {
+                        log.debug(debugPrefix
                                 + " - SqlSession of thread: "
                                 + Thread.currentThread().getId()
                                 + " was in rollbackOnly mode, rolling it back");
                     }
 
-                    this.sqlSessionManager.rollback(true);
+                    sqlSessionManager.rollback(true);
                 }
 
-                if (this.log.isDebugEnabled()) {
-                    this.log.debug(String.format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
+                if (log.isDebugEnabled()) {
+                    log.debug(String.format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
                             debugPrefix,
                             Thread.currentThread().getId()));
                 }
 
-                this.sqlSessionManager.close();
-            } else if (this.log.isDebugEnabled()) {
-                this.log.debug(String.format("%s - SqlSession of thread: %s is inherited, skipped close operation",
+                sqlSessionManager.close();
+            } else if (log.isDebugEnabled()) {
+                log.debug(String.format("%s - SqlSession of thread: %s is inherited, skipped close operation",
                         debugPrefix,
                         Thread.currentThread().getId()));
             }
