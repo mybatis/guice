@@ -33,9 +33,7 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
 
     @Inject
     public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url,
-            @Named("JDBC.username") final String username,
-            @Named("JDBC.password") final String password) {
+            @Named("JDBC.url") final String url) {
         try {
             this.adapter.setDriver(driver);
         } catch (ClassNotFoundException e) {
@@ -44,8 +42,26 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
                     + "' not found in the classpath", e);
         }
         this.adapter.setUrl(url);
-        this.adapter.setUser(username);
-        this.adapter.setPassword(password);
+    }
+
+    /**
+     *
+     * @param username
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named("JDBC.username") final String username) {
+        adapter.setUser(username);
+    }
+
+    /**
+     *
+     * @param password
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named("JDBC.password") final String password) {
+        adapter.setPassword(password);
     }
 
     @com.google.inject.Inject(optional = true)
