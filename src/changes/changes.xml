@@ -33,10 +33,12 @@
         Missing mapUnderscoreToCamelCase property in mybatis-guice.
       </action>
       <action dev="simone.tripodi" type="update">
-        Made C3P0 username/password optional (users can specify them in the JDBC URL).
+        Made org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider username/password optional
+        (users can specify them in the JDBC URL).
       </action>
       <action dev="simone.tripodi" type="update">
-        Made BasicDataSource username/password optional (users can specify them in the JDBC URL).
+        Made org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider username/password optional
+        (users can specify them in the JDBC URL).
       </action>
       <action dev="simone.tripodi" type="update">
         Internal code polishing.
