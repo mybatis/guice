@@ -48,7 +48,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
     @Inject
     public UnpooledDataSourceProvider(@Named("JDBC.driver") final String driver,
             @Named("JDBC.url") final String url) {
-        this.unpooledDataSource = new UnpooledDataSource(this.getClass().getClassLoader(), driver, url, null, null);
+        unpooledDataSource = new UnpooledDataSource(getClass().getClassLoader(), driver, url, null, null);
     }
 
     /**
@@ -78,7 +78,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
      */
     @com.google.inject.Inject(optional = true)
     public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
-        this.unpooledDataSource.setAutoCommit(autoCommit);
+        unpooledDataSource.setAutoCommit(autoCommit);
     }
 
     /**
@@ -89,7 +89,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
         try {
-            this.unpooledDataSource.setLoginTimeout(loginTimeout);
+            unpooledDataSource.setLoginTimeout(loginTimeout);
         } catch (SQLException e) {
             throw new RuntimeException("Impossible to set login timeout '"
                     + loginTimeout
@@ -99,14 +99,14 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
 
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named("JDBC.driverProperties") final Properties driverProperties) {
-        this.unpooledDataSource.setDriverProperties(driverProperties);
+        unpooledDataSource.setDriverProperties(driverProperties);
     }
 
     /**
      * {@inheritDoc}
      */
     public DataSource get() {
-        return this.unpooledDataSource;
+        return unpooledDataSource;
     }
 
 }
