@@ -44,7 +44,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
     }
 
     /**
-     * 
+     *
      * @param sqlSessionFactory
      * @since 1.0.1
      */
@@ -54,7 +54,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
     }
 
     public SqlSessionManager get() {
-        return this.sqlSessionManager;
+        return sqlSessionManager;
     }
 
 }
