@@ -248,42 +248,42 @@ public final class ConfigurationProvider implements Provider<Configuration> {
      * {@inheritDoc}
      */
     public Configuration get() {
-        final Configuration configuration = new Configuration(this.environment);
-        configuration.setLazyLoadingEnabled(this.lazyLoadingEnabled);
-        configuration.setAggressiveLazyLoading(this.aggressiveLazyLoading);
-        configuration.setMultipleResultSetsEnabled(this.multipleResultSetsEnabled);
-        configuration.setUseGeneratedKeys(this.useGeneratedKeys);
-        configuration.setUseColumnLabel(this.useColumnLabel);
-        configuration.setCacheEnabled(this.cacheEnabled);
-        configuration.setDefaultExecutorType(this.defaultExecutorType);
-        configuration.setAutoMappingBehavior(this.autoMappingBehavior);
-        configuration.setObjectFactory(this.objectFactory);
+        final Configuration configuration = new Configuration(environment);
+        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
+        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
+        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);
+        configuration.setUseGeneratedKeys(useGeneratedKeys);
+        configuration.setUseColumnLabel(useColumnLabel);
+        configuration.setCacheEnabled(cacheEnabled);
+        configuration.setDefaultExecutorType(defaultExecutorType);
+        configuration.setAutoMappingBehavior(autoMappingBehavior);
+        configuration.setObjectFactory(objectFactory);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
 
         try {
-            for (Map.Entry<String,Class<?>> alias : this.typeAliases.entrySet()) {
+            for (Map.Entry<String,Class<?>> alias : typeAliases.entrySet()) {
                 configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
             }
 
-            for (Map.Entry<Class<?>,TypeHandler<?>> typeHandler : this.typeHandlers.entrySet()) {
+            for (Map.Entry<Class<?>,TypeHandler<?>> typeHandler : typeHandlers.entrySet()) {
                 registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());
             }
 
-            for (TypeHandler<?> typeHandler : this.mappingTypeHandlers) {
+            for (TypeHandler<?> typeHandler : mappingTypeHandlers) {
                 configuration.getTypeHandlerRegistry().register(typeHandler);
             }
 
-            for (Class<?> mapperClass : this.mapperClasses) {
+            for (Class<?> mapperClass : mapperClasses) {
                 if (!configuration.hasMapper(mapperClass)) {
                     configuration.addMapper(mapperClass);
                 }
             }
 
-            for (Interceptor interceptor : this.plugins) {
+            for (Interceptor interceptor : plugins) {
                 configuration.addInterceptor(interceptor);
             }
 
-            if (this.failFast) {
+            if (failFast) {
                 configuration.getMappedStatementNames();
             }
         } catch (Throwable cause) {
