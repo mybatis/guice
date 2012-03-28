@@ -108,12 +108,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         }
 
         // fixed bindings
-        binder().bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
-        binder().bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
-        binder().bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
+        bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
+        bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
+        bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
 
         // parametric bindings
-        binder().bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
+        bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
     }
 
     /**
@@ -125,7 +125,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (environmentId == null) {
             throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
         }
-        binder().bindConstant().annotatedWith(named("mybatis.environment.id")).to(environmentId);
+        bindConstant().annotatedWith(named("mybatis.environment.id")).to(environmentId);
     }
 
     /**
@@ -190,7 +190,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param value
      */
     private final void bindBoolean(String name, boolean value) {
-        binder().bindConstant().annotatedWith(named(name)).to(value);
+        bindConstant().annotatedWith(named(name)).to(value);
     }
 
     /**
@@ -202,7 +202,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (executorType == null) {
             throw new IllegalArgumentException("Parameter 'executorType' must be not null");
         }
-        binder().bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
+        bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
     }
 
     /**
@@ -214,7 +214,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (autoMappingBehavior == null) {
             throw new IllegalArgumentException("Parameter 'autoMappingBehavior' must be not null");
         }
-        binder().bindConstant().annotatedWith(named("mybatis.configuration.autoMappingBehavior")).to(autoMappingBehavior);
+        bindConstant().annotatedWith(named("mybatis.configuration.autoMappingBehavior")).to(autoMappingBehavior);
     }
 
     /**
@@ -226,7 +226,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (dataSourceProviderType == null) {
             throw new IllegalArgumentException("Parameter 'dataSourceProviderType' must be not null");
         }
-        binder().bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);
+        bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);
     }
 
     /**
@@ -250,7 +250,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (dataSourceProvider == null) {
             throw new IllegalArgumentException("Parameter 'dataSourceProvider' must be not null");
         }
-        binder().bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);
+        bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);
     }
 
     /**
@@ -262,7 +262,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (transactionFactoryType == null) {
             throw new IllegalArgumentException("Parameter 'transactionFactoryType' must be not null");
         }
-        binder().bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);
+        bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);
     }
 
     /**
@@ -286,7 +286,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (transactionFactoryProvider == null) {
             throw new IllegalArgumentException("Parameter 'transactionFactoryProvider' must be not null");
         }
-        binder().bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);
+        bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);
     }
 
     /**
