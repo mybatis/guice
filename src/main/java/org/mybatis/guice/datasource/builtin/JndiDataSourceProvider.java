@@ -31,28 +31,28 @@ import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 public final class JndiDataSourceProvider implements Provider<DataSource> {
 
     /**
-     * 
+     *
      */
     private final Properties properties = new Properties();
 
     /**
-     * 
+     *
      *
      * @param initialContext
      */
     @com.google.inject.Inject(optional = true)
     public void setInitialContext(@Named("jndi.initialContext") final String initialContext) {
-        this.properties.setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, initialContext);
+        properties.setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, initialContext);
     }
 
     /**
-     * 
+     *
      *
      * @param dataSource
      */
     @com.google.inject.Inject(optional = true)
     public void setDataSource(@Named("jndi.dataSource") final String dataSource) {
-        this.properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
+        properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
     }
 
     /**
@@ -60,7 +60,7 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
      */
     public DataSource get() {
         JndiDataSourceFactory factory = new JndiDataSourceFactory();
-        factory.setProperties(this.properties);
+        factory.setProperties(properties);
         return factory.getDataSource();
     }
 
