@@ -79,32 +79,32 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     @Override
     final void internalConfigure() {
-        if (this.aliases != null) {
+        if (aliases != null) {
             throw new IllegalStateException("Re-entry is not allowed.");
         }
-        if (this.handlers != null) {
+        if (handlers != null) {
             throw new IllegalStateException("Re-entry is not allowed.");
         }
-        if (this.interceptors != null) {
+        if (interceptors != null) {
             throw new IllegalStateException("Re-entry is not allowed.");
         }
-        if (this.mappers != null) {
+        if (mappers != null) {
             throw new IllegalStateException("Re-entry is not allowed.");
         }
 
-        this.aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
-        this.handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
-        this.interceptors = newSetBinder(binder(), Interceptor.class);
-        this.mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>(){}, MappingTypeHandlers.class);
-        this.mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
+        aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
+        handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
+        interceptors = newSetBinder(binder(), Interceptor.class);
+        mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>(){}, MappingTypeHandlers.class);
+        mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
 
         try {
-            this.initialize();
+            initialize();
         } finally {
-            this.aliases = null;
-            this.handlers = null;
-            this.interceptors = null;
-            this.mappers = null;
+            aliases = null;
+            handlers = null;
+            interceptors = null;
+            mappers = null;
         }
 
         // fixed bindings
@@ -113,7 +113,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         binder().bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
 
         // parametric bindings
-        binder().bind(ObjectFactory.class).to(this.objectFactoryType).in(Scopes.SINGLETON);
+        binder().bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
     }
 
     /**
@@ -364,7 +364,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param test a test to run against the objects found in the specified package
      */
     protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
-        this.addSimpleAliases(getClasses(test, packageName));
+        addSimpleAliases(getClasses(test, packageName));
     }
 
     /**
@@ -375,7 +375,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param packageName the specified package to search for classes to alias
      */
     protected final void addSimpleAliases(final String packageName) {
-        this.addSimpleAliases(getClasses(packageName));
+        addSimpleAliases(getClasses(packageName));
     }
 
     /**
@@ -436,14 +436,14 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     /**
      * Adds the user defined MyBatis type handlers in the given package, letting
      * google-guice creating it.
-     * 
+     *
      * @param packageName the package where looking for type handlers.
      */
     protected final void addTypeHandlerClasses(String packageName) {
         if (packageName == null) {
             throw new IllegalArgumentException("Parameter 'packageName' must be not null");
         }
-        this.addTypeHandlersClasses(new ResolverUtil<TypeHandler<?>>()
+        addTypeHandlersClasses(new ResolverUtil<TypeHandler<?>>()
                 .find(new ResolverUtil.IsA(TypeHandler.class), packageName)
                 .getClasses());
     }
@@ -488,7 +488,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         if (packageName == null) {
             throw new IllegalArgumentException("Parameter 'packageName' must be not null");
         }
-        this.addInterceptorsClasses(new ResolverUtil<Interceptor>()
+        addInterceptorsClasses(new ResolverUtil<Interceptor>()
                 .find(new ResolverUtil.IsA(Interceptor.class), packageName)
                 .getClasses());
     }
@@ -528,7 +528,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param packageName the specified package to search for mappers to add.
      */
     protected final void addMapperClasses(final String packageName) {
-        this.addMapperClasses(getClasses(packageName));
+        addMapperClasses(getClasses(packageName));
     }
 
     /**
@@ -538,7 +538,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param test a test to run against the objects found in the specified package.
      */
     protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
-        this.addMapperClasses(getClasses(test, packageName));
+        addMapperClasses(getClasses(test, packageName));
     }
 
     /**
