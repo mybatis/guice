@@ -35,13 +35,13 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
     public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver,
             @Named("JDBC.url") final String url) {
         try {
-            this.adapter.setDriver(driver);
+            adapter.setDriver(driver);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Driver '"
                     + driver
                     + "' not found in the classpath", e);
         }
-        this.adapter.setUrl(url);
+        adapter.setUrl(url);
     }
 
     /**
@@ -66,51 +66,51 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
 
     @com.google.inject.Inject(optional = true)
     public void setDescription(@Named("DBCP.description") String description) {
-        this.adapter.setDescription(description);
+        adapter.setDescription(description);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") int seconds) {
-        this.adapter.setLoginTimeout(seconds);
+        adapter.setLoginTimeout(seconds);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxActive(@Named("DBCP.maxActive") int maxActive) {
-        this.adapter.setMaxActive(maxActive);
+        adapter.setMaxActive(maxActive);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxIdle(@Named("DBCP.maxIdle") int maxIdle) {
-        this.adapter.setMaxIdle(maxIdle);
+        adapter.setMaxIdle(maxIdle);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMaxPreparedStatements(@Named("DBCP.maxOpenPreparedStatements") int maxPreparedStatements) {
-        this.adapter.setMaxPreparedStatements(maxPreparedStatements);
+        adapter.setMaxPreparedStatements(maxPreparedStatements);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
-        this.adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
-        this.adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+        adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") boolean poolPreparedStatements) {
-        this.adapter.setPoolPreparedStatements(poolPreparedStatements);
+        adapter.setPoolPreparedStatements(poolPreparedStatements);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTimeBetweenEvictionRunsMillis(@Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-        this.adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
     }
 
     public ConnectionPoolDataSource get() {
-        return this.adapter;
+        return adapter;
     }
 
 }
