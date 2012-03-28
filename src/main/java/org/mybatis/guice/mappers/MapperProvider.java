@@ -41,7 +41,7 @@ public final class MapperProvider<T> implements Provider<T> {
     }
 
     public T get() {
-        return this.sqlSessionManager.getMapper(this.mapperType);
+        return this.sqlSessionManager.getMapper(mapperType);
     }
 
 }
