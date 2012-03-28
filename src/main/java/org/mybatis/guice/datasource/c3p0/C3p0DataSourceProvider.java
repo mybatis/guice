@@ -47,9 +47,7 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public C3p0DataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url,
-            @Named("JDBC.username") final String username,
-            @Named("JDBC.password") final String password) {
+            @Named("JDBC.url") final String url) {
         try {
             dataSource.setDriverClass(driver);
         } catch (PropertyVetoException e) {
@@ -58,7 +56,23 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
                     + "', see nested exceptions", e);
         }
         dataSource.setJdbcUrl(url);
+    }
+
+    /**
+     *
+     * @param username
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named("JDBC.username") final String username) {
         dataSource.setUser(username);
+    }
+
+    /**
+     *
+     * @param password
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named("JDBC.password") final String password) {
         dataSource.setPassword(password);
     }
 
