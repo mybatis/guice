@@ -108,7 +108,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
             SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
                     environmentId,
                     properties);
-            binder().bind(SqlSessionFactory.class).toInstance(sessionFactory);
+            bind(SqlSessionFactory.class).toInstance(sessionFactory);
 
             Configuration configuration = sessionFactory.getConfiguration();
 
@@ -128,23 +128,23 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
             Collection<Map<JdbcType, TypeHandler<?>>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler<?>>>) getValue(TYPE_HANDLERS, context, configuration);
             for (Map<JdbcType, TypeHandler<?>> mappedTypeHandler: mappedTypeHandlers) {
                 for (TypeHandler<?> handler : mappedTypeHandler.values()) {
-                    binder().requestInjection(handler);
+                    requestInjection(handler);
                 }
             }
             @SuppressWarnings("unchecked")
             Collection<TypeHandler<?>> allTypeHandlers = (Collection<TypeHandler<?>>) getValue(ALL_TYPE_HANDLERS, context, configuration);
             for (TypeHandler<?> handler: allTypeHandlers) {
-                binder().requestInjection(handler);
+                requestInjection(handler);
             }
 
             // request injection for interceptors
             @SuppressWarnings("unchecked")
             Collection<Interceptor> interceptors = (Collection<Interceptor>) getValue(INTERCEPTORS, context, configuration);
             for (Interceptor interceptor : interceptors) {
-                binder().requestInjection(interceptor);
+                requestInjection(interceptor);
             }
         } catch (Exception e) {
-            binder().addError("sible to read classpath resource '%s', see nested exceptions: %s",
+            addError("Impossible to read classpath resource '%s', see nested exceptions: %s",
                     classPathResource,
                     e.getMessage());
         } finally {
