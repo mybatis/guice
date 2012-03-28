@@ -45,17 +45,17 @@ final class Formatter implements Provider<String> {
         int pos;
         while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
             if (pos > 0) {
-                this.appenders.add(Providers.of(pattern.substring(prev, pos)));
+                appenders.add(Providers.of(pattern.substring(prev, pos)));
             }
             if (pos == pattern.length() - 1) {
-                this.appenders.add(Providers.of(VAR_BEGIN));
+                appenders.add(Providers.of(VAR_BEGIN));
                 prev = pos + 1;
             } else if (pattern.charAt(pos + 1) != '{') {
                 if (pattern.charAt(pos + 1) == '$') {
-                    this.appenders.add(Providers.of(VAR_BEGIN));
+                    appenders.add(Providers.of(VAR_BEGIN));
                     prev = pos + 2;
                 } else {
-                    this.appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
+                    appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
                     prev = pos + 2;
                 }
             } else {
@@ -70,19 +70,19 @@ final class Formatter implements Provider<String> {
                     defaultValue = keyTokenizer.nextToken();
                 }
                 KeyResolver resolver = new KeyResolver(key, defaultValue);
-                this.appenders.add(resolver);
-                this.resolvers.add(resolver);
+                appenders.add(resolver);
+                resolvers.add(resolver);
                 prev = endName + 1;
             }
         }
         if (prev < pattern.length()) {
-            this.appenders.add(Providers.of(pattern.substring(prev)));
+            appenders.add(Providers.of(pattern.substring(prev)));
         }
     }
 
     @Inject
     public void setInjector(Injector injector) {
-        for (KeyResolver resolver : this.resolvers) {
+        for (KeyResolver resolver : resolvers) {
             resolver.setInjector(injector);
         }
     }
@@ -92,7 +92,7 @@ final class Formatter implements Provider<String> {
      */
     public String get() {
         StringBuilder buffer = new StringBuilder();
-        for (Provider<String> appender : this.appenders) {
+        for (Provider<String> appender : appenders) {
             buffer.append(appender.get());
         }
         return buffer.toString();
@@ -103,7 +103,7 @@ final class Formatter implements Provider<String> {
      */
     @Override
     public String toString() {
-        return this.appenders.toString();
+        return appenders.toString();
     }
 
 }
