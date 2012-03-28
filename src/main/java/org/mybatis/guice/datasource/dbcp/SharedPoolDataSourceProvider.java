@@ -35,82 +35,82 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
 
     @Inject
     public SharedPoolDataSourceProvider(ConnectionPoolDataSource cpds) {
-        this.dataSource.setConnectionPoolDataSource(cpds);
+        dataSource.setConnectionPoolDataSource(cpds);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDataSourceName(@Named("DBCP.name") String name) {
-        this.dataSource.setDataSourceName(name);
+        dataSource.setDataSourceName(name);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultAutoCommit(@Named("JDBC.autoCommit") boolean autoCommit) {
-        this.dataSource.setDefaultAutoCommit(autoCommit);
+        dataSource.setDefaultAutoCommit(autoCommit);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultReadOnly(@Named("DBCP.defaultReadOnly") boolean defaultReadOnly) {
-        this.dataSource.setDefaultReadOnly(defaultReadOnly);
+        dataSource.setDefaultReadOnly(defaultReadOnly);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultTransactionIsolation(@Named("DBCP.defaultTransactionIsolation") int defaultTransactionIsolation) {
-        this.dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);
+        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDescription(@Named("DBCP.description") String description) {
-        this.dataSource.setDescription(description);
+        dataSource.setDescription(description);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setJndiEnvironment(@Named("DBCP.jndi.key") String key, @Named("DBCP.jndi.value") String value) {
-        this.dataSource.setJndiEnvironment(key, value);
+        dataSource.setJndiEnvironment(key, value);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") int loginTimeout) {
-        this.dataSource.setLoginTimeout(loginTimeout);
+        dataSource.setLoginTimeout(loginTimeout);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
-        this.dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
-        this.dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+        dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setRollbackAfterValidation(@Named("DBCP.rollbackAfterValidation") boolean rollbackAfterValidation) {
-        this.dataSource.setRollbackAfterValidation(rollbackAfterValidation);
+        dataSource.setRollbackAfterValidation(rollbackAfterValidation);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTestOnBorrow(@Named("DBCP.testOnBorrow") boolean testOnBorrow) {
-        this.dataSource.setTestOnBorrow(testOnBorrow);
+        dataSource.setTestOnBorrow(testOnBorrow);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTestOnReturn(@Named("DBCP.testOnReturn") boolean testOnReturn) {
-        this.dataSource.setTestOnReturn(testOnReturn);
+        dataSource.setTestOnReturn(testOnReturn);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTestWhileIdle(@Named("DBCP.testWhileIdle") boolean testWhileIdle) {
-        this.dataSource.setTestWhileIdle(testWhileIdle);
+        dataSource.setTestWhileIdle(testWhileIdle);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setTimeBetweenEvictionRunsMillis(@Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-        this.dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
     }
 
     @com.google.inject.Inject(optional = true)
     public void setValidationQuery(@Named("DBCP.validationQuery") String validationQuery) {
-        this.dataSource.setValidationQuery(validationQuery);
+        dataSource.setValidationQuery(validationQuery);
     }
 
     /**
@@ -120,7 +120,7 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
-        this.dataSource.setMaxActive(maxActive);
+        dataSource.setMaxActive(maxActive);
     }
 
     /**
@@ -130,7 +130,7 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxIdle(@Named("DBCP.maxIdle") final int maxIdle) {
-        this.dataSource.setMaxIdle(maxIdle);
+        dataSource.setMaxIdle(maxIdle);
     }
 
     /**
@@ -140,14 +140,14 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxWait(@Named("DBCP.maxWait") final int maxWait) {
-        this.dataSource.setMaxWait(maxWait);
+        dataSource.setMaxWait(maxWait);
     }
 
     /**
      * {@inheritDoc}
      */
     public DataSource get() {
-        return this.dataSource;
+        return dataSource;
     }
 
 }
