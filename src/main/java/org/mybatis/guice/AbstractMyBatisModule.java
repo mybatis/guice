@@ -42,24 +42,24 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     @Override
     protected final void configure() {
         // sql session manager
-        binder().bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
-        binder().bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
+        bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
+        bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
         // transactional interceptor
         TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-        binder().requestInjection(interceptor);
-        binder().bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+        requestInjection(interceptor);
+        bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
 
         internalConfigure();
     }
 
     /**
-     * 
+     *
      * @param <T>
      * @param mapperType
      */
     final <T> void bindMapper(Class<T> mapperType) {
-        binder().bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+        bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
     abstract void internalConfigure();
 
     /**
-     * 
+     *
      */
     protected abstract void initialize();
 
