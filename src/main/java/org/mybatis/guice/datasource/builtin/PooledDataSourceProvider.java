@@ -15,15 +15,15 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import com.google.inject.Singleton;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
 
 /**
  * Provides the myBatis built-in PooledDataSource.
@@ -32,148 +32,151 @@ import java.util.Properties;
  */
 public final class PooledDataSourceProvider implements Provider<DataSource> {
 
-    private String driver, url, username, password, pingQuery;
-    private boolean autoCommit, pingEnabled;
-    private int loginTimeout, maximumActiveConnections, maximumCheckoutTime, maximumIdleConnections, pingConnectionsNotUsedFor, timeToWait;
-    private Properties driverProperties;
+    /**
+     * The PooledDataSource reference.
+     */
+    private final PooledDataSource dataSource;
 
     /**
      * Creates a new PooledDataSource using the needed parameter.
      *
      * @param driver The JDBC driver class.
-     * @param url    the database URL of the form <code>jdbc:subprotocol:subname</code>.
+     * @param url the database URL of the form <code>jdbc:subprotocol:subname</code>.
+     * @param username the database user.
+     * @param password the user's password.
      */
     @Inject
     public PooledDataSourceProvider(@Named("JDBC.driver") final String driver,
-                                    @Named("JDBC.url") final String url) {
-        this.driver = driver;
-        this.url = url;
+            @Named("JDBC.url") final String url) {
+        dataSource = new PooledDataSource(getClass().getClassLoader(), driver, url, null, null);
     }
 
     /**
-     * @param username the database user.
+     *
+     * @param username
+     * @since 3.3
      */
     @com.google.inject.Inject(optional = true)
-    public void setUsername(@Named("JDBC.username") final String username) {
-        this.username = username;
+    public void setUser(@Named("JDBC.username") final String username) {
+        dataSource.setUsername(username);
     }
 
     /**
-     * @param password the user's password.
+     *
+     * @param password
+     * @since 3.3
      */
     @com.google.inject.Inject(optional = true)
     public void setPassword(@Named("JDBC.password") final String password) {
-        this.password = password;
+        dataSource.setPassword(password);
     }
 
     /**
+     *
+     *
      * @param autoCommit
      */
     @com.google.inject.Inject(optional = true)
     public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
-        this.autoCommit = autoCommit;
+        dataSource.setDefaultAutoCommit(autoCommit);
     }
 
     /**
+     *
+     *
      * @param loginTimeout
      */
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
-        this.loginTimeout = loginTimeout;
+        try {
+            dataSource.setLoginTimeout(loginTimeout);
+        } catch (SQLException e) {
+            throw new RuntimeException("Impossible to set login timeout '"
+                    + loginTimeout
+                    + "' to Unpooled Data Source", e);
+        }
     }
 
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named("JDBC.driverProperties") final Properties driverProperties) {
-        this.driverProperties = driverProperties;
+        dataSource.setDriverProperties(driverProperties);
     }
 
     /**
+     *
+     *
      * @param maximumActiveConnections
      */
     @com.google.inject.Inject(optional = true)
     public void setMaximumActiveConnections(@Named("mybatis.pooled.maximumActiveConnections") final int maximumActiveConnections) {
-        this.maximumActiveConnections = maximumActiveConnections;
+        dataSource.setPoolMaximumActiveConnections(maximumActiveConnections);
     }
 
     /**
+     *
+     *
      * @param maximumCheckoutTime
      */
     @com.google.inject.Inject(optional = true)
     public void setMaximumCheckoutTime(@Named("mybatis.pooled.maximumCheckoutTime") final int maximumCheckoutTime) {
-        this.maximumCheckoutTime = maximumCheckoutTime;
+        dataSource.setPoolMaximumCheckoutTime(maximumCheckoutTime);
     }
 
     /**
+     *
+     *
      * @param maximumIdleConnections
      */
     @com.google.inject.Inject(optional = true)
     public void setMaximumIdleConnections(@Named("mybatis.pooled.maximumIdleConnections") final int maximumIdleConnections) {
-        this.maximumIdleConnections = maximumIdleConnections;
+        dataSource.setPoolMaximumIdleConnections(maximumIdleConnections);
     }
 
     /**
+     *
+     *
      * @param pingConnectionsNotUsedFor
      */
     @com.google.inject.Inject(optional = true)
     public void setPingConnectionsNotUsedFor(@Named("mybatis.pooled.pingConnectionsNotUsedFor") final int pingConnectionsNotUsedFor) {
-        this.pingConnectionsNotUsedFor = pingConnectionsNotUsedFor;
+        dataSource.setPoolPingConnectionsNotUsedFor(pingConnectionsNotUsedFor);
     }
 
     /**
+     *
+     *
      * @param pingEnabled
      */
     @com.google.inject.Inject(optional = true)
     public void setPingEnabled(@Named("mybatis.pooled.pingEnabled") final boolean pingEnabled) {
-        this.pingEnabled = pingEnabled;
+        dataSource.setPoolPingEnabled(pingEnabled);
     }
 
     /**
+     *
+     *
      * @param pingQuery
      */
     @com.google.inject.Inject(optional = true)
     public void setPingEnabled(@Named("mybatis.pooled.pingQuery") final String pingQuery) {
-        this.pingQuery = pingQuery;
+        dataSource.setPoolPingQuery(pingQuery);
     }
 
     /**
+     *
+     *
      * @param timeToWait
      */
     @com.google.inject.Inject(optional = true)
     public void setTimeToWait(@Named("mybatis.pooled.timeToWait") final int timeToWait) {
-        this.timeToWait = timeToWait;
+        dataSource.setPoolTimeToWait(timeToWait);
     }
 
     /**
      * {@inheritDoc}
      */
-    @Singleton
     public DataSource get() {
-        PooledDataSource pooledDataSource = new PooledDataSource(this.getClass().getClassLoader(), driver, url, username, password);
-
-        pooledDataSource.setUsername(username);
-        pooledDataSource.setPassword(password);
-        pooledDataSource.setDefaultAutoCommit(autoCommit);
-        pooledDataSource.setDriverProperties(driverProperties);
-        pooledDataSource.setPoolMaximumActiveConnections(maximumActiveConnections);
-        pooledDataSource.setPoolMaximumCheckoutTime(maximumCheckoutTime);
-        pooledDataSource.setPoolMaximumIdleConnections(maximumIdleConnections);
-        pooledDataSource.setPoolTimeToWait(timeToWait);
-
-        if (pingEnabled) {
-            pooledDataSource.setPoolPingEnabled(pingEnabled);
-            pooledDataSource.setPoolPingQuery(pingQuery);
-            pooledDataSource.setPoolPingConnectionsNotUsedFor(pingConnectionsNotUsedFor);
-        }
-
-        try {
-            pooledDataSource.setLoginTimeout(loginTimeout);
-        } catch (SQLException e) {
-            throw new RuntimeException("Impossible to set login timeout '"
-                    + loginTimeout
-                    + "' to Pooled Data Source", e);
-        }
-
-        return pooledDataSource;
+        return dataSource;
     }
 
 }

@@ -44,6 +44,10 @@
         Made org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider username/password optional
         (users can specify them in the JDBC URL).
       </action>
+      <action dev="nathan.maves" type="update">
+        Made org.mybatis.guice.datasource.builtin.PooledDataSourceProvider username/password optional
+        (users can specify them in the JDBC URL).
+      </action>
       <action dev="simone.tripodi" type="update">
         Made org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider username/password optional
         (users can specify them in the JDBC URL).
