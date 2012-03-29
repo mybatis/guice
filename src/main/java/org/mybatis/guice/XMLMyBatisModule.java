@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.internal.util.$Preconditions.checkArgument;
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
 import static org.apache.ibatis.ognl.Ognl.getValue;
 
@@ -66,9 +67,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      * @param classPathResource the MyBatis configuration class path resource
      */
     protected final void setClassPathResource(String classPathResource) {
-        if (classPathResource == null) {
-            throw new IllegalArgumentException("Parameter 'classPathResource' must be not null");
-        }
+        checkArgument( classPathResource != null, "Parameter 'classPathResource' must be not null");
         this.classPathResource = classPathResource;
     }
 
@@ -78,9 +77,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      * @param environmentId the MyBatis configuration environment id
      */
     protected final void setEnvironmentId(String environmentId) {
-        if (environmentId == null) {
-            throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
-        }
+        checkArgument( environmentId != null, "Parameter 'environmentId' must be not null");
         this.environmentId = environmentId;
     }
 
