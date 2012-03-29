@@ -15,6 +15,8 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.internal.util.$Preconditions.checkArgument;
+import static com.google.inject.internal.util.$Preconditions.checkState;
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
@@ -79,18 +81,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     @Override
     final void internalConfigure() {
-        if (aliases != null) {
-            throw new IllegalStateException("Re-entry is not allowed.");
-        }
-        if (handlers != null) {
-            throw new IllegalStateException("Re-entry is not allowed.");
-        }
-        if (interceptors != null) {
-            throw new IllegalStateException("Re-entry is not allowed.");
-        }
-        if (mappers != null) {
-            throw new IllegalStateException("Re-entry is not allowed.");
-        }
+        checkState( aliases == null, "Re-entry is not allowed." );
+        checkState( handlers == null, "Re-entry is not allowed." );
+        checkState( interceptors == null, "Re-entry is not allowed." );
+        checkState( mappers == null, "Re-entry is not allowed." );
 
         aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
         handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
@@ -122,9 +116,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param environmentId the MyBatis configuration environment id
      */
     protected final void environmentId(String environmentId) {
-        if (environmentId == null) {
-            throw new IllegalArgumentException("Parameter 'environmentId' must be not null");
-        }
+        checkArgument( environmentId != null, "Parameter 'environmentId' must be not null");
         bindConstant().annotatedWith(named("mybatis.environment.id")).to(environmentId);
     }
 
@@ -199,9 +191,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param executorType
      */
     protected final void executorType(ExecutorType executorType) {
-        if (executorType == null) {
-            throw new IllegalArgumentException("Parameter 'executorType' must be not null");
-        }
+        checkArgument(executorType != null, "Parameter 'executorType' must be not null");
         bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
     }
 
@@ -211,9 +201,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param autoMappingBehavior
      */
     protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
-        if (autoMappingBehavior == null) {
-            throw new IllegalArgumentException("Parameter 'autoMappingBehavior' must be not null");
-        }
+        checkArgument(autoMappingBehavior != null, "Parameter 'autoMappingBehavior' must be not null");
         bindConstant().annotatedWith(named("mybatis.configuration.autoMappingBehavior")).to(autoMappingBehavior);
     }
 
@@ -223,9 +211,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param dataSourceProviderType the DataSource Provider type
      */
     protected final void bindDataSourceProviderType(Class<? extends Provider<DataSource>> dataSourceProviderType) {
-        if (dataSourceProviderType == null) {
-            throw new IllegalArgumentException("Parameter 'dataSourceProviderType' must be not null");
-        }
+        checkArgument(dataSourceProviderType != null, "Parameter 'dataSourceProviderType' must be not null");
         bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);
     }
 
@@ -235,9 +221,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param dataSourceProvider
      */
     protected final void bindDataSourceProvider(Provider<DataSource> dataSourceProvider) {
-        if (dataSourceProvider == null) {
-            throw new IllegalArgumentException("Parameter 'dataSourceProvider' must be not null");
-        }
+        checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
         bindDataSourceProvider(guicify(dataSourceProvider));
     }
 
@@ -247,9 +231,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param dataSourceProvider
      */
     protected final void bindDataSourceProvider(com.google.inject.Provider<DataSource> dataSourceProvider) {
-        if (dataSourceProvider == null) {
-            throw new IllegalArgumentException("Parameter 'dataSourceProvider' must be not null");
-        }
+        checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
         bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);
     }
 
@@ -259,9 +241,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param transactionFactoryType the TransactionFactory type
      */
     protected final void bindTransactionFactoryType(Class<? extends TransactionFactory> transactionFactoryType) {
-        if (transactionFactoryType == null) {
-            throw new IllegalArgumentException("Parameter 'transactionFactoryType' must be not null");
-        }
+        checkArgument(transactionFactoryType != null, "Parameter 'transactionFactoryType' must be not null");
         bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);
     }
 
@@ -271,9 +251,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param transactionFactoryProvider
      */
     protected final void bindTransactionFactory(Provider<TransactionFactory> transactionFactoryProvider) {
-        if (transactionFactoryProvider == null) {
-            throw new IllegalArgumentException("Parameter 'transactionFactoryProvider' must be not null");
-        }
+        checkArgument(transactionFactoryProvider != null, "Parameter 'transactionFactoryProvider' must be not null");
         bindTransactionFactory(guicify(transactionFactoryProvider));
     }
 
@@ -283,9 +261,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param transactionFactoryProvider
      */
     protected final void bindTransactionFactory(com.google.inject.Provider<TransactionFactory> transactionFactoryProvider) {
-        if (transactionFactoryProvider == null) {
-            throw new IllegalArgumentException("Parameter 'transactionFactoryProvider' must be not null");
-        }
+        checkArgument(transactionFactoryProvider != null, "Parameter 'transactionFactoryProvider' must be not null");
         bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);
     }
 
@@ -295,9 +271,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param objectFactoryType the ObjectFactory type
      */
     protected final void bindObjectFactoryType(Class<? extends ObjectFactory> objectFactoryType) {
-        if (objectFactoryType == null) {
-            throw new IllegalArgumentException("Parameter 'objectFactoryType' must be not null");
-        }
+        checkArgument(objectFactoryType != null, "Parameter 'objectFactoryType' must be not null");
         this.objectFactoryType = objectFactoryType;
     }
 
@@ -308,17 +282,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param clazz the type has to be bound.
      */
     protected final AliasBinder addAlias(final String alias) {
-        if (alias == null || alias.length() == 0) {
-            throw new IllegalArgumentException("Empty or null 'alias' is not valid");
-        }
+        checkArgument(alias != null && alias.length() > 0, "Empty or null 'alias' is not valid");
 
         return new AliasBinder() {
 
             public void to(final Class<?> clazz) {
-                if (clazz == null) {
-                    throw new IllegalArgumentException(String.format("Null type not valid for alias '%s'", alias));
-                }
-
+                checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
                 aliases.addBinding(alias).toInstance(clazz);
             }
 
@@ -332,10 +301,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param types the specified types have to be bind
      */
     protected final void addSimpleAlias(final Class<?> type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Parameter 'type' must be not null");
-        }
-
+        checkArgument(type != null, "Parameter 'type' must be not null");
         addAlias(type.getSimpleName()).to(type);
     }
 
@@ -346,9 +312,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param types the specified types have to be bind
      */
     protected final void addSimpleAliases(final Collection<Class<?>> types) {
-        if (types == null) {
-            throw new IllegalArgumentException("Parameter 'types' must be not null");
-        }
+        checkArgument(types != null, "Parameter 'types' must be not null");
 
         for (Class<?> type : types) {
             addSimpleAlias(type);
@@ -385,18 +349,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param handler the handler type.
      */
     protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
-        if (type == null) {
-            throw new IllegalArgumentException("Parameter 'type' must not be null");
-        }
+        checkArgument(type != null, "Parameter 'type' must be not null");
 
         return new TypeHandlerBinder<T>() {
 
             public void with(final Class<? extends TypeHandler<? extends T>> handler) {
-                if (handler == null) {
-                    throw new IllegalArgumentException(
-                            String.format("TypeHandler must not be null for '%s'", type.getName()));
-                }
-
+                checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler).in(Scopes.SINGLETON);
             }
 
@@ -410,10 +368,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param handlerClass the handler type.
      */
     protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
-        if (handlerClass == null) {
-            throw new IllegalArgumentException("Parameter 'handlerClass' must not be null");
-        }
-
+        checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
     	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
     }
 
@@ -424,9 +379,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param handlerClass the handler type.
      */
     protected final void addTypeHandlersClasses(Collection<Class<? extends TypeHandler<?>>> handlersClasses) {
-        if (handlersClasses == null) {
-            throw new IllegalArgumentException("Parameter 'handlersClasses' must not be null");
-        }
+        checkArgument(handlersClasses != null, "Parameter 'handlersClasses' must not be null");
 
         for (Class<? extends TypeHandler<?>> handlerClass : handlersClasses) {
         	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
@@ -440,9 +393,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param packageName the package where looking for type handlers.
      */
     protected final void addTypeHandlerClasses(String packageName) {
-        if (packageName == null) {
-            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
-        }
+        checkArgument(packageName != null, "Parameter 'packageName' must not be null");
         addTypeHandlersClasses(new ResolverUtil<TypeHandler<?>>()
                 .find(new ResolverUtil.IsA(TypeHandler.class), packageName)
                 .getClasses());
@@ -455,10 +406,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param interceptorClasse The user defined MyBatis interceptor plugin type
      */
     protected final void addInterceptorClass(Class<? extends Interceptor> interceptorClass) {
-        if (interceptorClass == null) {
-            throw new IllegalArgumentException("Parameter 'interceptorsClass' must not be null");
-        }
-
+        checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
         interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
     }
 
@@ -469,9 +417,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param interceptorsClasses the user defined MyBatis Interceptors plugins types
      */
     protected final void addInterceptorsClasses(Collection<Class<? extends Interceptor>> interceptorsClasses) {
-        if (interceptorsClasses == null) {
-            throw new IllegalArgumentException("Parameter 'interceptorsClasses' must not be null");
-        }
+        checkArgument(interceptorsClasses != null, "Parameter 'interceptorsClasses' must not be null");
 
         for (Class<? extends Interceptor> interceptorClass : interceptorsClasses) {
             addInterceptorClass(interceptorClass);
@@ -485,9 +431,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param packageName the package where looking for Interceptors plugins types.
      */
     protected final void addInterceptorsClasses(String packageName) {
-        if (packageName == null) {
-            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
-        }
+        checkArgument(packageName != null, "Parameter 'packageName' must not be null");
         addInterceptorsClasses(new ResolverUtil<Interceptor>()
                 .find(new ResolverUtil.IsA(Interceptor.class), packageName)
                 .getClasses());
@@ -499,9 +443,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param mapperClasses the user defined mapper classes.
      */
     protected final void addMapperClass(Class<?> mapperClass) {
-        if (mapperClass == null) {
-            throw new IllegalArgumentException("Parameter 'mapperClass' must not be null");
-        }
+        checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
         mappers.addBinding().toInstance(mapperClass);
         bindMapper(mapperClass);
@@ -513,9 +455,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param mapperClasses the user defined mapper classes
      */
     protected final void addMapperClasses(Collection<Class<?>> mapperClasses) {
-        if (mapperClasses == null) {
-            throw new IllegalArgumentException("Parameter 'mapperClasses' must not be null");
-        }
+        checkArgument(mapperClasses != null, "Parameter 'mapperClasses' must not be null");
 
         for (Class<?> mapperClass : mapperClasses) {
             addMapperClass(mapperClass);
@@ -560,12 +500,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @return a set of all classes contained in the given package.
      */
     private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
-        if (test == null) {
-            throw new IllegalArgumentException("Parameter 'test' must be not null");
-        }
-        if (packageName == null) {
-            throw new IllegalArgumentException("Parameter 'packageName' must be not null");
-        }
+        checkArgument(test != null, "Parameter 'test' must not be null");
+        checkArgument(packageName != null, "Parameter 'packageName' must not be null");
         return new ResolverUtil<Object>().find(test, packageName).getClasses();
     }
 
