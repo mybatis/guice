@@ -32,6 +32,9 @@
       <action dev="simone.tripodi" type="fix" due-to="422">
         Missing mapUnderscoreToCamelCase property in mybatis-guice.
       </action>
+      <action dev="christian.poitras" type="add">
+        Inject dependencies in TypeHandlers defined in the XML
+      </action>
       <action dev="simone.tripodi" type="update">
         Made org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider username/password optional
         (users can specify them in the JDBC URL).
