@@ -46,7 +46,7 @@ public final class BoneCPProvider implements Provider<DataSource> {
     }
 
     @com.google.inject.Inject(optional = true)
-    public void setClassLoader(@Named("bonecp.classLoader") ClassLoader classLoader) {
+    public void setClassLoader(@Named("JDBC.driverClassLoader") ClassLoader classLoader) {
         dataSource.setClassLoader(classLoader);
     }
 

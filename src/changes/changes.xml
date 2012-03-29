@@ -29,6 +29,9 @@
 
   <body>
     <release version="3.3" date="201?-??-??" description="maintenance release">
+      <action dev="simone.tripodi" type="add">
+        Added resources/JDBC custom ClassLoader support.
+      </action>
       <action dev="simone.tripodi" type="fix" due-to="422">
         Missing mapUnderscoreToCamelCase property in mybatis-guice.
       </action>

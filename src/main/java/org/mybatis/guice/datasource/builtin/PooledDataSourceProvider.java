@@ -47,8 +47,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public PooledDataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url) {
-        dataSource = new PooledDataSource(getClass().getClassLoader(), driver, url, null, null);
+            @Named("JDBC.url") final String url,
+            @Named("JDBC.driverClassLoader") final ClassLoader driverClassLoader) {
+        dataSource = new PooledDataSource(driverClassLoader, driver, url, null, null);
     }
 
     /**

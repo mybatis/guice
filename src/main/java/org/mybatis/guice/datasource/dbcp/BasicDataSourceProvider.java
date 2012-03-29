@@ -48,7 +48,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public BasicDataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url) {
+            @Named("JDBC.url") final String url,
+            @Named("JDBC.driverClassLoader") final ClassLoader driverClassLoader) {
+        dataSource.setDriverClassLoader(driverClassLoader);
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);
     }

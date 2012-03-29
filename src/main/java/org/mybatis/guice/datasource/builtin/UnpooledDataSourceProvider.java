@@ -47,8 +47,9 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
      */
     @Inject
     public UnpooledDataSourceProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url) {
-        unpooledDataSource = new UnpooledDataSource(getClass().getClassLoader(), driver, url, null, null);
+            @Named("JDBC.url") final String url,
+            @Named("JDBC.driverClassLoader") final ClassLoader driverClassLoader) {
+        unpooledDataSource = new UnpooledDataSource(driverClassLoader, driver, url, null, null);
     }
 
     /**

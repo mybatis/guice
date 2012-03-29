@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.name.Names.named;
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 import static com.google.inject.util.Providers.guicify;
@@ -36,21 +37,34 @@ import com.google.inject.Scopes;
  */
 abstract class AbstractMyBatisModule extends AbstractModule {
 
+    private ClassLoader resourcesClassLoader = getDefaultClassLoader();
+
+    private ClassLoader driverClassLoader = getDefaultClassLoader();
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected final void configure() {
-        // sql session manager
-        bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
-        bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
+        try {
+            // sql session manager
+            bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
+            bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
-        // transactional interceptor
-        TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-        requestInjection(interceptor);
-        bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+            // transactional interceptor
+            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+            requestInjection(interceptor);
+            bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
 
-        internalConfigure();
+            internalConfigure();
+
+            bind(ClassLoader.class)
+                .annotatedWith(named("JDBC.driverClassLoader"))
+                .toInstance(driverClassLoader);
+        } finally {
+            resourcesClassLoader = getDefaultClassLoader();
+            driverClassLoader = getDefaultClassLoader();
+        }
     }
 
     /**
@@ -60,6 +74,42 @@ abstract class AbstractMyBatisModule extends AbstractModule {
      */
     final <T> void bindMapper(Class<T> mapperType) {
         bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+    }
+
+    /**
+     *
+     * @return
+     * @since 3.3
+     */
+    public void useResourceClassLoader(ClassLoader resourceClassLoader) {
+        this.resourcesClassLoader = resourceClassLoader;
+    }
+
+    /**
+     *
+     * @return
+     * @since 3.3
+     */
+    protected final ClassLoader getResourceClassLoader() {
+        return resourcesClassLoader;
+    }
+
+   /**
+    *
+    * @return
+    * @since 3.3
+    */
+   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
+        this.driverClassLoader = driverClassLoader;
+    }
+
+    /**
+     *
+     * @return
+     * @since 3.3
+     */
+    private ClassLoader getDefaultClassLoader() {
+        return getClass().getClassLoader();
     }
 
     /**
