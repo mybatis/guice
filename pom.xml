@@ -30,7 +30,7 @@
   <artifactId>mybatis-guice</artifactId>
   <name>MyBatis Guice</name>
   <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
-  <version>3.3</version>
+  <version>3.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <url>http://www.mybatis.org/guice/${project.version}</url>
 
@@ -52,9 +52,9 @@
   </contributors>
 
   <scm>
-    <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.3</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.3</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/tags/mybatis-guice-3.3</developerConnection>
+    <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</url>
+    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>
+    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</developerConnection>
   </scm>
   <distributionManagement>
     <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
