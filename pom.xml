@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>15</version>
+    <version>17-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -82,6 +82,8 @@
      | see distributionManagement.site.url
     -->
     <site.deploymentUrl>ftp://${mybatis.host}/guice/</site.deploymentUrl>
+    <javac.src.version>1.5</javac.src.version>
+    <javac.target.version>1.5</javac.target.version>
   </properties>
 
   <dependencies>
