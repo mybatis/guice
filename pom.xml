@@ -15,6 +15,7 @@
   limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.mybatis</groupId>
@@ -22,12 +23,12 @@
     <version>17-SNAPSHOT</version>
   </parent>
 
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>mybatis-guice</artifactId>
-  <name>MyBatis Guice</name>
-  <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
   <version>3.4-SNAPSHOT</version>
   <packaging>jar</packaging>
+
+  <name>MyBatis Guice</name>
+  <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
   <url>http://www.mybatis.org/guice/${project.version}</url>
 
   <contributors>
