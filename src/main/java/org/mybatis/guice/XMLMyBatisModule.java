@@ -95,6 +95,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     final void internalConfigure() {
         this.initialize();
@@ -114,8 +115,14 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
             context.setRoot(configuration);
 
             // bind mappers
-            @SuppressWarnings("unchecked")
-            Set<Class<?>> mapperClasses = (Set<Class<?>>) getValue(KNOWN_MAPPERS, context, configuration);
+            Object introspectedMapperClasses = getValue(KNOWN_MAPPERS, context, configuration);
+            // mybatis 3.2 contains a HashMap, previous versions a HashSet
+            Collection<Class<?>> mapperClasses = null;
+            if (Map.class.isAssignableFrom(introspectedMapperClasses.getClass())) {
+              mapperClasses = ((Map) introspectedMapperClasses).keySet();
+            } else {
+              mapperClasses = (Collection) introspectedMapperClasses; 
+            }
             for (Class<?> mapperType : mapperClasses) {
                 bindMapper(mapperType);
             }
