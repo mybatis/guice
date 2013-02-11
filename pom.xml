@@ -49,9 +49,10 @@
   </contributors>
 
   <scm>
-    <url>scm:svn:http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk</developerConnection>
+    <url>http://github.com/mybatis/guice</url>
+    <connection>scm:git:ssh://github.com/mybatis/guice.git</connection>
+    <developerConnection>scm:git:git+ssh://git@github.com/mybatis/guice.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
