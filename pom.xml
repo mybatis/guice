@@ -29,7 +29,7 @@
 
   <name>MyBatis Guice</name>
   <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
-  <url>http://www.mybatis.org/guice/${project.version}</url>
+  <url>http://www.mybatis.org/guice/</url>
 
   <contributors>
     <contributor>
