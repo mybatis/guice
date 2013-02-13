@@ -65,7 +65,7 @@
   <distributionManagement>
     <site>
       <id>github</id>
-      <url>gitsite:git@github.com/mybatis/spring.git</url>
+      <url>gitsite:git@github.com/mybatis/guice.git</url>
     </site>
   </distributionManagement>
 
