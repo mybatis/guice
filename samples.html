@@ -11,7 +11,7 @@
     <meta name="Date-Revision-yyyymmdd" content="20130211" />
     <meta http-equiv="Content-Language" content="en" />
     <title>MyBatis - 
-    MyBatis Guice | Introduction</title>
+    MyBatis Guice | Samples</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -58,10 +58,12 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Reference Documentation</li>
                                 
-      <li class="active">
+      <li>
     
-            <a href="#"><i class="none"></i>Introduction</a>
-          </li>
+                          <a href="index.html" title="Introduction">
+          <i class="none"></i>
+        Introduction</a>
+            </li>
                   
       <li>
     
@@ -135,111 +137,18 @@
         JDBC Helper</a>
             </li>
                   
-      <li>
+      <li class="active">
     
-                          <a href="samples.html" title="Samples">
-          <i class="none"></i>
-        Samples</a>
-            </li>
+            <a href="#"><i class="none"></i>Samples</a>
+          </li>
                               <li class="nav-header">Project Documentation</li>
-                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                          
       <li>
     
                           <a href="project-info.html" title="Project Information">
-          <i class="icon-chevron-down"></i>
+          <i class="icon-chevron-right"></i>
         Project Information</a>
-                    <ul class="nav nav-list">
-                      
-      <li class="active">
-    
-            <a href="#"><i class="none"></i>About</a>
-          </li>
-                      
-      <li>
-    
-                          <a href="team-list.html" title="Project Team">
-          <i class="none"></i>
-        Project Team</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="dependency-info.html" title="Dependency Information">
-          <i class="none"></i>
-        Dependency Information</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="plugins.html" title="Project Plugins">
-          <i class="none"></i>
-        Project Plugins</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="integration.html" title="Continuous Integration">
-          <i class="none"></i>
-        Continuous Integration</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="issue-tracking.html" title="Issue Tracking">
-          <i class="none"></i>
-        Issue Tracking</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="source-repository.html" title="Source Repository">
-          <i class="none"></i>
-        Source Repository</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="license.html" title="Project License">
-          <i class="none"></i>
-        Project License</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="plugin-management.html" title="Plugin Management">
-          <i class="none"></i>
-        Plugin Management</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="distribution-management.html" title="Distribution Management">
-          <i class="none"></i>
-        Distribution Management</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="project-summary.html" title="Project Summary">
-          <i class="none"></i>
-        Project Summary</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="mail-lists.html" title="Mailing Lists">
-          <i class="none"></i>
-        Mailing Lists</a>
-            </li>
-                      
-      <li>
-    
-                          <a href="dependencies.html" title="Dependencies">
-          <i class="none"></i>
-        Dependencies</a>
-            </li>
-              </ul>
-        </li>
+                  </li>
                                                                                                                                                                                                                                                         
       <li>
     
@@ -282,58 +191,90 @@
   limitations under the License. --><!-- version: $Id$ -->
 
   
-    <div class="section"><h2>Why MyBatis-Guice - Motivation<a name="Why_MyBatis-Guice_-_Motivation"></a></h2>
-      <p>In our daily work we've been strongly using both
-      <a class="externalLink" href="http://www.mybatis.org/">MyBatis Sql Mapper</a> and
-      <a class="externalLink" href="http://code.google.com/p/google-guice/">Google Guice</a>
-      frameworks and once noticed we'd been continuosly repeating the same
-      code snippets in different projects, according to the DRY
-      <i>don't repeat yourself</i> principle, we started
-      realizing something that alleviate us the task to create our stuff.</p>
-      <p>Indeed, this small library intends to create the missing perfect glue
-      between the two popular frameworks, reducing the boilerplate and
-      redundant code that users have to write to configure and use MyBatis
-      into a Google Guice context.</p>
+    <div class="section"><h2>Sample Code<a name="Sample_Code"></a></h2>
 
-      <div class="section"><h3>A little bit of history<a name="A_little_bit_of_history"></a></h3>
-        <p>
-            The mybatis-guice library was born during the Christmas' vacation in
-            the far December 2009, with the name of <a class="externalLink" href="http://www.99soft.org/projects/ibaguice/1.0">iBaGuice</a>
-            on Google Code, created and maintained by the <a class="externalLink" href="http://www.99soft.org/">99soft.org</a>
-            folks Marco Speranza and Simone Tripodi.
-        </p>
-        <p>
-            Since the two communities where strictly collaborating, Clinton Begin,
-            the creator of the MyBatis project, invited Simone Tripodi to join the
-            MyBatis team, bringing with him the <i>iBaGuice</i>
-            code base to become an official MyBatis subproject.
-        </p>
-        <p>
-            By that day, the mybatis-guice project is maintained by the MyBatis.org
-            team.
-        </p>
-      </div>
-    </div>
+    <p>
+        You can check out sample code from the MyBatis repository on Google Code.</p>
+        <ul>
+            <li>
+                <a class="externalLink" href="http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk/src/test/java/org/mybatis/guice/sample/">Java code</a>
+            </li>
+            <li>
+                <a class="externalLink" href="http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk/src/test/resources/org/mybatis/guice/sample/">Config files</a>
+            </li>
+        </ul>
+    <p>
+        Any of the samples can be run with JUnit 4.
+  </p>
+  <p>
+        The sample code shows a typical design where a transactional service gets
+        domain objects from a data access layer.
+  </p>
+  <p>
+        The service is composed by an interface <tt>FooService.java</tt>
+        and an implementation <tt>FooServiceImpl.java</tt>. 
+        This service is transactional so a transaction is started when its method 
+        is called and commited when the method ends without throwing a unchecked exception.
+        </p><div class="source"><pre class="prettyprint">public class FooServiceMapperImpl implements FooService {
 
-    <div class="section"><h2>Requirements<a name="Requirements"></a></h2>
-      <p> Before starting reading the manual, it is very important you're familiar with both MyBatis and Google Guice
-  framework and therminology. </p>
-  <p> Like MyBatis and Google Guice, mybatis-guice requires Java 5 or higher. </p>
-    </div>
+    @Inject
+    private UserMapper userMapper;
 
-    <div class="section"><h2>Acknowledgements<a name="Acknowledgements"></a></h2>
-      <p>
-            A special thanks goes to all the special people who made the Google Guice
-            integration a reality, above all Clinton Begin, who strongly believed
-            on that MyBatis sub-project, and Marco Speranza, without him that
-            project wouldn't exist.
-        </p>
-        <p>
-            Special acknowledgments go to Stephen Friedrich for providing an amazing patch,
-            Poitras Christian who made the XML module a reality and Marzia Forli for the JRS330 feedbacks.
-        </p>
-    </div>
-  
+    @Transactional
+    public User doSomeBusinessStuff(String userId) {
+        return this.userMapper.getUser(userId);
+    }
+
+}</pre></div>
+        Notice that transactional behaviour is configured with the
+        <tt>@Transactional</tt> annotation. 
+    
+
+    <p>
+        This service calls a data access layer built with MyBatis. This layer
+        is composed by a MyBatis mapper interface <tt>UserMapper.java</tt>
+        and a DAO composed by its interface <tt>UserDao.java</tt>
+        and its implementation <tt>UserDaoImpl.java</tt>
+    </p>
+
+    <p>
+        The database access layer has been implemented using a mapper and a Dao that 
+        internally uses a <tt>SqlSession</tt>.</p>
+        <table border="0" class="table table-striped"><caption>Sample test classes</caption>
+            
+            <thead>
+                <tr class="a">
+                    <th>Sample test</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="b">
+                    <td>
+                        <tt>SampleBasicTest</tt>
+                    </td>
+                    <td>
+                        Shows you the recommended and simplest configuration
+                        based on a mapper.
+                    </td>
+                </tr>
+                <tr class="a">
+                    <td>
+                        <tt>SampleSqlSessionTest</tt>
+                    </td>
+                    <td>
+                        Shows how to hand code
+                        a DAO using a managed
+                        <tt>SqlSession</tt>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Please have a look and run the sample code to see MyBatis-Guice in action.</p>
+
+</div>
+
+
 
 
                   </div>
