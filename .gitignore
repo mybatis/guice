@@ -1,0 +1,11 @@
+/*.iml
+/*.ipr
+/*.iws
+/.classpath
+/.project
+/.settings
+/mybatis-guice_TEST.log
+/mybatis-guice_TEST.properties
+/mybatis-guice_TEST.script
+/nb*
+/target
