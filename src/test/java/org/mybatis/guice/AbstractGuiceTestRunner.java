@@ -50,6 +50,7 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
 
         try {
             final Contact contact = new Contact();
+            contact.setId(1);
             contact.setFirstName("John");
             contact.setLastName("Doe");
             contact.setCreated(new CustomType(currentTimeMillis()));
