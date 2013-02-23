@@ -22,6 +22,7 @@ public class ContactIdTypeHandler implements TypeHandler<Integer> {
 	public void setParameter(PreparedStatement ps, int i, Integer parameter,
 			JdbcType jdbcType) throws SQLException {
 		counter.increment();
+		if (parameter == null) parameter = 0; 
 		ps.setInt(i, parameter);
 	}
 	public Integer getResult(ResultSet rs, String columnName)
