@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2013-02-14T12:21:39.666">
-<file name="/Users/stripodi/Documents/mybatis/guice/src/main/java/org/mybatis/guice/MyBatisModule.java">
+<pmd version="4.3" timestamp="2013-02-23T04:08:36.275">
+<file name="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/MyBatisModule.java">
 <violation beginline="16" endline="508" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.mybatis.guice" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
 </violation>
 </file>
-<file name="/Users/stripodi/Documents/mybatis/guice/src/main/java/org/mybatis/guice/XMLMyBatisModule.java">
+<file name="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/XMLMyBatisModule.java">
 <violation beginline="27" endline="27" begincolumn="1" endcolumn="21" rule="UnusedImports" ruleset="Import Statement Rules" package="org.mybatis.guice" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'java.util.Set'
 </violation>
@@ -13,7 +13,7 @@ Avoid unused imports such as 'java.util.Set'
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/Users/stripodi/Documents/mybatis/guice/src/main/java/org/mybatis/guice/session/SqlSessionFactoryProvider.java">
+<file name="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/session/SqlSessionFactoryProvider.java">
 <violation beginline="52" endline="54" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.guice.session" class="SqlSessionFactoryProvider" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused constructor parameters such as 'configuration'.
 </violation>
