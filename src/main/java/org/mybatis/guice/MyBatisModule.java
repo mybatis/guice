@@ -175,6 +175,15 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void failFast(boolean failFast) {
         bindBoolean("mybatis.configuration.failFast", failFast);
     }
+  
+    /**
+     * Maps underscores to camel case.
+     *
+     * @param mapUnderscoreToCamelCase Toggles this settings value.
+     */
+    protected final void mapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
+        bindBoolean("mybatis.configuration.mapUnderscoreToCamelCase", mapUnderscoreToCamelCase);
+    }
 
     /**
      *
