@@ -15,18 +15,10 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.internal.util.$Preconditions.checkArgument;
-import static com.google.inject.internal.util.$Preconditions.checkState;
-import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
-
-import java.util.Collection;
-import java.util.Set;
-
 import javax.inject.Provider;
 import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.Set;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.Environment;
@@ -36,6 +28,7 @@ import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.LocalCacheScope;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.TypeHandler;
@@ -50,8 +43,13 @@ import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+import static com.google.inject.internal.util.$Preconditions.*;
 import com.google.inject.multibindings.MapBinder;
+import static com.google.inject.multibindings.MapBinder.*;
 import com.google.inject.multibindings.Multibinder;
+import static com.google.inject.multibindings.Multibinder.*;
+import static com.google.inject.name.Names.*;
+import static com.google.inject.util.Providers.*;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -193,6 +191,17 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void executorType(ExecutorType executorType) {
         checkArgument(executorType != null, "Parameter 'executorType' must be not null");
         bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
+    }
+
+    /**
+     * Configures the local cache scope setting.
+     *
+     * @param localeCacheScope The cache scope to use.
+     * @since 3.4
+     */
+    protected final void localCacheScope(LocalCacheScope localeCacheScope) {
+        checkArgument(localeCacheScope != null, "Parameter 'localCacheScope' must be not null");
+        bindConstant().annotatedWith(named("mybatis.configuration.localCacheScope")).to(localeCacheScope);
     }
 
     /**
