@@ -43,13 +43,14 @@ import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import static com.google.inject.internal.util.$Preconditions.*;
+import static com.google.inject.internal.util.$Preconditions.checkArgument;
+import static com.google.inject.internal.util.$Preconditions.checkState;
 import com.google.inject.multibindings.MapBinder;
-import static com.google.inject.multibindings.MapBinder.*;
+import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import com.google.inject.multibindings.Multibinder;
-import static com.google.inject.multibindings.Multibinder.*;
-import static com.google.inject.name.Names.*;
-import static com.google.inject.util.Providers.*;
+import static com.google.inject.multibindings.Multibinder.newSetBinder;
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
