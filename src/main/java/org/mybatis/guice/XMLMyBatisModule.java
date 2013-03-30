@@ -1,5 +1,5 @@
 /*
- *    Copyright 2010-2012 The MyBatis Team
+ *    Copyright 2010-2013 The MyBatis Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,22 +17,16 @@ package org.mybatis.guice;
 
 import static com.google.inject.internal.util.$Preconditions.checkArgument;
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
-import static org.apache.ibatis.ognl.Ognl.getValue;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
-import org.apache.ibatis.ognl.DefaultMemberAccess;
-import org.apache.ibatis.ognl.OgnlContext;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
 /**
@@ -46,14 +40,6 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
     private static final String DEFAULT_CONFIG_RESOURCE = "mybatis-config.xml";
 
     private static final String DEFAULT_ENVIRONMENT_ID = "development";
-
-    private static final String KNOWN_MAPPERS = "mapperRegistry.knownMappers";
-
-    private static final String TYPE_HANDLERS = "typeHandlerRegistry.TYPE_HANDLER_MAP.values()";
-
-    private static final String ALL_TYPE_HANDLERS = "typeHandlerRegistry.ALL_TYPE_HANDLERS_MAP.values()";
-
-    private static final String INTERCEPTORS = "interceptorChain.interceptors";
 
     private String classPathResource = DEFAULT_CONFIG_RESOURCE;
 
@@ -95,7 +81,6 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     final void internalConfigure() {
         this.initialize();
@@ -110,40 +95,20 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
             Configuration configuration = sessionFactory.getConfiguration();
 
-            OgnlContext context = new OgnlContext();
-            context.setMemberAccess(new DefaultMemberAccess(true, true, true));
-            context.setRoot(configuration);
-
             // bind mappers
-            Object introspectedMapperClasses = getValue(KNOWN_MAPPERS, context, configuration);
-            // mybatis 3.2 contains a HashMap, previous versions a HashSet
-            Collection<Class<?>> mapperClasses = null;
-            if (Map.class.isAssignableFrom(introspectedMapperClasses.getClass())) {
-              mapperClasses = ((Map) introspectedMapperClasses).keySet();
-            } else {
-              mapperClasses = (Collection) introspectedMapperClasses; 
-            }
+            Collection<Class<?>> mapperClasses = configuration.getMapperRegistry().getMappers();
             for (Class<?> mapperType : mapperClasses) {
                 bindMapper(mapperType);
             }
 
             // request injection for type handlers
-            @SuppressWarnings("unchecked")
-            Collection<Map<JdbcType, TypeHandler<?>>> mappedTypeHandlers = (Collection<Map<JdbcType, TypeHandler<?>>>) getValue(TYPE_HANDLERS, context, configuration);
-            for (Map<JdbcType, TypeHandler<?>> mappedTypeHandler: mappedTypeHandlers) {
-                for (TypeHandler<?> handler : mappedTypeHandler.values()) {
-                    requestInjection(handler);
-                }
-            }
-            @SuppressWarnings("unchecked")
-            Collection<TypeHandler<?>> allTypeHandlers = (Collection<TypeHandler<?>>) getValue(ALL_TYPE_HANDLERS, context, configuration);
+            Collection<TypeHandler<?>> allTypeHandlers = configuration.getTypeHandlerRegistry().getTypeHandlers();
             for (TypeHandler<?> handler: allTypeHandlers) {
                 requestInjection(handler);
             }
 
             // request injection for interceptors
-            @SuppressWarnings("unchecked")
-            Collection<Interceptor> interceptors = (Collection<Interceptor>) getValue(INTERCEPTORS, context, configuration);
+            Collection<Interceptor> interceptors = configuration.getInterceptors();
             for (Interceptor interceptor : interceptors) {
                 requestInjection(interceptor);
             }
