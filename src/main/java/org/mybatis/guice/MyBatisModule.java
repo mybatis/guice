@@ -31,6 +31,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.LocalCacheScope;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
@@ -298,7 +299,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Add a user defined binding.
      *
      * @param alias the string type alias
-     * @param clazz the type has to be bound.
      */
     protected final AliasBinder addAlias(final String alias) {
         checkArgument(alias != null && alias.length() > 0, "Empty or null 'alias' is not valid");
@@ -317,12 +317,19 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adding simple aliases means that every specified class will be bound
      * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
      *
-     * @param types the specified types have to be bind
+     * @param type the specified types have to be bind
      */
-    protected final void addSimpleAlias(final Class<?> type) {
-        checkArgument(type != null, "Parameter 'type' must be not null");
-        addAlias(type.getSimpleName()).to(type);
-    }
+	protected final void addSimpleAlias(final Class<?> type) {
+		checkArgument(type != null, "Parameter 'type' must be not null");
+
+		String alias = type.getSimpleName();
+		// check if the class uses the Alias annotation.
+		final Alias annotation = type.getAnnotation(Alias.class);
+		if (annotation != null) {
+			alias = annotation.value();
+		}
+		addAlias(alias).to(type);
+	}
 
     /**
      * Adding simple aliases means that every specified class will be bound
@@ -365,7 +372,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Add a user defined Type Handler letting google-guice creating it.
      *
      * @param type the specified type has to be handled.
-     * @param handler the handler type.
      */
     protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
         checkArgument(type != null, "Parameter 'type' must be not null");
@@ -395,7 +401,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adds the user defined MyBatis type handlers, letting
      * google-guice creating it.
      *
-     * @param handlerClass the handler type.
+     * @param handlersClasses the handler type.
      */
     protected final void addTypeHandlersClasses(Collection<Class<? extends TypeHandler<?>>> handlersClasses) {
         checkArgument(handlersClasses != null, "Parameter 'handlersClasses' must not be null");
@@ -422,7 +428,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * Adds the user defined myBatis interceptor plugins type, letting
      * google-guice creating it.
      *
-     * @param interceptorClasse The user defined MyBatis interceptor plugin type
+     * @param interceptorClass The user defined MyBatis interceptor plugin type
      */
     protected final void addInterceptorClass(Class<? extends Interceptor> interceptorClass) {
         checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
@@ -459,7 +465,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     /**
      * Adds the user defined mapper classes.
      *
-     * @param mapperClasses the user defined mapper classes.
+     * @param mapperClass the user defined mapper classes.
      */
     protected final void addMapperClass(Class<?> mapperClass) {
         checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
