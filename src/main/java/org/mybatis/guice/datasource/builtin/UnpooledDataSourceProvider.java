@@ -15,15 +15,14 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import java.sql.SQLException;
-import java.util.Properties;
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.

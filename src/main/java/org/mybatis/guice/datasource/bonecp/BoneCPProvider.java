@@ -15,16 +15,15 @@
  */
 package org.mybatis.guice.datasource.bonecp;
 
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+import com.jolbox.bonecp.BoneCPDataSource;
+import com.jolbox.bonecp.hooks.ConnectionHook;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-
-import com.jolbox.bonecp.BoneCPDataSource;
-import com.jolbox.bonecp.hooks.ConnectionHook;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the BoneCP DataSource.

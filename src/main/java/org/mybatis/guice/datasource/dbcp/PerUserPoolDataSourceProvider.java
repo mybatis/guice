@@ -15,15 +15,14 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
 
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
