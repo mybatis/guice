@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
+import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
-
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.

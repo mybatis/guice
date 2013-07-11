@@ -15,11 +15,9 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.name.Names.named;
-import static com.google.inject.matcher.Matchers.annotatedWith;
-import static com.google.inject.matcher.Matchers.any;
-import static com.google.inject.util.Providers.guicify;
-
+import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Scopes;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.mappers.MapperProvider;
@@ -27,9 +25,10 @@ import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Scopes;
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
 
 /**
  *

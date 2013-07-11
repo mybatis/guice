@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.configuration;
 
+import com.google.inject.BindingAnnotation;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import com.google.inject.BindingAnnotation;
 
 /**
  * Marker for type aliases.

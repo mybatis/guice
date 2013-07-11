@@ -19,8 +19,8 @@
   version: $Id$
 -->
 <document xmlns="http://maven.apache.org/changes/1.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
 
   <properties>
     <author>The MyBatis Team</author>
@@ -28,6 +28,20 @@
   </properties>
 
   <body>
+    <release version="3.4" date="2013-07-11" description="maintenance release">
+      <action dev="nathan.maves" type="fix">
+        Alias scanner will now respect the @Alias annotation of MyBatis.
+      </action>
+      <action dev="nathan.maves" type="update">
+        Code cleanup, optimized the imports and some java-doc fixes.
+      </action>
+      <action dev="nathan.maves" type="update">
+        Updated some internal dependencies.
+        log4j 1.2.16 -> 1.2.17
+        hsqldb 2.2.4 -> 2.2.9
+      </action>
+    </release>
+
     <release version="3.3" date="201?-??-??" description="maintenance release">
       <action dev="simone.tripodi" type="add">
         Added resources/JDBC custom ClassLoader support.

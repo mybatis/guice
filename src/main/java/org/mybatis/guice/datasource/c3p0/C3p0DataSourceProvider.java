@@ -15,15 +15,14 @@
  */
 package org.mybatis.guice.datasource.c3p0;
 
-import java.beans.PropertyVetoException;
-import java.util.Properties;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import java.beans.PropertyVetoException;
+import java.util.Properties;
 
 /**
  * Provides the C3P0 DataSource.

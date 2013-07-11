@@ -15,14 +15,14 @@
  */
 package org.mybatis.guice.session;
 
-import static org.apache.ibatis.session.SqlSessionManager.newInstance;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionManager;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionManager;
+import static org.apache.ibatis.session.SqlSessionManager.newInstance;
 
 /**
  *

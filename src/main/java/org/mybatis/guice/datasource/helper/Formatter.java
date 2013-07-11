@@ -15,15 +15,14 @@
  */
 package org.mybatis.guice.datasource.helper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.inject.Provider;
-
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.util.Providers;
+
+import javax.inject.Provider;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *

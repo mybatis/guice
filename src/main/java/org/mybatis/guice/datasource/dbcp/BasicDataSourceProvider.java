@@ -15,16 +15,15 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import java.sql.SQLException;
-import java.util.Map.Entry;
-import java.util.Properties;
+import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.BasicDataSource;
+import java.sql.SQLException;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 /**
  * Provides the Apache commons-dbcp {@code BasicDataSource}.

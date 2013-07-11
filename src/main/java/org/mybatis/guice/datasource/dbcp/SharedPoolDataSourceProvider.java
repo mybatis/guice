@@ -15,14 +15,13 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
+import com.google.inject.Provider;
+import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
-
-import com.google.inject.Provider;
 
 /**
  * Provides the Apache commons-dbcp {@code SharedPoolDataSource}.

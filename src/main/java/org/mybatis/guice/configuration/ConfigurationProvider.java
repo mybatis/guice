@@ -15,15 +15,7 @@
  */
 package org.mybatis.guice.configuration;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-
+import com.google.inject.ProvisionException;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
@@ -33,7 +25,13 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.google.inject.ProvisionException;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the myBatis Configuration.
