@@ -15,21 +15,16 @@
  */
 package org.mybatis.guice;
 
-import javax.inject.Provider;
-import javax.sql.DataSource;
-import java.util.Collection;
-import java.util.Set;
-
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.LocalCacheScope;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.TypeHandler;
@@ -42,13 +37,14 @@ import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
+import javax.inject.Provider;
+import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.Set;
+
 import static com.google.inject.internal.util.$Preconditions.checkArgument;
 import static com.google.inject.internal.util.$Preconditions.checkState;
-import com.google.inject.multibindings.MapBinder;
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import com.google.inject.multibindings.Multibinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;

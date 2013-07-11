@@ -15,13 +15,13 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import java.lang.annotation.Annotation;
-import java.util.Map;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+
+import java.lang.annotation.Annotation;
+import java.util.Map;
 
 /**
  * @version $Id$

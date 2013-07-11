@@ -14,7 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -50,6 +51,11 @@
     <contributor>
       <name>Brian Pontarelli</name>
       <url>https://github.com/voidmain</url>
+    </contributor>
+
+    <contributor>
+      <name>Nathan Maves</name>
+      <url>https://github.com/nmaves</url>
     </contributor>
   </contributors>
 
@@ -162,14 +168,14 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.2.4</version>
+      <version>2.2.9</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
+      <version>1.2.17</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -199,9 +205,9 @@
       </exclusions>
     </dependency>
     <dependency>
-    	<groupId>cglib</groupId>
-    	<artifactId>cglib</artifactId>
-    	<version>2.2.2</version>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.2.2</version>
     </dependency>
   </dependencies>
 
@@ -215,7 +221,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <arguments>-Prelease,bundle,gupload</arguments>
+          <arguments>-Prelease,bundle</arguments>
         </configuration>
       </plugin>
     </plugins>

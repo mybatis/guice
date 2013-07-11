@@ -15,13 +15,13 @@
  */
 package org.mybatis.guice.transactional;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.TransactionIsolationLevel;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
  * Any method marked with this annotation will be considered for

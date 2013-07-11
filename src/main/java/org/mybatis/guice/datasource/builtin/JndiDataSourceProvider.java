@@ -15,13 +15,12 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import java.util.Properties;
+import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-
-import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
+import java.util.Properties;
 
 /**
  * Provides the myBatis built-in JndiDataSourceFactory.
