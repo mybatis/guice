@@ -1062,6 +1062,42 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/mybatis/guice/MyBatisModule.html#localCacheScope(org.apache.ibatis.session.LocalCacheScope)">localCacheScope</a></span>(LocalCacheScope localeCacheScope)</nobr>
+        
+        <div class="jd-descrdiv">Configures the local cache scope setting.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../org/mybatis/guice/MyBatisModule.html#mapUnderscoreToCamelCase(boolean)">mapUnderscoreToCamelCase</a></span>(boolean mapUnderscoreToCamelCase)</nobr>
+        
+        <div class="jd-descrdiv">Maps underscores to camel case.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="../../../org/mybatis/guice/MyBatisModule.html#multipleResultSetsEnabled(boolean)">multipleResultSetsEnabled</a></span>(boolean multipleResultSetsEnabled)</nobr>
         
   </td></tr>
@@ -1963,7 +1999,8 @@ From interface
       <table class="jd-tagtable">
         <tr>
           <th>alias</td>
-          <td>the string type alias</td>
+          <td>the string type alias
+</td>
         </tr>
       </table>
   </div>
@@ -1999,6 +2036,16 @@ From interface
       
   <div class="jd-tagdata jd-tagdescr"><p>Adds the user defined myBatis interceptor plugins type, letting
  google-guice creating it.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>interceptorClass</td>
+          <td>The user defined MyBatis interceptor plugin type
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>
@@ -2114,6 +2161,16 @@ From interface
     <div class="jd-details-descr">
       
   <div class="jd-tagdata jd-tagdescr"><p>Adds the user defined mapper classes.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>mapperClass</td>
+          <td>the user defined mapper classes.
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>
@@ -2273,6 +2330,16 @@ From interface
       
   <div class="jd-tagdata jd-tagdescr"><p>Adding simple aliases means that every specified class will be bound
  using the simple class name, i.e.  <code>com.acme.Foo</code> becomes <code>Foo</code>.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>type</td>
+          <td>the specified types have to be bind
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>
@@ -2521,6 +2588,16 @@ From interface
       
   <div class="jd-tagdata jd-tagdescr"><p>Adds the user defined MyBatis type handlers, letting
  google-guice creating it.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>handlersClasses</td>
+          <td>the handler type.
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>
@@ -3032,7 +3109,8 @@ From interface
       <table class="jd-tagtable">
         <tr>
           <th>type</td>
-          <td>the specified type has to be handled.</td>
+          <td>the specified type has to be handled.
+</td>
         </tr>
       </table>
   </div>
@@ -3098,6 +3176,87 @@ From interface
     <div class="jd-details-descr">
       
   <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="localCacheScope(org.apache.ibatis.session.LocalCacheScope)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        protected 
+         
+        final 
+         
+         
+        void
+      </span>
+      <span class="sympad">localCacheScope</span>
+      <span class="normal">(LocalCacheScope localeCacheScope)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Configures the local cache scope setting.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>localeCacheScope</td>
+          <td>The cache scope to use.</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="mapUnderscoreToCamelCase(boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        protected 
+         
+        final 
+         
+         
+        void
+      </span>
+      <span class="sympad">mapUnderscoreToCamelCase</span>
+      <span class="normal">(boolean mapUnderscoreToCamelCase)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Maps underscores to camel case.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>mapUnderscoreToCamelCase</td>
+          <td>Toggles this settings value.
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>

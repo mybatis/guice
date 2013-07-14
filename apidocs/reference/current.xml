@@ -431,6 +431,32 @@
 <parameter name="lazyLoadingEnabled" type="boolean">
 </parameter>
 </method>
+<method name="localCacheScope"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="localeCacheScope" type="org.apache.ibatis.session.LocalCacheScope">
+</parameter>
+</method>
+<method name="mapUnderscoreToCamelCase"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="mapUnderscoreToCamelCase" type="boolean">
+</parameter>
+</method>
 <method name="multipleResultSetsEnabled"
  return="void"
  abstract="false"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
 <duplication lines="81" tokens="532">
-<file line="38" path="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProvider.java"/>
-<file line="37" path="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/datasource/dbcp/SharedPoolDataSourceProvider.java"/>
+<file line="37" path="/Users/stripodi/Documents/mybatis/guice/target/checkout/src/main/java/org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProvider.java"/>
+<file line="36" path="/Users/stripodi/Documents/mybatis/guice/target/checkout/src/main/java/org/mybatis/guice/datasource/dbcp/SharedPoolDataSourceProvider.java"/>
 <codefragment>
 <![CDATA[
     public void setConnectionPoolDataSource(ConnectionPoolDataSource cpds) {
@@ -90,8 +90,8 @@
 </codefragment>
 </duplication>
 <duplication lines="44" tokens="150">
-<file line="52" path="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/datasource/builtin/PooledDataSourceProvider.java"/>
-<file line="55" path="/home/eduardo/git/guice/src/main/java/org/mybatis/guice/datasource/dbcp/BasicDataSourceProvider.java"/>
+<file line="51" path="/Users/stripodi/Documents/mybatis/guice/target/checkout/src/main/java/org/mybatis/guice/datasource/builtin/PooledDataSourceProvider.java"/>
+<file line="54" path="/Users/stripodi/Documents/mybatis/guice/target/checkout/src/main/java/org/mybatis/guice/datasource/dbcp/BasicDataSourceProvider.java"/>
 <codefragment>
 <![CDATA[
         dataSource = new PooledDataSource(driverClassLoader, driver, url, null, null);
