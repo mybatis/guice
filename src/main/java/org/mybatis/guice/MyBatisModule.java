@@ -42,8 +42,8 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.google.inject.internal.util.$Preconditions.checkArgument;
-import static com.google.inject.internal.util.$Preconditions.checkState;
+import static org.mybatis.guice.Preconditions.checkArgument;
+import static org.mybatis.guice.Preconditions.checkState;
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;

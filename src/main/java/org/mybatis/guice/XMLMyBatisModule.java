@@ -26,7 +26,7 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.Properties;
 
-import static com.google.inject.internal.util.$Preconditions.checkArgument;
+import static org.mybatis.guice.Preconditions.checkArgument;
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
 
 /**
