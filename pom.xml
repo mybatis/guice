@@ -84,8 +84,7 @@
     <guice.version>3.0</guice.version>
     <clirr.comparisonVersion>3.3</clirr.comparisonVersion>
     <gcu.product>Guice</gcu.product>
-    <osgi.import>com.jolbox.bonecp;resolution:=optional,com.mchange.v2.c3p0;resolution:=optional,org.apache.commons.dbcp;resolution:=optional,
-    org.apache.commons.dbcp.cpdsadapter;resolution:=optional,org.apache.commons.dbcp.datasources;resolution:=optional,*</osgi.import>
+    <osgi.import>com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp.*;resolution:=optional,*</osgi.import>
   </properties>
 
   <dependencies>
