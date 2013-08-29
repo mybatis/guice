@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.junit.rules.TestRule;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
@@ -107,4 +108,10 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
         return this.injector.getInstance(this.getTestClass().getJavaClass());
     }
 
+    @Override
+    protected List<TestRule> getTestRules(Object target) {
+        List<TestRule> rules = super.getTestRules(target);
+        rules.add(injector.getInstance(CleanDatabaseRule.class));
+        return rules;
+    }
 }
