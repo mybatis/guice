@@ -87,6 +87,8 @@ public enum JdbcHelper implements Module {
 
     Oracle_Thin("jdbc:oracle:thin:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}", "oracle.jdbc.OracleDriver"),
 
+    Oracle_Service("jdbc:oracle:thin:@//${JDBC.host|localhost}:${JDBC.port|1521}/${oracle.servicename|ORCL}", "oracle.jdbc.OracleDriver"),
+
     Oracle_OCI("jdbc:oracle:oci:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}", "oracle.jdbc.OracleDriver"),
 
     Oracle_DataDirect("jdbc:datadirect:oracle://${JDBC.host|localhost}:${JDBC.port|1521};ServiceName=${oracle.servicename|ORCL}", "com.ddtek.jdbc.oracle.OracleDriver"),
