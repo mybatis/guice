@@ -77,7 +77,7 @@ public class CustomType  {
         if (value == null) {
             if (other.value != null)
                 return false;
-        } else if (!value.equals(other.value))
+        } else if (Math.abs(value - other.value) > 5)
             return false;
         return true;
     }
