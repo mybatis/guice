@@ -24,7 +24,7 @@
   </parent>
 
   <artifactId>mybatis-guice</artifactId>
-  <version>3.5-SNAPSHOT</version>
+  <version>3.5</version>
   <packaging>jar</packaging>
 
   <name>MyBatis Guice</name>
@@ -62,7 +62,7 @@
     <url>http://github.com/mybatis/guice</url>
     <connection>scm:git:ssh://github.com/mybatis/guice.git</connection>
     <developerConnection>scm:git:git+ssh://git@github.com/mybatis/guice.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>mybatis-guice-3.5</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
@@ -94,7 +94,7 @@
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.2.3-SNAPSHOT</version>
+      <version>3.2.3</version>
       <scope>provided</scope>
     </dependency>
 
