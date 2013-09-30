@@ -17,6 +17,7 @@ package org.mybatis.guice.configuration;
 
 import com.google.inject.ProvisionException;
 import org.apache.ibatis.executor.ErrorContext;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -106,6 +108,12 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.mapUnderscoreToCamelCase")
     private boolean mapUnderscoreToCamelCase = false;
+
+    @com.google.inject.Inject(optional = true)
+    private DatabaseIdProvider databaseIdProvider;
+
+    @com.google.inject.Inject
+    private DataSource dataSource;
 
     /**
      * @since 1.0.1
@@ -259,6 +267,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
 
         try {
+            if (databaseIdProvider != null) {
+                configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));
+            }
+
             for (Map.Entry<String,Class<?>> alias : typeAliases.entrySet()) {
                 configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
             }

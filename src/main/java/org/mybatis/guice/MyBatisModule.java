@@ -20,11 +20,16 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 import org.apache.ibatis.io.ResolverUtil;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
-import org.apache.ibatis.session.*;
+import org.apache.ibatis.session.AutoMappingBehavior;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.LocalCacheScope;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.TypeHandler;
@@ -42,12 +47,12 @@ import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.Set;
 
-import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.mybatis.guice.Preconditions.checkState;
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
+import static org.mybatis.guice.Preconditions.checkArgument;
+import static org.mybatis.guice.Preconditions.checkState;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -171,7 +176,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void failFast(boolean failFast) {
         bindBoolean("mybatis.configuration.failFast", failFast);
     }
-  
+
     /**
      * Maps underscores to camel case.
      *
@@ -249,6 +254,26 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void bindDataSourceProvider(com.google.inject.Provider<DataSource> dataSourceProvider) {
         checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
         bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);
+    }
+
+    /**
+     *
+     *
+     * @param databaseIdProvider The DatabaseIdProvider class.
+     */
+    protected final void bindDatabaseIdProvider(Class<? extends DatabaseIdProvider> databaseIdProvider) {
+        checkArgument(databaseIdProvider != null, "Parameter 'dataSourceProvider' must be not null");
+        bind(DatabaseIdProvider.class).to(databaseIdProvider).in(Scopes.SINGLETON);
+    }
+
+    /**
+     *
+     *
+     * @param databaseIdProvider The DatabaseIdProvider instance.
+     */
+    protected final void bindDatabaseIdProvider(DatabaseIdProvider databaseIdProvider) {
+        checkArgument(databaseIdProvider != null, "Parameter 'dataSourceProvider' must be not null");
+        bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);
     }
 
     /**

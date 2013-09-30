@@ -15,11 +15,12 @@
  */
 package org.mybatis.guice;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 /**
  *
@@ -67,6 +68,12 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
                                                 + this.contactWithAdress
                                                 + " but found "
                                                 + contact;
+    }
+
+    @Test
+    public void selectAllContactsWithDatabaseId() throws Exception {
+        List<Contact> contacts = this.contactMapperClient.getAllWithDatabaseId();
+        assert contacts.size() > 0 : "Expected not empty contact table";
     }
 
 }
