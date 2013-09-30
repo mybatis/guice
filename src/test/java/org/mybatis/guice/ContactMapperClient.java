@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice;
 
+import org.mybatis.guice.transactional.Isolation;
+import org.mybatis.guice.transactional.Transactional;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-
-import org.mybatis.guice.transactional.Isolation;
-import org.mybatis.guice.transactional.Transactional;
 
 /**
  * 

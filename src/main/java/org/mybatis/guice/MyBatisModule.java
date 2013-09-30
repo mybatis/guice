@@ -15,11 +15,10 @@
  */
 package org.mybatis.guice;
 
-import javax.inject.Provider;
-import javax.sql.DataSource;
-import java.util.Collection;
-import java.util.Set;
-
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -43,11 +42,12 @@ import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
+import javax.inject.Provider;
+import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.Set;
+
 import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import com.google.inject.multibindings.Multibinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
@@ -176,7 +176,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void failFast(boolean failFast) {
         bindBoolean("mybatis.configuration.failFast", failFast);
     }
-  
+
     /**
      * Maps underscores to camel case.
      *
