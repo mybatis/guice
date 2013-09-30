@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.runners.model.InitializationError;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
@@ -51,6 +52,7 @@ public final class GuicePackageTestRunner extends AbstractGuiceTestRunner {
                 addMapperClass(ContactMapper.class);
                 addInterceptorClass(CountUpdateInterceptor.class);
                 addTypeHandlerClasses("org.mybatis.guice");
+                bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
             }
 
         });

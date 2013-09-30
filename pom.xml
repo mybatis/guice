@@ -24,7 +24,7 @@
   </parent>
 
   <artifactId>mybatis-guice</artifactId>
-  <version>3.6-SNAPSHOT</version>
+  <version>3.6-inversoft</version>
   <packaging>jar</packaging>
 
   <name>MyBatis Guice</name>

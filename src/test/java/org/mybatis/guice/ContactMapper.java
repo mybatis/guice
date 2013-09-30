@@ -38,4 +38,5 @@ public interface ContactMapper {
 
     List<Contact> selectAll();
 
+    List<Contact> selectAllWithDatabaseId();
 }

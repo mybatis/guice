@@ -15,10 +15,9 @@
  */
 package org.mybatis.guice;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 
 import org.mybatis.guice.transactional.Isolation;
 import org.mybatis.guice.transactional.Transactional;
@@ -90,6 +89,15 @@ public class ContactMapperClient {
     )
     public List<Contact> getAll() throws CustomException {
         return this.contactMapper.selectAll();
+    }
+
+    @Transactional(
+        isolation = Isolation.SERIALIZABLE,
+        rethrowExceptionsAs = CustomException.class,
+        exceptionMessage = "An error occurred when selecting all stored contacts using a database id"
+    )
+    public List<Contact> getAllWithDatabaseId() throws CustomException {
+        return this.contactMapper.selectAllWithDatabaseId();
     }
 
     @Transactional(

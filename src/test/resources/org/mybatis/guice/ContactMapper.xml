@@ -117,4 +117,8 @@
     <include refid="select"/>
   </select>
 
+  <select id="selectAllWithDatabaseId" resultMap="contactMap" databaseId="HSQL Database Engine">
+    <include refid="select"/>
+  </select>
+
 </mapper>
