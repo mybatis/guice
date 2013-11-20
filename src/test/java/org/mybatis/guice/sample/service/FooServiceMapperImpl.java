@@ -29,6 +29,7 @@ import javax.inject.Inject;
  *
  * @version $Id$
  */
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class FooServiceMapperImpl implements FooService {
 
     private UserMapper userMapper;
@@ -38,7 +39,6 @@ public class FooServiceMapperImpl implements FooService {
         this.userMapper = userMapper;
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public User doSomeBusinessStuff(String userId) {
         return this.userMapper.getUser(userId);
     }

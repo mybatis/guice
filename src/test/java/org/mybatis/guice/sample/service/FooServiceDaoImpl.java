@@ -29,6 +29,7 @@ import javax.inject.Inject;
  *
  * @version $Id$
  */
+@Transactional
 public class FooServiceDaoImpl implements FooService {
 
     private UserDao userDao;

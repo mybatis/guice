@@ -66,6 +66,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         Method interceptedMethod = invocation.getMethod();
         Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);
+        
+        // The annotation may be present at the class level instead
+		if (transactional == null) {
+			transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);
+		}
 
         String debugPrefix = null;
         if (this.log.isDebugEnabled()) {
