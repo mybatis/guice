@@ -31,6 +31,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.mybatis.guice.CustomException;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
@@ -104,4 +105,17 @@ public class SampleBasicTest {
         assertEquals("Pocoyo", user.getName());
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testTransactionalOnClassAndMethod() {
+    	User user = new User();
+    	user.setName("Christian Poitras");
+        this.fooService.brokenInsert(user);
+    }
+    
+    @Test(expected=CustomException.class)
+    public void testTransactionalOnClass() {
+    	User user = new User();
+    	user.setName("Christian Poitras");
+        this.fooService.brokenInsert2(user);
+    }
 }

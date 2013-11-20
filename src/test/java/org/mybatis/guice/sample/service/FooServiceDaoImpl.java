@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice.sample.service;
 
+import org.mybatis.guice.CustomException;
 import org.mybatis.guice.sample.dao.UserDao;
 import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.transactional.Isolation;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
  *
  * @version $Id$
  */
-@Transactional
+@Transactional(rethrowExceptionsAs=CustomException.class)
 public class FooServiceDaoImpl implements FooService {
 
     private UserDao userDao;
@@ -44,4 +45,12 @@ public class FooServiceDaoImpl implements FooService {
         return this.userDao.getUser(userId);
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
+    public void brokenInsert(User user) {
+        this.userDao.brokenInsert(user);
+    }
+    
+    public void brokenInsert2(User user) {
+    	this.userDao.brokenInsert(user);
+    }
 }

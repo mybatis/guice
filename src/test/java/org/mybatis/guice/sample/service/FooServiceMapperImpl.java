@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice.sample.service;
 
+import org.mybatis.guice.CustomException;
 import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.sample.mapper.UserMapper;
 import org.mybatis.guice.transactional.Isolation;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
  *
  * @version $Id$
  */
-@Transactional(isolation = Isolation.SERIALIZABLE)
+@Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=CustomException.class)
 public class FooServiceMapperImpl implements FooService {
 
     private UserMapper userMapper;
@@ -43,4 +44,12 @@ public class FooServiceMapperImpl implements FooService {
         return this.userMapper.getUser(userId);
     }
 
+    @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
+    public void brokenInsert(User user) {
+    	this.userMapper.brokenAdd(user);
+    }
+
+    public void brokenInsert2(User user) {
+    	this.userMapper.brokenAdd(user);
+    }
 }

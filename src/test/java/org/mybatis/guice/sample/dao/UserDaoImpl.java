@@ -38,4 +38,8 @@ public class UserDaoImpl implements UserDao {
         return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
     }
 
+    public void brokenInsert(User user) {
+        this.sqlSession.insert("org.mybatis.guice.sample.mapper.UserMapper.brokenAdd", user);
+    }
+
 }

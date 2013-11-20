@@ -26,4 +26,6 @@ public interface UserDao {
 
     User getUser(String userId);
 
+    public void brokenInsert(User user);
+
 }

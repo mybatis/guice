@@ -27,5 +27,9 @@ import org.mybatis.guice.sample.domain.User;
 public interface FooService {
 
     User doSomeBusinessStuff(String userId);
+    
+    void brokenInsert(User user);
+
+    void brokenInsert2(User user);
 
 }

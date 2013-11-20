@@ -26,5 +26,14 @@
   <select id="getUser" resultType="org.mybatis.guice.sample.domain.User" parameterType="java.lang.String">
     select * from users where id=#{value}
   </select>
+  <insert id="brokenAdd" parameterType="org.mybatis.guice.sample.domain.User" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO
+      contact (id,
+        name
+      )
+    VALUES (
+      #{name}
+    )
+  </insert>
 
 </mapper>
