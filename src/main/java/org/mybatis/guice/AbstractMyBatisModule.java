@@ -27,6 +27,7 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.not;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
@@ -54,6 +55,10 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
             requestInjection(interceptor);
             bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+            // Intercept classes annotated with Transactional, but avoid "double"
+            // interception when a mathod is also annotated inside an annotated
+            // class.
+            bindInterceptor(annotatedWith(Transactional.class), not(annotatedWith(Transactional.class)), interceptor);
 
             internalConfigure();
 
