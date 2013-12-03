@@ -17,8 +17,10 @@ package org.mybatis.guice;
 
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
+
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -44,6 +46,7 @@ import org.mybatis.guice.session.SqlSessionFactoryProvider;
 
 import javax.inject.Provider;
 import javax.sql.DataSource;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -105,7 +108,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         // fixed bindings
         bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
         bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
-        bind(SqlSessionFactory.class).toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
+        
+        // replaceable bindings.
+        bindSqlSessionFactory(bind(SqlSessionFactory.class));
 
         // parametric bindings
         bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
@@ -306,6 +311,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);
     }
 
+    /**
+     * Binds SqlSessionFactory class.
+     */
+    protected void bindSqlSessionFactory(AnnotatedBindingBuilder<SqlSessionFactory> binding) {
+    	binding.toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
+    }
+    
     /**
      * Sets the ObjectFactory class.
      *
