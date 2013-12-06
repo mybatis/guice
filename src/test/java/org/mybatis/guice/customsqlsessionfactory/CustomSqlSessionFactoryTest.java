@@ -29,8 +29,6 @@ import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Scopes;
-import com.google.inject.binder.AnnotatedBindingBuilder;
 
 public class CustomSqlSessionFactoryTest {
     protected Properties createTestProperties() {
@@ -43,27 +41,6 @@ public class CustomSqlSessionFactoryTest {
     }
     
     @Test
-    public void customSqlSessionFactory() throws Exception {
-        Injector injector = Guice.createInjector(new MyBatisModule(){
-            @Override
-            protected void initialize() {
-                install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-                bindProperties(binder(), createTestProperties());
-                
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-            }
-
-            @Override
-            protected void bindSqlSessionFactory(AnnotatedBindingBuilder<SqlSessionFactory> binding) {
-                binding.to(MySqlSessionFactory.class).in(Scopes.SINGLETON);
-            }
-        });
-        SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
-        assertTrue("SqlSessionFactory not an instanceof MySqlSessionFactory", MySqlSessionFactory.class.isAssignableFrom(sqlSessionFactory.getClass()));
-    }
-    
-    @Test
     public void customSqlSessionFactoryProvider() throws Exception {
         Injector injector = Guice.createInjector(new MyBatisModule(){
             @Override
@@ -71,13 +48,9 @@ public class CustomSqlSessionFactoryTest {
                 install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
                 bindProperties(binder(), createTestProperties());
                 
+                useSqlSessionFactoryProvider(MySqlSessionFactoryProvider.class);
                 bindDataSourceProviderType(PooledDataSourceProvider.class);
                 bindTransactionFactoryType(JdbcTransactionFactory.class);
-            }
-
-            @Override
-            protected void bindSqlSessionFactory(AnnotatedBindingBuilder<SqlSessionFactory> binding) {
-                binding.toProvider(MySqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
             }
         });
         SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);

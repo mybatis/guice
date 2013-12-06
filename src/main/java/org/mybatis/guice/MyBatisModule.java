@@ -17,7 +17,6 @@ package org.mybatis.guice;
 
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
@@ -69,6 +68,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * The ObjectFactory Provider class reference.
      */
     private Class<? extends ObjectFactory> objectFactoryType = DefaultObjectFactory.class;
+    /**
+     * The SqlSessionFactory Provider class reference.
+     */
+    private Class<? extends Provider<? extends SqlSessionFactory>> sqlSessionFactoryProviderType = SqlSessionFactoryProvider.class;
 
     private MapBinder<String, Class<?>> aliases;
 
@@ -110,7 +113,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
         
         // replaceable bindings.
-        bindSqlSessionFactory(bind(SqlSessionFactory.class));
+        bind(SqlSessionFactory.class).toProvider(sqlSessionFactoryProviderType);
 
         // parametric bindings
         bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
@@ -172,6 +175,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     protected final void useCacheEnabled(boolean useCacheEnabled) {
         bindBoolean("mybatis.configuration.cacheEnabled", useCacheEnabled);
+    }
+    
+    /**
+     * @param sqlSessionFactoryProvider provider for SqlSessionFactory
+     */
+    protected final void useSqlSessionFactoryProvider(Class<? extends Provider<? extends SqlSessionFactory>> sqlSessionFactoryProvider) {
+        this.sqlSessionFactoryProviderType = sqlSessionFactoryProvider;
     }
 
     /**
@@ -311,13 +321,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);
     }
 
-    /**
-     * Binds SqlSessionFactory class.
-     */
-    protected void bindSqlSessionFactory(AnnotatedBindingBuilder<SqlSessionFactory> binding) {
-    	binding.toProvider(SqlSessionFactoryProvider.class).in(Scopes.SINGLETON);
-    }
-    
     /**
      * Sets the ObjectFactory class.
      *
