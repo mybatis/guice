@@ -19,7 +19,9 @@ import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 import javax.inject.Named;
 import javax.inject.Provider;
+import javax.naming.Context;
 import javax.sql.DataSource;
+
 import java.util.Properties;
 
 /**
@@ -52,6 +54,26 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
     @com.google.inject.Inject(optional = true)
     public void setDataSource(@Named("jndi.dataSource") final String dataSource) {
         properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
+    }
+
+    /**
+    *
+    *
+    * @param initialContextFactory
+    */
+    @com.google.inject.Inject(optional = true)
+    public void setEnvInitialContextFactory(@Named(Context.INITIAL_CONTEXT_FACTORY) final String initialContextFactory) {
+        properties.setProperty(JndiDataSourceFactory.ENV_PREFIX+Context.INITIAL_CONTEXT_FACTORY, initialContextFactory);
+    }
+
+    /**
+    *
+    *
+    * @param providerUrl
+    */
+    @com.google.inject.Inject(optional = true)
+    public void setEnvProviderURL(@Named(Context.PROVIDER_URL) final String providerUrl) {
+        properties.setProperty(JndiDataSourceFactory.ENV_PREFIX+Context.PROVIDER_URL, providerUrl);
     }
 
     /**
