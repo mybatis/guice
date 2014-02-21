@@ -86,8 +86,7 @@ public class MultiJNDITest {
                     protected void initialize() {
                         bindTransactionFactoryType(JdbcTransactionFactory.class);
 
-                        JndiDataSourceProvider provider = new JndiDataSourceProvider();
-                        provider.setDataSource("java:comp/env/jdbc/DS1");
+                        JndiDataSourceProvider provider = new JndiDataSourceProvider("java:comp/env/jdbc/DS1");
                         provider.setEnvInitialContextFactory(MockInitialContextFactory.class
                                 .getName());
                         bindDataSourceProvider(provider);
@@ -115,8 +114,7 @@ public class MultiJNDITest {
                     protected void initialize() {
                         bindTransactionFactoryType(JdbcTransactionFactory.class);
 
-                        JndiDataSourceProvider provider = new JndiDataSourceProvider();
-                        provider.setDataSource("java:comp/env/jdbc/DS2");
+                        JndiDataSourceProvider provider = new JndiDataSourceProvider("java:comp/env/jdbc/DS2");
                         provider.setEnvInitialContextFactory(MockInitialContextFactory.class
                                 .getName());
                         bindDataSourceProvider(provider);
