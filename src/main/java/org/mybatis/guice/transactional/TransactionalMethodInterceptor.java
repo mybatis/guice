@@ -96,88 +96,43 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
         }
 
         Object object = null;
+        boolean needsRollback = transactional.rollbackOnly();
         try {
             object = invocation.proceed();
-
-            if (!isSessionInherited && !transactional.rollbackOnly()) {
-                sqlSessionManager.commit(transactional.force());
-            }
         } catch (Throwable t) {
-            
-            // rollback the transaction 
-            if (!isSessionInherited) { //issue #20
-                sqlSessionManager.rollback(transactional.force());
-            }
-
-            // check the caught exception is declared in the invoked method
-            for (Class<?> exceptionClass : interceptedMethod.getExceptionTypes()) {
-                if (exceptionClass.isAssignableFrom(t.getClass())) {
-                    throw t;
-                }
-            }
-
-            // check the caught exception is of same rethrow type
-            if (transactional.rethrowExceptionsAs().isAssignableFrom(t.getClass())) {
-                throw t;
-            }
-
-            // rethrow the exception as new exception
-            String errorMessage;
-            Object[] initargs;
-            Class<?>[] initargsType;
-
-            if (transactional.exceptionMessage().length() != 0) {
-                errorMessage = format(transactional.exceptionMessage(), invocation.getArguments());
-                initargs = new Object[]{ errorMessage, t };
-                initargsType = MESSAGE_CAUSE_TYPES;
-            } else {
-                initargs = new Object[]{ t };
-                initargsType = CAUSE_TYPES;
-            }
-
-            Constructor<? extends Throwable> exceptionConstructor = getMatchingConstructor(transactional.rethrowExceptionsAs(), initargsType);
-            Throwable rethrowEx = null;
-            if (exceptionConstructor != null) {
-                try {
-                    rethrowEx = exceptionConstructor.newInstance(initargs);
-                } catch (Exception e) {
-                    errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
-                            transactional.rethrowExceptionsAs().getName(),
-                            Arrays.toString(initargsType));
-                    log.error(errorMessage, e);
-                    rethrowEx = new RuntimeException(errorMessage, e);
-                }
-            } else {
-                errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).",
-                        transactional.rethrowExceptionsAs().getName(),
-                        Arrays.toString(CAUSE_TYPES),
-                        Arrays.toString(MESSAGE_CAUSE_TYPES));
-                log.error(errorMessage);
-                rethrowEx = new RuntimeException(errorMessage);
-            }
-
-            throw rethrowEx;
+            needsRollback = true;
+            throw convertThrowableIfNeeded(invocation, transactional, t);
         } finally {
-            // skip close when the session is inherited from another Transactional method
             if (!isSessionInherited) {
-                if (transactional.rollbackOnly()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug(debugPrefix
-                                + " - SqlSession of thread: "
-                                + currentThread().getId()
-                                + " was in rollbackOnly mode, rolling it back");
-                    }
-
-                    sqlSessionManager.rollback(true);
+                try {
+                  if (needsRollback) {
+                      if (log.isDebugEnabled()) {
+                          log.debug(debugPrefix
+                                  + " - SqlSession of thread: "
+                                  + currentThread().getId()
+                                  + " rolling back");
+                      }
+                      
+                      sqlSessionManager.rollback(true);
+                  } else {
+                      if (log.isDebugEnabled()) {
+                          log.debug(debugPrefix
+                                  + " - SqlSession of thread: "
+                                  + currentThread().getId()
+                                  + " committing");
+                      }
+                      
+                      sqlSessionManager.commit(transactional.force());
+                  }
+                } finally {
+                  if (log.isDebugEnabled()) {
+                      log.debug(format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
+                              debugPrefix,
+                              currentThread().getId()));
+                  }
+                  
+                  sqlSessionManager.close();
                 }
-
-                if (log.isDebugEnabled()) {
-                    log.debug(format("%s - SqlSession of thread: %s terminated its life-cycle, closing it",
-                            debugPrefix,
-                            currentThread().getId()));
-                }
-
-                sqlSessionManager.close();
             } else if (log.isDebugEnabled()) {
                 log.debug(format("%s - SqlSession of thread: %s is inherited, skipped close operation",
                         debugPrefix,
@@ -188,6 +143,59 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
         return object;
     }
 
+    private Throwable convertThrowableIfNeeded(MethodInvocation invocation, Transactional transactional, Throwable t) {
+        Method interceptedMethod = invocation.getMethod();
+        
+        // check the caught exception is declared in the invoked method
+        for (Class<?> exceptionClass : interceptedMethod.getExceptionTypes()) {
+            if (exceptionClass.isAssignableFrom(t.getClass())) {
+                return t;
+            }
+        }
+
+        // check the caught exception is of same rethrow type
+        if (transactional.rethrowExceptionsAs().isAssignableFrom(t.getClass())) {
+            return t;
+        }
+
+        // rethrow the exception as new exception
+        String errorMessage;
+        Object[] initargs;
+        Class<?>[] initargsType;
+
+        if (transactional.exceptionMessage().length() != 0) {
+            errorMessage = format(transactional.exceptionMessage(), invocation.getArguments());
+            initargs = new Object[]{ errorMessage, t };
+            initargsType = MESSAGE_CAUSE_TYPES;
+        } else {
+            initargs = new Object[]{ t };
+            initargsType = CAUSE_TYPES;
+        }
+
+        Constructor<? extends Throwable> exceptionConstructor = getMatchingConstructor(transactional.rethrowExceptionsAs(), initargsType);
+        Throwable rethrowEx = null;
+        if (exceptionConstructor != null) {
+            try {
+                rethrowEx = exceptionConstructor.newInstance(initargs);
+            } catch (Exception e) {
+                errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s argument(s).",
+                        transactional.rethrowExceptionsAs().getName(),
+                        Arrays.toString(initargsType));
+                log.error(errorMessage, e);
+                rethrowEx = new RuntimeException(errorMessage, e);
+            }
+        } else {
+            errorMessage = format("Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).",
+                    transactional.rethrowExceptionsAs().getName(),
+                    Arrays.toString(CAUSE_TYPES),
+                    Arrays.toString(MESSAGE_CAUSE_TYPES));
+            log.error(errorMessage);
+            rethrowEx = new RuntimeException(errorMessage);
+        }
+
+        return rethrowEx;        
+    }
+    
     @SuppressWarnings("unchecked")
     private static <E extends Throwable> Constructor<E> getMatchingConstructor(Class<E> type,
             Class<?>[] argumentsType) {
