@@ -1,5 +1,5 @@
 /*
- *    Copyright 2010-2012 The MyBatis Team
+ *    Copyright 2010-2014 The MyBatis Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -66,11 +66,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         Method interceptedMethod = invocation.getMethod();
         Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);
-        
+
         // The annotation may be present at the class level instead
-		if (transactional == null) {
-			transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);
-		}
+        if (transactional == null) {
+            transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);
+        }
 
         String debugPrefix = null;
         if (this.log.isDebugEnabled()) {
@@ -103,8 +103,11 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
                 sqlSessionManager.commit(transactional.force());
             }
         } catch (Throwable t) {
-            // rollback the transaction
-            sqlSessionManager.rollback(transactional.force());
+            
+            // rollback the transaction 
+            if (!isSessionInherited) { //issue #20
+                sqlSessionManager.rollback(transactional.force());
+            }
 
             // check the caught exception is declared in the invoked method
             for (Class<?> exceptionClass : interceptedMethod.getExceptionTypes()) {
