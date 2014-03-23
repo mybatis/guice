@@ -31,13 +31,13 @@
     <section name="Sample Code">
 
     <p>
-        You can check out sample code from the MyBatis repository on Google Code.</p>
+        You can check out sample code from the MyBatis repository on Github.</p>
         <ul>
             <li>
-                <a href="http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk/src/test/java/org/mybatis/guice/sample/">Java code</a>
+                <a href="https://github.com/mybatis/guice/tree/master/src/test/java/org/mybatis/guice/sample">Java code</a>
             </li>
             <li>
-                <a href="http://mybatis.googlecode.com/svn/sub-projects/mybatis-guice/trunk/src/test/resources/org/mybatis/guice/sample/">Config files</a>
+                <a href="https://github.com/mybatis/guice/tree/master/src/test/resources/org/mybatis/guice/sample">Config files</a>
             </li>
         </ul>
     <p>
