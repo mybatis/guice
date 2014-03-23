@@ -402,8 +402,11 @@ Summary:
             </nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.html#JndiDataSourceProvider()">JndiDataSourceProvider</a></span>()</nobr>
+        <span class="sympad"><a href="../../../../../org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.html#JndiDataSourceProvider(java.lang.String)">JndiDataSourceProvider</a></span>(String dataSource)</nobr>
         
+        <div class="jd-descrdiv">Creates a new JndiDataSourceProvider with the specified
+ JNDI data source.</div>
+  
   </td></tr>
 
 
@@ -450,13 +453,29 @@ Summary:
             void</nobr>
         </td>
         <td class="jd-linkcol" width="100%"><nobr>
-        <span class="sympad"><a href="../../../../../org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.html#setDataSource(java.lang.String)">setDataSource</a></span>(String dataSource)</nobr>
+        <span class="sympad"><a href="../../../../../org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.html#setEnvInitialContextFactory(java.lang.String)">setEnvInitialContextFactory</a></span>(String initialContextFactory)</nobr>
         
   </td></tr>
 
 
 	 
     <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.html#setEnvProviderURL(java.lang.String)">setEnvProviderURL</a></span>(String providerUrl)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
         <td class="jd-typecol"><nobr>
             
             
@@ -763,7 +782,7 @@ From interface
 
 
 
-<A NAME="JndiDataSourceProvider()"></A>
+<A NAME="JndiDataSourceProvider(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -776,7 +795,7 @@ From interface
         
       </span>
       <span class="sympad">JndiDataSourceProvider</span>
-      <span class="normal">()</span>
+      <span class="normal">(String dataSource)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -788,7 +807,18 @@ From interface
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Creates a new JndiDataSourceProvider with the specified
+ JNDI data source.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>dataSource</td>
+          <td>the JNDI datasource name (fully qualified)
+</td>
+        </tr>
+      </table>
+  </div>
 
     </div>
 </div>
@@ -841,7 +871,7 @@ From interface
 </div>
 
 
-<A NAME="setDataSource(java.lang.String)"></A>
+<A NAME="setEnvInitialContextFactory(java.lang.String)"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -853,8 +883,39 @@ From interface
          
         void
       </span>
-      <span class="sympad">setDataSource</span>
-      <span class="normal">(String dataSource)</span>
+      <span class="sympad">setEnvInitialContextFactory</span>
+      <span class="normal">(String initialContextFactory)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setEnvProviderURL(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setEnvProviderURL</span>
+      <span class="normal">(String providerUrl)</span>
     </h4>
       <div class="api-level">
         <div>
