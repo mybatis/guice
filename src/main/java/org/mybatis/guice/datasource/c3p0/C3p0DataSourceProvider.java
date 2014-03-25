@@ -41,8 +41,6 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
      *
      * @param driver The JDBC driver class.
      * @param url the database URL of the form <code>jdbc:subprotocol:subname</code>.
-     * @param username the database user.
-     * @param password the user's password.
      */
     @Inject
     public C3p0DataSourceProvider(@Named("JDBC.driver") final String driver,

@@ -41,8 +41,7 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
      *
      * @param driver The JDBC driver class.
      * @param url the database URL of the form <code>jdbc:subprotocol:subname</code>.
-     * @param username the database user.
-     * @param password the user's password.
+     * @param driverClassLoader ClassLoader to use to load JDBC driver class.
      */
     @Inject
     public PooledDataSourceProvider(@Named("JDBC.driver") final String driver,

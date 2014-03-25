@@ -73,7 +73,6 @@ abstract class AbstractMyBatisModule extends AbstractModule {
 
     /**
      *
-     * @param <T>
      * @param mapperType
      */
     final <T> void bindMapper(Class<T> mapperType) {
