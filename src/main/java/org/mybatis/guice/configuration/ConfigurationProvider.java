@@ -84,6 +84,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Named("mybatis.configuration.failFast")
     private boolean failFast = false;
 
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.callSettersOnNulls")
+    private boolean callSettersOnNulls = false;
+    
     @Inject
     private ObjectFactory objectFactory;
 
@@ -193,6 +197,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     public void setFailFast(boolean failFast) {
         this.failFast = failFast;
     }
+    
+    public void setCallSettersOnNulls(boolean callSettersOnNulls) {
+        this.callSettersOnNulls = callSettersOnNulls;
+    }
 
     /**
      * Adds the user defined type aliases to the myBatis Configuration.
@@ -265,6 +273,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setAutoMappingBehavior(autoMappingBehavior);
         configuration.setObjectFactory(objectFactory);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
+        configuration.setCallSettersOnNulls(callSettersOnNulls);
 
         try {
             if (databaseIdProvider != null) {
