@@ -16,11 +16,13 @@
 package org.mybatis.guice.configuration;
 
 import com.google.inject.ProvisionException;
+
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -31,6 +33,7 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -90,6 +93,9 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     
     @Inject
     private ObjectFactory objectFactory;
+    
+    @Inject
+    private ObjectWrapperFactory objectWrapperFactory;
 
     @com.google.inject.Inject(optional = true)
     @TypeAliases
@@ -238,6 +244,15 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     public void setObjectFactory(final ObjectFactory objectFactory) {
         this.objectFactory = objectFactory;
     }
+    
+    /**
+     * Adds the user defined ObjectWrapperFactory to the myBatis Configuration.
+     *
+     * @param objectWrapperFactory
+     */
+    public void setWrapperObjectFactory(final ObjectWrapperFactory objectWrapperFactory) {
+        this.objectWrapperFactory = objectWrapperFactory;
+    }
 
     /**
      * Registers the user defined plugins interceptors to the
@@ -272,6 +287,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDefaultExecutorType(defaultExecutorType);
         configuration.setAutoMappingBehavior(autoMappingBehavior);
         configuration.setObjectFactory(objectFactory);
+        configuration.setObjectWrapperFactory(objectWrapperFactory);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
         configuration.setCallSettersOnNulls(callSettersOnNulls);
 

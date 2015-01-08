@@ -26,6 +26,8 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -68,6 +70,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * The ObjectFactory Provider class reference.
      */
     private Class<? extends ObjectFactory> objectFactoryType = DefaultObjectFactory.class;
+    /**
+     * The ObjectWrapperFactory Provider class reference.
+     */
+    private Class<? extends ObjectWrapperFactory> objectWrapperFactoryType = DefaultObjectWrapperFactory.class;
     /**
      * The SqlSessionFactory Provider class reference.
      */
@@ -117,6 +123,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         // parametric bindings
         bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
+        
+        bind(ObjectWrapperFactory.class).to(objectWrapperFactoryType).in(Scopes.SINGLETON);
     }
 
     /**
@@ -329,6 +337,15 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void bindObjectFactoryType(Class<? extends ObjectFactory> objectFactoryType) {
         checkArgument(objectFactoryType != null, "Parameter 'objectFactoryType' must be not null");
         this.objectFactoryType = objectFactoryType;
+    }
+    /**
+     * Sets the ObjectWrapperFactory class.
+     *
+     * @param objectWrapperFactoryType the ObjectFactory type
+     */
+    protected final void bindObjectWrapperFactoryType(Class<? extends ObjectWrapperFactory> objectWrapperFactoryType) {
+        checkArgument(objectFactoryType != null, "Parameter 'objectWrapperFactoryType' must be not null");
+        this.objectWrapperFactoryType = objectWrapperFactoryType;
     }
 
     /**
