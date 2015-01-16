@@ -118,4 +118,10 @@ public class SampleBasicTest {
     	user.setName("Christian Poitras");
         this.fooService.brokenInsert2(user);
     }
+
+    @Test
+    public void shouldNotFailOnObjectsMethodsCall() {
+        this.fooService.toString();
+    }
+
 }
