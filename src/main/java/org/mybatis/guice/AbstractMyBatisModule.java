@@ -18,12 +18,15 @@ package org.mybatis.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
+import com.google.inject.matcher.AbstractMatcher;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
+
+import java.lang.reflect.Method;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
@@ -36,6 +39,12 @@ import static com.google.inject.util.Providers.guicify;
  * @version $Id$
  */
 abstract class AbstractMyBatisModule extends AbstractModule {
+
+    private static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
+        public boolean matches(Method method) {
+            return method.getDeclaringClass() == Object.class;
+        }
+    };
 
     private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
@@ -54,11 +63,11 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             // transactional interceptor
             TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
             requestInjection(interceptor);
-            bindInterceptor(any(), annotatedWith(Transactional.class), interceptor);
+            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);
             // Intercept classes annotated with Transactional, but avoid "double"
             // interception when a mathod is also annotated inside an annotated
             // class.
-            bindInterceptor(annotatedWith(Transactional.class), not(annotatedWith(Transactional.class)), interceptor);
+            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);
 
             internalConfigure();
 
