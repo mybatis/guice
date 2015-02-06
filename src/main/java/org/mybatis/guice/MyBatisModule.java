@@ -46,6 +46,7 @@ import org.mybatis.guice.configuration.MappingTypeHandlers;
 import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
+import org.mybatis.guice.type.TypeHandlerProvider;
 
 import javax.inject.Provider;
 import javax.sql.DataSource;
@@ -450,7 +451,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
             public void with(final Class<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-                handlers.addBinding(type).to(handler).in(Scopes.SINGLETON);
+                handlers.addBinding(type).to(handler);
+                bindTypeHandler(handler, type);
             }
 
         };
@@ -464,7 +466,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
         checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
-    	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
+    	mappingTypeHandlers.addBinding().to(handlerClass);
+    	bindTypeHandler(handlerClass, null);
     }
 
     /**
@@ -477,7 +480,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(handlersClasses != null, "Parameter 'handlersClasses' must not be null");
 
         for (Class<? extends TypeHandler<?>> handlerClass : handlersClasses) {
-        	mappingTypeHandlers.addBinding().to(handlerClass).in(Scopes.SINGLETON);
+            addTypeHandlerClass(handlerClass);
         }
     }
 
@@ -600,4 +603,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         return new ResolverUtil<Object>().find(test, packageName).getClasses();
     }
 
+    final <TH extends TypeHandler<? extends T>, T> void bindTypeHandler(Class<TH> typeHandlerType, Class<T> type) {
+        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
+    }
 }
