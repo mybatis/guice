@@ -112,6 +112,12 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
             for (Interceptor interceptor : interceptors) {
                 requestInjection(interceptor);
             }
+
+            // request injection for object factory.
+            requestInjection(configuration.getObjectFactory());
+
+            // request injection for object wrapper factory.
+            requestInjection(configuration.getObjectWrapperFactory());
         } catch (Exception e) {
             addError("Impossible to read classpath resource '%s', see nested exceptions: %s",
                     classPathResource,
