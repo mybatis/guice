@@ -28,6 +28,22 @@
   </properties>
 
   <body>
+    <release version="3.7" date="2015-??-??" description="maintenance release">
+      <action dev="christian.poitras" type="add">
+        Default scripting language can be used.
+      </action>
+      <action dev="christian.poitras" type="add">
+        Generic type handlers can be used.
+      </action>
+      <action dev="christian.poitras" type="remove">
+        Constructor injection will not work on type handlers due to support for generic type handlers.
+        Use field or setter injection instead.
+      </action>
+      <action dev="christian.poitras" type="update">
+        Injection will work for ObjectFactory and ObjectWrapperFactory when using XML configuration.
+      </action>
+    </release>
+
     <release version="3.4" date="2013-07-11" description="maintenance release">
       <action dev="nathan.maves" type="fix">
         Alias scanner will now respect the @Alias annotation of MyBatis.

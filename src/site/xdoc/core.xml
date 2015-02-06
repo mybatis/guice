@@ -261,6 +261,7 @@ Module module = new MyBatisModule() {
 
 }]]></source>
                 and let Google Guice create the handlers instances and bind them to be injected to MyBatis components.
+                Constructor injection will not work, so use field or setter injection for type handler dependencies.
             </p>
         </section>
 
