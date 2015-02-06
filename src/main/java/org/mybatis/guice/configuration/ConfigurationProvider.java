@@ -23,6 +23,7 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
+import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -96,6 +97,9 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     
     @Inject
     private ObjectWrapperFactory objectWrapperFactory;
+
+    @Inject
+    private Class<? extends LanguageDriver> defaultScriptingLanguageType;
 
     @com.google.inject.Inject(optional = true)
     @TypeAliases
@@ -288,6 +292,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setAutoMappingBehavior(autoMappingBehavior);
         configuration.setObjectFactory(objectFactory);
         configuration.setObjectWrapperFactory(objectWrapperFactory);
+        configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
         configuration.setCallSettersOnNulls(callSettersOnNulls);
 

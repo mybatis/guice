@@ -28,6 +28,8 @@ import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
+import org.apache.ibatis.scripting.LanguageDriver;
+import org.apache.ibatis.scripting.xmltags.XMLLanguageDriver;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
@@ -67,13 +69,14 @@ import static org.mybatis.guice.Preconditions.checkState;
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 
     /**
-     * The ObjectFactory Provider class reference.
+     * The ObjectFactory class reference.
      */
     private Class<? extends ObjectFactory> objectFactoryType = DefaultObjectFactory.class;
     /**
-     * The ObjectWrapperFactory Provider class reference.
+     * The ObjectWrapperFactory class reference.
      */
     private Class<? extends ObjectWrapperFactory> objectWrapperFactoryType = DefaultObjectWrapperFactory.class;
+    private Class<? extends LanguageDriver> defaultScriptingLanguageType = XMLLanguageDriver.class;
     /**
      * The SqlSessionFactory Provider class reference.
      */
@@ -123,8 +126,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         // parametric bindings
         bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
-        
         bind(ObjectWrapperFactory.class).to(objectWrapperFactoryType).in(Scopes.SINGLETON);
+        bind(new TypeLiteral<Class<? extends LanguageDriver>>() {}).toInstance(defaultScriptingLanguageType);
+        
     }
 
     /**
@@ -348,6 +352,19 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         this.objectWrapperFactoryType = objectWrapperFactoryType;
     }
 
+    /**
+     * Sets the default LanguageDriver class.
+     * <p>
+     * Due to current limitations in MyBatis, &#64;Inject cannot be used in LanguageDriver class.
+     * </p>
+     *
+     * @param defaultScriptingLanguageType the default LanguageDriver type
+     */
+    protected final void bindDefaultScriptingLanguageType(Class<? extends LanguageDriver> defaultScriptingLanguageType) {
+        checkArgument(defaultScriptingLanguageType != null, "Parameter 'defaultScriptingLanguageType' must be not null");
+        this.defaultScriptingLanguageType = defaultScriptingLanguageType;
+    }
+    
     /**
      * Add a user defined binding.
      *
