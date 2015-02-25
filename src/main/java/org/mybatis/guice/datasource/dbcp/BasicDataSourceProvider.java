@@ -275,6 +275,16 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
     /**
      *
      *
+     * @param timeBetweenEvictionRunsMillis
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setTimeBetweenEvictionRunsMillis(@Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
+        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+    }
+
+    /**
+     *
+     *
      * @param validationQuery
      */
     @com.google.inject.Inject(optional = true)
