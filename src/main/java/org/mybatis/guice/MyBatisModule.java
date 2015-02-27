@@ -215,11 +215,24 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * set default statement timeout.
+     *
+     * @param defaultStatementTimeout default statement timeout in seconds.
+     */
+    protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
+        bindInteger("mybatis.configuration.defaultStatementTimeout", defaultStatementTimeout);
+    }
+
+    /**
      *
      * @param name
      * @param value
      */
     private final void bindBoolean(String name, boolean value) {
+        bindConstant().annotatedWith(named(name)).to(value);
+    }
+
+    private final void bindInteger(String name, Integer value) {
         bindConstant().annotatedWith(named(name)).to(value);
     }
 
