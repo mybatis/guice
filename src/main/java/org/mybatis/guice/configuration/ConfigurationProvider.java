@@ -94,7 +94,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
     @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.defaultStatementTimeout")
-    private Integer defaultStatementTimeout = null;
+    private int defaultStatementTimeout;
     
     @Inject
     private ObjectFactory objectFactory;
@@ -216,7 +216,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         this.callSettersOnNulls = callSettersOnNulls;
     }
 
-    public void setDefaultStatementTimeout(Integer defaultStatementTimeout) {
+    public void setDefaultStatementTimeout(int defaultStatementTimeout) {
         this.defaultStatementTimeout = defaultStatementTimeout;
     }
 
@@ -303,7 +303,9 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
         configuration.setCallSettersOnNulls(callSettersOnNulls);
-        configuration.setDefaultStatementTimeout(defaultStatementTimeout);
+        if(defaultStatementTimeout > 0) {
+            configuration.setDefaultStatementTimeout(defaultStatementTimeout);
+        }
 
         try {
             if (databaseIdProvider != null) {
