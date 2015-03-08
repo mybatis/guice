@@ -29,6 +29,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -94,7 +95,8 @@ public final class ConfigurationProvider implements Provider<Configuration> {
 
     @com.google.inject.Inject(optional = true)
     @Named("mybatis.configuration.defaultStatementTimeout")
-    private int defaultStatementTimeout;
+    @Nullable
+    private Integer defaultStatementTimeout;
     
     @Inject
     private ObjectFactory objectFactory;
@@ -216,7 +218,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         this.callSettersOnNulls = callSettersOnNulls;
     }
 
-    public void setDefaultStatementTimeout(int defaultStatementTimeout) {
+    public void setDefaultStatementTimeout(Integer defaultStatementTimeout) {
         this.defaultStatementTimeout = defaultStatementTimeout;
     }
 
@@ -303,9 +305,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);
         configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );
         configuration.setCallSettersOnNulls(callSettersOnNulls);
-        if(defaultStatementTimeout > 0) {
-            configuration.setDefaultStatementTimeout(defaultStatementTimeout);
-        }
+        configuration.setDefaultStatementTimeout(defaultStatementTimeout);
 
         try {
             if (databaseIdProvider != null) {

@@ -20,6 +20,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
+import com.google.inject.util.Providers;
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -219,8 +220,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      *
      * @param defaultStatementTimeout default statement timeout in seconds.
      */
-    protected final void setDefaultStatementTimeout(int defaultStatementTimeout) {
-        checkArgument(defaultStatementTimeout > 0, "defaultStatementTimeout must be positive integer!");
+    protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
         bindInteger("mybatis.configuration.defaultStatementTimeout", defaultStatementTimeout);
     }
 
@@ -233,8 +233,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         bindConstant().annotatedWith(named(name)).to(value);
     }
 
-    private final void bindInteger(String name, int value) {
-        bindConstant().annotatedWith(named(name)).to(value);
+    private final void bindInteger(String name, Integer value) {
+        bind(Integer.class).annotatedWith(named(name)).toProvider(Providers.of(value));
     }
 
     /**
