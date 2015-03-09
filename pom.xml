@@ -85,7 +85,7 @@
     <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
     <guice.version>3.0</guice.version>
-    <osgi.import>com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp.*;resolution:=optional,*</osgi.import>
+    <osgi.import>com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp.*;resolution:=optional,*,javax.transaction.*;resolution:=optional</osgi.import>
   </properties>
 
   <dependencies>
@@ -167,6 +167,51 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.10</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.openejb</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>6.0-5</version>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- JTA test -->
+    <dependency>
+      <groupId>org.apache.aries.transaction</groupId>
+      <artifactId>org.apache.aries.transaction.manager</artifactId>
+      <version>1.1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.tranql</groupId>
+      <artifactId>tranql-connector</artifactId>
+      <version>1.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.components</groupId>
+      <artifactId>geronimo-connector</artifactId>
+      <version>3.1.1</version>
+      <!-- <scope>test</scope> -->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.aries.transaction</groupId>
+      <artifactId>org.apache.aries.transaction.jdbc</artifactId>
+      <version>2.1.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.aries.transaction</groupId>
+      <artifactId>org.apache.aries.transaction.blueprint</artifactId>
+      <version>1.0.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.11.1.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
