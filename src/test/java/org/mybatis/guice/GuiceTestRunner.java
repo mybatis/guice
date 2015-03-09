@@ -56,6 +56,7 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
                 addTypeHandlerClass(ContactIdTypeHandler.class);
                 addTypeHandlerClass(ContactNameTypeHandler.class);
                 bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
+                defaultStatementTimeout(null);
             }
 
         });
