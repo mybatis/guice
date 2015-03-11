@@ -17,70 +17,70 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
-	private final Log log = LogFactory.getLog(getClass());
+    private final Log log = LogFactory.getLog(getClass());
 
-	private TransactionManager transactionManager;
+    private TransactionManager transactionManager;
 
-	public MyBatisJtaModule() {
-	}
+    public MyBatisJtaModule() {
+    }
 
-	public MyBatisJtaModule(TransactionManager transactionManager) {
-		this.transactionManager = transactionManager;
-	}
+    public MyBatisJtaModule(TransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
-	@Override
-	protected void bindTransactionInterceptors() {
-		TransactionManager manager = getTransactionManager();
+    @Override
+    protected void bindTransactionInterceptors() {
+        TransactionManager manager = getTransactionManager();
 
-		if (manager == null) {
-			log.debug("bind default transaction interceptors");
-			super.bindTransactionInterceptors();
-		} else {
-			log.debug("bind XA transaction interceptors");
+        if (manager == null) {
+            log.debug("bind default transaction interceptors");
+            super.bindTransactionInterceptors();
+        } else {
+            log.debug("bind XA transaction interceptors");
 
-			// mybatis transactional interceptor
-			TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-			requestInjection(interceptor);
+            // transactional interceptor
+            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+            requestInjection(interceptor);
 
-			// jta transactional interceptor
-			TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
-			requestInjection(interceptorTx);
+            // jta transactional interceptor
+            TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
+            requestInjection(interceptorTx);
 
-			bind(TransactionManager.class).toInstance(manager);
-			bindInterceptor(any(), annotatedWith(Transactional.class),
-					interceptorTx, interceptor);
-			// Intercept classes annotated with Transactional, but avoid "double"
-			// interception when a mathod is also annotated inside an annotated class.
-			bindInterceptor(annotatedWith(Transactional.class), not(annotatedWith(Transactional.class)), 
-					interceptorTx, interceptor);
-		}
-	}
+            bind(TransactionManager.class).toInstance(manager);
 
-	protected TransactionManager getTransactionManager() {
-		return transactionManager;
-	}
+            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx, interceptor);
+            // Intercept classes annotated with Transactional, but avoid "double"
+            // interception when a mathod is also annotated inside an annotated
+            // class.
+            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);
+        }
+    }
 
-	protected void setTransactionManager(TransactionManager transactionManager) {
-		this.transactionManager = transactionManager;
-	}
+    protected TransactionManager getTransactionManager() {
+        return transactionManager;
+    }
 
-	protected void bindDefaultTransactionProvider() {
-		Class<? extends TransactionFactory> factoryType = getTransactionManager() == null ? 
-				JdbcTransactionFactory.class : ManagedTransactionFactory.class;
+    protected void setTransactionManager(TransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
-		bindTransactionFactoryType(factoryType);
-	}
+    protected void bindDefaultTransactionProvider() {
+        Class<? extends TransactionFactory> factoryType = getTransactionManager() == null ?
+                JdbcTransactionFactory.class : ManagedTransactionFactory.class;
 
-	protected static class ProviderImpl<T> implements Provider<T> {
-		private T wrapper;
+        bindTransactionFactoryType(factoryType);
+    }
 
-		public ProviderImpl(T wrapper) {
-			this.wrapper = wrapper;
-		}
+    protected static class ProviderImpl<T> implements Provider<T> {
+        private T wrapper;
 
-		public T get() {
-			return wrapper;
-		}
+        public ProviderImpl(T wrapper) {
+            this.wrapper = wrapper;
+        }
 
-	}
+        public T get() {
+            return wrapper;
+        }
+
+    }
 }

@@ -42,8 +42,8 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
     @Inject private TransactionManager manager;
     @Inject private SqlSessionManager sqlSessionManager;
 
-	public TxTransactionalMethodInterceptor() {
-	}
+    public TxTransactionalMethodInterceptor() {
+    }
 
     /**
      * {@inheritDoc}
@@ -64,81 +64,81 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 
         boolean needsRollback = transactional.rollbackOnly();
         Object object = null;
-		TransactionAttribute attribute = null;
-		
-		if(manager != null) {
-			TxType txType = transactional.value();
-			if(TxType.REQUIRED.equals(txType))
-				attribute = TransactionAttribute.REQUIRED;
-			else if(TxType.REQUIRES_NEW.equals(txType))
-				attribute = TransactionAttribute.REQUIRESNEW;
-			else if(TxType.MANDATORY.equals(txType))
-				attribute = TransactionAttribute.MANDATORY;
-			else if(TxType.SUPPORTS.equals(txType))
-				attribute = TransactionAttribute.SUPPORTS;
-			else if(TxType.NOT_SUPPORTED.equals(txType))
-				attribute = null; // FIXME add implementation
-			else if(TxType.NEVER.equals(txType))
-				attribute = TransactionAttribute.NEVER;
-		}
-		
-		if(attribute == null) {
-			if(log.isDebugEnabled()) {
-				log.debug(format("%s - skip Tx Transaction", debugPrefix));
-			}
+        TransactionAttribute attribute = null;
 
-			// without Tx
-	        try {
-	            object = invocation.proceed();
-	        } catch (Throwable t) {
-	        	throw t;
-	        }
-		} else {
-			if(log.isDebugEnabled()) {
-				log.debug(format("%s - Tx Transaction %s begin",
-						debugPrefix,
-						attribute.name()));
-			}
+        if(manager != null) {
+            TxType txType = transactional.value();
+            if(TxType.REQUIRED.equals(txType))
+                attribute = TransactionAttribute.REQUIRED;
+            else if(TxType.REQUIRES_NEW.equals(txType))
+                attribute = TransactionAttribute.REQUIRESNEW;
+            else if(TxType.MANDATORY.equals(txType))
+                attribute = TransactionAttribute.MANDATORY;
+            else if(TxType.SUPPORTS.equals(txType))
+                attribute = TransactionAttribute.SUPPORTS;
+            else if(TxType.NOT_SUPPORTED.equals(txType))
+                attribute = null; // FIXME add implementation
+            else if(TxType.NEVER.equals(txType))
+                attribute = TransactionAttribute.NEVER;
+        }
 
-			// with Tx
-			TransactionToken tranToken = attribute.begin(manager);
-			
-			log.debug("enlistResource XASqlSessionManager");
-			XASqlSessionManager xaRes = new XASqlSessionManager(sqlSessionManager);
-			tranToken.getActiveTransaction().enlistResource(xaRes);
+        if(attribute == null) {
+            if(log.isDebugEnabled()) {
+                log.debug(format("%s - skip Tx Transaction", debugPrefix));
+            }
 
-	        try {
-				if(log.isDebugEnabled()) {
-					log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) call method",
-							debugPrefix,
-							attribute.name(),
-							tranToken.isCompletionAllowed()));
-				}
-	            object = invocation.proceed();
+            // without Tx
+            try {
+                object = invocation.proceed();
+            } catch (Throwable t) {
+                throw t;
+            }
+        } else {
+            if(log.isDebugEnabled()) {
+                log.debug(format("%s - Tx Transaction %s begin",
+                        debugPrefix,
+                        attribute.name()));
+            }
 
-	            if(needsRollback)
-	            	manager.setRollbackOnly();
-	            
-	        } catch (Throwable t) {
-				if(log.isDebugEnabled()) {
-					log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) rolling back",
-							debugPrefix,
-							attribute.name(),
-							tranToken.isCompletionAllowed()));
-				}
-	        	manager.setRollbackOnly();
-	        	throw t;
-	        } finally {
-				if(log.isDebugEnabled()) {
-					log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) finish",
-							debugPrefix,
-							attribute.name(),
-							tranToken.isCompletionAllowed()));
-				}
-				attribute.finish(manager, tranToken);
-	        }
-		}
-		return object;
-	}
+            // with Tx
+            TransactionToken tranToken = attribute.begin(manager);
+
+            log.debug("enlistResource XASqlSessionManager");
+            XASqlSessionManager xaRes = new XASqlSessionManager(sqlSessionManager);
+            tranToken.getActiveTransaction().enlistResource(xaRes);
+
+            try {
+                if(log.isDebugEnabled()) {
+                    log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) call method",
+                            debugPrefix,
+                            attribute.name(),
+                            tranToken.isCompletionAllowed()));
+                }
+                object = invocation.proceed();
+
+                if(needsRollback)
+                    manager.setRollbackOnly();
+
+            } catch (Throwable t) {
+                if(log.isDebugEnabled()) {
+                    log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) rolling back",
+                            debugPrefix,
+                            attribute.name(),
+                            tranToken.isCompletionAllowed()));
+                }
+                manager.setRollbackOnly();
+                throw t;
+            } finally {
+                if(log.isDebugEnabled()) {
+                    log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) finish",
+                            debugPrefix,
+                            attribute.name(),
+                            tranToken.isCompletionAllowed()));
+                }
+                attribute.finish(manager, tranToken);
+            }
+        }
+        return object;
+    }
 
 }
