@@ -33,323 +33,471 @@ import org.apache.ibatis.session.SqlSessionManager;
 public class XASqlSessionManager implements XAResource, NamedXAResource {
     private static final Log log = LogFactory.getLog(XASqlSessionManager.class);
 
+    public static final int NO_TX = 0;
+    public static final int STARTED = 1;
+    public static final int ENDED = 2;
+    public static final int PREPARED = 3;
+
     private SqlSessionManager sqlSessionManager;
-	private int transactionTimeout;
-	private String id;
+    private int transactionTimeout;
+    private String id;
+    private Xid xid;
+    private int state = NO_TX;
 
-	private static HashMap<GlobalKey, GlobalToken> globalTokens = new HashMap<XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken>();
+    private static HashMap<GlobalKey, GlobalToken> globalTokens = new HashMap<XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken>();
 
-	public XASqlSessionManager(SqlSessionManager sqlSessionManager) {
-		this.sqlSessionManager = sqlSessionManager;
-		id = sqlSessionManager.getConfiguration().getEnvironment().getId();
-	}
+    public XASqlSessionManager(SqlSessionManager sqlSessionManager) {
+        this.sqlSessionManager = sqlSessionManager;
+        id = sqlSessionManager.getConfiguration().getEnvironment().getId();
+    }
 
-	//@Override
-	public String getName() {
-		return id;
-	}
+    //@Override
+    public String getName() {
+        return id;
+    }
 
-	//@Override
-	public void commit(Xid xid, boolean flag) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " commit flag:" + flag + " " + xid);
-		}
-		parentResume(xid);
-	}
+    public int getState() {
+        return state;
+    }
 
-	//@Override
-	public void end(Xid xid, int flag) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " end flag:" + printFlag(flag) + " " + xid);
-		}
+    private String xlatedState() {
+        switch (state) {
+            case NO_TX: return "NO_TX";
+            case STARTED: return "STARTED";
+            case ENDED: return "ENDED";
+            case PREPARED: return "PREPARED";
+            default: return "!invalid state (" + state + ")!";
+        }
+    }
 
-		// TODO XAResource.TMSUSPEND ?
-	}
+    private String decodeXAResourceFlag(int flag) {
+        switch(flag) {
+        case XAResource.TMENDRSCAN: return "TMENDRSCAN";
+        case XAResource.TMFAIL: return "TMFAIL";
+        case XAResource.TMJOIN: return "TMJOIN";
+        case XAResource.TMNOFLAGS: return "TMNOFLAGS";
+        case XAResource.TMONEPHASE: return "TMONEPHASE";
+        case XAResource.TMRESUME: return "TMRESUME";
+        case XAResource.TMSTARTRSCAN: return "TMSTARTRSCAN";
+        case XAResource.TMSUCCESS: return "TMSUCCESS";
+        case XAResource.TMSUSPEND: return "TMSUSPEND";
+        default: return "" + flag;
+        }
+    }
 
-	//@Override
-	public void forget(Xid xid) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " forget " + xid);
-		}
-	}
+    //@Override
+    public int getTransactionTimeout() throws XAException {
+        return transactionTimeout;
+    }
 
-	//@Override
-	public int getTransactionTimeout() throws XAException {
-		return transactionTimeout;
-	}
+    //@Override
+    public boolean setTransactionTimeout(int second) throws XAException {
+        transactionTimeout = second;
+        return true;
+    }
 
-	//@Override
-	public boolean isSameRM(XAResource xares) throws XAException {
-		return this == xares;
-	}
+    //@Override
+    public void forget(Xid xid) throws XAException {
+    }
 
-	//@Override
-	public int prepare(Xid xid) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " prepare " + xid);
-		}
-		return 0;
-	}
+    //@Override
+    public Xid[] recover(int flags) throws XAException {
+        return new Xid[0];
+    }
 
-	//@Override
-	public Xid[] recover(int flag) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " recover flag:" + printFlag(flag));
-		}
+    //@Override
+    public boolean isSameRM(XAResource xares) throws XAException {
+        return this == xares;
+    }
 
-		// TODO return empty array or null? or current xid?
-		return new Xid[0];
-	}
+    //@Override
+    public void start(Xid xid, int flag) throws XAException {
+        if(log.isDebugEnabled()) log.debug(id + ": call start old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
 
-	//@Override
-	public void rollback(Xid xid) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " rollback " + xid);
-		}
+        if (flag != XAResource.TMNOFLAGS  && flag != XAResource.TMJOIN)
+            throw new MyBatisXAException(id + ": unsupported start flag " + decodeXAResourceFlag(flag), XAException.XAER_RMERR);
+        if (xid == null)
+            throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
 
-		parentResume(xid);
-	}
+        if (state == NO_TX) {
+            if (this.xid != null)
+                throw new MyBatisXAException(id + ": resource already started on XID " + this.xid, XAException.XAER_PROTO);
+            else {
+                if (flag == XAResource.TMJOIN)
+                    throw new MyBatisXAException(id + ": resource not yet started", XAException.XAER_PROTO);
+                else {
+                    if (log.isDebugEnabled()) log.debug(id + ": OK to start, old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
+                    this.xid = xid;
+                }
+            }
+        }
+        else if (state == STARTED) {
+            throw new MyBatisXAException(id + ": resource already started on XID " + this.xid, XAException.XAER_PROTO);
+        }
+        else if (state == ENDED) {
+            if (flag == XAResource.TMNOFLAGS)
+                throw new MyBatisXAException(id + ": resource already registered XID " + this.xid, XAException.XAER_DUPID);
+            else {
+                if (xid.equals(this.xid)) {
+                    if (log.isDebugEnabled()) log.debug(id + ": OK to join, old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
+                }
+                else
+                    throw new MyBatisXAException(id + ": resource already started on XID " + this.xid + " - cannot start it on more than one XID at a time", XAException.XAER_RMERR);
+            }
+        }
+        else if (state == PREPARED) {
+            throw new MyBatisXAException(id + ": resource already prepared on XID " + this.xid, XAException.XAER_PROTO);
+        }
 
-	//@Override
-	public boolean setTransactionTimeout(int second) throws XAException {
-		transactionTimeout = second;
-		return true;
-	}
+        state = STARTED;
+        parentSuspend(xid);
+    }
 
-	//@Override
-	public void start(Xid xid, int flag) throws XAException {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " start flag:" + printFlag(flag) + " " + xid);
-		}
+    //@Override
+    public void end(Xid xid, int flag) throws XAException {
+        if(log.isDebugEnabled()) log.debug(id + ": call end old state=" + xlatedState() + ", XID=" + xid + " and flag " + decodeXAResourceFlag(flag));
 
-		if(flag == XAResource.TMNOFLAGS) {
-			parentSuspend(xid);
-		}
-		// TODO XAResource.TMRESUME ?
-	}
+        if (flag != XAResource.TMSUCCESS && flag != XAResource.TMFAIL)
+            throw new MyBatisXAException(id + ": unsupported end flag " + decodeXAResourceFlag(flag), XAException.XAER_RMERR);
+        if (xid == null)
+            throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
 
-	private String printFlag(int flag) {
-		switch(flag) {
-		case XAResource.TMENDRSCAN: return "TMENDRSCAN";
-		case XAResource.TMFAIL: return "TMFAIL";
-		case XAResource.TMJOIN: return "TMJOIN";
-		case XAResource.TMNOFLAGS: return "TMNOFLAGS";
-		case XAResource.TMONEPHASE: return "TMONEPHASE";
-		case XAResource.TMRESUME: return "TMRESUME";
-		case XAResource.TMSTARTRSCAN: return "TMSTARTRSCAN";
-		case XAResource.TMSUCCESS: return "TMSUCCESS";
-		case XAResource.TMSUSPEND: return "TMSUSPEND";
-		default: return "" + flag;
-		}
-	}
+        if (state == NO_TX) {
+            throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == STARTED) {
+            if (this.xid.equals(xid)) {
+                if (log.isDebugEnabled()) log.debug(id + ": OK to end, old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
+            }
+            else
+                throw new MyBatisXAException(id + ": resource already started on XID " + this.xid + " - cannot end it on another XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == ENDED) {
+            throw new MyBatisXAException(id + ": resource already ended on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == PREPARED) {
+            throw new MyBatisXAException(id + ": cannot end, resource already prepared on XID " + xid, XAException.XAER_PROTO);
+        }
 
-	private void parentSuspend(Xid xid) {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " suspend parent session " + xid);
-		}
+        if (flag == XAResource.TMFAIL) {
+            // Rollback transaction. After call method end() call medod roolback()
+            if (log.isDebugEnabled()) log.debug(id + ": after end TMFAIL reset state to ENDED and roolback");
+        }
 
-		byte[] trId = xid.getGlobalTransactionId();
-		GlobalKey key = new GlobalKey(trId);
-		GlobalToken globalToken = globalTokens.get(key);
+        this.state = ENDED;
+    }
 
-		if(globalToken == null) {
-			if(log.isDebugEnabled()) {
-				log.debug(id + " add GlobalToken " + key);
-			}
+    //@Override
+    public int prepare(Xid xid) throws XAException {
+        if(log.isDebugEnabled()) log.debug(id + ": call prepare old state=" + xlatedState() + ", XID=" + xid);
 
-			globalTokens.put(key, globalToken = new GlobalToken());
-		} else {
-			if(log.isDebugEnabled()) {
-				log.debug(id + " present GlobalToken " + key);
-			}
-		}
-		globalToken.parentSuspend(id, sqlSessionManager);
-	}
+        if (xid == null)
+            throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
 
-	private void parentResume(Xid xid) {
-		if(log.isDebugEnabled()) {
-			log.debug(id + " resume parent session " + xid);
-		}
+        if (state == NO_TX) {
+            throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == STARTED) {
+            throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == ENDED) {
+            if (this.xid.equals(xid)) {
+                if (log.isDebugEnabled()) log.debug(id + ": OK to prepare, old state=" + xlatedState() + ", XID=" + xid);
+            }
+            else
+                throw new MyBatisXAException(id + ": resource already started on XID " + this.xid + " - cannot prepare it on another XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == PREPARED) {
+            throw new MyBatisXAException(id + ": resource already prepared on XID " + this.xid, XAException.XAER_PROTO);
+        }
 
-		byte[] trId = xid.getGlobalTransactionId();
-		GlobalKey key = new GlobalKey(trId);
-		GlobalToken globalToken = globalTokens.get(key);
+        this.state = PREPARED;
+        return XAResource.XA_OK;
+    }
 
-		if(globalToken != null) {
-			globalToken.parentResume(id, sqlSessionManager);
+    //@Override
+    public void commit(Xid xid, boolean onePhase) throws XAException {
+        if(log.isDebugEnabled()) log.debug(id + ": call commit old state=" + xlatedState() + ", XID=" + xid + " onePhase is " + onePhase);
 
-			if(globalToken.isEmpty()) {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " remove GlobalToken " + key);
-				}
+        if (xid == null)
+            throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
 
-				globalTokens.remove(key);
-			} else {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " not remove GlobalToken " + key);
-				}
-			}
-		} else {
-			if(log.isDebugEnabled()) {
-				log.debug(id + " not find GlobalToken " + key);
-			}
-		}
-	}
+        if (state == NO_TX) {
+            throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == STARTED) {
+            throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == ENDED) {
+            if (onePhase) {
+                if (log.isDebugEnabled()) log.debug(id + ": OK to commit with 1PC, old state=" + xlatedState() + ", XID=" + xid);
+            }
+            else
+                throw new MyBatisXAException(id + ": resource never prepared on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == PREPARED) {
+            if (!onePhase) {
+                if (this.xid.equals(xid)) {
+                    if (log.isDebugEnabled()) log.debug(id + ": OK to commit, old state=" + xlatedState() + ", XID=" + xid);
+                }
+                else
+                    throw new MyBatisXAException(id + ": resource already started on XID " + this.xid + " - cannot commit it on another XID " + xid, XAException.XAER_PROTO);
+            }
+            else
+                throw new MyBatisXAException(id + ": cannot commit in one phase as resource has been prepared on XID " + xid, XAException.XAER_PROTO);
+        }
 
-	static class GlobalKey {
-		final byte[] globalId;
-		final int arrayHash;
+        try {
+            parentResume(xid);
+        } finally {
+            if (log.isDebugEnabled()) log.debug(id + ": after commit reset state to NO_TX");
+            this.state = NO_TX;
+            this.xid = null;
+        }
+    }
 
-		public GlobalKey(byte[] globalId) {
-			this.globalId = globalId;
-			this.arrayHash = Arrays.hashCode(globalId);
-		}
+    //@Override
+    public void rollback(Xid xid) throws XAException {
+        if(log.isDebugEnabled()) log.debug(id + ": call roolback old state=" + xlatedState() + ", XID=" + xid);
 
-		@Override
-		public int hashCode() {
-			return arrayHash;
-		}
+        if (xid == null)
+            throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			GlobalKey other = (GlobalKey) obj;
-			if (!Arrays.equals(globalId, other.globalId))
-				return false;
-			return true;
-		}
+        if (state == NO_TX) {
+            throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == STARTED) {
+            throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == ENDED) {
+            if (this.xid.equals(xid)) {
+                if (log.isDebugEnabled()) log.debug(id + ": OK to rollback, old state=" + xlatedState() + ", XID=" + xid);
+            }
+            else
+                throw new MyBatisXAException(id + ": resource already started on XID " + this.xid + " - cannot roll it back on another XID " + xid, XAException.XAER_PROTO);
+        }
+        else if (state == PREPARED) {
+            if (log.isDebugEnabled()) log.debug(id + ": rollback reset state from PREPARED to NO_TX");
+            this.state = NO_TX;
+            throw new MyBatisXAException(id + ": resource committed during prepare on XID " + this.xid, XAException.XA_HEURCOM);
+        }
 
-		@Override
-		public String toString() {
-	        StringBuilder s = new StringBuilder();
-	        s.append("[Xid:globalId=");
-	        for (int i = 0; i < globalId.length; i++) {
-	            s.append(Integer.toHexString(globalId[i]));
-	        }
-	        s.append(",length=").append(globalId.length);
-			return s.toString();
-		}
-	}
+        try {
+            parentResume(xid);
+        } finally {
+            if (log.isDebugEnabled()) log.debug(id + ": after rollback reset state to NO_TX");
+            this.state = NO_TX;
+            this.xid = null;
+        }
+    }
 
-	static class GlobalToken {
-	    private final Log log = LogFactory.getLog(getClass());
-		IdentityHashMap<SqlSessionManager, Token> tokens = new IdentityHashMap<SqlSessionManager, XASqlSessionManager.Token>();
+    private void parentSuspend(Xid xid) {
+        if(log.isDebugEnabled()) {
+            log.debug(id + ": suspend parent session " + xid);
+        }
 
-		public GlobalToken() {
-		}
+        byte[] trId = xid.getGlobalTransactionId();
+        GlobalKey key = new GlobalKey(trId);
+        GlobalToken globalToken = globalTokens.get(key);
 
-		void parentSuspend(String id, SqlSessionManager sqlSessionManager) {
-			Token token = tokens.get(sqlSessionManager);
+        if(globalToken == null) {
+            if(log.isDebugEnabled()) {
+                log.debug(id + ": add GlobalToken " + key);
+            }
 
-			if(token == null) {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " add Token " + sqlSessionManager);
-				}
+            globalTokens.put(key, globalToken = new GlobalToken());
+        } else {
+            if(log.isDebugEnabled()) {
+                log.debug(id + ": present GlobalToken " + key);
+            }
+        }
+        globalToken.parentSuspend(id, sqlSessionManager);
+    }
 
-				token = new Token(sqlSessionManager);
-				tokens.put(sqlSessionManager, token);
-			} else {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " present Token " + sqlSessionManager);
-				}
-			}
-			token.parentSuspend(id);
-		}
+    private void parentResume(Xid xid) {
+        if(log.isDebugEnabled()) {
+            log.debug(id + ": resume parent session " + xid);
+        }
 
-		void parentResume(String id, SqlSessionManager sqlSessionManager) {
-			Token token = tokens.get(sqlSessionManager);
+        byte[] trId = xid.getGlobalTransactionId();
+        GlobalKey key = new GlobalKey(trId);
+        GlobalToken globalToken = globalTokens.get(key);
 
-			if(token != null) {
-				token.parentResume(id);
+        if(globalToken != null) {
+            globalToken.parentResume(id, sqlSessionManager);
 
-				// remove last
-				if(token.isFirst()) {
-					if(log.isDebugEnabled()) {
-						log.debug(id + " remove parent session " + sqlSessionManager);
-					}
+            if(globalToken.isEmpty()) {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + ": remove GlobalToken " + key);
+                }
 
-					tokens.remove(sqlSessionManager);
-				}
-			} else {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " not find parent session " + sqlSessionManager);
-				}
-			}
-		}
+                globalTokens.remove(key);
+            } else {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + ": not remove GlobalToken " + key);
+                }
+            }
+        } else {
+            if(log.isDebugEnabled()) {
+                log.debug(id + ": not find GlobalToken " + key);
+            }
+        }
+    }
 
-		boolean isEmpty() {
-			return tokens.isEmpty();
-		}
-	}
+    static class GlobalKey {
+        final byte[] globalId;
+        final int arrayHash;
 
-	static class Token {
-	    private final Log log = LogFactory.getLog(getClass());
-	    final SqlSessionManager sqlSessionManager;
-		ThreadLocal<SqlSession> localSqlSession;
-		SqlSession suspendedSqlSession;
-		int count;
+        public GlobalKey(byte[] globalId) {
+            this.globalId = globalId;
+            this.arrayHash = Arrays.hashCode(globalId);
+        }
 
-		@SuppressWarnings("unchecked")
-		public Token(SqlSessionManager sqlSessionManager) {
-			this.sqlSessionManager = sqlSessionManager;
-			this.count = 0;
-			try {
-				Field field = SqlSessionManager.class.getDeclaredField("localSqlSession");
-				field.setAccessible(true);
-				localSqlSession = (ThreadLocal<SqlSession>) field.get(sqlSessionManager);
-			} catch(Exception e) {
-			}
-		}
+        @Override
+        public int hashCode() {
+            return arrayHash;
+        }
 
-		boolean isFirst() {
-			return count == 0;
-		}
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            GlobalKey other = (GlobalKey) obj;
+            if (!Arrays.equals(globalId, other.globalId))
+                return false;
+            return true;
+        }
 
-		void parentSuspend(String id) {
-			if(isFirst()) {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " suspend parent session");
-				}
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder();
+            s.append("[Xid:globalId=");
+            for (int i = 0; i < globalId.length; i++) {
+                s.append(Integer.toHexString(globalId[i]));
+            }
+            s.append(",length=").append(globalId.length);
+            return s.toString();
+        }
+    }
 
-				if(localSqlSession != null) {
-					suspendedSqlSession = localSqlSession.get();
-					localSqlSession.remove();
-				}
-			} else {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " skip suspend parent session");
-				}
-			}
-			count++;
-		}
+    static class GlobalToken {
+        private final Log log = LogFactory.getLog(getClass());
+        IdentityHashMap<SqlSessionManager, Token> tokens = new IdentityHashMap<SqlSessionManager, XASqlSessionManager.Token>();
 
-		void parentResume(String id) {
-			if(count > 0)
-				count--;
+        public GlobalToken() {
+        }
 
-			if(isFirst()) {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " resume parent session");
-				}
+        void parentSuspend(String id, SqlSessionManager sqlSessionManager) {
+            Token token = tokens.get(sqlSessionManager);
 
-				if(localSqlSession != null) {
-					if(suspendedSqlSession == null) {
-						localSqlSession.remove();
-					} else {
-						localSqlSession.set(suspendedSqlSession);
-						suspendedSqlSession = null;
-					}
-				}
-			} else {
-				if(log.isDebugEnabled()) {
-					log.debug(id + " skip resume parent session");
-				}
-			}
-		}
-	}
+            if(token == null) {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + ": add Token " + sqlSessionManager);
+                }
+
+                token = new Token(sqlSessionManager);
+                tokens.put(sqlSessionManager, token);
+            } else {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + ": present Token " + sqlSessionManager);
+                }
+            }
+            token.parentSuspend(id);
+        }
+
+        void parentResume(String id, SqlSessionManager sqlSessionManager) {
+            Token token = tokens.get(sqlSessionManager);
+
+            if(token != null) {
+                token.parentResume(id);
+
+                // remove last
+                if(token.isFirst()) {
+                    if(log.isDebugEnabled()) {
+                        log.debug(id + ": remove parent session " + sqlSessionManager);
+                    }
+
+                    tokens.remove(sqlSessionManager);
+                }
+            } else {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + ": not find parent session " + sqlSessionManager);
+                }
+            }
+        }
+
+        boolean isEmpty() {
+            return tokens.isEmpty();
+        }
+    }
+
+    static class Token {
+        private final Log log = LogFactory.getLog(getClass());
+        final SqlSessionManager sqlSessionManager;
+        ThreadLocal<SqlSession> localSqlSession;
+        SqlSession suspendedSqlSession;
+        int count;
+
+        @SuppressWarnings("unchecked")
+        public Token(SqlSessionManager sqlSessionManager) {
+            this.sqlSessionManager = sqlSessionManager;
+            this.count = 0;
+            try {
+                Field field = SqlSessionManager.class.getDeclaredField("localSqlSession");
+                field.setAccessible(true);
+                localSqlSession = (ThreadLocal<SqlSession>) field.get(sqlSessionManager);
+            } catch(Exception e) {
+            }
+        }
+
+        boolean isFirst() {
+            return count == 0;
+        }
+
+        void parentSuspend(String id) {
+            if(isFirst()) {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + " suspend parent session");
+                }
+
+                if(localSqlSession != null) {
+                    suspendedSqlSession = localSqlSession.get();
+                    localSqlSession.remove();
+                }
+            } else {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + " skip suspend parent session");
+                }
+            }
+            count++;
+        }
+
+        void parentResume(String id) {
+            if(count > 0)
+                count--;
+
+            if(isFirst()) {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + " resume parent session");
+                }
+
+                if(localSqlSession != null) {
+                    if(suspendedSqlSession == null) {
+                        localSqlSession.remove();
+                    } else {
+                        localSqlSession.set(suspendedSqlSession);
+                        suspendedSqlSession = null;
+                    }
+                }
+            } else {
+                if(log.isDebugEnabled()) {
+                    log.debug(id + " skip resume parent session");
+                }
+            }
+        }
+    }
 }
