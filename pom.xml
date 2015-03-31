@@ -176,6 +176,12 @@
       <version>6.0-5</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.components</groupId>
+      <artifactId>geronimo-connector</artifactId>
+      <version>3.1.1</version>
+      <optional>true</optional>
+    </dependency>
 
     <!-- JTA test -->
     <dependency>
@@ -189,12 +195,6 @@
       <artifactId>tranql-connector</artifactId>
       <version>1.8</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.components</groupId>
-      <artifactId>geronimo-connector</artifactId>
-      <version>3.1.1</version>
-      <!-- <scope>test</scope> -->
     </dependency>
     <dependency>
       <groupId>org.apache.aries.transaction</groupId>

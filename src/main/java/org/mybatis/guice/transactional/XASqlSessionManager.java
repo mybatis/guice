@@ -24,13 +24,12 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import org.apache.geronimo.transaction.manager.NamedXAResource;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 
-public class XASqlSessionManager implements XAResource, NamedXAResource {
+public class XASqlSessionManager implements XAResource {
     private static final Log log = LogFactory.getLog(XASqlSessionManager.class);
 
     public static final int NO_TX = 0;
@@ -52,7 +51,7 @@ public class XASqlSessionManager implements XAResource, NamedXAResource {
     }
 
     //@Override
-    public String getName() {
+    public String getId() {
         return id;
     }
 
