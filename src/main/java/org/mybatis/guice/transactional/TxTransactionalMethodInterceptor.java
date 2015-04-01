@@ -20,13 +20,14 @@ import static java.lang.String.format;
 import java.lang.reflect.Method;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.transaction.TransactionManager;
+import javax.transaction.xa.XAResource;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
-import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.transactional.Transactional.TxType;
 
 /**
@@ -39,8 +40,10 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
      */
     private final Log log = LogFactory.getLog(getClass());
 
-    @Inject private TransactionManager manager;
-    @Inject private SqlSessionManager sqlSessionManager;
+    @Inject
+    private TransactionManager manager;
+    @Inject
+    private Provider<XAResource> xaResourceProvider;
 
     public TxTransactionalMethodInterceptor() {
     }
@@ -104,7 +107,7 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
             TransactionToken tranToken = attribute.begin(manager);
 
             log.debug("enlistResource XASqlSessionManager");
-            XASqlSessionManager xaRes = new XASqlSessionManager(sqlSessionManager);
+            XAResource xaRes = xaResourceProvider.get();
             tranToken.getActiveTransaction().enlistResource(xaRes);
 
             try {

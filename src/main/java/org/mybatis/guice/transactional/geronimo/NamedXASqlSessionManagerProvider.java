@@ -15,17 +15,16 @@
  */
 package org.mybatis.guice.transactional.geronimo;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import javax.transaction.xa.XAResource;
 
-import org.apache.ibatis.session.SqlSessionManager;
+import org.apache.geronimo.transaction.manager.WrapperNamedXAResource;
 import org.mybatis.guice.transactional.XASqlSessionManager;
+import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
 
-public class NamedXASqlSessionManagerProvider implements Provider<XASqlSessionManager> {
-    @Inject
-    private SqlSessionManager sqlSessionManager;
-    
-    public XASqlSessionManager get() {
-        return new NamedXASqlSessionManager(sqlSessionManager);
+public class NamedXASqlSessionManagerProvider extends XASqlSessionManagerProvider {
+    public XAResource get() {
+        XAResource xaResource = super.get();
+        String name = ((XASqlSessionManager) xaResource).getId();
+        return new WrapperNamedXAResource(xaResource, name);
     }
 }

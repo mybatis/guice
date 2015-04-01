@@ -3,9 +3,11 @@ package org.mybatis.guice;
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 import static com.google.inject.matcher.Matchers.not;
+import static org.mybatis.guice.Preconditions.checkArgument;
 
 import javax.inject.Provider;
 import javax.transaction.TransactionManager;
+import javax.transaction.xa.XAResource;
 
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -15,11 +17,13 @@ import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
+import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
     private final Log log = LogFactory.getLog(getClass());
 
     private TransactionManager transactionManager;
+    private Class<? extends Provider<? extends XAResource>> xaSqlSessionManagerProvider = XASqlSessionManagerProvider.class;
 
     public MyBatisJtaModule() {
     }
@@ -45,6 +49,7 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
             // jta transactional interceptor
             TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
             requestInjection(interceptorTx);
+            bind(XAResource.class).toProvider(xaSqlSessionManagerProvider);
 
             bind(TransactionManager.class).toInstance(manager);
 
@@ -69,6 +74,11 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
                 JdbcTransactionFactory.class : ManagedTransactionFactory.class;
 
         bindTransactionFactoryType(factoryType);
+    }
+    
+    protected void bindXASqlSessionManagerProviderType(Class<? extends Provider<? extends XAResource>> xaSqlSessionManagerProvider) {
+        checkArgument(xaSqlSessionManagerProvider != null, "Parameter 'xaSqlSessionManagerProvider' must be not null");
+        this.xaSqlSessionManagerProvider = xaSqlSessionManagerProvider;
     }
 
     protected static class ProviderImpl<T> implements Provider<T> {

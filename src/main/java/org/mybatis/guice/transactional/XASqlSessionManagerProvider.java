@@ -17,14 +17,15 @@ package org.mybatis.guice.transactional;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.transaction.xa.XAResource;
 
 import org.apache.ibatis.session.SqlSessionManager;
 
-public class XASqlSessionManagerProvider implements Provider<XASqlSessionManager> {
+public class XASqlSessionManagerProvider implements Provider<XAResource> {
     @Inject
     private SqlSessionManager sqlSessionManager;
     
-    public XASqlSessionManager get() {
+    public XAResource get() {
         return new XASqlSessionManager(sqlSessionManager);
     }
 }
