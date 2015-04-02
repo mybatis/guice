@@ -60,9 +60,9 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
             bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
-            bindTransactionInterceptors();
-
             internalConfigure();
+
+            bindTransactionInterceptors();
 
             bind(ClassLoader.class)
                 .annotatedWith(named("JDBC.driverClassLoader"))

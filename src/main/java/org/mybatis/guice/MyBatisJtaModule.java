@@ -23,7 +23,7 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
     private final Log log = LogFactory.getLog(getClass());
 
     private TransactionManager transactionManager;
-    private Class<? extends Provider<? extends XAResource>> xaSqlSessionManagerProvider = XASqlSessionManagerProvider.class;
+    private Class<? extends Provider<? extends XAResource>> xaResourceProvider = XASqlSessionManagerProvider.class;
 
     public MyBatisJtaModule() {
     }
@@ -49,7 +49,7 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
             // jta transactional interceptor
             TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
             requestInjection(interceptorTx);
-            bind(XAResource.class).toProvider(xaSqlSessionManagerProvider);
+            bind(XAResource.class).toProvider(xaResourceProvider);
 
             bind(TransactionManager.class).toInstance(manager);
 
@@ -76,9 +76,9 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
         bindTransactionFactoryType(factoryType);
     }
     
-    protected void bindXASqlSessionManagerProviderType(Class<? extends Provider<? extends XAResource>> xaSqlSessionManagerProvider) {
-        checkArgument(xaSqlSessionManagerProvider != null, "Parameter 'xaSqlSessionManagerProvider' must be not null");
-        this.xaSqlSessionManagerProvider = xaSqlSessionManagerProvider;
+    protected void bindXAResourceProvider(Class<? extends Provider<? extends XAResource>> xaResourceProvider) {
+        checkArgument(xaResourceProvider != null, "Parameter 'xaResourceProvider' must be not null");
+        this.xaResourceProvider = xaResourceProvider;
     }
 
     protected static class ProviderImpl<T> implements Provider<T> {
