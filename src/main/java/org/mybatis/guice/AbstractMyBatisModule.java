@@ -40,7 +40,7 @@ import static com.google.inject.util.Providers.guicify;
  */
 abstract class AbstractMyBatisModule extends AbstractModule {
 
-    private static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
+    protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
         public boolean matches(Method method) {
             return method.getDeclaringClass() == Object.class;
         }
@@ -60,16 +60,9 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
             bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
 
-            // transactional interceptor
-            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-            requestInjection(interceptor);
-            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);
-            // Intercept classes annotated with Transactional, but avoid "double"
-            // interception when a mathod is also annotated inside an annotated
-            // class.
-            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);
-
             internalConfigure();
+
+            bindTransactionInterceptors();
 
             bind(ClassLoader.class)
                 .annotatedWith(named("JDBC.driverClassLoader"))
@@ -78,6 +71,20 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             resourcesClassLoader = getDefaultClassLoader();
             driverClassLoader = getDefaultClassLoader();
         }
+    }
+    
+    /**
+     * bind transactional interceptors
+     */
+    protected void bindTransactionInterceptors() {
+            // transactional interceptor
+            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+            requestInjection(interceptor);
+            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);
+            // Intercept classes annotated with Transactional, but avoid "double"
+            // interception when a mathod is also annotated inside an annotated
+            // class.
+            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);
     }
 
     /**
