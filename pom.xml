@@ -127,9 +127,9 @@
     </dependency>
 
     <dependency>
-      <groupId>c3p0</groupId>
+      <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.1.2</version>
+      <version>0.9.5</version>
       <optional>true</optional>
     </dependency>
 
@@ -174,7 +174,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.10</version>
+      <version>1.7.12</version>
       <scope>test</scope>
     </dependency>
 
@@ -214,10 +214,10 @@
     </dependency>
 
     <dependency>
-    	<groupId>org.apache.geronimo.components</groupId>
-    	<artifactId>geronimo-connector</artifactId>
-    	<version>3.1.1</version>
-    	<scope>test</scope>
+      <groupId>org.apache.geronimo.components</groupId>
+      <artifactId>geronimo-connector</artifactId>
+      <version>3.1.1</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -226,6 +226,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pdf-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <property>
+              <name>derby.stream.error.file</name>
+              <value>target/derby.log</value>
+            </property>
+          </systemProperties>
+        </configuration>
       </plugin>
     </plugins>
   </build>
