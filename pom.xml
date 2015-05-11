@@ -214,10 +214,10 @@
     </dependency>
 
     <dependency>
-    	<groupId>org.apache.geronimo.components</groupId>
-    	<artifactId>geronimo-connector</artifactId>
-    	<version>3.1.1</version>
-    	<scope>test</scope>
+      <groupId>org.apache.geronimo.components</groupId>
+      <artifactId>geronimo-connector</artifactId>
+      <version>3.1.1</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
