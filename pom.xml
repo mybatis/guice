@@ -62,7 +62,7 @@
   <scm>
     <url>http://github.com/mybatis/guice</url>
     <connection>scm:git:ssh://github.com/mybatis/guice.git</connection>
-    <developerConnection>scm:git:git+ssh://git@github.com/mybatis/guice.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com/mybatis/guice.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
