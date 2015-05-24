@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 /**
  * Contains c3p0 Data Source provider.
  *
