@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 /**
  * Contains core classes to build the BoneCP DataSource implementations through
  * google-guice.

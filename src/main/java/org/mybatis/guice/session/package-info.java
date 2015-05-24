@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 /**
  * Defines Google Guice's providers for {@code SqlSessionFactory} and {@code SqlSessionManager}.
  *

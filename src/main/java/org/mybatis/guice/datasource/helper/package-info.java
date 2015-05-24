@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 /**
  * Contains helper classes to build and bind <code>JDBC.driver</code> and <code>JDBC.url</code>
  * properties.
