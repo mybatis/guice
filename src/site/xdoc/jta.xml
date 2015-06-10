@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2010-2012 The MyBatis Team
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+  version: $Id$
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Guice | Java Transaction API</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="Introduction">
+        <p>
+            Java Transaction API support is done using <i>org.mybatis.guice.MyBatisJtaModule</i>.
+        </p>
+    </section>
+
+    <section name="@Transactional support">
+        <p>
+            Methods annotated with <code>org.mybatis.guice.transactional.Transactional</code> will be
+            executed inside the JTA's active transaction. If a method annotated with
+            <code>org.mybatis.guice.transactional.Transactional</code> throws an exception,
+            the active transaction will be rolled back.
+            <br/>
+            If a method annotated with <code>org.mybatis.guice.transactional.Transactional</code> is called
+            and JTA does not have an active transaction, a new transaction is started.
+            MyBatis-Guice will take care commiting or rolling back this new transaction after the method completes.
+        </p>
+        <p>
+            Nested calls to methods annotated with <code>org.mybatis.guice.transactional.Transactional</code>
+            will all be executed in the same transaction.
+        </p>
+    </section>
+    
+    <section name="Configuring TransactionManager">
+        <p>
+            <i>org.mybatis.guice.MyBatisJtaModule</i> requires an instance of <i>javax.transaction.TransactionManager</i>.
+            Here is some examples on how to obtain such an instance.
+        </p>
+        <subsection name="JavaEE 7 or CDI">
+            <source><![CDATA[@Inject TransactionManager tm;]]></source>
+        </subsection>
+        <subsection name="JavaEE 6">
+            <source><![CDATA[@Resource TransactionManager tm;]]></source>
+        </subsection>
+        <subsection name="OSGi service from ServiceReference">
+            <source><![CDATA[BundleContext bundleContext;
+ServiceReference<TransactionManager> reference = 
+  bundleContext.getServiceReference(TransactionManager.class);
+TransactionManager tm = bundleContext.getService(reference);]]></source>
+        </subsection>
+        <subsection name="OSGi service from OSGi Enterprise Editon using lookup">
+            <source><![CDATA[InitialContext initCtx = new InitialContext();
+String txName = "osgi:service/javax.transaction.TransactionManager"
+TransactionManager tm = (TransactionManager) initCtx.lookup(txName);]]></source>
+        </subsection>
+        <subsection name="OSGi Dynamic Service SCR annotation">
+            <source><![CDATA[@Component
+@References({
+  @Reference(
+    name                = "transactionManager",
+    referenceInterface  = TransactionManager.class,
+    cardinality         = ReferenceCardinality.MANDATORY_UNARY,
+    policy              = ReferencePolicy.STATIC,
+    bind                = "bindTransactionManager",
+    unbind              = "unbindTransactionManager"),
+})
+public MyComponent {
+  TransactionManager tm;
+
+  bindTransactionManager(TransactionManager tm) {
+    this.tm = tm;
+  }
+
+  unbindTransactionManager(TransactionManager tm) {
+    this.tm = null;
+  }
+}]]></source>
+        </subsection>
+    </section>
+    
+    <section name="Configuring DataSource">
+        <p>
+            MyBatis-Guice will automatically find the DataSource used by JTA.
+        </p>
+    </section>
+    
+    <section name="Configuring XAResource">
+        <p>
+            <i>org.mybatis.guice.MyBatisJtaModule</i> will automatically create an instance of XAResource
+            unless you bind your own provider.
+       </p>
+    </section>
+
+  </body>
+
+</document>

@@ -35,6 +35,7 @@
       </item>
       <item name="Injections" href="injections.html"/>
       <item name="@Transactional" href="transactional.html"/>
+      <item name="JTA" href="jta.html"/>
       <item name="JDBC Helper" href="jdbc-helper.html"/>
       <item name="Samples" href="samples.html"/>
     </menu>
