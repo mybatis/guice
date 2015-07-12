@@ -98,7 +98,7 @@
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.2.8</version>
+      <version>3.3.0</version>
       <scope>provided</scope>
     </dependency>
 
@@ -129,7 +129,7 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
-      <version>0.9.5</version>
+      <version>0.9.5.1</version>
       <optional>true</optional>
     </dependency>
 
