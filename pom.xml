@@ -21,6 +21,7 @@
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
     <version>25</version>
+    <relativePath />
   </parent>
 
   <artifactId>mybatis-guice</artifactId>
@@ -29,7 +30,7 @@
 
   <name>mybatis-guice</name>
   <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
-  <url>http://www.mybatis.org/guice/</url>
+  <url>http://mybatis.github.io/guice/</url>
 
   <contributors>
     <contributor>
