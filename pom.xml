@@ -75,8 +75,9 @@
   </ciManagement>
   <distributionManagement>
     <site>
-      <id>github</id>
-      <url>gitsite:git@github.com/mybatis/guice.git</url>
+      <id>gh-pages</id>
+      <name>Mybatis Guice GitHub Pages</name>
+      <url>github:ssh://hazendaz.github.io/guice/</url>
     </site>
   </distributionManagement>
 
@@ -222,6 +223,17 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <configuration>
+            <topSiteURL>http://hazendaz.github.io/guice</topSiteURL>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
