@@ -111,6 +111,10 @@ public enum JdbcHelper implements Module {
 
     SQL_Server_2005_MS_Driver("jdbc:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}", "com.microsoft.sqlserver.jdbc.SQLServerDriver"),
 
+    SQLITE_FILE("jdbc:sqlite:${JDBC.schema}", "org.sqlite.JDBC"),
+
+    SQLITE_IN_MEMORY("jdbc:sqlite::memory:", "org.sqlite.JDBC"),
+
     Sybase_ASE_jTDS("jdbc:jtds:sybase://${JDBC.host|localhost}:${JDBC.port|5000};DatabaseName=${JDBC.schema}", "net.sourceforge.jtds.jdbc.Driver"),
 
     Sybase_ASE_JConnect("jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|5000}/${JDBC.schema}", "com.sybase.jdbc3.jdbc.SybDriver"),
