@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DriverAdapterCPDSProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">DriverAdapterCPDSProvider.java</span></div><h1>DriverAdapterCPDSProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2015 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.dbcp;
+
+import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.sql.ConnectionPoolDataSource;
+
+/**
+ * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.
+ *
+ * @version $Id$
+ */
+public final class DriverAdapterCPDSProvider implements Provider&lt;ConnectionPoolDataSource&gt; {
+
+<span class="nc" id="L32">    private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();</span>
+
+    @Inject
+    public DriverAdapterCPDSProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
+<span class="nc" id="L36">            @Named(&quot;JDBC.url&quot;) final String url) {</span>
+        try {
+<span class="nc" id="L38">            adapter.setDriver(driver);</span>
+<span class="nc" id="L39">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L40">            throw new RuntimeException(&quot;Driver '&quot;</span>
+                    + driver
+                    + &quot;' not found in the classpath&quot;, e);
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">        adapter.setUrl(url);</span>
+<span class="nc" id="L45">    }</span>
+
+    /**
+     *
+     * @param username
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="nc" id="L54">        adapter.setUser(username);</span>
+<span class="nc" id="L55">    }</span>
+
+    /**
+     *
+     * @param password
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="nc" id="L64">        adapter.setPassword(password);</span>
+<span class="nc" id="L65">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setDescription(@Named(&quot;DBCP.description&quot;) String description) {
+<span class="nc" id="L69">        adapter.setDescription(description);</span>
+<span class="nc" id="L70">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int seconds) {
+<span class="nc" id="L74">        adapter.setLoginTimeout(seconds);</span>
+<span class="nc" id="L75">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setMaxActive(@Named(&quot;DBCP.maxActive&quot;) int maxActive) {
+<span class="nc" id="L79">        adapter.setMaxActive(maxActive);</span>
+<span class="nc" id="L80">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) int maxIdle) {
+<span class="nc" id="L84">        adapter.setMaxIdle(maxIdle);</span>
+<span class="nc" id="L85">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setMaxPreparedStatements(@Named(&quot;DBCP.maxOpenPreparedStatements&quot;) int maxPreparedStatements) {
+<span class="nc" id="L89">        adapter.setMaxPreparedStatements(maxPreparedStatements);</span>
+<span class="nc" id="L90">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setMinEvictableIdleTimeMillis(@Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) int minEvictableIdleTimeMillis) {
+<span class="nc" id="L94">        adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
+<span class="nc" id="L95">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) int numTestsPerEvictionRun) {
+<span class="nc" id="L99">        adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
+<span class="nc" id="L100">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setPoolPreparedStatements(@Named(&quot;DBCP.poolPreparedStatements&quot;) boolean poolPreparedStatements) {
+<span class="nc" id="L104">        adapter.setPoolPreparedStatements(poolPreparedStatements);</span>
+<span class="nc" id="L105">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setTimeBetweenEvictionRunsMillis(@Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
+<span class="nc" id="L109">        adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
+<span class="nc" id="L110">    }</span>
+
+    public ConnectionPoolDataSource get() {
+<span class="nc" id="L113">        return adapter;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

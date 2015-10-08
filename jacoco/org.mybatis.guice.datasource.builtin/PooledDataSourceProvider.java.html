@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PooledDataSourceProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.builtin</a> &gt; <span class="el_source">PooledDataSourceProvider.java</span></div><h1>PooledDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2015 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.builtin;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Properties;
+
+/**
+ * Provides the myBatis built-in PooledDataSource.
+ *
+ * @version $Id$
+ */
+public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt; {
+
+    /**
+     * The PooledDataSource reference.
+     */
+    private final PooledDataSource dataSource;
+
+    /**
+     * Creates a new PooledDataSource using the needed parameter.
+     *
+     * @param driver The JDBC driver class.
+     * @param url the database URL of the form &lt;code&gt;jdbc:subprotocol:subname&lt;/code&gt;.
+     * @param driverClassLoader ClassLoader to use to load JDBC driver class.
+     */
+    @Inject
+    public PooledDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
+            @Named(&quot;JDBC.url&quot;) final String url,
+<span class="fc" id="L49">            @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
+<span class="fc" id="L50">        dataSource = new PooledDataSource(driverClassLoader, driver, url, null, null);</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     *
+     * @param username
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="fc" id="L60">        dataSource.setUsername(username);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     *
+     * @param password
+     * @since 3.3
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="fc" id="L70">        dataSource.setPassword(password);</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     *
+     *
+     * @param autoCommit
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
+<span class="fc" id="L80">        dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     *
+     *
+     * @param loginTimeout
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
+        try {
+<span class="nc" id="L91">            dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="nc" id="L92">        } catch (SQLException e) {</span>
+<span class="nc" id="L93">            throw new RuntimeException(&quot;Impossible to set login timeout '&quot;</span>
+                    + loginTimeout
+                    + &quot;' to Unpooled Data Source&quot;, e);
+<span class="nc" id="L96">        }</span>
+<span class="nc" id="L97">    }</span>
+
+    @com.google.inject.Inject(optional = true)
+    public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
+<span class="nc" id="L101">        dataSource.setDriverProperties(driverProperties);</span>
+<span class="nc" id="L102">    }</span>
+
+    /**
+     *
+     *
+     * @param maximumActiveConnections
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setMaximumActiveConnections(@Named(&quot;mybatis.pooled.maximumActiveConnections&quot;) final int maximumActiveConnections) {
+<span class="nc" id="L111">        dataSource.setPoolMaximumActiveConnections(maximumActiveConnections);</span>
+<span class="nc" id="L112">    }</span>
+
+    /**
+     *
+     *
+     * @param maximumCheckoutTime
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setMaximumCheckoutTime(@Named(&quot;mybatis.pooled.maximumCheckoutTime&quot;) final int maximumCheckoutTime) {
+<span class="nc" id="L121">        dataSource.setPoolMaximumCheckoutTime(maximumCheckoutTime);</span>
+<span class="nc" id="L122">    }</span>
+
+    /**
+     *
+     *
+     * @param maximumIdleConnections
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setMaximumIdleConnections(@Named(&quot;mybatis.pooled.maximumIdleConnections&quot;) final int maximumIdleConnections) {
+<span class="nc" id="L131">        dataSource.setPoolMaximumIdleConnections(maximumIdleConnections);</span>
+<span class="nc" id="L132">    }</span>
+
+    /**
+     *
+     *
+     * @param pingConnectionsNotUsedFor
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPingConnectionsNotUsedFor(@Named(&quot;mybatis.pooled.pingConnectionsNotUsedFor&quot;) final int pingConnectionsNotUsedFor) {
+<span class="nc" id="L141">        dataSource.setPoolPingConnectionsNotUsedFor(pingConnectionsNotUsedFor);</span>
+<span class="nc" id="L142">    }</span>
+
+    /**
+     *
+     *
+     * @param pingEnabled
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPingEnabled(@Named(&quot;mybatis.pooled.pingEnabled&quot;) final boolean pingEnabled) {
+<span class="nc" id="L151">        dataSource.setPoolPingEnabled(pingEnabled);</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     *
+     *
+     * @param pingQuery
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setPingEnabled(@Named(&quot;mybatis.pooled.pingQuery&quot;) final String pingQuery) {
+<span class="nc" id="L161">        dataSource.setPoolPingQuery(pingQuery);</span>
+<span class="nc" id="L162">    }</span>
+
+    /**
+     *
+     *
+     * @param timeToWait
+     */
+    @com.google.inject.Inject(optional = true)
+    public void setTimeToWait(@Named(&quot;mybatis.pooled.timeToWait&quot;) final int timeToWait) {
+<span class="nc" id="L171">        dataSource.setPoolTimeToWait(timeToWait);</span>
+<span class="nc" id="L172">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    public DataSource get() {
+<span class="fc" id="L178">        return dataSource;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

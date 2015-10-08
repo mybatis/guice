@@ -1,6 +1,113 @@
 <api>
 <package name="org.mybatis.guice"
 >
+<class name="MyBatisJtaModule"
+ extends="org.mybatis.guice.MyBatisModule"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="MyBatisJtaModule"
+ type="org.mybatis.guice.MyBatisJtaModule"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="MyBatisJtaModule"
+ type="org.mybatis.guice.MyBatisJtaModule"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="transactionManager" type="javax.transaction.TransactionManager">
+</parameter>
+</constructor>
+<method name="bindDefaultTransactionProvider"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+<method name="bindXAResourceProvider"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="xaResourceProvider" type="java.lang.Class&lt;? extends javax.inject.Provider&lt;? extends javax.transaction.xa.XAResource&gt;&gt;">
+</parameter>
+</method>
+<method name="getTransactionManager"
+ return="javax.transaction.TransactionManager"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+<method name="setTransactionManager"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="transactionManager" type="javax.transaction.TransactionManager">
+</parameter>
+</method>
+</class>
+<class name="MyBatisJtaModule.ProviderImpl"
+ extends="java.lang.Object"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<implements name="javax.inject.Provider">
+</implements>
+<constructor name="MyBatisJtaModule.ProviderImpl"
+ type="org.mybatis.guice.MyBatisJtaModule.ProviderImpl"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="wrapper" type="T">
+</parameter>
+</constructor>
+<method name="get"
+ return="T"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
 <class name="MyBatisModule"
  extends="org.mybatis.guice.AbstractMyBatisModule"
  abstract="true"
@@ -53,7 +160,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="packageName" type="java.lang.String">
+<parameter name="interceptorsClasses" type="java.util.Collection&lt;java.lang.Class&lt;? extends org.apache.ibatis.plugin.Interceptor&gt;&gt;">
 </parameter>
 </method>
 <method name="addInterceptorsClasses"
@@ -66,7 +173,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="interceptorsClasses" type="java.util.Collection&lt;java.lang.Class&lt;? extends org.apache.ibatis.plugin.Interceptor&gt;&gt;">
+<parameter name="packageName" type="java.lang.String">
 </parameter>
 </method>
 <method name="addMapperClass"
@@ -92,6 +199,19 @@
  deprecated="not deprecated"
  visibility="protected"
 >
+<parameter name="mapperClasses" type="java.util.Collection&lt;java.lang.Class&lt;?&gt;&gt;">
+</parameter>
+</method>
+<method name="addMapperClasses"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
 <parameter name="packageName" type="java.lang.String">
 </parameter>
 </method>
@@ -108,19 +228,6 @@
 <parameter name="packageName" type="java.lang.String">
 </parameter>
 <parameter name="test" type="org.apache.ibatis.io.ResolverUtil.Test">
-</parameter>
-</method>
-<method name="addMapperClasses"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="true"
- deprecated="not deprecated"
- visibility="protected"
->
-<parameter name="mapperClasses" type="java.util.Collection&lt;java.lang.Class&lt;?&gt;&gt;">
 </parameter>
 </method>
 <method name="addSimpleAlias"
@@ -146,7 +253,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="packageName" type="java.lang.String">
+<parameter name="types" type="java.util.Collection&lt;java.lang.Class&lt;?&gt;&gt;">
 </parameter>
 </method>
 <method name="addSimpleAliases"
@@ -174,7 +281,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="types" type="java.util.Collection&lt;java.lang.Class&lt;?&gt;&gt;">
+<parameter name="packageName" type="java.lang.String">
 </parameter>
 </method>
 <method name="addTypeHandlerClass"
@@ -252,7 +359,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="dataSourceProvider" type="com.google.inject.Provider&lt;javax.sql.DataSource&gt;">
+<parameter name="dataSourceProvider" type="javax.inject.Provider&lt;javax.sql.DataSource&gt;">
 </parameter>
 </method>
 <method name="bindDataSourceProvider"
@@ -265,7 +372,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="dataSourceProvider" type="javax.inject.Provider&lt;javax.sql.DataSource&gt;">
+<parameter name="dataSourceProvider" type="com.google.inject.Provider&lt;javax.sql.DataSource&gt;">
 </parameter>
 </method>
 <method name="bindDataSourceProviderType"
@@ -307,6 +414,19 @@
 <parameter name="databaseIdProvider" type="org.apache.ibatis.mapping.DatabaseIdProvider">
 </parameter>
 </method>
+<method name="bindDefaultScriptingLanguageType"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="defaultScriptingLanguageType" type="java.lang.Class&lt;? extends org.apache.ibatis.scripting.LanguageDriver&gt;">
+</parameter>
+</method>
 <method name="bindObjectFactoryType"
  return="void"
  abstract="false"
@@ -320,7 +440,7 @@
 <parameter name="objectFactoryType" type="java.lang.Class&lt;? extends org.apache.ibatis.reflection.factory.ObjectFactory&gt;">
 </parameter>
 </method>
-<method name="bindTransactionFactory"
+<method name="bindObjectWrapperFactoryType"
  return="void"
  abstract="false"
  native="false"
@@ -330,7 +450,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="transactionFactoryProvider" type="com.google.inject.Provider&lt;org.apache.ibatis.transaction.TransactionFactory&gt;">
+<parameter name="objectWrapperFactoryType" type="java.lang.Class&lt;? extends org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory&gt;">
 </parameter>
 </method>
 <method name="bindTransactionFactory"
@@ -346,6 +466,19 @@
 <parameter name="transactionFactoryProvider" type="javax.inject.Provider&lt;org.apache.ibatis.transaction.TransactionFactory&gt;">
 </parameter>
 </method>
+<method name="bindTransactionFactory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="transactionFactoryProvider" type="com.google.inject.Provider&lt;org.apache.ibatis.transaction.TransactionFactory&gt;">
+</parameter>
+</method>
 <method name="bindTransactionFactoryType"
  return="void"
  abstract="false"
@@ -359,7 +492,7 @@
 <parameter name="transactionFactoryType" type="java.lang.Class&lt;? extends org.apache.ibatis.transaction.TransactionFactory&gt;">
 </parameter>
 </method>
-<method name="configure"
+<method name="defaultStatementTimeout"
  return="void"
  abstract="false"
  native="false"
@@ -369,6 +502,8 @@
  deprecated="not deprecated"
  visibility="protected"
 >
+<parameter name="defaultStatementTimeout" type="java.lang.Integer">
+</parameter>
 </method>
 <method name="environmentId"
  return="void"
@@ -409,17 +544,6 @@
 <parameter name="failFast" type="boolean">
 </parameter>
 </method>
-<method name="getResourceClassLoader"
- return="java.lang.ClassLoader"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="true"
- deprecated="not deprecated"
- visibility="protected"
->
-</method>
 <method name="handleType"
  return="org.mybatis.guice.binder.TypeHandlerBinder&lt;T&gt;"
  abstract="false"
@@ -432,17 +556,6 @@
 >
 <parameter name="type" type="java.lang.Class&lt;T&gt;">
 </parameter>
-</method>
-<method name="initialize"
- return="void"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="protected"
->
 </method>
 <method name="lazyLoadingEnabled"
  return="void"
@@ -535,32 +648,6 @@
 <parameter name="useGeneratedKeys" type="boolean">
 </parameter>
 </method>
-<method name="useJdbcDriverClassLoader"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="driverClassLoader" type="java.lang.ClassLoader">
-</parameter>
-</method>
-<method name="useResourceClassLoader"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="resourceClassLoader" type="java.lang.ClassLoader">
-</parameter>
-</method>
 <method name="useSqlSessionFactoryProvider"
  return="void"
  abstract="false"
@@ -604,39 +691,6 @@
 <parameter name="properties" type="java.util.Properties">
 </parameter>
 </method>
-<method name="configure"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="true"
- deprecated="not deprecated"
- visibility="protected"
->
-</method>
-<method name="getResourceClassLoader"
- return="java.lang.ClassLoader"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="true"
- deprecated="not deprecated"
- visibility="protected"
->
-</method>
-<method name="initialize"
- return="void"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="protected"
->
-</method>
 <method name="setClassPathResource"
  return="void"
  abstract="false"
@@ -661,32 +715,6 @@
  visibility="protected"
 >
 <parameter name="environmentId" type="java.lang.String">
-</parameter>
-</method>
-<method name="useJdbcDriverClassLoader"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="driverClassLoader" type="java.lang.ClassLoader">
-</parameter>
-</method>
-<method name="useResourceClassLoader"
- return="void"
- abstract="false"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="resourceClassLoader" type="java.lang.ClassLoader">
 </parameter>
 </method>
 </class>
@@ -834,6 +862,19 @@
 <parameter name="cacheEnabled" type="boolean">
 </parameter>
 </method>
+<method name="setCallSettersOnNulls"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="callSettersOnNulls" type="boolean">
+</parameter>
+</method>
 <method name="setDefaultExecutorType"
  return="void"
  abstract="false"
@@ -845,6 +886,19 @@
  visibility="protected"
 >
 <parameter name="defaultExecutorType" type="org.apache.ibatis.session.ExecutorType">
+</parameter>
+</method>
+<method name="setDefaultStatementTimeout"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="defaultStatementTimeout" type="java.lang.Integer">
 </parameter>
 </method>
 <method name="setEnvironment"
@@ -975,6 +1029,19 @@
  visibility="protected"
 >
 <parameter name="useGeneratedKeys" type="boolean">
+</parameter>
+</method>
+<method name="setWrapperObjectFactory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="objectWrapperFactory" type="org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory">
 </parameter>
 </method>
 </class>
@@ -2560,6 +2627,19 @@
 <parameter name="testWhileIdle" type="boolean">
 </parameter>
 </method>
+<method name="setTimeBetweenEvictionRunsMillis"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="timeBetweenEvictionRunsMillis" type="int">
+</parameter>
+</method>
 <method name="setUser"
  return="void"
  abstract="false"
@@ -3908,6 +3988,256 @@
 >
 </method>
 </class>
+<class name="MyBatisXAException"
+ extends="javax.transaction.xa.XAException"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="MyBatisXAException"
+ type="org.mybatis.guice.transactional.MyBatisXAException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="errorCode" type="int">
+</parameter>
+</constructor>
+<constructor name="MyBatisXAException"
+ type="org.mybatis.guice.transactional.MyBatisXAException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="message" type="java.lang.String">
+</parameter>
+<parameter name="errorCode" type="int">
+</parameter>
+<parameter name="t" type="java.lang.Throwable">
+</parameter>
+</constructor>
+</class>
+<class name="TransactionAttribute"
+ extends="java.lang.Enum"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="begin"
+ return="org.mybatis.guice.transactional.TransactionToken"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="man" type="javax.transaction.TransactionManager">
+</parameter>
+<exception name="IllegalStateException" type="java.lang.IllegalStateException">
+</exception>
+<exception name="InvalidTransactionException" type="javax.transaction.InvalidTransactionException">
+</exception>
+<exception name="NotSupportedException" type="javax.transaction.NotSupportedException">
+</exception>
+<exception name="SystemException" type="javax.transaction.SystemException">
+</exception>
+</method>
+<method name="finish"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="man" type="javax.transaction.TransactionManager">
+</parameter>
+<parameter name="tranToken" type="org.mybatis.guice.transactional.TransactionToken">
+</parameter>
+<exception name="HeuristicMixedException" type="javax.transaction.HeuristicMixedException">
+</exception>
+<exception name="HeuristicRollbackException" type="javax.transaction.HeuristicRollbackException">
+</exception>
+<exception name="IllegalStateException" type="java.lang.IllegalStateException">
+</exception>
+<exception name="InvalidTransactionException" type="javax.transaction.InvalidTransactionException">
+</exception>
+<exception name="RollbackException" type="javax.transaction.RollbackException">
+</exception>
+<exception name="SecurityException" type="java.lang.SecurityException">
+</exception>
+<exception name="SystemException" type="javax.transaction.SystemException">
+</exception>
+</method>
+<method name="fromValue"
+ return="org.mybatis.guice.transactional.TransactionAttribute"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+</method>
+<method name="valueOf"
+ return="org.mybatis.guice.transactional.TransactionAttribute"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="values"
+ return="org.mybatis.guice.transactional.TransactionAttribute[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="TransactionToken"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="TransactionToken"
+ type="org.mybatis.guice.transactional.TransactionToken"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activeTransaction" type="javax.transaction.Transaction">
+</parameter>
+<parameter name="suspendedTransaction" type="javax.transaction.Transaction">
+</parameter>
+<parameter name="transactionAttribute" type="org.mybatis.guice.transactional.TransactionAttribute">
+</parameter>
+</constructor>
+<method name="getActiveTransaction"
+ return="javax.transaction.Transaction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSuspendedTransaction"
+ return="javax.transaction.Transaction"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getTransactionAttribute"
+ return="org.mybatis.guice.transactional.TransactionAttribute"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isCompletionAllowed"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setActiveTransaction"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activeTransaction" type="javax.transaction.Transaction">
+</parameter>
+</method>
+<method name="setCompletionAllowed"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="isCompletionAllowed" type="boolean">
+</parameter>
+</method>
+<method name="setSuspendedTransaction"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="suspendedTransaction" type="javax.transaction.Transaction">
+</parameter>
+</method>
+<method name="setTransactionStrategy"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="transactionAttribute" type="org.mybatis.guice.transactional.TransactionAttribute">
+</parameter>
+</method>
+</class>
 <class name="Transactional"
  extends="java.lang.Object"
  abstract="true"
@@ -3918,6 +4248,39 @@
 >
 <implements name="java.lang.annotation.Annotation">
 </implements>
+</class>
+<class name="Transactional.TxType"
+ extends="java.lang.Enum"
+ abstract="false"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="valueOf"
+ return="org.mybatis.guice.transactional.Transactional.TxType"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="values"
+ return="org.mybatis.guice.transactional.Transactional.TxType[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 </class>
 <class name="TransactionalMethodInterceptor"
  extends="java.lang.Object"
@@ -3964,6 +4327,348 @@
 >
 <parameter name="sqlSessionManager" type="org.apache.ibatis.session.SqlSessionManager">
 </parameter>
+</method>
+</class>
+<class name="TxTransactionalMethodInterceptor"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="org.aopalliance.intercept.MethodInterceptor">
+</implements>
+<constructor name="TxTransactionalMethodInterceptor"
+ type="org.mybatis.guice.transactional.TxTransactionalMethodInterceptor"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="invoke"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="invocation" type="org.aopalliance.intercept.MethodInvocation">
+</parameter>
+<exception name="Throwable" type="java.lang.Throwable">
+</exception>
+</method>
+</class>
+<class name="XASqlSessionManager"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="javax.transaction.xa.XAResource">
+</implements>
+<constructor name="XASqlSessionManager"
+ type="org.mybatis.guice.transactional.XASqlSessionManager"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="sqlSessionManager" type="org.apache.ibatis.session.SqlSessionManager">
+</parameter>
+</constructor>
+<method name="commit"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<parameter name="onePhase" type="boolean">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="end"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<parameter name="flag" type="int">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="forget"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="getId"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getState"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getTransactionTimeout"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="isSameRM"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xares" type="javax.transaction.xa.XAResource">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="prepare"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="recover"
+ return="javax.transaction.xa.Xid[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="flags" type="int">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="rollback"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="setTransactionTimeout"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="second" type="int">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<method name="start"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="xid" type="javax.transaction.xa.Xid">
+</parameter>
+<parameter name="flag" type="int">
+</parameter>
+<exception name="XAException" type="javax.transaction.xa.XAException">
+</exception>
+</method>
+<field name="ENDED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="NO_TX"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="PREPARED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="3"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="STARTED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="XASqlSessionManagerProvider"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="javax.inject.Provider">
+</implements>
+<constructor name="XASqlSessionManagerProvider"
+ type="org.mybatis.guice.transactional.XASqlSessionManagerProvider"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="get"
+ return="javax.transaction.xa.XAResource"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+</package>
+<package name="org.mybatis.guice.type"
+>
+<class name="TypeHandlerProvider"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="javax.inject.Provider">
+</implements>
+<constructor name="TypeHandlerProvider"
+ type="org.mybatis.guice.type.TypeHandlerProvider"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="typeHandlerType" type="java.lang.Class&lt;TH&gt;">
+</parameter>
+<parameter name="handledType" type="java.lang.Class&lt;T&gt;">
+</parameter>
+</constructor>
+<method name="get"
+ return="TH"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 </method>
 </class>
 </package>

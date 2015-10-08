@@ -48,29 +48,31 @@
 
 
 
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Javadoc API documentation for mybatis-guice." />
+
 <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 <title>
 
   Class Index
 
 
-| MyBatis Guice
+| mybatis-guice
 
 </title>
-<link href="./../assets/android-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="./../assets/doclava-developer-docs.css" rel="stylesheet" type="text/css" />
 <link href="./../assets/customizations.css" rel="stylesheet" type="text/css" />
 <script src="./../assets/search_autocomplete.js" type="text/javascript"></script>
 <script src="./../assets/jquery-resizable.min.js" type="text/javascript"></script>
-<script src="./../assets/android-developer-docs.js" type="text/javascript"></script>
+<script src="./../assets/doclava-developer-docs.js" type="text/javascript"></script>
 <script src="./../assets/prettify.js" type="text/javascript"></script>
 <script type="text/javascript">
   setToRoot("./", "./../assets/");
 </script>
-<script src="./../assets/android-developer-reference.js" type="text/javascript"></script>
+<script src="./../assets/doclava-developer-reference.js" type="text/javascript"></script>
 <script src="./../assets/navtree_data.js" type="text/javascript"></script>
 <script src="./../assets/customizations.js" type="text/javascript"></script>
 <noscript>
@@ -89,7 +91,7 @@
 <div id="header">
     <div id="headerLeft">
     
-      <span id="masthead-title">MyBatis Guice</span>
+      <span id="masthead-title">mybatis-guice</span>
     
     </div>
     <div id="headerRight">
@@ -135,9 +137,9 @@
         <div id="nav-panels">
           <div id="resize-packages-nav">
             <div id="packages-nav">
-              <div id="index-links"><nobr>
+              <div id="index-links">
                 <a href="./packages.html"  >Package Index</a> | 
-                <a href="./classes.html" class="selected">Class Index</a></nobr>
+                <a href="./classes.html" class="selected">Class Index</a>
               </div>
               <ul>
                 
@@ -165,6 +167,8 @@
   <a href="./org/mybatis/guice/session/package-summary.html">org.mybatis.guice.session</a></li>
     <li class="api apilevel-">
   <a href="./org/mybatis/guice/transactional/package-summary.html">org.mybatis.guice.transactional</a></li>
+    <li class="api apilevel-">
+  <a href="./org/mybatis/guice/type/package-summary.html">org.mybatis.guice.type</a></li>
               </ul><br/>
             </div> <!-- end packages -->
           </div> <!-- end resize-packages -->
@@ -176,9 +180,9 @@
           </div><!-- end classes -->
         </div><!-- end nav-panels -->
         <div id="nav-tree" style="display:none">
-          <div id="index-links"><nobr>
+          <div id="index-links">
             <a href="./packages.html"  >Package Index</a> | 
-            <a href="./classes.html" class="selected">Class Index</a></nobr>
+            <a href="./classes.html" class="selected">Class Index</a>
           </div>
         </div><!-- end nav-tree -->
       </div><!-- end swapper -->
@@ -361,9 +365,27 @@
     
     
         <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/MyBatisJtaModule.html">MyBatisJtaModule</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/MyBatisJtaModule.ProviderImpl.html">MyBatisJtaModule.ProviderImpl</a>&lt;T&gt;</td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
             <td class="jd-linkcol"><a href="./org/mybatis/guice/MyBatisModule.html">MyBatisModule</a></td>
             <td class="jd-descrcol" width="100%">Easy to use helper Module that alleviates users to write the boilerplate
  google-guice bindings to create the SqlSessionFactory.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/MyBatisXAException.html">MyBatisXAException</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
         </tr>
     
     
@@ -474,7 +496,33 @@
     
     
         <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/Transactional.TxType.html">Transactional.TxType</a></td>
+            <td class="jd-descrcol" width="100%">The TxType element of the annotation indicates whether a bean method is to be
+ executed within a transaction context where the values provide the following
+ corresponding behavior.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
             <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/TransactionalMethodInterceptor.html">TransactionalMethodInterceptor</a></td>
+            <td class="jd-descrcol" width="100%">Method interceptor for <code><a href="./org/mybatis/guice/transactional/Transactional.html">Transactional</a></code> annotation.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/TransactionAttribute.html">TransactionAttribute</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/TransactionToken.html">TransactionToken</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/TxTransactionalMethodInterceptor.html">TxTransactionalMethodInterceptor</a></td>
             <td class="jd-descrcol" width="100%">Method interceptor for <code><a href="./org/mybatis/guice/transactional/Transactional.html">Transactional</a></code> annotation.&nbsp;</td>
         </tr>
     
@@ -488,6 +536,12 @@
         <tr class=" api apilevel-" >
             <td class="jd-linkcol"><a href="./org/mybatis/guice/binder/TypeHandlerBinder.html">TypeHandlerBinder</a>&lt;T&gt;</td>
             <td class="jd-descrcol" width="100%">Bind the given <code>TypeHandler</code> to an already defined type.&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/type/TypeHandlerProvider.html">TypeHandlerProvider</a>&lt;TH&nbsp;extends&nbsp;TypeHandler&lt;?&nbsp;extends&nbsp;T&gt;,&nbsp;T&gt;</td>
+            <td class="jd-descrcol" width="100%">A generic MyBatis type provider.&nbsp;</td>
         </tr>
     
     
@@ -512,6 +566,18 @@
     
     
         <tr class="alt-color api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/XASqlSessionManager.html">XASqlSessionManager</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class=" api apilevel-" >
+            <td class="jd-linkcol"><a href="./org/mybatis/guice/transactional/XASqlSessionManagerProvider.html">XASqlSessionManagerProvider</a></td>
+            <td class="jd-descrcol" width="100%">&nbsp;</td>
+        </tr>
+    
+    
+        <tr class="alt-color api apilevel-" >
             <td class="jd-linkcol"><a href="./org/mybatis/guice/XMLMyBatisModule.html">XMLMyBatisModule</a></td>
             <td class="jd-descrcol" width="100%">Easy to use helper Module that alleviates users to write the boilerplate
  google-guice bindings to create the SqlSessionFactory, via XML configuration.&nbsp;</td>
@@ -531,7 +597,7 @@ Generated by <a href="http://code.google.com/p/doclava/">Doclava</a>.
 </div> <!-- end body-content --> 
 
 <script type="text/javascript">
-init(); /* initialize android-developer-docs.js */
+init(); /* initialize doclava-developer-docs.js */
 </script>
 
 </body>

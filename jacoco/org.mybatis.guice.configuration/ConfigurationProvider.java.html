@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConfigurationProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.configuration</a> &gt; <span class="el_source">ConfigurationProvider.java</span></div><h1>ConfigurationProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2015 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.configuration;
+
+import com.google.inject.ProvisionException;
+
+import org.apache.ibatis.executor.ErrorContext;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
+import org.apache.ibatis.scripting.LanguageDriver;
+import org.apache.ibatis.session.AutoMappingBehavior;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.type.TypeHandler;
+
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+import javax.sql.DataSource;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Provides the myBatis Configuration.
+ *
+ * @version $Id$
+ */
+@Singleton
+public final class ConfigurationProvider implements Provider&lt;Configuration&gt; {
+
+    /**
+     * The myBatis Configuration reference.
+     */
+    private final Environment environment;
+
+<span class="fc" id="L56">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.lazyLoadingEnabled&quot;)
+    private boolean lazyLoadingEnabled = false;
+
+<span class="fc" id="L60">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.aggressiveLazyLoading&quot;)
+    private boolean aggressiveLazyLoading = true;
+
+<span class="fc" id="L64">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.multipleResultSetsEnabled&quot;)
+    private boolean multipleResultSetsEnabled = true;
+
+<span class="fc" id="L68">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.useGeneratedKeys&quot;)
+    private boolean useGeneratedKeys = false;
+
+<span class="fc" id="L72">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.useColumnLabel&quot;)
+    private boolean useColumnLabel = true;
+
+<span class="fc" id="L76">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.cacheEnabled&quot;)
+    private boolean cacheEnabled = true;
+
+<span class="fc" id="L80">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.defaultExecutorType&quot;)
+    private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
+
+<span class="fc" id="L84">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.autoMappingBehavior&quot;)
+    private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
+
+<span class="fc" id="L88">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.failFast&quot;)
+    private boolean failFast = false;
+
+<span class="fc" id="L92">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.callSettersOnNulls&quot;)
+    private boolean callSettersOnNulls = false;
+
+    @com.google.inject.Inject(optional = true)
+    @Named(&quot;mybatis.configuration.defaultStatementTimeout&quot;)
+    @Nullable
+    private Integer defaultStatementTimeout;
+    
+    @Inject
+    private ObjectFactory objectFactory;
+    
+    @Inject
+    private ObjectWrapperFactory objectWrapperFactory;
+
+    @Inject
+    private Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType;
+
+    @com.google.inject.Inject(optional = true)
+    @TypeAliases
+    private Map&lt;String, Class&lt;?&gt;&gt; typeAliases;
+
+<span class="fc" id="L114">    @com.google.inject.Inject(optional = true)</span>
+    private Map&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; typeHandlers = Collections.emptyMap();
+
+<span class="fc" id="L117">    @com.google.inject.Inject(optional = true)</span>
+    @MappingTypeHandlers
+    private Set&lt;TypeHandler&lt;?&gt;&gt; mappingTypeHandlers = Collections.emptySet();
+
+<span class="fc" id="L121">    @com.google.inject.Inject(optional = true)</span>
+    @Mappers
+    private Set&lt;Class&lt;?&gt;&gt; mapperClasses = Collections.emptySet();
+
+<span class="fc" id="L125">    @com.google.inject.Inject(optional = true)</span>
+    private Set&lt;Interceptor&gt; plugins = Collections.emptySet();
+
+<span class="fc" id="L128">    @com.google.inject.Inject(optional = true)</span>
+    @Named(&quot;mybatis.configuration.mapUnderscoreToCamelCase&quot;)
+    private boolean mapUnderscoreToCamelCase = false;
+
+    @com.google.inject.Inject(optional = true)
+    private DatabaseIdProvider databaseIdProvider;
+
+    @com.google.inject.Inject
+    private DataSource dataSource;
+
+    /**
+     * @since 1.0.1
+     */
+    @com.google.inject.Inject
+<span class="fc" id="L142">    public ConfigurationProvider(final Environment environment) {</span>
+<span class="fc" id="L143">        this.environment = environment;</span>
+<span class="fc" id="L144">    }</span>
+
+    @Deprecated
+    public void setEnvironment(Environment environment) {
+        // do nothing
+<span class="nc" id="L149">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
+<span class="nc" id="L155">        this.lazyLoadingEnabled = lazyLoadingEnabled;</span>
+<span class="nc" id="L156">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setAggressiveLazyLoading(boolean aggressiveLazyLoading) {
+<span class="nc" id="L162">        this.aggressiveLazyLoading = aggressiveLazyLoading;</span>
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setMultipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
+<span class="nc" id="L169">        this.multipleResultSetsEnabled = multipleResultSetsEnabled;</span>
+<span class="nc" id="L170">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setUseGeneratedKeys(boolean useGeneratedKeys) {
+<span class="nc" id="L176">        this.useGeneratedKeys = useGeneratedKeys;</span>
+<span class="nc" id="L177">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setUseColumnLabel(boolean useColumnLabel) {
+<span class="nc" id="L183">        this.useColumnLabel = useColumnLabel;</span>
+<span class="nc" id="L184">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setCacheEnabled(boolean cacheEnabled) {
+<span class="nc" id="L190">        this.cacheEnabled = cacheEnabled;</span>
+<span class="nc" id="L191">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setDefaultExecutorType(ExecutorType defaultExecutorType) {
+<span class="nc" id="L197">        this.defaultExecutorType = defaultExecutorType;</span>
+<span class="nc" id="L198">    }</span>
+
+    /**
+     * @since 1.0.1
+     */
+    protected void setAutoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
+<span class="nc" id="L204">        this.autoMappingBehavior = autoMappingBehavior;</span>
+<span class="nc" id="L205">    }</span>
+
+    /**
+     * Flag to check all statements are completed.
+     *
+     * @param failFast flag to check all statements are completed
+     * @since 1.0.1
+     */
+    public void setFailFast(boolean failFast) {
+<span class="nc" id="L214">        this.failFast = failFast;</span>
+<span class="nc" id="L215">    }</span>
+    
+    public void setCallSettersOnNulls(boolean callSettersOnNulls) {
+<span class="nc" id="L218">        this.callSettersOnNulls = callSettersOnNulls;</span>
+<span class="nc" id="L219">    }</span>
+
+    public void setDefaultStatementTimeout(Integer defaultStatementTimeout) {
+<span class="nc" id="L222">        this.defaultStatementTimeout = defaultStatementTimeout;</span>
+<span class="nc" id="L223">    }</span>
+
+    /**
+     * Adds the user defined type aliases to the myBatis Configuration.
+     *
+     * @param typeAliases the user defined type aliases.
+     */
+    public void setTypeAliases(Map&lt;String, Class&lt;?&gt;&gt; typeAliases) {
+<span class="nc" id="L231">        this.typeAliases = typeAliases;</span>
+<span class="nc" id="L232">    }</span>
+
+    /**
+     * Adds the user defined type handlers to the myBatis Configuration.
+     *
+     * @param typeHandlers the user defined type handlers.
+     */
+    @com.google.inject.Inject(optional = true)
+    public void registerTypeHandlers(final Map&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; typeHandlers) {
+<span class="fc" id="L241">        this.typeHandlers = typeHandlers;</span>
+<span class="fc" id="L242">    }</span>
+
+    /**
+     * Adds the user defined Mapper classes to the myBatis Configuration.
+     *
+     * @param mapperClasses the user defined Mapper classes.
+     */
+    public void setMapperClasses(Set&lt;Class&lt;?&gt;&gt; mapperClasses) {
+<span class="nc" id="L250">        this.mapperClasses = mapperClasses;</span>
+<span class="nc" id="L251">    }</span>
+
+    /**
+     * Adds the user defined ObjectFactory to the myBatis Configuration.
+     *
+     * @param objectFactory
+     */
+    public void setObjectFactory(final ObjectFactory objectFactory) {
+<span class="nc" id="L259">        this.objectFactory = objectFactory;</span>
+<span class="nc" id="L260">    }</span>
+    
+    /**
+     * Adds the user defined ObjectWrapperFactory to the myBatis Configuration.
+     *
+     * @param objectWrapperFactory
+     */
+    public void setWrapperObjectFactory(final ObjectWrapperFactory objectWrapperFactory) {
+<span class="nc" id="L268">        this.objectWrapperFactory = objectWrapperFactory;</span>
+<span class="nc" id="L269">    }</span>
+
+    /**
+     * Registers the user defined plugins interceptors to the
+     * myBatis Configuration.
+     *
+     * @param plugins the user defined plugins interceptors.
+     */
+    public void setPlugins(Set&lt;Interceptor&gt; plugins) {
+<span class="nc" id="L278">        this.plugins = plugins;</span>
+<span class="nc" id="L279">    }</span>
+
+    /**
+     * @since 3.3
+     * @param mapUnderscoreToCamelCase
+     */
+    public void mapUnderscoreToCamelCase( boolean mapUnderscoreToCamelCase )
+    {
+<span class="nc" id="L287">        this.mapUnderscoreToCamelCase = mapUnderscoreToCamelCase;</span>
+<span class="nc" id="L288">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    public Configuration get() {
+<span class="fc" id="L294">        final Configuration configuration = new Configuration(environment);</span>
+<span class="fc" id="L295">        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
+<span class="fc" id="L296">        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
+<span class="fc" id="L297">        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
+<span class="fc" id="L298">        configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
+<span class="fc" id="L299">        configuration.setUseColumnLabel(useColumnLabel);</span>
+<span class="fc" id="L300">        configuration.setCacheEnabled(cacheEnabled);</span>
+<span class="fc" id="L301">        configuration.setDefaultExecutorType(defaultExecutorType);</span>
+<span class="fc" id="L302">        configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
+<span class="fc" id="L303">        configuration.setObjectFactory(objectFactory);</span>
+<span class="fc" id="L304">        configuration.setObjectWrapperFactory(objectWrapperFactory);</span>
+<span class="fc" id="L305">        configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);</span>
+<span class="fc" id="L306">        configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );</span>
+<span class="fc" id="L307">        configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
+<span class="fc" id="L308">        configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
+
+        try {
+<span class="fc bfc" id="L311" title="All 2 branches covered.">            if (databaseIdProvider != null) {</span>
+<span class="fc" id="L312">                configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
+            }
+
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">            for (Map.Entry&lt;String,Class&lt;?&gt;&gt; alias : typeAliases.entrySet()) {</span>
+<span class="nc" id="L316">                configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());</span>
+<span class="nc" id="L317">            }</span>
+
+<span class="fc bfc" id="L319" title="All 2 branches covered.">            for (Map.Entry&lt;Class&lt;?&gt;,TypeHandler&lt;?&gt;&gt; typeHandler : typeHandlers.entrySet()) {</span>
+<span class="fc" id="L320">                registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());</span>
+<span class="fc" id="L321">            }</span>
+
+<span class="fc bfc" id="L323" title="All 2 branches covered.">            for (TypeHandler&lt;?&gt; typeHandler : mappingTypeHandlers) {</span>
+<span class="fc" id="L324">                configuration.getTypeHandlerRegistry().register(typeHandler);</span>
+<span class="fc" id="L325">            }</span>
+
+<span class="fc bfc" id="L327" title="All 2 branches covered.">            for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">                if (!configuration.hasMapper(mapperClass)) {</span>
+<span class="fc" id="L329">                    configuration.addMapper(mapperClass);</span>
+                }
+<span class="fc" id="L331">            }</span>
+
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            for (Interceptor interceptor : plugins) {</span>
+<span class="fc" id="L334">                configuration.addInterceptor(interceptor);</span>
+<span class="fc" id="L335">            }</span>
+
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">            if (failFast) {</span>
+<span class="nc" id="L338">                configuration.getMappedStatementNames();</span>
+            }
+<span class="nc" id="L340">        } catch (Throwable cause) {</span>
+<span class="nc" id="L341">            throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;, cause);</span>
+        } finally {
+<span class="pc" id="L343">            ErrorContext.instance().reset();</span>
+<span class="fc" id="L344">        }</span>
+
+<span class="fc" id="L346">        return configuration;</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private &lt;T&gt; void registerTypeHandler(Configuration configuration, Class&lt;?&gt; type, TypeHandler&lt;?&gt; handler) {
+<span class="fc" id="L351">        configuration.getTypeHandlerRegistry().register((Class&lt;T&gt;)type, (TypeHandler&lt;T&gt;)handler);</span>
+<span class="fc" id="L352">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

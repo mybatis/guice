@@ -10,4 +10,5 @@ org.mybatis.guice.environment
 org.mybatis.guice.mappers
 org.mybatis.guice.session
 org.mybatis.guice.transactional
+org.mybatis.guice.type
 

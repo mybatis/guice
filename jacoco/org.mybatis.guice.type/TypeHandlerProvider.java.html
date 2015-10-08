@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TypeHandlerProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.type</a> &gt; <span class="el_source">TypeHandlerProvider.java</span></div><h1>TypeHandlerProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2015 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.type;
+
+import java.lang.reflect.Constructor;
+
+import org.apache.ibatis.type.TypeException;
+import org.apache.ibatis.type.TypeHandler;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
+import javax.inject.Provider;
+
+/**
+ * A generic MyBatis type provider.
+ *
+ * @version $Id$
+ */
+public final class TypeHandlerProvider&lt;TH extends TypeHandler&lt;? extends T&gt;, T&gt; implements Provider&lt;TH&gt; {
+    private final Class&lt;TH&gt; typeHandlerType;
+    private final Class&lt;T&gt; handledType;
+    @Inject
+    private Injector injector;
+
+<span class="fc" id="L39">    public TypeHandlerProvider(Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {</span>
+<span class="fc" id="L40">        this.typeHandlerType = typeHandlerType;</span>
+<span class="fc" id="L41">        this.handledType = handledType;</span>
+<span class="fc" id="L42">    }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public TH get() {
+<span class="fc" id="L46">        TH instance = null;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (handledType != null) {</span>
+            try {
+<span class="fc" id="L49">                Constructor&lt;?&gt; c = typeHandlerType.getConstructor(Class.class);</span>
+<span class="fc" id="L50">                instance = (TH) c.newInstance(handledType);</span>
+<span class="fc" id="L51">                injector.injectMembers(instance);</span>
+<span class="fc" id="L52">            } catch (NoSuchMethodException ignored) {</span>
+                // ignored
+<span class="nc" id="L54">            } catch (Exception e) {</span>
+<span class="nc" id="L55">                throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerType, e);</span>
+<span class="fc" id="L56">            }</span>
+        }
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (instance == null) {</span>
+            try {
+<span class="fc" id="L60">                instance = (TH) typeHandlerType.newInstance();</span>
+<span class="fc" id="L61">                injector.injectMembers(instance);</span>
+<span class="nc" id="L62">            } catch (Exception e) {</span>
+<span class="nc" id="L63">                throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerType, e);</span>
+<span class="fc" id="L64">            }</span>
+        }
+<span class="fc" id="L66">        return instance;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
