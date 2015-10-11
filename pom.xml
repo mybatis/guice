@@ -151,7 +151,7 @@
     <dependency>
       <groupId>org.apache.openejb</groupId>
       <artifactId>javaee-api</artifactId>
-      <version>6.0-5</version>
+      <version>6.0-6</version>
       <optional>true</optional>
     </dependency>
 
