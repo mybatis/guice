@@ -55,6 +55,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
         this.sqlSessionManager = newInstance(sqlSessionFactory);
     }
 
+    @Override
     public SqlSessionManager get() {
         return sqlSessionManager;
     }

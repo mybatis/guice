@@ -34,10 +34,12 @@ public class UserDaoImpl implements UserDao {
         this.sqlSession = sqlSession;
     }
 
+    @Override
     public User getUser(String userId) {
         return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
     }
 
+    @Override
     public void brokenInsert(User user) {
         this.sqlSession.insert("org.mybatis.guice.sample.mapper.UserMapper.brokenAdd", user);
     }

@@ -29,6 +29,7 @@ public class MySqlSessionFactoryProvider implements Provider<SqlSessionFactory> 
         this.configuration = configuration;
     }
     
+    @Override
     public SqlSessionFactory get() {
         return new MySqlSessionFactory(configuration);
     }

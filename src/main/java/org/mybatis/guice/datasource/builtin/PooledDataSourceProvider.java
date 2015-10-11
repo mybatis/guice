@@ -174,6 +174,7 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataSource get() {
         return dataSource;
     }

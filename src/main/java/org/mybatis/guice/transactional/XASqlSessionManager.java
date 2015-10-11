@@ -85,31 +85,37 @@ public class XASqlSessionManager implements XAResource {
     }
 
     //@Override
+    @Override
     public int getTransactionTimeout() throws XAException {
         return transactionTimeout;
     }
 
     //@Override
+    @Override
     public boolean setTransactionTimeout(int second) throws XAException {
         transactionTimeout = second;
         return true;
     }
 
     //@Override
+    @Override
     public void forget(Xid xid) throws XAException {
     }
 
     //@Override
+    @Override
     public Xid[] recover(int flags) throws XAException {
         return new Xid[0];
     }
 
     //@Override
+    @Override
     public boolean isSameRM(XAResource xares) throws XAException {
         return this == xares;
     }
 
     //@Override
+    @Override
     public void start(Xid xid, int flag) throws XAException {
         if(log.isDebugEnabled()) log.debug(id + ": call start old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
 
@@ -153,6 +159,7 @@ public class XASqlSessionManager implements XAResource {
     }
 
     //@Override
+    @Override
     public void end(Xid xid, int flag) throws XAException {
         if(log.isDebugEnabled()) log.debug(id + ": call end old state=" + xlatedState() + ", XID=" + xid + " and flag " + decodeXAResourceFlag(flag));
 
@@ -187,6 +194,7 @@ public class XASqlSessionManager implements XAResource {
     }
 
     //@Override
+    @Override
     public int prepare(Xid xid) throws XAException {
         if(log.isDebugEnabled()) log.debug(id + ": call prepare old state=" + xlatedState() + ", XID=" + xid);
 
@@ -215,6 +223,7 @@ public class XASqlSessionManager implements XAResource {
     }
 
     //@Override
+    @Override
     public void commit(Xid xid, boolean onePhase) throws XAException {
         if(log.isDebugEnabled()) log.debug(id + ": call commit old state=" + xlatedState() + ", XID=" + xid + " onePhase is " + onePhase);
 
@@ -256,6 +265,7 @@ public class XASqlSessionManager implements XAResource {
     }
 
     //@Override
+    @Override
     public void rollback(Xid xid) throws XAException {
         if(log.isDebugEnabled()) log.debug(id + ": call roolback old state=" + xlatedState() + ", XID=" + xid);
 

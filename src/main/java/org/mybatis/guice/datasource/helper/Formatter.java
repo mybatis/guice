@@ -89,6 +89,7 @@ final class Formatter implements Provider<String> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String get() {
         StringBuilder buffer = new StringBuilder();
         for (Provider<String> appender : appenders) {

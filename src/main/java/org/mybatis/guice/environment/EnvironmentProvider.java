@@ -60,6 +60,7 @@ public final class EnvironmentProvider implements Provider<Environment> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Environment get() {
         return new Environment(id, transactionFactory, dataSource);
     }

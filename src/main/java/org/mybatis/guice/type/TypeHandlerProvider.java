@@ -41,6 +41,7 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
         this.handledType = handledType;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public TH get() {
         TH instance = null;

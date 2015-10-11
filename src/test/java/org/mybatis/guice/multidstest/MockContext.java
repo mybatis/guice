@@ -29,10 +29,12 @@ public class MockContext extends InitialContext {
         super(lazy);
     }
 
+    @Override
     public Object lookup(String name) throws NamingException {
         return bindings.get(name);
     }
 
+    @Override
     public void bind(String name, Object obj) throws NamingException {
         bindings.put(name, obj);
     }

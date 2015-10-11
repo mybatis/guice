@@ -136,6 +136,7 @@ public enum JdbcHelper implements Module {
         this.driverClass = driverClass;
     }
 
+    @Override
     public void configure(Binder binder) {
         binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);
         binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new Formatter(urlTemplate)));

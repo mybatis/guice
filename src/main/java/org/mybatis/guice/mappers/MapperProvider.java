@@ -40,6 +40,7 @@ public final class MapperProvider<T> implements Provider<T> {
         this.sqlSessionManager = sqlSessionManager;
     }
 
+    @Override
     public T get() {
         return this.sqlSessionManager.getMapper(mapperType);
     }

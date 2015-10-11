@@ -40,15 +40,18 @@ public class CountUpdateInterceptor implements Interceptor {
     @Inject
     private Counter counter;
 
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
         counter.increment();
           return invocation.proceed();
     }
 
+    @Override
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
+    @Override
     public void setProperties(Properties properties) {
     }
 

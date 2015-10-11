@@ -41,6 +41,7 @@ import static com.google.inject.util.Providers.guicify;
 abstract class AbstractMyBatisModule extends AbstractModule {
 
     protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
+        @Override
         public boolean matches(Method method) {
             return method.getDeclaringClass() == Object.class;
         }

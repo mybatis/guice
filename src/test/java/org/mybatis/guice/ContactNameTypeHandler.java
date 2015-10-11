@@ -34,11 +34,14 @@ import org.mybatis.guice.Counter;
 public class ContactNameTypeHandler implements TypeHandler<String> {
 	private Counter counter;
 	
+	@Override
 	public void setParameter(PreparedStatement ps, int i, String parameter,
 			JdbcType jdbcType) throws SQLException {
 		counter.increment();
 		ps.setString(i, parameter);
 	}
+
+	@Override
 	public String getResult(ResultSet rs, String columnName)
 			throws SQLException {
 		counter.increment();
@@ -49,6 +52,8 @@ public class ContactNameTypeHandler implements TypeHandler<String> {
 			return ret;
 		}
 	}
+
+	@Override
 	public String getResult(ResultSet rs, int columnIndex) throws SQLException {
 		counter.increment();
 		String ret = rs.getString(columnIndex);
@@ -58,6 +63,8 @@ public class ContactNameTypeHandler implements TypeHandler<String> {
 			return ret;
 		}
 	}
+
+	@Override
 	public String getResult(CallableStatement cs, int columnIndex)
 			throws SQLException {
 		counter.increment();

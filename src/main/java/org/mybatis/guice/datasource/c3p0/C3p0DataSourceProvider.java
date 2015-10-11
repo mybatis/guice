@@ -343,6 +343,7 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataSource get() {
         return dataSource;
     }

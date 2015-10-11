@@ -290,6 +290,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Configuration get() {
         final Configuration configuration = new Configuration(environment);
         configuration.setLazyLoadingEnabled(lazyLoadingEnabled);

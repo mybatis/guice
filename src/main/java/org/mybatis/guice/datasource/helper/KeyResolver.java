@@ -52,6 +52,7 @@ final class KeyResolver implements Provider<String> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String get() {
         try {
             return injector.getInstance(key);

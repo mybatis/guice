@@ -40,16 +40,19 @@ public class FooServiceDaoImpl implements FooService {
         this.userDao = userDao;
     }
 
+    @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public User doSomeBusinessStuff(String userId) {
         return this.userDao.getUser(userId);
     }
 
+    @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
     public void brokenInsert(User user) {
         this.userDao.brokenInsert(user);
     }
     
+    @Override
     public void brokenInsert2(User user) {
     	this.userDao.brokenInsert(user);
     }
