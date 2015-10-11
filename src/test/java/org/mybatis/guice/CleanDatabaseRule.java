@@ -41,6 +41,7 @@ public class CleanDatabaseRule implements TestRule {
         this.addressConverter = addressConverter;
     }
     
+    @Override
     public Statement apply(final Statement base, Description description) {
         return new Statement() {
             @Override

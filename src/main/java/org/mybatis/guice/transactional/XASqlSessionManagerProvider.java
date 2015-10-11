@@ -25,6 +25,7 @@ public class XASqlSessionManagerProvider implements Provider<XAResource> {
     @Inject
     private SqlSessionManager sqlSessionManager;
     
+    @Override
     public XAResource get() {
         return new XASqlSessionManager(sqlSessionManager);
     }

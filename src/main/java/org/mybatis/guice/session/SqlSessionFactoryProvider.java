@@ -67,6 +67,7 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
     /**
      * {@inheritDoc}
      */
+    @Override
     public SqlSessionFactory get() {
         return sqlSessionFactory;
     }

@@ -40,15 +40,18 @@ public class FooServiceMapperImpl implements FooService {
         this.userMapper = userMapper;
     }
 
+    @Override
     public User doSomeBusinessStuff(String userId) {
         return this.userMapper.getUser(userId);
     }
 
+    @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
     public void brokenInsert(User user) {
     	this.userMapper.brokenAdd(user);
     }
 
+    @Override
     public void brokenInsert2(User user) {
     	this.userMapper.brokenAdd(user);
     }

@@ -71,6 +71,7 @@ abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
             // bindings
             List<Module> modules = this.createMyBatisModule();
             modules.add(new Module() {
+                @Override
                 public void configure(Binder binder) {
                     bindProperties(binder, createTestProperties());
                     binder.bind(Contact.class).toInstance(contact);

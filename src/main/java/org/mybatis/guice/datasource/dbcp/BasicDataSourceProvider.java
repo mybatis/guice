@@ -295,6 +295,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataSource get() {
         return dataSource;
     }

@@ -105,6 +105,7 @@ public class SampleSqlSessionTest {
 
         }); */
         modules.add(new Module() {
+            @Override
             public void configure(Binder binder) {
                 bindProperties(binder, createTestProperties());
                 binder.bind(FooService.class).to(FooServiceDaoImpl.class);

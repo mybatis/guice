@@ -81,6 +81,7 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataSource get() {
         JndiDataSourceFactory factory = new JndiDataSourceFactory();
         factory.setProperties(properties);

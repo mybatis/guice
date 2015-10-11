@@ -390,6 +390,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         return new AliasBinder() {
 
+            @Override
             public void to(final Class<?> clazz) {
                 checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
                 aliases.addBinding(alias).toInstance(clazz);
@@ -463,6 +464,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         return new TypeHandlerBinder<T>() {
 
+            @Override
             public void with(final Class<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler);

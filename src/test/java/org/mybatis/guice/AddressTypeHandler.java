@@ -35,6 +35,7 @@ public class AddressTypeHandler implements TypeHandler<Address> {
 
     private AddressConverter addressConverter;
 
+    @Override
     public void setParameter(PreparedStatement ps, int i, Address parameter, JdbcType jdbcType) throws SQLException {
         if (parameter == null) {
             ps.setNull(i, jdbcType.TYPE_CODE);
@@ -43,6 +44,7 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         }
     }
 
+    @Override
     public Address getResult(ResultSet rs, String columnName) throws SQLException {
         String input = rs.getString(columnName);
         if (rs.wasNull()) {
@@ -56,6 +58,7 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         }
     }
 
+    @Override
     public Address getResult(CallableStatement cs, int columnIndex) throws SQLException {
         String input = cs.getString(columnIndex);
         if (cs.wasNull()) {
@@ -69,6 +72,7 @@ public class AddressTypeHandler implements TypeHandler<Address> {
         }
     }
 
+    @Override
     public Address getResult(ResultSet rs, int columnIndex) throws SQLException {
         String input = rs.getString(columnIndex);
         if (rs.wasNull()) {

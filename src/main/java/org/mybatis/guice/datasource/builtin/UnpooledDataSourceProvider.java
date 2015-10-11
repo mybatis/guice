@@ -104,6 +104,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public DataSource get() {
         return unpooledDataSource;
     }

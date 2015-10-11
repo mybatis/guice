@@ -170,6 +170,7 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
         }
     }
 
+    @Override
     public DataSource get() {
         return dataSource;
     }

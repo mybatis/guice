@@ -63,6 +63,7 @@ public final class TransactionalMethodInterceptor implements MethodInterceptor {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         Method interceptedMethod = invocation.getMethod();
         Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);

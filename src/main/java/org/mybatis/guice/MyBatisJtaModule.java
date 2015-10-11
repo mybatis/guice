@@ -103,6 +103,7 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
             this.wrapper = wrapper;
         }
 
+        @Override
         public T get() {
             return wrapper;
         }
