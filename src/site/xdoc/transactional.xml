@@ -269,6 +269,29 @@ class ServiceB {
             take care to manage them in the same session, even if annotated to
             start a new transaction.
         </p>
+        <p>
+            Configuration for nested transactions:
+            <source><![CDATA[Class<? extends Provider<DataSource>> dataSourceProviderClass = [...];
+Class<? extends Provider<TransactionFactory>> txFactoryProviderClass = [...];
+
+Injector injector = Guice.createInjector(new MyBatisModule() {
+
+        @Override
+        protected void initialize() {
+            environmentId("test");
+            bindDataSourceProviderType(dataSourceProviderType);
+            bindTransactionFactoryType(txFactoryClass);
+            addMapperClass(FooMapper.class);
+            addMapperClass(BarMapper.class);
+            // Must bind services in the MyBatisModule for @Transactional.
+            bind(ServiceA.class);
+            bind(ServiceB.class);
+            bind(CompositeService.class);
+        }
+
+    }
+);]]></source>
+        </p>
     </subsection>
 
 </section>
