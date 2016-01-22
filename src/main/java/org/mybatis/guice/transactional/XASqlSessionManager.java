@@ -17,8 +17,8 @@ package org.mybatis.guice.transactional;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
@@ -43,7 +43,7 @@ public class XASqlSessionManager implements XAResource {
     private Xid xid;
     private int state = NO_TX;
 
-    private static HashMap<GlobalKey, GlobalToken> globalTokens = new HashMap<XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken>();
+    private static ConcurrentHashMap<GlobalKey, GlobalToken> globalTokens = new ConcurrentHashMap<XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken>();
 
     public XASqlSessionManager(SqlSessionManager sqlSessionManager) {
         this.sqlSessionManager = sqlSessionManager;
