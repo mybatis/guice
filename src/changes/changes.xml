@@ -28,7 +28,13 @@
   </properties>
 
   <body>
-    <release version="3.7" date="2015-??-??" description="maintenance release">
+    <release version="3.7.1" date="2016-01-22" description="maintenance release">
+      <action dev="christian.poitras" type="upadte">
+        Fixes concurrency error with JTA.
+      </action>
+    </release>
+
+    <release version="3.7" date="2015-07-25" description="maintenance release">
       <action dev="christian.poitras" type="add">
         Default scripting language can be used.
       </action>
