@@ -157,6 +157,10 @@ InformixServer=${informixserver};DatabaseServer=${JDBC.schema}</code></td>
                         <td><code>jdbc:odbc:${ODBC.datasource}</code></td>
                     </tr>
                     <tr>
+                        <td><code>JdbcHelper.MariaDB</code></td>
+                        <td><code>jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}</code></td>
+                    </tr>
+                    <tr>
                         <td><code>JdbcHelper.MaxDB</code></td>
                         <td><code>jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}</code></td>
                     </tr>
