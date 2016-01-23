@@ -63,99 +63,100 @@ import static java.lang.Thread.currentThread;
     /**
      * {@inheritDoc}
      */
+    @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-<span class="fc" id="L67">        Method interceptedMethod = invocation.getMethod();</span>
-<span class="fc" id="L68">        Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);</span>
+<span class="fc" id="L68">        Method interceptedMethod = invocation.getMethod();</span>
+<span class="fc" id="L69">        Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);</span>
 
         // The annotation may be present at the class level instead
-<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (transactional == null) {</span>
-<span class="fc" id="L72">            transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (transactional == null) {</span>
+<span class="fc" id="L73">            transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);</span>
         }
 
-<span class="fc" id="L75">        String debugPrefix = null;</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (this.log.isDebugEnabled()) {</span>
-<span class="nc" id="L77">            debugPrefix = format(&quot;[Intercepted method: %s]&quot;, interceptedMethod.toGenericString());</span>
+<span class="fc" id="L76">        String debugPrefix = null;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (this.log.isDebugEnabled()) {</span>
+<span class="nc" id="L78">            debugPrefix = format(&quot;[Intercepted method: %s]&quot;, interceptedMethod.toGenericString());</span>
         }
 
-<span class="fc" id="L80">        boolean isSessionInherited = this.sqlSessionManager.isManagedSessionStarted();</span>
+<span class="fc" id="L81">        boolean isSessionInherited = this.sqlSessionManager.isManagedSessionStarted();</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (isSessionInherited) {</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L84">                log.debug(format(&quot;%s - SqlSession already set for thread: %s&quot;,</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (isSessionInherited) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L85">                log.debug(format(&quot;%s - SqlSession already set for thread: %s&quot;,</span>
                         debugPrefix,
                         currentThread().getId()));
             }
         } else {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L90">                log.debug(format(&quot;%s - SqlSession not set for thread: %s, creating a new one&quot;,</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L91">                log.debug(format(&quot;%s - SqlSession not set for thread: %s, creating a new one&quot;,</span>
                         debugPrefix,
                         currentThread().getId()));
             }
 
-<span class="fc" id="L95">            sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());</span>
+<span class="fc" id="L96">            sqlSessionManager.startManagedSession(transactional.executorType(), transactional.isolation().getTransactionIsolationLevel());</span>
         }
 
-<span class="fc" id="L98">        Object object = null;</span>
-<span class="fc" id="L99">        boolean needsRollback = transactional.rollbackOnly();</span>
+<span class="fc" id="L99">        Object object = null;</span>
+<span class="fc" id="L100">        boolean needsRollback = transactional.rollbackOnly();</span>
         try {
-<span class="fc" id="L101">            object = invocation.proceed();</span>
-<span class="fc" id="L102">        } catch (Throwable t) {</span>
-<span class="fc" id="L103">            needsRollback = true;</span>
-<span class="fc" id="L104">            throw convertThrowableIfNeeded(invocation, transactional, t);</span>
+<span class="fc" id="L102">            object = invocation.proceed();</span>
+<span class="fc" id="L103">        } catch (Throwable t) {</span>
+<span class="fc" id="L104">            needsRollback = true;</span>
+<span class="fc" id="L105">            throw convertThrowableIfNeeded(invocation, transactional, t);</span>
         } finally {
-<span class="fc bfc" id="L106" title="All 4 branches covered.">            if (!isSessionInherited) {</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">            if (!isSessionInherited) {</span>
                 try {
-<span class="pc bpc" id="L108" title="2 of 4 branches missed.">                  if (needsRollback) {</span>
-<span class="pc bpc" id="L109" title="3 of 4 branches missed.">                      if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L110">                          log.debug(debugPrefix</span>
+<span class="pc bpc" id="L109" title="2 of 4 branches missed.">                  if (needsRollback) {</span>
+<span class="pc bpc" id="L110" title="3 of 4 branches missed.">                      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L111">                          log.debug(debugPrefix</span>
                                   + &quot; - SqlSession of thread: &quot;
                                   + currentThread().getId()
                                   + &quot; rolling back&quot;);
                       }
                       
-<span class="pc" id="L116">                      sqlSessionManager.rollback(true);</span>
+<span class="pc" id="L117">                      sqlSessionManager.rollback(true);</span>
                   } else {
-<span class="pc bpc" id="L118" title="3 of 4 branches missed.">                      if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L119">                          log.debug(debugPrefix</span>
+<span class="pc bpc" id="L119" title="3 of 4 branches missed.">                      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L120">                          log.debug(debugPrefix</span>
                                   + &quot; - SqlSession of thread: &quot;
                                   + currentThread().getId()
                                   + &quot; committing&quot;);
                       }
                       
-<span class="pc" id="L125">                      sqlSessionManager.commit(transactional.force());</span>
+<span class="pc" id="L126">                      sqlSessionManager.commit(transactional.force());</span>
                   }
                 } finally {
-<span class="pc bpc" id="L128" title="6 of 8 branches missed.">                  if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L129">                      log.debug(format(&quot;%s - SqlSession of thread: %s terminated its life-cycle, closing it&quot;,</span>
+<span class="pc bpc" id="L129" title="6 of 8 branches missed.">                  if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L130">                      log.debug(format(&quot;%s - SqlSession of thread: %s terminated its life-cycle, closing it&quot;,</span>
                               debugPrefix,
                               currentThread().getId()));
                   }
                   
-<span class="pc" id="L134">                  sqlSessionManager.close();</span>
-<span class="fc" id="L135">                }</span>
-<span class="pc bpc" id="L136" title="2 of 4 branches missed.">            } else if (log.isDebugEnabled()) {</span>
-<span class="pc" id="L137">                log.debug(format(&quot;%s - SqlSession of thread: %s is inherited, skipped close operation&quot;,</span>
+<span class="pc" id="L135">                  sqlSessionManager.close();</span>
+<span class="fc" id="L136">                }</span>
+<span class="pc bpc" id="L137" title="2 of 4 branches missed.">            } else if (log.isDebugEnabled()) {</span>
+<span class="pc" id="L138">                log.debug(format(&quot;%s - SqlSession of thread: %s is inherited, skipped close operation&quot;,</span>
                         debugPrefix,
                         currentThread().getId()));
             }
         }
 
-<span class="fc" id="L143">        return object;</span>
+<span class="fc" id="L144">        return object;</span>
     }
 
     private Throwable convertThrowableIfNeeded(MethodInvocation invocation, Transactional transactional, Throwable t) {
-<span class="fc" id="L147">        Method interceptedMethod = invocation.getMethod();</span>
+<span class="fc" id="L148">        Method interceptedMethod = invocation.getMethod();</span>
         
         // check the caught exception is declared in the invoked method
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        for (Class&lt;?&gt; exceptionClass : interceptedMethod.getExceptionTypes()) {</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">            if (exceptionClass.isAssignableFrom(t.getClass())) {</span>
-<span class="fc" id="L152">                return t;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        for (Class&lt;?&gt; exceptionClass : interceptedMethod.getExceptionTypes()) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">            if (exceptionClass.isAssignableFrom(t.getClass())) {</span>
+<span class="fc" id="L153">                return t;</span>
             }
         }
 
         // check the caught exception is of same rethrow type
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (transactional.rethrowExceptionsAs().isAssignableFrom(t.getClass())) {</span>
-<span class="fc" id="L158">            return t;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (transactional.rethrowExceptionsAs().isAssignableFrom(t.getClass())) {</span>
+<span class="fc" id="L159">            return t;</span>
         }
 
         // rethrow the exception as new exception
@@ -163,52 +164,52 @@ import static java.lang.Thread.currentThread;
         Object[] initargs;
         Class&lt;?&gt;[] initargsType;
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (transactional.exceptionMessage().length() != 0) {</span>
-<span class="fc" id="L167">            errorMessage = format(transactional.exceptionMessage(), invocation.getArguments());</span>
-<span class="fc" id="L168">            initargs = new Object[]{ errorMessage, t };</span>
-<span class="fc" id="L169">            initargsType = MESSAGE_CAUSE_TYPES;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (transactional.exceptionMessage().length() != 0) {</span>
+<span class="fc" id="L168">            errorMessage = format(transactional.exceptionMessage(), invocation.getArguments());</span>
+<span class="fc" id="L169">            initargs = new Object[]{ errorMessage, t };</span>
+<span class="fc" id="L170">            initargsType = MESSAGE_CAUSE_TYPES;</span>
         } else {
-<span class="fc" id="L171">            initargs = new Object[]{ t };</span>
-<span class="fc" id="L172">            initargsType = CAUSE_TYPES;</span>
+<span class="fc" id="L172">            initargs = new Object[]{ t };</span>
+<span class="fc" id="L173">            initargsType = CAUSE_TYPES;</span>
         }
 
-<span class="fc" id="L175">        Constructor&lt;? extends Throwable&gt; exceptionConstructor = getMatchingConstructor(transactional.rethrowExceptionsAs(), initargsType);</span>
-<span class="fc" id="L176">        Throwable rethrowEx = null;</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (exceptionConstructor != null) {</span>
+<span class="fc" id="L176">        Constructor&lt;? extends Throwable&gt; exceptionConstructor = getMatchingConstructor(transactional.rethrowExceptionsAs(), initargsType);</span>
+<span class="fc" id="L177">        Throwable rethrowEx = null;</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        if (exceptionConstructor != null) {</span>
             try {
-<span class="fc" id="L179">                rethrowEx = exceptionConstructor.newInstance(initargs);</span>
-<span class="nc" id="L180">            } catch (Exception e) {</span>
-<span class="nc" id="L181">                errorMessage = format(&quot;Impossible to re-throw '%s', it needs the constructor with %s argument(s).&quot;,</span>
+<span class="fc" id="L180">                rethrowEx = exceptionConstructor.newInstance(initargs);</span>
+<span class="nc" id="L181">            } catch (Exception e) {</span>
+<span class="nc" id="L182">                errorMessage = format(&quot;Impossible to re-throw '%s', it needs the constructor with %s argument(s).&quot;,</span>
                         transactional.rethrowExceptionsAs().getName(),
                         Arrays.toString(initargsType));
-<span class="nc" id="L184">                log.error(errorMessage, e);</span>
-<span class="nc" id="L185">                rethrowEx = new RuntimeException(errorMessage, e);</span>
-<span class="pc" id="L186">            }</span>
+<span class="nc" id="L185">                log.error(errorMessage, e);</span>
+<span class="nc" id="L186">                rethrowEx = new RuntimeException(errorMessage, e);</span>
+<span class="pc" id="L187">            }</span>
         } else {
-<span class="nc" id="L188">            errorMessage = format(&quot;Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).&quot;,</span>
+<span class="nc" id="L189">            errorMessage = format(&quot;Impossible to re-throw '%s', it needs the constructor with %s or %s argument(s).&quot;,</span>
                     transactional.rethrowExceptionsAs().getName(),
                     Arrays.toString(CAUSE_TYPES),
                     Arrays.toString(MESSAGE_CAUSE_TYPES));
-<span class="nc" id="L192">            log.error(errorMessage);</span>
-<span class="nc" id="L193">            rethrowEx = new RuntimeException(errorMessage);</span>
+<span class="nc" id="L193">            log.error(errorMessage);</span>
+<span class="nc" id="L194">            rethrowEx = new RuntimeException(errorMessage);</span>
         }
 
-<span class="fc" id="L196">        return rethrowEx;        </span>
+<span class="fc" id="L197">        return rethrowEx;        </span>
     }
     
     @SuppressWarnings(&quot;unchecked&quot;)
     private static &lt;E extends Throwable&gt; Constructor&lt;E&gt; getMatchingConstructor(Class&lt;E&gt; type,
             Class&lt;?&gt;[] argumentsType) {
-<span class="fc" id="L202">        Class&lt;? super E&gt; currentType = type;</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">        while (Object.class != currentType) {</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            for (Constructor&lt;?&gt; constructor : currentType.getConstructors()) {</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">                if (Arrays.equals(argumentsType, constructor.getParameterTypes())) {</span>
-<span class="fc" id="L206">                    return (Constructor&lt;E&gt;) constructor;</span>
+<span class="fc" id="L203">        Class&lt;? super E&gt; currentType = type;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        while (Object.class != currentType) {</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">            for (Constructor&lt;?&gt; constructor : currentType.getConstructors()) {</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                if (Arrays.equals(argumentsType, constructor.getParameterTypes())) {</span>
+<span class="fc" id="L207">                    return (Constructor&lt;E&gt;) constructor;</span>
                 }
             }
-<span class="nc" id="L209">            currentType = currentType.getSuperclass();</span>
+<span class="nc" id="L210">            currentType = currentType.getSuperclass();</span>
         }
-<span class="nc" id="L211">        return null;</span>
+<span class="nc" id="L212">        return null;</span>
     }
 
 }

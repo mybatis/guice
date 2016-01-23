@@ -136,10 +136,11 @@ import static com.google.inject.util.Providers.guicify;
 <span class="fc" id="L136">        this.driverClass = driverClass;</span>
 <span class="fc" id="L137">    }</span>
 
+    @Override
     public void configure(Binder binder) {
-<span class="fc" id="L140">        binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);</span>
-<span class="fc" id="L141">        binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new Formatter(urlTemplate)));</span>
-<span class="fc" id="L142">    }</span>
+<span class="fc" id="L141">        binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);</span>
+<span class="fc" id="L142">        binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new Formatter(urlTemplate)));</span>
+<span class="fc" id="L143">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

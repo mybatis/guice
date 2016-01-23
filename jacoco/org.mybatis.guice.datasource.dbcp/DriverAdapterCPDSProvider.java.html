@@ -109,8 +109,9 @@ public final class DriverAdapterCPDSProvider implements Provider&lt;ConnectionPo
 <span class="nc" id="L109">        adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
 <span class="nc" id="L110">    }</span>
 
+    @Override
     public ConnectionPoolDataSource get() {
-<span class="nc" id="L113">        return adapter;</span>
+<span class="nc" id="L114">        return adapter;</span>
     }
 
 }

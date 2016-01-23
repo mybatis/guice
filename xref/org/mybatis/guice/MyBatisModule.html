@@ -398,239 +398,241 @@
 <a class="jxr_linenumber" name="L390" href="#L390">390</a> 
 <a class="jxr_linenumber" name="L391" href="#L391">391</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/mybatis/guice/binder/AliasBinder.html">AliasBinder</a>() {
 <a class="jxr_linenumber" name="L392" href="#L392">392</a> 
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> to(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) {
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>                 checkArgument(clazz != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Null type not valid for alias '%s'"</span>, alias);
-<a class="jxr_linenumber" name="L395" href="#L395">395</a>                 aliases.addBinding(alias).toInstance(clazz);
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>             }
-<a class="jxr_linenumber" name="L397" href="#L397">397</a> 
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>         };
-<a class="jxr_linenumber" name="L399" href="#L399">399</a>     }
-<a class="jxr_linenumber" name="L400" href="#L400">400</a> 
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
-<a class="jxr_linenumber" name="L403" href="#L403">403</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
-<a class="jxr_linenumber" name="L404" href="#L404">404</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L405" href="#L405">405</a> <em class="jxr_javadoccomment">     * @param type the specified types have to be bind</em>
-<a class="jxr_linenumber" name="L406" href="#L406">406</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L407" href="#L407">407</a> 	<strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAlias(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; type) {
-<a class="jxr_linenumber" name="L408" href="#L408">408</a> 		checkArgument(type != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'type' must be not null"</span>);
-<a class="jxr_linenumber" name="L409" href="#L409">409</a> 
-<a class="jxr_linenumber" name="L410" href="#L410">410</a> 		String alias = type.getSimpleName();
-<a class="jxr_linenumber" name="L411" href="#L411">411</a> 		<em class="jxr_comment">// check if the class uses the Alias annotation.</em>
-<a class="jxr_linenumber" name="L412" href="#L412">412</a> 		<strong class="jxr_keyword">final</strong> Alias annotation = type.getAnnotation(Alias.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L413" href="#L413">413</a> 		<strong class="jxr_keyword">if</strong> (annotation != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L414" href="#L414">414</a> 			alias = annotation.value();
-<a class="jxr_linenumber" name="L415" href="#L415">415</a> 		}
-<a class="jxr_linenumber" name="L416" href="#L416">416</a> 		addAlias(alias).to(type);
-<a class="jxr_linenumber" name="L417" href="#L417">417</a> 	}
-<a class="jxr_linenumber" name="L418" href="#L418">418</a> 
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L420" href="#L420">420</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
-<a class="jxr_linenumber" name="L421" href="#L421">421</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
-<a class="jxr_linenumber" name="L422" href="#L422">422</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L423" href="#L423">423</a> <em class="jxr_javadoccomment">     * @param types the specified types have to be bind</em>
-<a class="jxr_linenumber" name="L424" href="#L424">424</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> Collection&lt;Class&lt;?&gt;&gt; types) {
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         checkArgument(types != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'types' must be not null"</span>);
-<a class="jxr_linenumber" name="L427" href="#L427">427</a> 
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>         <strong class="jxr_keyword">for</strong> (Class&lt;?&gt; type : types) {
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>             addSimpleAlias(type);
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>         }
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>     }
-<a class="jxr_linenumber" name="L432" href="#L432">432</a> 
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L434" href="#L434">434</a> <em class="jxr_javadoccomment">     * Adds all Classes in the given package as a simple alias.</em>
-<a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
-<a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
-<a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for classes to alias.</em>
-<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     * @param test a test to run against the objects found in the specified package</em>
-<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> String packageName, <strong class="jxr_keyword">final</strong> ResolverUtil.Test test) {
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>         addSimpleAliases(getClasses(test, packageName));
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>     }
-<a class="jxr_linenumber" name="L444" href="#L444">444</a> 
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L446" href="#L446">446</a> <em class="jxr_javadoccomment">     * Adds all Classes in the given package as a simple alias.</em>
-<a class="jxr_linenumber" name="L447" href="#L447">447</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
-<a class="jxr_linenumber" name="L448" href="#L448">448</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
-<a class="jxr_linenumber" name="L449" href="#L449">449</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L450" href="#L450">450</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for classes to alias</em>
-<a class="jxr_linenumber" name="L451" href="#L451">451</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> String packageName) {
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>         addSimpleAliases(getClasses(packageName));
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>     }
-<a class="jxr_linenumber" name="L455" href="#L455">455</a> 
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     * Add a user defined Type Handler letting google-guice creating it.</em>
-<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     * @param type the specified type has to be handled.</em>
-<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> &lt;T&gt; TypeHandlerBinder&lt;T&gt; handleType(<strong class="jxr_keyword">final</strong> Class&lt;T&gt; type) {
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>         checkArgument(type != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'type' must be not null"</span>);
-<a class="jxr_linenumber" name="L463" href="#L463">463</a> 
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> TypeHandlerBinder&lt;T&gt;() {
-<a class="jxr_linenumber" name="L465" href="#L465">465</a> 
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> with(<strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;? <strong class="jxr_keyword">extends</strong> T&gt;&gt; handler) {
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>                 checkArgument(handler != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"TypeHandler must not be null for '%s'"</span>, type.getName());
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>                 handlers.addBinding(type).to(handler);
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>                 bindTypeHandler(handler, type);
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>             }
-<a class="jxr_linenumber" name="L471" href="#L471">471</a> 
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>         };
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>     }
-<a class="jxr_linenumber" name="L474" href="#L474">474</a> 
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handler, letting</em>
-<a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
-<a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L479" href="#L479">479</a> <em class="jxr_javadoccomment">     * @param handlerClass the handler type.</em>
-<a class="jxr_linenumber" name="L480" href="#L480">480</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlerClass(Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt; handlerClass) {
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         checkArgument(handlerClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'handlerClass' must not be null"</span>);
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>     	mappingTypeHandlers.addBinding().to(handlerClass);
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>     	bindTypeHandler(handlerClass, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>     }
-<a class="jxr_linenumber" name="L486" href="#L486">486</a> 
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L488" href="#L488">488</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handlers, letting</em>
-<a class="jxr_linenumber" name="L489" href="#L489">489</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
-<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">     * @param handlersClasses the handler type.</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlersClasses(Collection&lt;Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt;&gt; handlersClasses) {
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>         checkArgument(handlersClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'handlersClasses' must not be null"</span>);
-<a class="jxr_linenumber" name="L495" href="#L495">495</a> 
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         <strong class="jxr_keyword">for</strong> (Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>             addTypeHandlerClass(handlerClass);
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>         }
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>     }
-<a class="jxr_linenumber" name="L500" href="#L500">500</a> 
-<a class="jxr_linenumber" name="L501" href="#L501">501</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handlers in the given package, letting</em>
-<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
-<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * @param packageName the package where looking for type handlers.</em>
-<a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlerClasses(String packageName) {
-<a class="jxr_linenumber" name="L508" href="#L508">508</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>         addTypeHandlersClasses(<strong class="jxr_keyword">new</strong> ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;()
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>                 .find(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(TypeHandler.<strong class="jxr_keyword">class</strong>), packageName)
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>                 .getClasses());
-<a class="jxr_linenumber" name="L512" href="#L512">512</a>     }
-<a class="jxr_linenumber" name="L513" href="#L513">513</a> 
-<a class="jxr_linenumber" name="L514" href="#L514">514</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L515" href="#L515">515</a> <em class="jxr_javadoccomment">     * Adds the user defined myBatis interceptor plugins type, letting</em>
-<a class="jxr_linenumber" name="L516" href="#L516">516</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
-<a class="jxr_linenumber" name="L517" href="#L517">517</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L518" href="#L518">518</a> <em class="jxr_javadoccomment">     * @param interceptorClass The user defined MyBatis interceptor plugin type</em>
-<a class="jxr_linenumber" name="L519" href="#L519">519</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorClass(Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt; interceptorClass) {
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>         checkArgument(interceptorClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'interceptorClass' must not be null"</span>);
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>         interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>     }
-<a class="jxr_linenumber" name="L524" href="#L524">524</a> 
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L526" href="#L526">526</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis interceptors plugins types, letting</em>
-<a class="jxr_linenumber" name="L527" href="#L527">527</a> <em class="jxr_javadoccomment">     * google-guice creating them.</em>
-<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L529" href="#L529">529</a> <em class="jxr_javadoccomment">     * @param interceptorsClasses the user defined MyBatis Interceptors plugins types</em>
-<a class="jxr_linenumber" name="L530" href="#L530">530</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorsClasses(Collection&lt;Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt;&gt; interceptorsClasses) {
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>         checkArgument(interceptorsClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'interceptorsClasses' must not be null"</span>);
-<a class="jxr_linenumber" name="L533" href="#L533">533</a> 
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>         <strong class="jxr_keyword">for</strong> (Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt; interceptorClass : interceptorsClasses) {
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>             addInterceptorClass(interceptorClass);
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>         }
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
-<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L540" href="#L540">540</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis interceptors plugins types in the given package,</em>
-<a class="jxr_linenumber" name="L541" href="#L541">541</a> <em class="jxr_javadoccomment">     * letting google-guice creating them.</em>
-<a class="jxr_linenumber" name="L542" href="#L542">542</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L543" href="#L543">543</a> <em class="jxr_javadoccomment">     * @param packageName the package where looking for Interceptors plugins types.</em>
-<a class="jxr_linenumber" name="L544" href="#L544">544</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorsClasses(String packageName) {
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>         addInterceptorsClasses(<strong class="jxr_keyword">new</strong> ResolverUtil&lt;Interceptor&gt;()
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>                 .find(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(Interceptor.<strong class="jxr_keyword">class</strong>), packageName)
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>                 .getClasses());
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>     }
-<a class="jxr_linenumber" name="L551" href="#L551">551</a> 
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L553" href="#L553">553</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
-<a class="jxr_linenumber" name="L554" href="#L554">554</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L555" href="#L555">555</a> <em class="jxr_javadoccomment">     * @param mapperClass the user defined mapper classes.</em>
-<a class="jxr_linenumber" name="L556" href="#L556">556</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClass(Class&lt;?&gt; mapperClass) {
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>         checkArgument(mapperClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'mapperClass' must not be null"</span>);
-<a class="jxr_linenumber" name="L559" href="#L559">559</a> 
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>         mappers.addBinding().toInstance(mapperClass);
-<a class="jxr_linenumber" name="L561" href="#L561">561</a>         bindMapper(mapperClass);
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>     }
-<a class="jxr_linenumber" name="L563" href="#L563">563</a> 
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L565" href="#L565">565</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
-<a class="jxr_linenumber" name="L566" href="#L566">566</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L567" href="#L567">567</a> <em class="jxr_javadoccomment">     * @param mapperClasses the user defined mapper classes</em>
-<a class="jxr_linenumber" name="L568" href="#L568">568</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L569" href="#L569">569</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(Collection&lt;Class&lt;?&gt;&gt; mapperClasses) {
-<a class="jxr_linenumber" name="L570" href="#L570">570</a>         checkArgument(mapperClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'mapperClasses' must not be null"</span>);
-<a class="jxr_linenumber" name="L571" href="#L571">571</a> 
-<a class="jxr_linenumber" name="L572" href="#L572">572</a>         <strong class="jxr_keyword">for</strong> (Class&lt;?&gt; mapperClass : mapperClasses) {
-<a class="jxr_linenumber" name="L573" href="#L573">573</a>             addMapperClass(mapperClass);
-<a class="jxr_linenumber" name="L574" href="#L574">574</a>         }
-<a class="jxr_linenumber" name="L575" href="#L575">575</a>     }
-<a class="jxr_linenumber" name="L576" href="#L576">576</a> 
-<a class="jxr_linenumber" name="L577" href="#L577">577</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L578" href="#L578">578</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
-<a class="jxr_linenumber" name="L579" href="#L579">579</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L580" href="#L580">580</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for mappers to add.</em>
-<a class="jxr_linenumber" name="L581" href="#L581">581</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L582" href="#L582">582</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(<strong class="jxr_keyword">final</strong> String packageName) {
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>         addMapperClasses(getClasses(packageName));
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>     }
-<a class="jxr_linenumber" name="L585" href="#L585">585</a> 
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L587" href="#L587">587</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
-<a class="jxr_linenumber" name="L588" href="#L588">588</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L589" href="#L589">589</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for mappers to add.</em>
-<a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     * @param test a test to run against the objects found in the specified package.</em>
-<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L592" href="#L592">592</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(<strong class="jxr_keyword">final</strong> String packageName, <strong class="jxr_keyword">final</strong> ResolverUtil.Test test) {
-<a class="jxr_linenumber" name="L593" href="#L593">593</a>         addMapperClasses(getClasses(test, packageName));
-<a class="jxr_linenumber" name="L594" href="#L594">594</a>     }
-<a class="jxr_linenumber" name="L595" href="#L595">595</a> 
-<a class="jxr_linenumber" name="L596" href="#L596">596</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L597" href="#L597">597</a> <em class="jxr_javadoccomment">     * Return a set of all classes contained in the given package.</em>
-<a class="jxr_linenumber" name="L598" href="#L598">598</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L599" href="#L599">599</a> <em class="jxr_javadoccomment">     * @param packageName the package has to be analyzed.</em>
-<a class="jxr_linenumber" name="L600" href="#L600">600</a> <em class="jxr_javadoccomment">     * @return a set of all classes contained in the given package.</em>
-<a class="jxr_linenumber" name="L601" href="#L601">601</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L602" href="#L602">602</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
-<a class="jxr_linenumber" name="L603" href="#L603">603</a>         <strong class="jxr_keyword">return</strong> getClasses(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(Object.<strong class="jxr_keyword">class</strong>), packageName);
-<a class="jxr_linenumber" name="L604" href="#L604">604</a>     }
-<a class="jxr_linenumber" name="L605" href="#L605">605</a> 
-<a class="jxr_linenumber" name="L606" href="#L606">606</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L607" href="#L607">607</a> <em class="jxr_javadoccomment">     * Return a set of all classes contained in the given package that match with</em>
-<a class="jxr_linenumber" name="L608" href="#L608">608</a> <em class="jxr_javadoccomment">     * the given test requirement.</em>
-<a class="jxr_linenumber" name="L609" href="#L609">609</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L610" href="#L610">610</a> <em class="jxr_javadoccomment">     * @param test the class filter on the given package.</em>
-<a class="jxr_linenumber" name="L611" href="#L611">611</a> <em class="jxr_javadoccomment">     * @param packageName the package has to be analyzed.</em>
-<a class="jxr_linenumber" name="L612" href="#L612">612</a> <em class="jxr_javadoccomment">     * @return a set of all classes contained in the given package.</em>
-<a class="jxr_linenumber" name="L613" href="#L613">613</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L614" href="#L614">614</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
-<a class="jxr_linenumber" name="L615" href="#L615">615</a>         checkArgument(test != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'test' must not be null"</span>);
-<a class="jxr_linenumber" name="L616" href="#L616">616</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
-<a class="jxr_linenumber" name="L617" href="#L617">617</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();
-<a class="jxr_linenumber" name="L618" href="#L618">618</a>     }
-<a class="jxr_linenumber" name="L619" href="#L619">619</a> 
-<a class="jxr_linenumber" name="L620" href="#L620">620</a>     <strong class="jxr_keyword">final</strong> &lt;TH <strong class="jxr_keyword">extends</strong> TypeHandler&lt;? <strong class="jxr_keyword">extends</strong> T&gt;, T&gt; <strong class="jxr_keyword">void</strong> bindTypeHandler(Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; type) {
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>         bind(typeHandlerType).toProvider(guicify(<strong class="jxr_keyword">new</strong> TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type))).in(Scopes.SINGLETON);
-<a class="jxr_linenumber" name="L622" href="#L622">622</a>     }
-<a class="jxr_linenumber" name="L623" href="#L623">623</a> }
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>             @Override
+<a class="jxr_linenumber" name="L394" href="#L394">394</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> to(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) {
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>                 checkArgument(clazz != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Null type not valid for alias '%s'"</span>, alias);
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>                 aliases.addBinding(alias).toInstance(clazz);
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>             }
+<a class="jxr_linenumber" name="L398" href="#L398">398</a> 
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>         };
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>     }
+<a class="jxr_linenumber" name="L401" href="#L401">401</a> 
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L403" href="#L403">403</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
+<a class="jxr_linenumber" name="L404" href="#L404">404</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
+<a class="jxr_linenumber" name="L405" href="#L405">405</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L406" href="#L406">406</a> <em class="jxr_javadoccomment">     * @param type the specified types have to be bind</em>
+<a class="jxr_linenumber" name="L407" href="#L407">407</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L408" href="#L408">408</a> 	<strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAlias(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; type) {
+<a class="jxr_linenumber" name="L409" href="#L409">409</a> 		checkArgument(type != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'type' must be not null"</span>);
+<a class="jxr_linenumber" name="L410" href="#L410">410</a> 
+<a class="jxr_linenumber" name="L411" href="#L411">411</a> 		String alias = type.getSimpleName();
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> 		<em class="jxr_comment">// check if the class uses the Alias annotation.</em>
+<a class="jxr_linenumber" name="L413" href="#L413">413</a> 		<strong class="jxr_keyword">final</strong> Alias annotation = type.getAnnotation(Alias.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L414" href="#L414">414</a> 		<strong class="jxr_keyword">if</strong> (annotation != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L415" href="#L415">415</a> 			alias = annotation.value();
+<a class="jxr_linenumber" name="L416" href="#L416">416</a> 		}
+<a class="jxr_linenumber" name="L417" href="#L417">417</a> 		addAlias(alias).to(type);
+<a class="jxr_linenumber" name="L418" href="#L418">418</a> 	}
+<a class="jxr_linenumber" name="L419" href="#L419">419</a> 
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L421" href="#L421">421</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
+<a class="jxr_linenumber" name="L422" href="#L422">422</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
+<a class="jxr_linenumber" name="L423" href="#L423">423</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L424" href="#L424">424</a> <em class="jxr_javadoccomment">     * @param types the specified types have to be bind</em>
+<a class="jxr_linenumber" name="L425" href="#L425">425</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> Collection&lt;Class&lt;?&gt;&gt; types) {
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>         checkArgument(types != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'types' must be not null"</span>);
+<a class="jxr_linenumber" name="L428" href="#L428">428</a> 
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>         <strong class="jxr_keyword">for</strong> (Class&lt;?&gt; type : types) {
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>             addSimpleAlias(type);
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>         }
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>     }
+<a class="jxr_linenumber" name="L433" href="#L433">433</a> 
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * Adds all Classes in the given package as a simple alias.</em>
+<a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
+<a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
+<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for classes to alias.</em>
+<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     * @param test a test to run against the objects found in the specified package</em>
+<a class="jxr_linenumber" name="L441" href="#L441">441</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> String packageName, <strong class="jxr_keyword">final</strong> ResolverUtil.Test test) {
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>         addSimpleAliases(getClasses(test, packageName));
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>     }
+<a class="jxr_linenumber" name="L445" href="#L445">445</a> 
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L447" href="#L447">447</a> <em class="jxr_javadoccomment">     * Adds all Classes in the given package as a simple alias.</em>
+<a class="jxr_linenumber" name="L448" href="#L448">448</a> <em class="jxr_javadoccomment">     * Adding simple aliases means that every specified class will be bound</em>
+<a class="jxr_linenumber" name="L449" href="#L449">449</a> <em class="jxr_javadoccomment">     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.</em>
+<a class="jxr_linenumber" name="L450" href="#L450">450</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L451" href="#L451">451</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for classes to alias</em>
+<a class="jxr_linenumber" name="L452" href="#L452">452</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addSimpleAliases(<strong class="jxr_keyword">final</strong> String packageName) {
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>         addSimpleAliases(getClasses(packageName));
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>     }
+<a class="jxr_linenumber" name="L456" href="#L456">456</a> 
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     * Add a user defined Type Handler letting google-guice creating it.</em>
+<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     * @param type the specified type has to be handled.</em>
+<a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> &lt;T&gt; TypeHandlerBinder&lt;T&gt; handleType(<strong class="jxr_keyword">final</strong> Class&lt;T&gt; type) {
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>         checkArgument(type != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'type' must be not null"</span>);
+<a class="jxr_linenumber" name="L464" href="#L464">464</a> 
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> TypeHandlerBinder&lt;T&gt;() {
+<a class="jxr_linenumber" name="L466" href="#L466">466</a> 
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>             @Override
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> with(<strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;? <strong class="jxr_keyword">extends</strong> T&gt;&gt; handler) {
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>                 checkArgument(handler != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"TypeHandler must not be null for '%s'"</span>, type.getName());
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>                 handlers.addBinding(type).to(handler);
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>                 bindTypeHandler(handler, type);
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>             }
+<a class="jxr_linenumber" name="L473" href="#L473">473</a> 
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>         };
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>     }
+<a class="jxr_linenumber" name="L476" href="#L476">476</a> 
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handler, letting</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
+<a class="jxr_linenumber" name="L480" href="#L480">480</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L481" href="#L481">481</a> <em class="jxr_javadoccomment">     * @param handlerClass the handler type.</em>
+<a class="jxr_linenumber" name="L482" href="#L482">482</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlerClass(Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt; handlerClass) {
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         checkArgument(handlerClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'handlerClass' must not be null"</span>);
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>     	mappingTypeHandlers.addBinding().to(handlerClass);
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>     	bindTypeHandler(handlerClass, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>     }
+<a class="jxr_linenumber" name="L488" href="#L488">488</a> 
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handlers, letting</em>
+<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
+<a class="jxr_linenumber" name="L492" href="#L492">492</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L493" href="#L493">493</a> <em class="jxr_javadoccomment">     * @param handlersClasses the handler type.</em>
+<a class="jxr_linenumber" name="L494" href="#L494">494</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlersClasses(Collection&lt;Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt;&gt; handlersClasses) {
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>         checkArgument(handlersClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'handlersClasses' must not be null"</span>);
+<a class="jxr_linenumber" name="L497" href="#L497">497</a> 
+<a class="jxr_linenumber" name="L498" href="#L498">498</a>         <strong class="jxr_keyword">for</strong> (Class&lt;? <strong class="jxr_keyword">extends</strong> TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>             addTypeHandlerClass(handlerClass);
+<a class="jxr_linenumber" name="L500" href="#L500">500</a>         }
+<a class="jxr_linenumber" name="L501" href="#L501">501</a>     }
+<a class="jxr_linenumber" name="L502" href="#L502">502</a> 
+<a class="jxr_linenumber" name="L503" href="#L503">503</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis type handlers in the given package, letting</em>
+<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
+<a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     * @param packageName the package where looking for type handlers.</em>
+<a class="jxr_linenumber" name="L508" href="#L508">508</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addTypeHandlerClasses(String packageName) {
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>         addTypeHandlersClasses(<strong class="jxr_keyword">new</strong> ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;()
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>                 .find(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(TypeHandler.<strong class="jxr_keyword">class</strong>), packageName)
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>                 .getClasses());
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>     }
+<a class="jxr_linenumber" name="L515" href="#L515">515</a> 
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L517" href="#L517">517</a> <em class="jxr_javadoccomment">     * Adds the user defined myBatis interceptor plugins type, letting</em>
+<a class="jxr_linenumber" name="L518" href="#L518">518</a> <em class="jxr_javadoccomment">     * google-guice creating it.</em>
+<a class="jxr_linenumber" name="L519" href="#L519">519</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L520" href="#L520">520</a> <em class="jxr_javadoccomment">     * @param interceptorClass The user defined MyBatis interceptor plugin type</em>
+<a class="jxr_linenumber" name="L521" href="#L521">521</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorClass(Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt; interceptorClass) {
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>         checkArgument(interceptorClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'interceptorClass' must not be null"</span>);
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>         interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>     }
+<a class="jxr_linenumber" name="L526" href="#L526">526</a> 
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis interceptors plugins types, letting</em>
+<a class="jxr_linenumber" name="L529" href="#L529">529</a> <em class="jxr_javadoccomment">     * google-guice creating them.</em>
+<a class="jxr_linenumber" name="L530" href="#L530">530</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L531" href="#L531">531</a> <em class="jxr_javadoccomment">     * @param interceptorsClasses the user defined MyBatis Interceptors plugins types</em>
+<a class="jxr_linenumber" name="L532" href="#L532">532</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorsClasses(Collection&lt;Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt;&gt; interceptorsClasses) {
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>         checkArgument(interceptorsClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'interceptorsClasses' must not be null"</span>);
+<a class="jxr_linenumber" name="L535" href="#L535">535</a> 
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>         <strong class="jxr_keyword">for</strong> (Class&lt;? <strong class="jxr_keyword">extends</strong> Interceptor&gt; interceptorClass : interceptorsClasses) {
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>             addInterceptorClass(interceptorClass);
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>         }
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>     }
+<a class="jxr_linenumber" name="L540" href="#L540">540</a> 
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L542" href="#L542">542</a> <em class="jxr_javadoccomment">     * Adds the user defined MyBatis interceptors plugins types in the given package,</em>
+<a class="jxr_linenumber" name="L543" href="#L543">543</a> <em class="jxr_javadoccomment">     * letting google-guice creating them.</em>
+<a class="jxr_linenumber" name="L544" href="#L544">544</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L545" href="#L545">545</a> <em class="jxr_javadoccomment">     * @param packageName the package where looking for Interceptors plugins types.</em>
+<a class="jxr_linenumber" name="L546" href="#L546">546</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addInterceptorsClasses(String packageName) {
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>         addInterceptorsClasses(<strong class="jxr_keyword">new</strong> ResolverUtil&lt;Interceptor&gt;()
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>                 .find(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(Interceptor.<strong class="jxr_keyword">class</strong>), packageName)
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>                 .getClasses());
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>     }
+<a class="jxr_linenumber" name="L553" href="#L553">553</a> 
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L555" href="#L555">555</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
+<a class="jxr_linenumber" name="L556" href="#L556">556</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L557" href="#L557">557</a> <em class="jxr_javadoccomment">     * @param mapperClass the user defined mapper classes.</em>
+<a class="jxr_linenumber" name="L558" href="#L558">558</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClass(Class&lt;?&gt; mapperClass) {
+<a class="jxr_linenumber" name="L560" href="#L560">560</a>         checkArgument(mapperClass != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'mapperClass' must not be null"</span>);
+<a class="jxr_linenumber" name="L561" href="#L561">561</a> 
+<a class="jxr_linenumber" name="L562" href="#L562">562</a>         mappers.addBinding().toInstance(mapperClass);
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>         bindMapper(mapperClass);
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>     }
+<a class="jxr_linenumber" name="L565" href="#L565">565</a> 
+<a class="jxr_linenumber" name="L566" href="#L566">566</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L567" href="#L567">567</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
+<a class="jxr_linenumber" name="L568" href="#L568">568</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L569" href="#L569">569</a> <em class="jxr_javadoccomment">     * @param mapperClasses the user defined mapper classes</em>
+<a class="jxr_linenumber" name="L570" href="#L570">570</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L571" href="#L571">571</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(Collection&lt;Class&lt;?&gt;&gt; mapperClasses) {
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>         checkArgument(mapperClasses != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'mapperClasses' must not be null"</span>);
+<a class="jxr_linenumber" name="L573" href="#L573">573</a> 
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>         <strong class="jxr_keyword">for</strong> (Class&lt;?&gt; mapperClass : mapperClasses) {
+<a class="jxr_linenumber" name="L575" href="#L575">575</a>             addMapperClass(mapperClass);
+<a class="jxr_linenumber" name="L576" href="#L576">576</a>         }
+<a class="jxr_linenumber" name="L577" href="#L577">577</a>     }
+<a class="jxr_linenumber" name="L578" href="#L578">578</a> 
+<a class="jxr_linenumber" name="L579" href="#L579">579</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L580" href="#L580">580</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
+<a class="jxr_linenumber" name="L581" href="#L581">581</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L582" href="#L582">582</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for mappers to add.</em>
+<a class="jxr_linenumber" name="L583" href="#L583">583</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(<strong class="jxr_keyword">final</strong> String packageName) {
+<a class="jxr_linenumber" name="L585" href="#L585">585</a>         addMapperClasses(getClasses(packageName));
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>     }
+<a class="jxr_linenumber" name="L587" href="#L587">587</a> 
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L589" href="#L589">589</a> <em class="jxr_javadoccomment">     * Adds the user defined mapper classes.</em>
+<a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">     * @param packageName the specified package to search for mappers to add.</em>
+<a class="jxr_linenumber" name="L592" href="#L592">592</a> <em class="jxr_javadoccomment">     * @param test a test to run against the objects found in the specified package.</em>
+<a class="jxr_linenumber" name="L593" href="#L593">593</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L594" href="#L594">594</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> addMapperClasses(<strong class="jxr_keyword">final</strong> String packageName, <strong class="jxr_keyword">final</strong> ResolverUtil.Test test) {
+<a class="jxr_linenumber" name="L595" href="#L595">595</a>         addMapperClasses(getClasses(test, packageName));
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>     }
+<a class="jxr_linenumber" name="L597" href="#L597">597</a> 
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L599" href="#L599">599</a> <em class="jxr_javadoccomment">     * Return a set of all classes contained in the given package.</em>
+<a class="jxr_linenumber" name="L600" href="#L600">600</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L601" href="#L601">601</a> <em class="jxr_javadoccomment">     * @param packageName the package has to be analyzed.</em>
+<a class="jxr_linenumber" name="L602" href="#L602">602</a> <em class="jxr_javadoccomment">     * @return a set of all classes contained in the given package.</em>
+<a class="jxr_linenumber" name="L603" href="#L603">603</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
+<a class="jxr_linenumber" name="L605" href="#L605">605</a>         <strong class="jxr_keyword">return</strong> getClasses(<strong class="jxr_keyword">new</strong> ResolverUtil.IsA(Object.<strong class="jxr_keyword">class</strong>), packageName);
+<a class="jxr_linenumber" name="L606" href="#L606">606</a>     }
+<a class="jxr_linenumber" name="L607" href="#L607">607</a> 
+<a class="jxr_linenumber" name="L608" href="#L608">608</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L609" href="#L609">609</a> <em class="jxr_javadoccomment">     * Return a set of all classes contained in the given package that match with</em>
+<a class="jxr_linenumber" name="L610" href="#L610">610</a> <em class="jxr_javadoccomment">     * the given test requirement.</em>
+<a class="jxr_linenumber" name="L611" href="#L611">611</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L612" href="#L612">612</a> <em class="jxr_javadoccomment">     * @param test the class filter on the given package.</em>
+<a class="jxr_linenumber" name="L613" href="#L613">613</a> <em class="jxr_javadoccomment">     * @param packageName the package has to be analyzed.</em>
+<a class="jxr_linenumber" name="L614" href="#L614">614</a> <em class="jxr_javadoccomment">     * @return a set of all classes contained in the given package.</em>
+<a class="jxr_linenumber" name="L615" href="#L615">615</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L616" href="#L616">616</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>         checkArgument(test != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'test' must not be null"</span>);
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>         checkArgument(packageName != <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Parameter 'packageName' must not be null"</span>);
+<a class="jxr_linenumber" name="L619" href="#L619">619</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();
+<a class="jxr_linenumber" name="L620" href="#L620">620</a>     }
+<a class="jxr_linenumber" name="L621" href="#L621">621</a> 
+<a class="jxr_linenumber" name="L622" href="#L622">622</a>     <strong class="jxr_keyword">final</strong> &lt;TH <strong class="jxr_keyword">extends</strong> TypeHandler&lt;? <strong class="jxr_keyword">extends</strong> T&gt;, T&gt; <strong class="jxr_keyword">void</strong> bindTypeHandler(Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; type) {
+<a class="jxr_linenumber" name="L623" href="#L623">623</a>         bind(typeHandlerType).toProvider(guicify(<strong class="jxr_keyword">new</strong> TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type))).in(Scopes.SINGLETON);
+<a class="jxr_linenumber" name="L624" href="#L624">624</a>     }
+<a class="jxr_linenumber" name="L625" href="#L625">625</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2010&#x2013;2015 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2010&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

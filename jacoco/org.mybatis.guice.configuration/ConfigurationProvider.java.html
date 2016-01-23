@@ -290,66 +290,67 @@ public final class ConfigurationProvider implements Provider&lt;Configuration&gt
     /**
      * {@inheritDoc}
      */
+    @Override
     public Configuration get() {
-<span class="fc" id="L294">        final Configuration configuration = new Configuration(environment);</span>
-<span class="fc" id="L295">        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
-<span class="fc" id="L296">        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
-<span class="fc" id="L297">        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
-<span class="fc" id="L298">        configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
-<span class="fc" id="L299">        configuration.setUseColumnLabel(useColumnLabel);</span>
-<span class="fc" id="L300">        configuration.setCacheEnabled(cacheEnabled);</span>
-<span class="fc" id="L301">        configuration.setDefaultExecutorType(defaultExecutorType);</span>
-<span class="fc" id="L302">        configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
-<span class="fc" id="L303">        configuration.setObjectFactory(objectFactory);</span>
-<span class="fc" id="L304">        configuration.setObjectWrapperFactory(objectWrapperFactory);</span>
-<span class="fc" id="L305">        configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);</span>
-<span class="fc" id="L306">        configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );</span>
-<span class="fc" id="L307">        configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
-<span class="fc" id="L308">        configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
+<span class="fc" id="L295">        final Configuration configuration = new Configuration(environment);</span>
+<span class="fc" id="L296">        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
+<span class="fc" id="L297">        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
+<span class="fc" id="L298">        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
+<span class="fc" id="L299">        configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
+<span class="fc" id="L300">        configuration.setUseColumnLabel(useColumnLabel);</span>
+<span class="fc" id="L301">        configuration.setCacheEnabled(cacheEnabled);</span>
+<span class="fc" id="L302">        configuration.setDefaultExecutorType(defaultExecutorType);</span>
+<span class="fc" id="L303">        configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
+<span class="fc" id="L304">        configuration.setObjectFactory(objectFactory);</span>
+<span class="fc" id="L305">        configuration.setObjectWrapperFactory(objectWrapperFactory);</span>
+<span class="fc" id="L306">        configuration.setDefaultScriptingLanguage(defaultScriptingLanguageType);</span>
+<span class="fc" id="L307">        configuration.setMapUnderscoreToCamelCase( mapUnderscoreToCamelCase );</span>
+<span class="fc" id="L308">        configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
+<span class="fc" id="L309">        configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
 
         try {
-<span class="fc bfc" id="L311" title="All 2 branches covered.">            if (databaseIdProvider != null) {</span>
-<span class="fc" id="L312">                configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">            if (databaseIdProvider != null) {</span>
+<span class="fc" id="L313">                configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
             }
 
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">            for (Map.Entry&lt;String,Class&lt;?&gt;&gt; alias : typeAliases.entrySet()) {</span>
-<span class="nc" id="L316">                configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());</span>
-<span class="nc" id="L317">            }</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">            for (Map.Entry&lt;String,Class&lt;?&gt;&gt; alias : typeAliases.entrySet()) {</span>
+<span class="nc" id="L317">                configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());</span>
+<span class="nc" id="L318">            }</span>
 
-<span class="fc bfc" id="L319" title="All 2 branches covered.">            for (Map.Entry&lt;Class&lt;?&gt;,TypeHandler&lt;?&gt;&gt; typeHandler : typeHandlers.entrySet()) {</span>
-<span class="fc" id="L320">                registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());</span>
-<span class="fc" id="L321">            }</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">            for (Map.Entry&lt;Class&lt;?&gt;,TypeHandler&lt;?&gt;&gt; typeHandler : typeHandlers.entrySet()) {</span>
+<span class="fc" id="L321">                registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());</span>
+<span class="fc" id="L322">            }</span>
 
-<span class="fc bfc" id="L323" title="All 2 branches covered.">            for (TypeHandler&lt;?&gt; typeHandler : mappingTypeHandlers) {</span>
-<span class="fc" id="L324">                configuration.getTypeHandlerRegistry().register(typeHandler);</span>
-<span class="fc" id="L325">            }</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            for (TypeHandler&lt;?&gt; typeHandler : mappingTypeHandlers) {</span>
+<span class="fc" id="L325">                configuration.getTypeHandlerRegistry().register(typeHandler);</span>
+<span class="fc" id="L326">            }</span>
 
-<span class="fc bfc" id="L327" title="All 2 branches covered.">            for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">                if (!configuration.hasMapper(mapperClass)) {</span>
-<span class="fc" id="L329">                    configuration.addMapper(mapperClass);</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">                if (!configuration.hasMapper(mapperClass)) {</span>
+<span class="fc" id="L330">                    configuration.addMapper(mapperClass);</span>
                 }
-<span class="fc" id="L331">            }</span>
+<span class="fc" id="L332">            }</span>
 
-<span class="fc bfc" id="L333" title="All 2 branches covered.">            for (Interceptor interceptor : plugins) {</span>
-<span class="fc" id="L334">                configuration.addInterceptor(interceptor);</span>
-<span class="fc" id="L335">            }</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">            for (Interceptor interceptor : plugins) {</span>
+<span class="fc" id="L335">                configuration.addInterceptor(interceptor);</span>
+<span class="fc" id="L336">            }</span>
 
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">            if (failFast) {</span>
-<span class="nc" id="L338">                configuration.getMappedStatementNames();</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">            if (failFast) {</span>
+<span class="nc" id="L339">                configuration.getMappedStatementNames();</span>
             }
-<span class="nc" id="L340">        } catch (Throwable cause) {</span>
-<span class="nc" id="L341">            throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;, cause);</span>
+<span class="nc" id="L341">        } catch (Throwable cause) {</span>
+<span class="nc" id="L342">            throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;, cause);</span>
         } finally {
-<span class="pc" id="L343">            ErrorContext.instance().reset();</span>
-<span class="fc" id="L344">        }</span>
+<span class="pc" id="L344">            ErrorContext.instance().reset();</span>
+<span class="fc" id="L345">        }</span>
 
-<span class="fc" id="L346">        return configuration;</span>
+<span class="fc" id="L347">        return configuration;</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     private &lt;T&gt; void registerTypeHandler(Configuration configuration, Class&lt;?&gt; type, TypeHandler&lt;?&gt; handler) {
-<span class="fc" id="L351">        configuration.getTypeHandlerRegistry().register((Class&lt;T&gt;)type, (TypeHandler&lt;T&gt;)handler);</span>
-<span class="fc" id="L352">    }</span>
+<span class="fc" id="L352">        configuration.getTypeHandlerRegistry().register((Class&lt;T&gt;)type, (TypeHandler&lt;T&gt;)handler);</span>
+<span class="fc" id="L353">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

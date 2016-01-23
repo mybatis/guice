@@ -25,8 +25,9 @@ import org.apache.ibatis.session.SqlSessionManager;
     @Inject
     private SqlSessionManager sqlSessionManager;
     
+    @Override
     public XAResource get() {
-<span class="fc" id="L29">        return new XASqlSessionManager(sqlSessionManager);</span>
+<span class="fc" id="L30">        return new XASqlSessionManager(sqlSessionManager);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

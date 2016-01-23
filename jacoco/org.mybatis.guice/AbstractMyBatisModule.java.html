@@ -41,14 +41,15 @@ import static com.google.inject.util.Providers.guicify;
 <span class="fc" id="L41">abstract class AbstractMyBatisModule extends AbstractModule {</span>
 
 <span class="fc" id="L43">    protected static final AbstractMatcher&lt;Method&gt; DECLARED_BY_OBJECT = new AbstractMatcher&lt;Method&gt;() {</span>
+        @Override
         public boolean matches(Method method) {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">            return method.getDeclaringClass() == Object.class;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            return method.getDeclaringClass() == Object.class;</span>
         }
     };
 
-<span class="fc" id="L49">    private ClassLoader resourcesClassLoader = getDefaultClassLoader();</span>
+<span class="fc" id="L50">    private ClassLoader resourcesClassLoader = getDefaultClassLoader();</span>
 
-<span class="fc" id="L51">    private ClassLoader driverClassLoader = getDefaultClassLoader();</span>
+<span class="fc" id="L52">    private ClassLoader driverClassLoader = getDefaultClassLoader();</span>
 
     /**
      * {@inheritDoc}
@@ -57,43 +58,43 @@ import static com.google.inject.util.Providers.guicify;
     protected final void configure() {
         try {
             // sql session manager
-<span class="fc" id="L60">            bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L61">            bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L61">            bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L62">            bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);</span>
 
-<span class="fc" id="L63">            internalConfigure();</span>
+<span class="fc" id="L64">            internalConfigure();</span>
 
-<span class="fc" id="L65">            bindTransactionInterceptors();</span>
+<span class="fc" id="L66">            bindTransactionInterceptors();</span>
 
-<span class="fc" id="L67">            bind(ClassLoader.class)</span>
+<span class="fc" id="L68">            bind(ClassLoader.class)</span>
                 .annotatedWith(named(&quot;JDBC.driverClassLoader&quot;))
                 .toInstance(driverClassLoader);
         } finally {
-<span class="pc" id="L71">            resourcesClassLoader = getDefaultClassLoader();</span>
-<span class="pc" id="L72">            driverClassLoader = getDefaultClassLoader();</span>
-<span class="fc" id="L73">        }</span>
-<span class="fc" id="L74">    }</span>
+<span class="pc" id="L72">            resourcesClassLoader = getDefaultClassLoader();</span>
+<span class="pc" id="L73">            driverClassLoader = getDefaultClassLoader();</span>
+<span class="fc" id="L74">        }</span>
+<span class="fc" id="L75">    }</span>
     
     /**
      * bind transactional interceptors
      */
     protected void bindTransactionInterceptors() {
             // transactional interceptor
-<span class="fc" id="L81">            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();</span>
-<span class="fc" id="L82">            requestInjection(interceptor);</span>
-<span class="fc" id="L83">            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);</span>
+<span class="fc" id="L82">            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();</span>
+<span class="fc" id="L83">            requestInjection(interceptor);</span>
+<span class="fc" id="L84">            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);</span>
             // Intercept classes annotated with Transactional, but avoid &quot;double&quot;
             // interception when a mathod is also annotated inside an annotated
             // class.
-<span class="fc" id="L87">            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L88">            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);</span>
+<span class="fc" id="L89">    }</span>
 
     /**
      *
      * @param mapperType
      */
     final &lt;T&gt; void bindMapper(Class&lt;T&gt; mapperType) {
-<span class="fc" id="L95">        bind(mapperType).toProvider(guicify(new MapperProvider&lt;T&gt;(mapperType))).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L96">        bind(mapperType).toProvider(guicify(new MapperProvider&lt;T&gt;(mapperType))).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L97">    }</span>
 
     /**
      *
@@ -101,8 +102,8 @@ import static com.google.inject.util.Providers.guicify;
      * @since 3.3
      */
     public void useResourceClassLoader(ClassLoader resourceClassLoader) {
-<span class="nc" id="L104">        this.resourcesClassLoader = resourceClassLoader;</span>
-<span class="nc" id="L105">    }</span>
+<span class="nc" id="L105">        this.resourcesClassLoader = resourceClassLoader;</span>
+<span class="nc" id="L106">    }</span>
 
     /**
      *
@@ -110,7 +111,7 @@ import static com.google.inject.util.Providers.guicify;
      * @since 3.3
      */
     protected final ClassLoader getResourceClassLoader() {
-<span class="fc" id="L113">        return resourcesClassLoader;</span>
+<span class="fc" id="L114">        return resourcesClassLoader;</span>
     }
 
    /**
@@ -119,8 +120,8 @@ import static com.google.inject.util.Providers.guicify;
     * @since 3.3
     */
    public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
-<span class="nc" id="L122">        this.driverClassLoader = driverClassLoader;</span>
-<span class="nc" id="L123">    }</span>
+<span class="nc" id="L123">        this.driverClassLoader = driverClassLoader;</span>
+<span class="nc" id="L124">    }</span>
 
     /**
      *
@@ -128,7 +129,7 @@ import static com.google.inject.util.Providers.guicify;
      * @since 3.3
      */
     private ClassLoader getDefaultClassLoader() {
-<span class="fc" id="L131">        return getClass().getClassLoader();</span>
+<span class="fc" id="L132">        return getClass().getClassLoader();</span>
     }
 
     /**

@@ -89,12 +89,13 @@ final class Formatter implements Provider&lt;String&gt; {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String get() {
-<span class="fc" id="L93">        StringBuilder buffer = new StringBuilder();</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (Provider&lt;String&gt; appender : appenders) {</span>
-<span class="fc" id="L95">            buffer.append(appender.get());</span>
-<span class="fc" id="L96">        }</span>
-<span class="fc" id="L97">        return buffer.toString();</span>
+<span class="fc" id="L94">        StringBuilder buffer = new StringBuilder();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (Provider&lt;String&gt; appender : appenders) {</span>
+<span class="fc" id="L96">            buffer.append(appender.get());</span>
+<span class="fc" id="L97">        }</span>
+<span class="fc" id="L98">        return buffer.toString();</span>
     }
 
     /**
@@ -102,7 +103,7 @@ final class Formatter implements Provider&lt;String&gt; {
      */
     @Override
     public String toString() {
-<span class="nc" id="L105">        return appenders.toString();</span>
+<span class="nc" id="L106">        return appenders.toString();</span>
     }
 
 }

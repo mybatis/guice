@@ -55,8 +55,9 @@ public final class SqlSessionManagerProvider implements Provider&lt;SqlSessionMa
 <span class="fc" id="L55">        this.sqlSessionManager = newInstance(sqlSessionFactory);</span>
 <span class="fc" id="L56">    }</span>
 
+    @Override
     public SqlSessionManager get() {
-<span class="fc" id="L59">        return sqlSessionManager;</span>
+<span class="fc" id="L60">        return sqlSessionManager;</span>
     }
 
 }

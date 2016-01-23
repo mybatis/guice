@@ -40,8 +40,9 @@ public final class MapperProvider&lt;T&gt; implements Provider&lt;T&gt; {
 <span class="nc" id="L40">        this.sqlSessionManager = sqlSessionManager;</span>
 <span class="nc" id="L41">    }</span>
 
+    @Override
     public T get() {
-<span class="fc" id="L44">        return this.sqlSessionManager.getMapper(mapperType);</span>
+<span class="fc" id="L45">        return this.sqlSessionManager.getMapper(mapperType);</span>
     }
 
 }

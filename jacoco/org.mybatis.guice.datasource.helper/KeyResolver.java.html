@@ -52,20 +52,21 @@ final class KeyResolver implements Provider&lt;String&gt; {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String get() {
         try {
-<span class="fc" id="L57">            return injector.getInstance(key);</span>
-<span class="fc" id="L58">        } catch (Throwable e) {</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (defaultValue != null) {</span>
-<span class="fc" id="L60">                return defaultValue;</span>
+<span class="fc" id="L58">            return injector.getInstance(key);</span>
+<span class="fc" id="L59">        } catch (Throwable e) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if (defaultValue != null) {</span>
+<span class="fc" id="L61">                return defaultValue;</span>
             }
-<span class="nc" id="L62">            return toString;</span>
+<span class="nc" id="L63">            return toString;</span>
         }
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L68">        return toString;</span>
+<span class="nc" id="L69">        return toString;</span>
     }
 
 }

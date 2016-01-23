@@ -103,8 +103,9 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
 <span class="fc" id="L103">            this.wrapper = wrapper;</span>
 <span class="fc" id="L104">        }</span>
 
+        @Override
         public T get() {
-<span class="fc" id="L107">            return wrapper;</span>
+<span class="fc" id="L108">            return wrapper;</span>
         }
 
     }
