@@ -75,6 +75,8 @@ public enum JdbcHelper implements Module {
 
     JDBC_ODBC_Bridge("jdbc:odbc:${ODBC.datasource}", "sun.jdbc.odbc.JdbcOdbcDriver"),
 
+    MariaDB("jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+
     MaxDB("jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}", "com.sap.dbtech.jdbc.DriverSapDB"),
 
     McKoi("jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}", "com.mckoi.JDBCDriver"),
