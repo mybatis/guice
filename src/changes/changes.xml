@@ -28,8 +28,14 @@
   </properties>
 
   <body>
+    <release version="3.8" date="2016-02-01" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Default Environment ID for XML configuration changed from "development" to the value of "default" attribute of &lt;environments&gt; element.
+      </action>
+    </release>
+
     <release version="3.7.1" date="2016-01-22" description="maintenance release">
-      <action dev="christian.poitras" type="upadte">
+      <action dev="christian.poitras" type="update">
         Fixes concurrency error with JTA.
       </action>
     </release>

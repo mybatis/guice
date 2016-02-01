@@ -18,6 +18,7 @@ package org.mybatis.guice;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,6 +39,14 @@ public final class XMLMyBatisModuleTestCase extends AbstractMyBatisModuleTestCas
 
     @Inject
     private AddressConverter addressConverter;
+
+    @Inject
+    private SqlSessionFactory sqlSessionFactory;
+
+    @Test
+    public void testEnvironmentId() throws Exception {
+        assert "test".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
+    }
 
     @Test
     public void testAddressConverter() throws Exception {

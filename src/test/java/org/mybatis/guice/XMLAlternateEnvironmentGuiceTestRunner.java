@@ -26,11 +26,11 @@ import com.google.inject.Module;
 /**
  * 
  *
- * @version $Id: XMLGuiceTestRunner.java 3980 2011-10-24 10:54:01Z simone.tripodi $
+ * @version $Id$
  */
-public final class XMLGuicePackageTestRunner extends AbstractGuiceTestRunner {
+public final class XMLAlternateEnvironmentGuiceTestRunner extends AbstractGuiceTestRunner {
 
-    public XMLGuicePackageTestRunner(Class<?> klass) throws InitializationError {
+    public XMLAlternateEnvironmentGuiceTestRunner(Class<?> klass) throws InitializationError {
         super(klass);
     }
 
@@ -41,7 +41,7 @@ public final class XMLGuicePackageTestRunner extends AbstractGuiceTestRunner {
 
             @Override
             protected void initialize() {
-                setClassPathResource("mybatis-package-config.xml");
+            	setEnvironmentId("test2");
             }
 
         });

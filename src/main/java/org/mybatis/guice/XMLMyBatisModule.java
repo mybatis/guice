@@ -39,7 +39,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
     private static final String DEFAULT_CONFIG_RESOURCE = "mybatis-config.xml";
 
-    private static final String DEFAULT_ENVIRONMENT_ID = "development";
+    private static final String DEFAULT_ENVIRONMENT_ID = null;
 
     private String classPathResource = DEFAULT_CONFIG_RESOURCE;
 
@@ -63,7 +63,6 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
      * @param environmentId the MyBatis configuration environment id
      */
     protected final void setEnvironmentId(String environmentId) {
-        checkArgument( environmentId != null, "Parameter 'environmentId' must be not null");
         this.environmentId = environmentId;
     }
 

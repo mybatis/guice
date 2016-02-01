@@ -50,6 +50,15 @@
         <property name="password" value="" />
       </dataSource>
     </environment>
+    <environment id="test2">
+      <transactionManager type="JDBC" />
+      <dataSource type="POOLED">
+        <property name="driver" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:mem:aname" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+      </dataSource>
+    </environment>
   </environments>
 
   <mappers>

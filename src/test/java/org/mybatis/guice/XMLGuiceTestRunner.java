@@ -41,7 +41,6 @@ public final class XMLGuiceTestRunner extends AbstractGuiceTestRunner {
 
             @Override
             protected void initialize() {
-                setEnvironmentId("test");
             }
 
         });

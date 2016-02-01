@@ -421,7 +421,7 @@ Module module = new MyBatisModule() {
             <ol>
                 <li><p>the MyBatis XML configuration file, located in the classpath, by default
                 the module will look for <i>mybatis-config.xml</i> in the root in the classpath;</p></li>
-                <li><p>the optional MyBatis <i>environmentId</i>, <i>development</i> by default;</p></li>
+                <li><p>the optional MyBatis <i>environmentId</i>, defaults to the <i>default</i> attribute of <i>&lt;environments&gt;</i> element;</p></li>
                 <li><p>the optional <i>java.util.Properties</i> to fill placeholders in the MyBatis XML configuration,
                 empty by default.</p></li>
             </ol>
