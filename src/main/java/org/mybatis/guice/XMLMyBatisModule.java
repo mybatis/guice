@@ -78,6 +78,13 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
     }
 
     /**
+     * @return new SqlSessionFactoryBuilder
+     */
+    protected SqlSessionFactoryBuilder newSqlSessionFactoryBuilder() {
+        return new SqlSessionFactoryBuilder();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -87,7 +94,7 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
         Reader reader = null;
         try {
             reader = getResourceAsReader(getResourceClassLoader(), classPathResource);
-            SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader,
+            SqlSessionFactory sessionFactory = newSqlSessionFactoryBuilder().build(reader,
                     environmentId,
                     properties);
             bind(SqlSessionFactory.class).toInstance(sessionFactory);
