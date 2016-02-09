@@ -109,7 +109,7 @@
       <version>${guice.version}</version>
       <scope>provided</scope>
     </dependency>
- 
+
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-multibindings</artifactId>
@@ -132,6 +132,12 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
       <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.0.16</version>
     </dependency>
 
     <dependency>
