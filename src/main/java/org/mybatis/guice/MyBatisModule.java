@@ -84,6 +84,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     private Class<? extends Provider<? extends SqlSessionFactory>> sqlSessionFactoryProviderType = SqlSessionFactoryProvider.class;
 
+    private Class<? extends Provider<? extends Configuration>> configurationProviderType = ConfigurationProvider.class;
+
     private MapBinder<String, Class<?>> aliases;
 
     private MapBinder<Class<?>, TypeHandler<?>> handlers;
@@ -121,9 +123,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
         // fixed bindings
         bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);
-        bind(Configuration.class).toProvider(ConfigurationProvider.class).in(Scopes.SINGLETON);
         
         // replaceable bindings.
+        bind(Configuration.class).toProvider(configurationProviderType).in(Scopes.SINGLETON);
         bind(SqlSessionFactory.class).toProvider(sqlSessionFactoryProviderType);
 
         // parametric bindings
@@ -190,7 +192,14 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void useCacheEnabled(boolean useCacheEnabled) {
         bindBoolean("mybatis.configuration.cacheEnabled", useCacheEnabled);
     }
-    
+
+    /**
+     * @param configurationProviderType provider for Configuration
+     */
+    protected final void useConfigurationProvider(Class<? extends Provider<? extends Configuration>> configurationProviderType) {
+        this.configurationProviderType = configurationProviderType;
+    }
+
     /**
      * @param sqlSessionFactoryProvider provider for SqlSessionFactory
      */

@@ -46,7 +46,7 @@ import java.util.Set;
  * @version $Id$
  */
 @Singleton
-public final class ConfigurationProvider implements Provider<Configuration> {
+public class ConfigurationProvider implements Provider<Configuration> {
 
     /**
      * The myBatis Configuration reference.
@@ -97,10 +97,10 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     @Named("mybatis.configuration.defaultStatementTimeout")
     @Nullable
     private Integer defaultStatementTimeout;
-    
+
     @Inject
     private ObjectFactory objectFactory;
-    
+
     @Inject
     private ObjectWrapperFactory objectWrapperFactory;
 
@@ -213,7 +213,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     public void setFailFast(boolean failFast) {
         this.failFast = failFast;
     }
-    
+
     public void setCallSettersOnNulls(boolean callSettersOnNulls) {
         this.callSettersOnNulls = callSettersOnNulls;
     }
@@ -258,7 +258,7 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     public void setObjectFactory(final ObjectFactory objectFactory) {
         this.objectFactory = objectFactory;
     }
-    
+
     /**
      * Adds the user defined ObjectWrapperFactory to the myBatis Configuration.
      *
@@ -288,11 +288,19 @@ public final class ConfigurationProvider implements Provider<Configuration> {
     }
 
     /**
+     * @param environment
+     * @return new configuration
+     */
+    protected Configuration newConfiguration(Environment environment) {
+        return new Configuration(environment);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public Configuration get() {
-        final Configuration configuration = new Configuration(environment);
+        final Configuration configuration = newConfiguration(environment);
         configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
         configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
         configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);
