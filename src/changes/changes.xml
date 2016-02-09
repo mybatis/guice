@@ -32,6 +32,9 @@
       <action dev="christian.poitras" type="update">
         Default Environment ID for XML configuration changed from "development" to the value of "default" attribute of &lt;environments&gt; element.
       </action>
+      <action dev="christian.poitras" type="add">
+        Added support for Druid data source.
+      </action>
     </release>
 
     <release version="3.7.1" date="2016-01-22" description="maintenance release">

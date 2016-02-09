@@ -53,6 +53,8 @@
           </li>
           <li><a href="datasources/bonecp.html">BoneCP</a>.
           </li>
+          <li><a href="datasources/druid.html">Druid</a>.
+          </li>
       </ol>
     </section>
   </body>
