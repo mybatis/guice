@@ -22,6 +22,7 @@ import org.apache.ibatis.type.TypeHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.TypeLiteral;
 
 import javax.inject.Provider;
 
@@ -31,13 +32,18 @@ import javax.inject.Provider;
  * @version $Id$
  */
 public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> implements Provider<TH> {
-    private final Class<TH> typeHandlerType;
+    private final TypeLiteral<TH> typeHandlerTypeLiteral;
     private final Class<T> handledType;
     @Inject
     private Injector injector;
 
     public TypeHandlerProvider(Class<TH> typeHandlerType, Class<T> handledType) {
-        this.typeHandlerType = typeHandlerType;
+        this.typeHandlerTypeLiteral = TypeLiteral.get(typeHandlerType);
+        this.handledType = handledType;
+    }
+    
+    public TypeHandlerProvider(TypeLiteral<TH> typeHandlerType, Class<T> handledType) {
+        this.typeHandlerTypeLiteral = typeHandlerType;
         this.handledType = handledType;
     }
 
@@ -47,21 +53,21 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
         TH instance = null;
         if (handledType != null) {
             try {
-                Constructor<?> c = typeHandlerType.getConstructor(Class.class);
+                Constructor<?> c = typeHandlerTypeLiteral.getRawType().getConstructor(Class.class);
                 instance = (TH) c.newInstance(handledType);
                 injector.injectMembers(instance);
             } catch (NoSuchMethodException ignored) {
                 // ignored
             } catch (Exception e) {
-                throw new TypeException("Failed invoking constructor for handler " + typeHandlerType, e);
+                throw new TypeException("Failed invoking constructor for handler " + typeHandlerTypeLiteral.getType(), e);
             }
         }
         if (instance == null) {
             try {
-                instance = (TH) typeHandlerType.newInstance();
+                instance = (TH) typeHandlerTypeLiteral.getRawType().newInstance();
                 injector.injectMembers(instance);
             } catch (Exception e) {
-                throw new TypeException("Failed invoking constructor for handler " + typeHandlerType, e);
+                throw new TypeException("Failed invoking constructor for handler " + typeHandlerTypeLiteral.getType(), e);
             }
         }
         return instance;

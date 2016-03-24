@@ -17,6 +17,8 @@ package org.mybatis.guice.binder;
 
 import org.apache.ibatis.type.TypeHandler;
 
+import com.google.inject.TypeLiteral;
+
 /**
  * Bind the given {@code TypeHandler} to an already defined type.
  */
@@ -28,5 +30,12 @@ public interface TypeHandlerBinder<T> {
      * @param handler The {@code TypeHandler} has to be bound
      */
     void with(Class<? extends TypeHandler<? extends T>> handler);
+    
+    /**
+     * Bind the given {@code TypeHandler} to an already defined type.
+     *
+     * @param handler The {@code TypeHandler} has to be bound
+     */
+    void with(TypeLiteral<? extends TypeHandler<? extends T>> handler);
 
 }

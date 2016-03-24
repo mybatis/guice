@@ -480,6 +480,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
                 bindTypeHandler(handler, type);
             }
 
+			@Override
+			public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+                checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+                handlers.addBinding(type).to(handler);
+                bindTypeHandler(handler, type);
+			}
+
         };
     }
 
@@ -629,6 +636,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }
 
     final <TH extends TypeHandler<? extends T>, T> void bindTypeHandler(Class<TH> typeHandlerType, Class<T> type) {
+        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
+    }
+    
+    final <TH extends TypeHandler<? extends T>, T> void bindTypeHandler(TypeLiteral<TH> typeHandlerType, Class<T> type) {
         bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
     }
 }
