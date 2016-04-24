@@ -27,7 +27,6 @@ import java.sql.SQLException;
  * Provides the Druid DataSource.
  *
  * @author lazeyliu
- * @version $Id$
  */
 public class DruidDataSourceProvider implements Provider<DataSource> {
 

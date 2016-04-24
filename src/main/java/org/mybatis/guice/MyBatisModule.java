@@ -65,8 +65,6 @@ import static org.mybatis.guice.Preconditions.checkState;
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
  * google-guice bindings to create the SqlSessionFactory.
- *
- * @version $Id$
  */
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 

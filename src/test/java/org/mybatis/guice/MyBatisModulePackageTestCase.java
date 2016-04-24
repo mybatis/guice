@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,11 +21,6 @@ import javax.inject.Named;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- *
- *
- * @version $Id: MyBatisModuleTestCase.java 3980 2011-10-24 10:54:01Z simone.tripodi $
- */
 @RunWith(GuicePackageTestRunner.class)
 public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 

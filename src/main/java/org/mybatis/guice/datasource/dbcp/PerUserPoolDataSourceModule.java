@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,9 +23,6 @@ import com.google.inject.TypeLiteral;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-/**
- * @version $Id$
- */
 public final class PerUserPoolDataSourceModule extends AbstractModule {
 
     private static final TypeLiteral<Map<String, Boolean>> STRING_BOOLEAN_MAP = new TypeLiteral<Map<String, Boolean>>(){};

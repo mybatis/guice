@@ -21,11 +21,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- *
- *
- * @version $Id$
- */
 @RunWith(XMLAlternateEnvironmentGuiceTestRunner.class)
 public final class XMLAlternateEnvironmentMyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 

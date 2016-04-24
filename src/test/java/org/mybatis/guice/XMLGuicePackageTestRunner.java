@@ -23,11 +23,6 @@ import org.junit.runners.model.InitializationError;
 
 import com.google.inject.Module;
 
-/**
- * 
- *
- * @version $Id: XMLGuiceTestRunner.java 3980 2011-10-24 10:54:01Z simone.tripodi $
- */
 public final class XMLGuicePackageTestRunner extends AbstractGuiceTestRunner {
 
     public XMLGuicePackageTestRunner(Class<?> klass) throws InitializationError {

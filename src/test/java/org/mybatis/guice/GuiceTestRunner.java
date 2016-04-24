@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,11 +27,6 @@ import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import com.google.inject.Module;
 
-/**
- * 
- *
- * @version $Id$
- */
 public final class GuiceTestRunner extends AbstractGuiceTestRunner {
 
     public GuiceTestRunner(Class<?> klass) throws InitializationError {
