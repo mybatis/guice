@@ -16,7 +16,5 @@
 /**
  * Contains the Provider and utility class to auto-bind requested mappers
  * in the Google Guice binder.
- *
- * @version $Id$
  */
 package org.mybatis.guice.mappers;

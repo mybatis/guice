@@ -27,8 +27,6 @@ import javax.inject.Inject;
  * Impl of the FooService.
  *
  * FooService simply receives a userId and uses a mapper/dao to get a record from the database.
- *
- * @version $Id$
  */
 @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=CustomException.class)
 public class FooServiceMapperImpl implements FooService {

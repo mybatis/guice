@@ -24,11 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- *
- *
- * @version $Id$
- */
 final class Formatter implements Provider<String> {
 
     private static final String VAR_BEGIN = "$";

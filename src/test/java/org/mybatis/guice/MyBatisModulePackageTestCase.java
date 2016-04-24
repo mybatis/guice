@@ -21,11 +21,6 @@ import javax.inject.Named;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- *
- *
- * @version $Id: MyBatisModuleTestCase.java 3980 2011-10-24 10:54:01Z simone.tripodi $
- */
 @RunWith(GuicePackageTestRunner.class)
 public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 

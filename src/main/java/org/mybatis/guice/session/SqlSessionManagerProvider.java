@@ -24,10 +24,6 @@ import javax.inject.Singleton;
 
 import static org.apache.ibatis.session.SqlSessionManager.newInstance;
 
-/**
- *
- * @version $Id$
- */
 @Singleton
 public final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
 

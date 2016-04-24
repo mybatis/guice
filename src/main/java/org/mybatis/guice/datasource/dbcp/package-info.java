@@ -15,7 +15,5 @@
  */
 /**
  * Contains Apache commons-dbcp Data Source providers.
- *
- * @version $Id$
  */
 package org.mybatis.guice.datasource.dbcp;

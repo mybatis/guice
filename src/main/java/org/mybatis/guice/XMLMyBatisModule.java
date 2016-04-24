@@ -32,8 +32,6 @@ import static org.apache.ibatis.io.Resources.getResourceAsReader;
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
  * google-guice bindings to create the SqlSessionFactory, via XML configuration.
- *
- * @version $Id$
  */
 public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 

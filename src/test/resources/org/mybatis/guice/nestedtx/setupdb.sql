@@ -14,8 +14,6 @@
 --    limitations under the License.
 --
 
---    version: $Id$
-
 drop table if exists table1;
 drop table if exists table2;
 

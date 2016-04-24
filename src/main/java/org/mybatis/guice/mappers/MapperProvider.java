@@ -22,8 +22,6 @@ import javax.inject.Provider;
 
 /**
  * A generic MyBatis mapper provider.
- *
- * @version $Id$
  */
 public final class MapperProvider<T> implements Provider<T> {
 

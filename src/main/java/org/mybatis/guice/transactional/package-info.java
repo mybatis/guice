@@ -15,7 +15,5 @@
  */
 /**
  * Contains classes to mark and handle transactional methods.
- *
- * @version $Id$
  */
 package org.mybatis.guice.transactional;

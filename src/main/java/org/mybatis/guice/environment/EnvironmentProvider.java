@@ -26,8 +26,6 @@ import javax.sql.DataSource;
 
 /**
  * Provides the myBatis Environment.
- *
- * @version $Id$
  */
 @Singleton
 public final class EnvironmentProvider implements Provider<Environment> {

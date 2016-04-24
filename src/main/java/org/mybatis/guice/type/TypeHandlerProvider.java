@@ -28,8 +28,6 @@ import javax.inject.Provider;
 
 /**
  * A generic MyBatis type provider.
- *
- * @version $Id$
  */
 public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> implements Provider<TH> {
     private final TypeLiteral<TH> typeHandlerTypeLiteral;

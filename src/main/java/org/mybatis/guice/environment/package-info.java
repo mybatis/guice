@@ -15,7 +15,5 @@
  */
 /**
  * Contains core classes to build the myBatis Environment through google-guice.
- *
- * @version $Id$
  */
 package org.mybatis.guice.environment;

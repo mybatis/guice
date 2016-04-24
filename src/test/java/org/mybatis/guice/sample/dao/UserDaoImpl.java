@@ -20,11 +20,6 @@ import org.mybatis.guice.sample.domain.User;
 
 import javax.inject.Inject;
 
-/**
- * 
- *
- * @version $Id$
- */
 public class UserDaoImpl implements UserDao {
 
     private SqlSession sqlSession;

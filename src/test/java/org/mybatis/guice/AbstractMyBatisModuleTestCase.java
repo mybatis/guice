@@ -22,11 +22,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertNotNull;
 
-/**
- *
- *
- * @version $Id$
- */
 public abstract class AbstractMyBatisModuleTestCase {
 
     @Inject

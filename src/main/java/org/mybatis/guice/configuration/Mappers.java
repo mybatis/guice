@@ -24,8 +24,6 @@ import java.lang.annotation.Target;
 
 /**
  * Marker for mapper interfaces.
- *
- * @version $Id$
  */
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)

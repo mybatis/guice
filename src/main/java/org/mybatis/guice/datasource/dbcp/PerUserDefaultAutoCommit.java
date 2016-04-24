@@ -19,9 +19,6 @@ import com.google.inject.BindingAnnotation;
 
 import java.lang.annotation.*;
 
-/**
- * @version $Id$
- */
 @BindingAnnotation
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

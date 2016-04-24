@@ -27,11 +27,6 @@ import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import com.google.inject.Module;
 
-/**
- * 
- *
- * @version $Id$
- */
 public final class GuiceTestRunner extends AbstractGuiceTestRunner {
 
     public GuiceTestRunner(Class<?> klass) throws InitializationError {

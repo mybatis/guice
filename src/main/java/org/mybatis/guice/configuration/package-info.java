@@ -15,7 +15,5 @@
  */
 /**
  * Contains core classes to build the iBatis Configuration through google-guice.
- *
- * @version $Id$
  */
 package org.mybatis.guice.configuration;

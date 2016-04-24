@@ -53,8 +53,6 @@ import com.google.inject.Module;
  * Example of MyBatis-Guice basic integration usage.
  *
  * This is the recommended scenario.
- *
- * @version $Id$
  */
 public class SampleSqlSessionTest {
 

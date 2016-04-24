@@ -26,8 +26,6 @@ import java.util.Properties;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.
- *
- * @version $Id$
  */
 public final class UnpooledDataSourceProvider implements Provider<DataSource> {
 

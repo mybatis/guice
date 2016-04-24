@@ -19,9 +19,6 @@ import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @version $Id$
- */
 public class AddressConverter {
 
     public Address convert(String input) throws ParseException {

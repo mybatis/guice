@@ -15,7 +15,5 @@
  */
 /**
  * The MyBatis module EDSL.
- *
- * @version $Id$
  */
 package org.mybatis.guice.binder;

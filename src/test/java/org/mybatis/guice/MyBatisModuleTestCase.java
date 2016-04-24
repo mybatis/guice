@@ -22,11 +22,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-/**
- *
- *
- * @version $Id$
- */
 @RunWith(GuiceTestRunner.class)
 public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 

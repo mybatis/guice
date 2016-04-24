@@ -26,8 +26,6 @@ import java.util.Properties;
 
 /**
  * Provides the myBatis built-in PooledDataSource.
- *
- * @version $Id$
  */
 public final class PooledDataSourceProvider implements Provider<DataSource> {
 

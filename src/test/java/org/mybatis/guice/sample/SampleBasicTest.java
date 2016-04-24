@@ -46,8 +46,6 @@ import com.google.inject.Injector;
  * Example of MyBatis-Guice basic integration usage.
  *
  * This is the recommended scenario.
- *
- * @version $Id$
  */
 public class SampleBasicTest {
 

@@ -14,8 +14,6 @@
 --    limitations under the License.
 --
 
---    version: $Id$
-
 insert into users VALUES ( 'u1',  'Pocoyo' );
 insert into users VALUES ( 'u2',  'Pato'   );
 insert into users VALUES ( 'u3',  'Eli'    );

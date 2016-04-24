@@ -26,8 +26,6 @@ import java.util.Map.Entry;
 
 /**
  * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
- *
- * @version $Id$
  */
 public final class PerUserPoolDataSourceProvider implements Provider<DataSource> {
 

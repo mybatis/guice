@@ -27,9 +27,6 @@ import org.apache.ibatis.type.TypeHandler;
 
 import javax.inject.Inject;
 
-/**
- * @version $Id$
- */
 @MappedTypes(Address.class)
 public class AddressTypeHandler implements TypeHandler<Address> {
 

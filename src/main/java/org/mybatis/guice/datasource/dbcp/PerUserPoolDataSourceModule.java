@@ -23,9 +23,6 @@ import com.google.inject.TypeLiteral;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-/**
- * @version $Id$
- */
 public final class PerUserPoolDataSourceModule extends AbstractModule {
 
     private static final TypeLiteral<Map<String, Boolean>> STRING_BOOLEAN_MAP = new TypeLiteral<Map<String, Boolean>>(){};

@@ -24,8 +24,6 @@ import javax.sql.ConnectionPoolDataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.
- *
- * @version $Id$
  */
 public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolDataSource> {
 

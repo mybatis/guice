@@ -14,8 +14,6 @@
 --    limitations under the License.
 --
 
---    version: $Id$
-
 drop table if exists users;
 create table users (
     id varchar(80) not null,

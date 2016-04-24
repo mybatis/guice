@@ -31,8 +31,6 @@ import static java.lang.Thread.currentThread;
 
 /**
  * Method interceptor for {@link Transactional} annotation.
- *
- * @version $Id$
  */
 public final class TransactionalMethodInterceptor implements MethodInterceptor {
 

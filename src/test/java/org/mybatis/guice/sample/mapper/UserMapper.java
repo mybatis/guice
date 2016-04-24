@@ -19,8 +19,6 @@ import org.mybatis.guice.sample.domain.User;
 
 /**
  * A org.mybatis.guice sample mapper.
- *
- * @version $Id$
  */
 public interface UserMapper {
 

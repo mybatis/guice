@@ -27,8 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the BoneCP DataSource.
- *
- * @version $Id$
  */
 public final class BoneCPProvider implements Provider<DataSource> {
 

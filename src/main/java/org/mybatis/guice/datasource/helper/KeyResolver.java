@@ -23,11 +23,6 @@ import javax.inject.Provider;
 
 import static com.google.inject.name.Names.named;
 
-/**
- *
- *
- * @version $Id$
- */
 final class KeyResolver implements Provider<String> {
 
     private final Key<String> key;

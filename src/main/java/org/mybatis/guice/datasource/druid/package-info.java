@@ -15,7 +15,5 @@
  */
 /**
  * Contains c3p0 Data Source provider.
- *
- * @version $Id$
  */
 package org.mybatis.guice.datasource.druid;

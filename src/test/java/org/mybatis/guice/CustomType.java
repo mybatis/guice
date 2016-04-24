@@ -15,9 +15,6 @@
  */
 package org.mybatis.guice;
 
-/**
- * @version $Id$
- */
 public class CustomType  {
 
     private Long value;

@@ -24,8 +24,6 @@ import static com.google.inject.util.Providers.guicify;
 
 /**
  * Helper to bind <code>JDBC.driver</code> and <code>JDBC.url</code> properties.
- *
- * @version $Id$
  */
 public enum JdbcHelper implements Module {
 

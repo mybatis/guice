@@ -22,11 +22,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
-/**
- * 
- *
- * @version $Id$
- */
 @Singleton
 public class ContactMapperClient {
 

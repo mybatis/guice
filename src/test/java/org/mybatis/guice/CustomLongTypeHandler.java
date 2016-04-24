@@ -25,9 +25,6 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-/**
- * @version $Id$
- */
 @MappedTypes(CustomType.class)
 public class CustomLongTypeHandler extends BaseTypeHandler<CustomType> {
 

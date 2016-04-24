@@ -26,8 +26,6 @@ import java.lang.annotation.Target;
 /**
  * Any method marked with this annotation will be considered for
  * transactionality.
- *
- * @version $Id$
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})

@@ -26,8 +26,6 @@ import java.util.Properties;
 
 /**
  * Provides the C3P0 DataSource.
- *
- * @version $Id$
  */
 public final class C3p0DataSourceProvider implements Provider<DataSource> {
 

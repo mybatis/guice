@@ -27,8 +27,6 @@ import java.util.Properties;
 
 /**
  * Provides the myBatis built-in JndiDataSourceFactory.
- *
- * @version $Id$
  */
 public final class JndiDataSourceProvider implements Provider<DataSource> {
 

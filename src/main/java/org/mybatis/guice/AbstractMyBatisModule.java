@@ -34,10 +34,6 @@ import static com.google.inject.matcher.Matchers.not;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
-/**
- *
- * @version $Id$
- */
 abstract class AbstractMyBatisModule extends AbstractModule {
 
     protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {

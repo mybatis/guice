@@ -37,11 +37,6 @@ import com.google.inject.Binder;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
-/**
- * 
- *
- * @version $Id$
- */
 abstract class AbstractGuiceTestRunner extends BlockJUnit4ClassRunner {
 
     private final Injector injector;

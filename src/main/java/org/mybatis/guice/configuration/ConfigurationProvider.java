@@ -42,8 +42,6 @@ import java.util.Set;
 
 /**
  * Provides the myBatis Configuration.
- *
- * @version $Id$
  */
 @Singleton
 public class ConfigurationProvider implements Provider<Configuration> {

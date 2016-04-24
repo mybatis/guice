@@ -15,7 +15,5 @@
  */
 /**
  * Contains core classes to build the MyBatis stuff through Google Guice.
- *
- * @version $Id$
  */
 package org.mybatis.guice;

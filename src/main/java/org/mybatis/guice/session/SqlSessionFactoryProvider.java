@@ -25,8 +25,6 @@ import javax.inject.Singleton;
 
 /**
  * Builds the SqlSessionFactory ant let google-guice injects his components.
- *
- * @version $Id$
  */
 @Singleton
 public final class SqlSessionFactoryProvider implements Provider<SqlSessionFactory> {

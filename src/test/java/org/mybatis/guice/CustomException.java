@@ -15,11 +15,6 @@
  */
 package org.mybatis.guice;
 
-/**
- * 
- *
- * @version $Id$
- */
 public final class CustomException extends Exception {
 
     private static final long serialVersionUID = 1L;

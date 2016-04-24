@@ -15,7 +15,5 @@
  */
 /**
  * Defines Google Guice's providers for {@code SqlSessionFactory} and {@code SqlSessionManager}.
- *
- * @version $Id$
  */
 package org.mybatis.guice.session;

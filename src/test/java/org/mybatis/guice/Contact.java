@@ -17,11 +17,6 @@ package org.mybatis.guice;
 
 import java.io.Serializable;
 
-/**
- *
- *
- * @version $Id$
- */
 public final class Contact implements Serializable {
 
     private static final long serialVersionUID = 1L;

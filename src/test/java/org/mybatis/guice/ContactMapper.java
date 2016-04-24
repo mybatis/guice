@@ -17,11 +17,6 @@ package org.mybatis.guice;
 
 import java.util.List;
 
-/**
- * 
- *
- * @version $Id$
- */
 public interface ContactMapper {
 
     void brokenAdd(Contact contact);

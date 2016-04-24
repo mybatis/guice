@@ -27,8 +27,6 @@ import java.util.Properties;
 
 /**
  * Provides the Apache commons-dbcp {@code BasicDataSource}.
- *
- * @version $Id$
  */
 public final class BasicDataSourceProvider implements Provider<DataSource> {
 

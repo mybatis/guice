@@ -15,11 +15,6 @@
  */
 package org.mybatis.guice;
 
-/**
- *
- *
- * @version $Id$
- */
 public class Counter {
 
     private int count;

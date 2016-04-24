@@ -24,8 +24,6 @@ import java.lang.annotation.Target;
 
 /**
  * Marker for type aliases.
- *
- * @version $Id$
  */
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)

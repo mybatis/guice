@@ -16,7 +16,5 @@
 /**
  * Contains core classes to build the myBatis DataSource implementations through
  * google-guice.
- *
- * @version $Id$
  */
 package org.mybatis.guice.datasource.builtin;
