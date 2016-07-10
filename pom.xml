@@ -89,7 +89,7 @@
     <clirr.comparisonVersion>3.6</clirr.comparisonVersion>
     <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
-    <guice.version>4.0</guice.version>
+    <guice.version>4.1.0</guice.version>
     <osgi.import>com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp.*;resolution:=optional,*,javax.transaction.*;resolution:=optional</osgi.import>
   </properties>
 
