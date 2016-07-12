@@ -42,6 +42,12 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             return method.getDeclaringClass() == Object.class;
         }
     };
+    protected static final AbstractMatcher<Method> SYNTHETIC = new AbstractMatcher<Method>() {
+        @Override
+        public boolean matches(Method method) {
+        	return method.isSynthetic();
+        }
+    };
 
     private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
@@ -77,11 +83,11 @@ abstract class AbstractMyBatisModule extends AbstractModule {
             // transactional interceptor
             TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
             requestInjection(interceptor);
-            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptor);
+            bindInterceptor(any(), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(annotatedWith(Transactional.class)), interceptor);
             // Intercept classes annotated with Transactional, but avoid "double"
             // interception when a mathod is also annotated inside an annotated
             // class.
-            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptor);
+            bindInterceptor(annotatedWith(Transactional.class), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(not(annotatedWith(Transactional.class))), interceptor);
     }
 
     /**
