@@ -16,6 +16,7 @@
 package org.mybatis.guice.type;
 
 import java.lang.reflect.Constructor;
+import java.util.Objects;
 
 import org.apache.ibatis.type.TypeException;
 import org.apache.ibatis.type.TypeHandler;
@@ -66,4 +67,19 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
         }
         return instance;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(typeHandlerType, handledType);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		TypeHandlerProvider other = (TypeHandlerProvider) obj;
+		return Objects.equals(this.typeHandlerType, other.typeHandlerType) &&
+				Objects.equals(this.handledType, other.handledType);
+	}
 }

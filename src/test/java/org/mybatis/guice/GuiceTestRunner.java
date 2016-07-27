@@ -60,6 +60,17 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
             }
 
         });
+        modules.add(new MyBatisModule() {
+            @Override
+            protected void initialize() {
+                addMapperClass(ContactMapper.class);
+                handleType(CustomType.class).with(CustomLongTypeHandler.class);
+                handleType(Address.class).with(AddressTypeHandler.class);
+                addTypeHandlerClass(ContactIdTypeHandler.class);
+                addTypeHandlerClass(ContactNameTypeHandler.class);
+            }
+
+        });
 
         return modules;
     }
