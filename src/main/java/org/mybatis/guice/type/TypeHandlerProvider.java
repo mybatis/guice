@@ -16,11 +16,11 @@
 package org.mybatis.guice.type;
 
 import java.lang.reflect.Constructor;
-import java.util.Objects;
 
 import org.apache.ibatis.type.TypeException;
 import org.apache.ibatis.type.TypeHandler;
 
+import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -70,7 +70,7 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(typeHandlerType, handledType);
+		return Objects.hashCode(typeHandlerType, handledType);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
 			return false;
 		}
 		TypeHandlerProvider other = (TypeHandlerProvider) obj;
-		return Objects.equals(this.typeHandlerType, other.typeHandlerType) &&
-				Objects.equals(this.handledType, other.handledType);
+		return Objects.equal(this.typeHandlerType, other.typeHandlerType) &&
+				Objects.equal(this.handledType, other.handledType);
 	}
 }

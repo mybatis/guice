@@ -17,7 +17,7 @@ package org.mybatis.guice.mappers;
 
 import org.apache.ibatis.session.SqlSessionManager;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -49,7 +49,7 @@ public final class MapperProvider<T> implements Provider<T> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(mapperType);
+		return Objects.hashCode(mapperType);
 	}
 
 	@Override
@@ -58,6 +58,6 @@ public final class MapperProvider<T> implements Provider<T> {
 			return false;
 		}
 		MapperProvider other = (MapperProvider) obj;
-		return Objects.equals(this.mapperType, other.mapperType);
+		return Objects.equal(this.mapperType, other.mapperType);
 	}
 }
