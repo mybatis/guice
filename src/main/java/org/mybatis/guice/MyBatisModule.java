@@ -15,12 +15,19 @@
  */
 package org.mybatis.guice;
 
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
+import static com.google.inject.multibindings.MapBinder.newMapBinder;
+import static com.google.inject.multibindings.Multibinder.newSetBinder;
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
+import static org.mybatis.guice.Preconditions.checkArgument;
+import static org.mybatis.guice.Preconditions.checkState;
 
-import com.google.inject.util.Providers;
+import java.util.Collection;
+import java.util.Set;
+
+import javax.inject.Provider;
+import javax.sql.DataSource;
+
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -45,22 +52,31 @@ import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.MappingTypeHandlers;
 import org.mybatis.guice.configuration.TypeAliases;
+import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
+import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
+import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
+import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.ConfigurationSettings;
+import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
+import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
+import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
+import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
+import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
+import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
+import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
+import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
+import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
-import javax.inject.Provider;
-import javax.sql.DataSource;
-
-import java.util.Collection;
-import java.util.Set;
-
-import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import static com.google.inject.multibindings.Multibinder.newSetBinder;
-import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
-import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.mybatis.guice.Preconditions.checkState;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
+import com.google.inject.util.Providers;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -93,6 +109,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     private Multibinder<Interceptor> interceptors;
 
     private Multibinder<Class<?>> mappers;
+    
+    private Multibinder<ConfigurationSetting> configurationSettings;
 
     /**
      * {@inheritDoc}
@@ -103,15 +121,18 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkState( handlers == null, "Re-entry is not allowed." );
         checkState( interceptors == null, "Re-entry is not allowed." );
         checkState( mappers == null, "Re-entry is not allowed." );
+        checkState( configurationSettings == null, "Re-entry is not allowed." );
 
         aliases = newMapBinder(binder(), new TypeLiteral<String>(){}, new TypeLiteral<Class<?>>(){}, TypeAliases.class);
         handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>(){}, new TypeLiteral<TypeHandler<?>>(){});
         interceptors = newSetBinder(binder(), Interceptor.class);
         mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>(){}, MappingTypeHandlers.class);
         mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>(){}, Mappers.class);
+        configurationSettings = newSetBinder(binder(), ConfigurationSetting.class, ConfigurationSettings.class);
 
         try {
             initialize();
+
         } finally {
             aliases = null;
             handlers = null;
@@ -129,8 +150,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         // parametric bindings
         bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);
         bind(ObjectWrapperFactory.class).to(objectWrapperFactoryType).in(Scopes.SINGLETON);
-        bind(new TypeLiteral<Class<? extends LanguageDriver>>() {}).toInstance(defaultScriptingLanguageType);
         
+
+        bindConfigurationSettingProvider(new ObjectFactoryConfigurationSetting(objectFactoryType));
+        bindConfigurationSettingProvider(new ObjectWrapperFactoryConfigurationSetting(objectWrapperFactoryType));
+        bindConfigurationSetting(new DefaultScriptingLanguageTypeConfigurationSetting(defaultScriptingLanguageType));
     }
 
     /**
@@ -148,7 +172,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param lazyLoadingEnabled
      */
     protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
-        bindBoolean("mybatis.configuration.lazyLoadingEnabled", lazyLoadingEnabled);
+        bindConfigurationSetting(new LazyLoadingEnabledConfigurationSetting(lazyLoadingEnabled));
     }
 
     /**
@@ -156,7 +180,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param aggressiveLazyLoading
      */
     protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
-        bindBoolean("mybatis.configuration.aggressiveLazyLoading", aggressiveLazyLoading);
+        bindConfigurationSetting(new AggressiveLazyLoadingConfigurationSetting(aggressiveLazyLoading));
     }
 
     /**
@@ -164,7 +188,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param multipleResultSetsEnabled
      */
     protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
-        bindBoolean("mybatis.configuration.multipleResultSetsEnabled", multipleResultSetsEnabled);
+        bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));
     }
 
     /**
@@ -172,7 +196,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param useGeneratedKeys
      */
     protected final void useGeneratedKeys(boolean useGeneratedKeys) {
-        bindBoolean("mybatis.configuration.useGeneratedKeys", useGeneratedKeys);
+        bindConfigurationSetting(new UseGeneratedKeysConfigurationSetting(useGeneratedKeys));
     }
 
     /**
@@ -180,7 +204,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param useColumnLabel
      */
     protected final void useColumnLabel(boolean useColumnLabel) {
-        bindBoolean("mybatis.configuration.useColumnLabel", useColumnLabel);
+        bindConfigurationSetting(new UseColumnLabelConfigurationSetting(useColumnLabel));
     }
 
     /**
@@ -188,7 +212,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param useCacheEnabled
      */
     protected final void useCacheEnabled(boolean useCacheEnabled) {
-        bindBoolean("mybatis.configuration.cacheEnabled", useCacheEnabled);
+        bindConfigurationSetting(new CacheEnabledConfigurationSetting(useCacheEnabled));
     }
 
     /**
@@ -210,7 +234,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param failFast
      */
     protected final void failFast(boolean failFast) {
-        bindBoolean("mybatis.configuration.failFast", failFast);
+//        bindBoolean("mybatis.configuration.failFast", failFast);
     }
 
     /**
@@ -219,7 +243,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param mapUnderscoreToCamelCase Toggles this settings value.
      */
     protected final void mapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
-        bindBoolean("mybatis.configuration.mapUnderscoreToCamelCase", mapUnderscoreToCamelCase);
+    	bindConfigurationSetting(new MapUnderscoreToCamelCaseConfigurationSetting(mapUnderscoreToCamelCase));
     }
 
     /**
@@ -228,20 +252,15 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param defaultStatementTimeout default statement timeout in seconds.
      */
     protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
-        bindInteger("mybatis.configuration.defaultStatementTimeout", defaultStatementTimeout);
+    	bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));
     }
-
-    /**
-     *
-     * @param name
-     * @param value
-     */
-    private final void bindBoolean(String name, boolean value) {
-        bindConstant().annotatedWith(named(name)).to(value);
+    
+    public void bindConfigurationSetting(final ConfigurationSetting configurationSetting){
+    	configurationSettings.addBinding().toProvider(Providers.of(configurationSetting));
     }
-
-    private final void bindInteger(String name, Integer value) {
-        bind(Integer.class).annotatedWith(named(name)).toProvider(Providers.of(value));
+    
+    public void bindConfigurationSettingProvider(final Provider<? extends ConfigurationSetting> configurationSettingProvider){
+    	configurationSettings.addBinding().toProvider(guicify(configurationSettingProvider));
     }
 
     /**
@@ -251,7 +270,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     protected final void executorType(ExecutorType executorType) {
         checkArgument(executorType != null, "Parameter 'executorType' must be not null");
-        bindConstant().annotatedWith(named("mybatis.configuration.defaultExecutorType")).to(executorType);
+        bindConfigurationSetting(new DefaultExecutorTypeConfigurationSetting(executorType));
     }
 
     /**
@@ -262,7 +281,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     protected final void localCacheScope(LocalCacheScope localeCacheScope) {
         checkArgument(localeCacheScope != null, "Parameter 'localCacheScope' must be not null");
-        bindConstant().annotatedWith(named("mybatis.configuration.localCacheScope")).to(localeCacheScope);
+        bindConfigurationSetting(new LocalCacheScopeConfigurationSetting(localeCacheScope));
     }
 
     /**
@@ -272,7 +291,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      */
     protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
         checkArgument(autoMappingBehavior != null, "Parameter 'autoMappingBehavior' must be not null");
-        bindConstant().annotatedWith(named("mybatis.configuration.autoMappingBehavior")).to(autoMappingBehavior);
+        bindConfigurationSetting(new AutoMappingBehaviorConfigurationSetting(autoMappingBehavior));
     }
 
     /**
