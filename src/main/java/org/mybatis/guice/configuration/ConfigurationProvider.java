@@ -31,6 +31,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSettings;
+import org.mybatis.guice.configuration.settings.FailFastSetting;
 
 import com.google.inject.ProvisionException;
 
@@ -73,6 +74,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
     @ConfigurationSettings
     private Set<ConfigurationSetting> configurationSettings = Collections.emptySet();
 
+    @com.google.inject.Inject(optional = true)
+    @FailFastSetting
     private boolean failFast;
     
     /**
