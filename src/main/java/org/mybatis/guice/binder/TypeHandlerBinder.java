@@ -30,13 +30,27 @@ public interface TypeHandlerBinder<T> {
      *
      * @param handler The {@code TypeHandler} has to be bound
      */
-	AnnotatedBindingBuilder<? extends TypeHandler<? extends T>> with(Class<? extends TypeHandler<? extends T>> handler);
+	void with(Class<? extends TypeHandler<? extends T>> handler);
     
     /**
      * Bind the given {@code TypeHandler} to an already defined type.
      *
      * @param handler The {@code TypeHandler} has to be bound
      */
-	AnnotatedBindingBuilder<? extends TypeHandler<? extends T>> with(TypeLiteral<? extends TypeHandler<? extends T>> handler);
+	void with(TypeLiteral<? extends TypeHandler<? extends T>> handler);
+	
+    /**
+     * Bind the given {@code TypeHandler} to an already defined type.
+     *
+     * @param handler The {@code TypeHandler} has to be bound
+     */
+	void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler);
+    
+    /**
+     * Bind the given {@code TypeHandler} to an already defined type.
+     *
+     * @param handler The {@code TypeHandler} has to be bound
+     */
+	void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler);
 
 }

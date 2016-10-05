@@ -75,7 +75,6 @@ import org.mybatis.guice.type.TypeHandlerProvider;
 
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.util.Providers;
@@ -493,19 +492,43 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         return new TypeHandlerBinder<T>() {
 
             @Override
-            public AnnotatedBindingBuilder<? extends TypeHandler<? extends T>> with(final Class<? extends TypeHandler<? extends T>> handler) {
+            public void with(final Class<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler);
                 
-                return bind(TypeLiteral.get(handler));
+                bindTypeHandler(TypeLiteral.get(handler));
             }
 
 			@Override
-			public AnnotatedBindingBuilder<? extends TypeHandler<? extends T>> with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+			public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+                checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+                handlers.addBinding(type).to(handler);
+
+                bindTypeHandler(handler);
+			}
+
+			@Override
+			public void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler);
                 
-                return bind(handler);
+                bindProvidedTypeHandler(TypeLiteral.get(handler), type);
+			}
+
+			@Override
+			public void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+				checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+                handlers.addBinding(type).to(handler);
+				
+                bindProvidedTypeHandler(handler, type);
+			}
+			
+			final <TH extends TypeHandler<? extends T>> void bindTypeHandler(TypeLiteral<TH> typeHandlerType) {
+	          bind(typeHandlerType).in(Scopes.SINGLETON);
+			}
+			
+			final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType, Class<T> type) {
+	          bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
 			}
         };
     }
