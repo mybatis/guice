@@ -48,7 +48,7 @@ public class GenericCustomObjectTypeHandlerTest {
                 bindDataSourceProviderType(PooledDataSourceProvider.class);
                 bindTransactionFactoryType(JdbcTransactionFactory.class);
                 Class handlerClass = (Class)GenericCustomObjectTypeHandler.class;
-                handleType(CustomObject.class).with(handlerClass);
+                handleType(CustomObject.class).withProvidedTypeHandler(handlerClass);
             }
         });
         SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);

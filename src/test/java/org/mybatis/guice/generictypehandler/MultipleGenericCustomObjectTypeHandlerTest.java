@@ -48,8 +48,8 @@ public class MultipleGenericCustomObjectTypeHandlerTest {
                 bindProperties(binder(), myBatisProperties);
                 bindDataSourceProviderType(PooledDataSourceProvider.class);
                 bindTransactionFactoryType(JdbcTransactionFactory.class);
-                handleType(CustomObject.class).with(new TypeLiteral<GenericCustomObjectTypeHandler<CustomObject>>(){});
-                handleType(SubCustomObject.class).with(new TypeLiteral<GenericCustomObjectTypeHandler<SubCustomObject>>(){});
+                handleType(CustomObject.class).withProvidedTypeHandler(new TypeLiteral<GenericCustomObjectTypeHandler<CustomObject>>(){});
+                handleType(SubCustomObject.class).withProvidedTypeHandler(new TypeLiteral<GenericCustomObjectTypeHandler<SubCustomObject>>(){});
             }
         });
         SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);

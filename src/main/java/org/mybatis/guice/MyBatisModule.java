@@ -495,16 +495,41 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
             public void with(final Class<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler);
-                bindTypeHandler(TypeLiteral.get(handler), type);
+                
+                bindTypeHandler(TypeLiteral.get(handler));
             }
 
-			@Override
-			public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+            @Override
+            public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
                 checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
                 handlers.addBinding(type).to(handler);
-                bindTypeHandler(handler, type);
-			}
 
+                bindTypeHandler(handler);
+            }
+
+            @Override
+            public void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler) {
+                checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+                handlers.addBinding(type).to(handler);
+                
+                bindProvidedTypeHandler(TypeLiteral.get(handler), type);
+            }
+
+            @Override
+            public void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+                checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+                handlers.addBinding(type).to(handler);
+                
+                bindProvidedTypeHandler(handler, type);
+            }
+
+            final <TH extends TypeHandler<? extends T>> void bindTypeHandler(TypeLiteral<TH> typeHandlerType) {
+                bind(typeHandlerType).in(Scopes.SINGLETON);
+            }
+
+            final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType, Class<T> type) {
+                bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
+            }
         };
     }
 
@@ -517,7 +542,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
         checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
     	mappingTypeHandlers.addBinding().to(handlerClass);
-    	bindTypeHandler(TypeLiteral.get(handlerClass), null);
+    	bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);
     }
 
     /**
@@ -651,9 +676,5 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(test != null, "Parameter 'test' must not be null");
         checkArgument(packageName != null, "Parameter 'packageName' must not be null");
         return new ResolverUtil<Object>().find(test, packageName).getClasses();
-    }
-
-    final <TH extends TypeHandler<? extends T>, T> void bindTypeHandler(TypeLiteral<TH> typeHandlerType, Class<T> type) {
-        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type))).in(Scopes.SINGLETON);
     }
 }
