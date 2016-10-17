@@ -136,7 +136,7 @@ Injector injector = Guice.createInjector(
             bindTransactionFactoryType(JdbcTransactionFactory.class);
             addMapperClass(UserMapper.class);
 
-            Names.bindProperties(binder, createTestProperties());
+            Names.bindProperties(binder(), createTestProperties());
             bind(FooService.class).to(FooServiceMapperImpl.class);
         }
 
