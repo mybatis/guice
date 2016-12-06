@@ -204,7 +204,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
      */
     @Override
     public Configuration get() {
-    	System.out.println(lazyLoadingEnabled);
         final Configuration configuration = newConfiguration(environment);
         configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
         configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
@@ -257,7 +256,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
         } finally {
             ErrorContext.instance().reset();
         }
-        System.out.println(configuration.isLazyLoadingEnabled());
 
         return configuration;
     }
