@@ -60,7 +60,6 @@ import org.mybatis.guice.configuration.settings.ConfigurationSettings;
 import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
-import org.mybatis.guice.configuration.settings.FailFastSettingImpl;
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
@@ -235,7 +234,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
      * @param failFast
      */
     protected final void failFast(boolean failFast) {
-        bindConstant().annotatedWith(FailFastSettingImpl.get()).to(failFast);
+        bindBoolean("mybatis.configuration.failFast", failFast);
     }
 
     /**
@@ -262,6 +261,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     
     public void bindConfigurationSettingProvider(final Provider<? extends ConfigurationSetting> configurationSettingProvider){
     	configurationSettings.addBinding().toProvider(guicify(configurationSettingProvider));
+    }
+    
+    private final void bindBoolean(String name, boolean value) {
+        bindConstant().annotatedWith(named(name)).to(value);
     }
 
     /**

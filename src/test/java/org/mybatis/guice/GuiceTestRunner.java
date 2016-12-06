@@ -78,6 +78,7 @@ public final class GuiceTestRunner extends AbstractGuiceTestRunner {
         myBatisProperties.setProperty("JDBC.username", "sa");
         myBatisProperties.setProperty("JDBC.password", "");
         myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        myBatisProperties.setProperty("JDBC.autoCommit", "false");
         return myBatisProperties;
     }
 }

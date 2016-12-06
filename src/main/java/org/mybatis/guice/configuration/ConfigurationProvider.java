@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
@@ -27,13 +28,15 @@ import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSettings;
-import org.mybatis.guice.configuration.settings.FailFastSetting;
 
 import com.google.inject.ProvisionException;
+import com.google.inject.name.Named;
 
 /**
  * Provides the myBatis Configuration.
@@ -45,6 +48,55 @@ public class ConfigurationProvider implements Provider<Configuration> {
      * The myBatis Configuration reference.
      */
     private final Environment environment;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.lazyLoadingEnabled")
+    private boolean lazyLoadingEnabled = false;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.aggressiveLazyLoading")
+    private boolean aggressiveLazyLoading = true;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.multipleResultSetsEnabled")
+    private boolean multipleResultSetsEnabled = true;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.useGeneratedKeys")
+    private boolean useGeneratedKeys = false;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.useColumnLabel")
+    private boolean useColumnLabel = true;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.cacheEnabled")
+    private boolean cacheEnabled = true;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.defaultExecutorType")
+    private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.autoMappingBehavior")
+    private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.callSettersOnNulls")
+    private boolean callSettersOnNulls = false;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.defaultStatementTimeout")
+    @Nullable
+    private Integer defaultStatementTimeout;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.mapUnderscoreToCamelCase")
+    private boolean mapUnderscoreToCamelCase = false;
+
+    @com.google.inject.Inject(optional = true)
+    @Named("mybatis.configuration.failFast")
+    private boolean failFast = false;
 
     @com.google.inject.Inject(optional = true)
     @TypeAliases
@@ -74,10 +126,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
     @ConfigurationSettings
     private Set<ConfigurationSetting> configurationSettings = Collections.emptySet();
 
-    @com.google.inject.Inject(optional = true)
-    @FailFastSetting
-    private boolean failFast;
-    
     /**
      * @since 1.0.1
      */
@@ -156,7 +204,19 @@ public class ConfigurationProvider implements Provider<Configuration> {
      */
     @Override
     public Configuration get() {
+    	System.out.println(lazyLoadingEnabled);
         final Configuration configuration = newConfiguration(environment);
+        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
+        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
+        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);
+        configuration.setUseGeneratedKeys(useGeneratedKeys);
+        configuration.setUseColumnLabel(useColumnLabel);
+        configuration.setCacheEnabled(cacheEnabled);
+        configuration.setDefaultExecutorType(defaultExecutorType);
+        configuration.setAutoMappingBehavior(autoMappingBehavior);
+        configuration.setCallSettersOnNulls(callSettersOnNulls);
+        configuration.setDefaultStatementTimeout(defaultStatementTimeout);
+        configuration.setMapUnderscoreToCamelCase(mapUnderscoreToCamelCase);
 
         for(ConfigurationSetting setting : configurationSettings){
         	setting.applyConfigurationSetting(configuration);
@@ -197,6 +257,7 @@ public class ConfigurationProvider implements Provider<Configuration> {
         } finally {
             ErrorContext.instance().reset();
         }
+        System.out.println(configuration.isLazyLoadingEnabled());
 
         return configuration;
     }
