@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DruidDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.druid</a> &gt; <span class="el_source">DruidDataSourceProvider.java</span></div><h1>DruidDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.druid;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.name.Named;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
+/**
+ * Provides the Druid DataSource.
+ *
+ * @author lazeyliu
+ */
+<span class="nc" id="L31">public class DruidDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
+
+<span class="nc" id="L33">    DruidDataSource dataSource = new DruidDataSource();</span>
+
+    @Inject
+    public void setDriverClassName(@Named(&quot;JDBC.driverClassName&quot;) final String driverClassName) {
+<span class="nc" id="L37">        dataSource.setDriverClassName(driverClassName);</span>
+<span class="nc" id="L38">    }</span>
+
+    @Inject
+    public void setUrl(@Named(&quot;JDBC.url&quot;) final String url) {
+<span class="nc" id="L42">        dataSource.setUrl(url);</span>
+<span class="nc" id="L43">    }</span>
+
+    @Inject
+    public void setUsername(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="nc" id="L47">        dataSource.setUsername(username);</span>
+<span class="nc" id="L48">    }</span>
+
+    @Inject
+    public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="nc" id="L52">        dataSource.setPassword(password);</span>
+<span class="nc" id="L53">    }</span>
+
+    @Inject(optional = true)
+    public void setDefaultAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean defaultAutoCommit) {
+<span class="nc" id="L57">        dataSource.setDefaultAutoCommit(defaultAutoCommit);</span>
+<span class="nc" id="L58">    }</span>
+
+    @Inject(optional = true)
+    public void setDefaultReadOnly(@Named(&quot;JDBC.readOnly&quot;) final boolean defaultReadOnly) {
+<span class="nc" id="L62">        dataSource.setDefaultAutoCommit(defaultReadOnly);</span>
+<span class="nc" id="L63">    }</span>
+
+    @Inject(optional = true)
+    public void setDefaultTransactionIsolation(@Named(&quot;JDBC.transactionIsolation&quot;) final int defaultTransactionIsolation) {
+<span class="nc" id="L67">        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="nc" id="L68">    }</span>
+
+    @Inject(optional = true)
+    public void setDefaultCatalog(@Named(&quot;JDBC.catalog&quot;) final String defaultCatalog) {
+<span class="nc" id="L72">        dataSource.setDefaultCatalog(defaultCatalog);</span>
+<span class="nc" id="L73">    }</span>
+
+    @Inject(optional = true)
+    public void setMaxActive(@Named(&quot;JDBC.maxActive&quot;) final int maxActive) {
+<span class="nc" id="L77">        dataSource.setMaxActive(maxActive);</span>
+<span class="nc" id="L78">    }</span>
+
+    @Inject(optional = true)
+    public void setMinIdle(@Named(&quot;JDBC.minIdle&quot;) final int minIdle) {
+<span class="nc" id="L82">        dataSource.setMinIdle(minIdle);</span>
+<span class="nc" id="L83">    }</span>
+
+    @Inject(optional = true)
+    public void setInitialSize(@Named(&quot;JDBC.initialSize&quot;) final int initialSize) {
+<span class="nc" id="L87">        dataSource.setInitialSize(initialSize);</span>
+<span class="nc" id="L88">    }</span>
+
+    @Inject(optional = true)
+    public void setMaxWait(@Named(&quot;JDBC.maxWait&quot;) final long maxWait) {
+<span class="nc" id="L92">        dataSource.setMaxWait(maxWait);</span>
+<span class="nc" id="L93">    }</span>
+
+    @Inject(optional = true)
+    public void setTestOnBorrow(@Named(&quot;JDBC.testOnBorrow&quot;) final boolean testOnBorrow) {
+<span class="nc" id="L97">        dataSource.setTestOnBorrow(testOnBorrow);</span>
+<span class="nc" id="L98">    }</span>
+
+    @Inject(optional = true)
+    public void setTestOnReturn(@Named(&quot;JDBC.testOnReturn&quot;) final boolean testOnReturn) {
+<span class="nc" id="L102">        dataSource.setTestOnReturn(testOnReturn);</span>
+<span class="nc" id="L103">    }</span>
+
+    @Inject(optional = true)
+    public void setTimeBetweenEvictionRunsMillis(@Named(&quot;JDBC.timeBetweenEvictionRunsMillis&quot;) final long timeBetweenEvictionRunsMillis) {
+<span class="nc" id="L107">        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
+<span class="nc" id="L108">    }</span>
+
+    @Inject(optional = true)
+    public void setMinEvictableIdleTimeMillis(@Named(&quot;JDBC.minEvictableIdleTimeMillis&quot;) final long minEvictableIdleTimeMillis) {
+<span class="nc" id="L112">        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
+<span class="nc" id="L113">    }</span>
+
+    @Inject(optional = true)
+    public void setTestWhileIdle(@Named(&quot;JDBC.testWhileIdle&quot;) final boolean testWhileIdle) {
+<span class="nc" id="L117">        dataSource.setTestWhileIdle(testWhileIdle);</span>
+<span class="nc" id="L118">    }</span>
+
+    @Inject(optional = true)
+    public void setValidationQuery(@Named(&quot;JDBC.validationQuery&quot;) final String validationQuery) {
+<span class="nc" id="L122">        dataSource.setValidationQuery(validationQuery);</span>
+<span class="nc" id="L123">    }</span>
+
+    @Inject(optional = true)
+    public void setValidationQueryTimeout(@Named(&quot;JDBC.validationQueryTimeout&quot;) final int validationQueryTimeout) {
+<span class="nc" id="L127">        dataSource.setValidationQueryTimeout(validationQueryTimeout);</span>
+<span class="nc" id="L128">    }</span>
+
+    @Inject(optional = true)
+    public void setAccessToUnderlyingConnectionAllowed(@Named(&quot;JDBC.accessToUnderlyingConnectionAllowed&quot;) final boolean accessToUnderlyingConnectionAllowed) {
+<span class="nc" id="L132">        dataSource.setAccessToUnderlyingConnectionAllowed(accessToUnderlyingConnectionAllowed);</span>
+<span class="nc" id="L133">    }</span>
+
+    @Inject(optional = true)
+    public void setRemoveAbandoned(@Named(&quot;JDBC.removeAbandoned&quot;) final boolean removeAbandoned) {
+<span class="nc" id="L137">        dataSource.setRemoveAbandoned(removeAbandoned);</span>
+<span class="nc" id="L138">    }</span>
+
+    @Inject(optional = true)
+    public void setRemoveAbandonedTimeout(@Named(&quot;JDBC.removeAbandonedTimeout&quot;) final int removeAbandonedTimeout) {
+<span class="nc" id="L142">        dataSource.setRemoveAbandonedTimeout(removeAbandonedTimeout);</span>
+<span class="nc" id="L143">    }</span>
+
+    @Inject(optional = true)
+    public void setLogAbandoned(@Named(&quot;JDBC.logAbandoned&quot;) final boolean logAbandoned) {
+<span class="nc" id="L147">        dataSource.setLogAbandoned(logAbandoned);</span>
+<span class="nc" id="L148">    }</span>
+
+    @Inject(optional = true)
+    public void setPoolPreparedStatements(@Named(&quot;JDBC.poolPreparedStatements&quot;) final boolean poolPreparedStatements) {
+<span class="nc" id="L152">        dataSource.setPoolPreparedStatements(poolPreparedStatements);</span>
+<span class="nc" id="L153">    }</span>
+
+    @Inject(optional = true)
+    public void setMaxOpenPreparedStatements(@Named(&quot;JDBC.maxOpenPreparedStatements&quot;) final int maxOpenPreparedStatements) {
+<span class="nc" id="L157">        dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);</span>
+<span class="nc" id="L158">    }</span>
+
+    @Inject(optional = true)
+    public void setConnectionProperties(@Named(&quot;JDBC.connectionProperties&quot;) final String connectionProperties) {
+<span class="nc" id="L162">        dataSource.setConnectionProperties(connectionProperties);</span>
+<span class="nc" id="L163">    }</span>
+
+    @Inject(optional = true)
+    public void setFilters(@Named(&quot;JDBC.filters&quot;) final String filters) throws SQLException {
+<span class="nc" id="L167">        dataSource.setFilters(filters);</span>
+<span class="nc" id="L168">    }</span>
+
+    @Inject(optional = true)
+    public void setExceptionSorter(@Named(&quot;JDBC.exceptionSorter&quot;) final String exceptionSorter) throws SQLException {
+<span class="nc" id="L172">        dataSource.setExceptionSorter(exceptionSorter);</span>
+<span class="nc" id="L173">    }</span>
+
+    @Inject(optional = true)
+    public void setExceptionSorterClassName(@Named(&quot;JDBC.exceptionSorterClassName&quot;) final String exceptionSorterClassName) throws Exception {
+<span class="nc" id="L177">        dataSource.setExceptionSorterClassName(exceptionSorterClassName);</span>
+<span class="nc" id="L178">    }</span>
+
+    @Override
+    public DataSource get() {
+<span class="nc" id="L182">        return dataSource;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

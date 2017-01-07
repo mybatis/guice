@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PerUserPoolDataSourceProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">PerUserPoolDataSourceProvider.java</span></div><h1>PerUserPoolDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2015 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PerUserPoolDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">PerUserPoolDataSourceProvider.java</span></div><h1>PerUserPoolDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,154 +26,152 @@ import java.util.Map.Entry;
 
 /**
  * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
- *
- * @version $Id$
  */
-<span class="nc" id="L32">public final class PerUserPoolDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
+<span class="nc" id="L30">public final class PerUserPoolDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
 
-<span class="nc" id="L34">    private final PerUserPoolDataSource dataSource = new PerUserPoolDataSource();</span>
+<span class="nc" id="L32">    private final PerUserPoolDataSource dataSource = new PerUserPoolDataSource();</span>
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionPoolDataSource(ConnectionPoolDataSource cpds) {
-<span class="nc" id="L38">        dataSource.setConnectionPoolDataSource(cpds);</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L36">        dataSource.setConnectionPoolDataSource(cpds);</span>
+<span class="nc" id="L37">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDataSourceName(@Named(&quot;DBCP.name&quot;) String name) {
-<span class="nc" id="L43">        dataSource.setDataSourceName(name);</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L41">        dataSource.setDataSourceName(name);</span>
+<span class="nc" id="L42">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) boolean autoCommit) {
-<span class="nc" id="L48">        dataSource.setDefaultAutoCommit(autoCommit);</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L46">        dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="nc" id="L47">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) boolean defaultReadOnly) {
-<span class="nc" id="L53">        dataSource.setDefaultReadOnly(defaultReadOnly);</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L51">        dataSource.setDefaultReadOnly(defaultReadOnly);</span>
+<span class="nc" id="L52">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultTransactionIsolation(@Named(&quot;DBCP.defaultTransactionIsolation&quot;) int defaultTransactionIsolation) {
-<span class="nc" id="L58">        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
-<span class="nc" id="L59">    }</span>
+<span class="nc" id="L56">        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="nc" id="L57">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDescription(@Named(&quot;DBCP.description&quot;) String description) {
-<span class="nc" id="L63">        dataSource.setDescription(description);</span>
-<span class="nc" id="L64">    }</span>
+<span class="nc" id="L61">        dataSource.setDescription(description);</span>
+<span class="nc" id="L62">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setJndiEnvironment(@Named(&quot;DBCP.jndi.key&quot;) String key, @Named(&quot;DBCP.jndi.value&quot;) String value) {
-<span class="nc" id="L68">        dataSource.setJndiEnvironment(key, value);</span>
-<span class="nc" id="L69">    }</span>
+<span class="nc" id="L66">        dataSource.setJndiEnvironment(key, value);</span>
+<span class="nc" id="L67">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int loginTimeout) {
-<span class="nc" id="L73">        dataSource.setLoginTimeout(loginTimeout);</span>
-<span class="nc" id="L74">    }</span>
+<span class="nc" id="L71">        dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="nc" id="L72">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setMinEvictableIdleTimeMillis(@Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) int minEvictableIdleTimeMillis) {
-<span class="nc" id="L78">        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
-<span class="nc" id="L79">    }</span>
+<span class="nc" id="L76">        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
+<span class="nc" id="L77">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) int numTestsPerEvictionRun) {
-<span class="nc" id="L83">        dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L81">        dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
+<span class="nc" id="L82">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setRollbackAfterValidation(@Named(&quot;DBCP.rollbackAfterValidation&quot;) boolean rollbackAfterValidation) {
-<span class="nc" id="L88">        dataSource.setRollbackAfterValidation(rollbackAfterValidation);</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L86">        dataSource.setRollbackAfterValidation(rollbackAfterValidation);</span>
+<span class="nc" id="L87">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setTestOnBorrow(@Named(&quot;DBCP.testOnBorrow&quot;) boolean testOnBorrow) {
-<span class="nc" id="L93">        dataSource.setTestOnBorrow(testOnBorrow);</span>
-<span class="nc" id="L94">    }</span>
+<span class="nc" id="L91">        dataSource.setTestOnBorrow(testOnBorrow);</span>
+<span class="nc" id="L92">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setTestOnReturn(@Named(&quot;DBCP.testOnReturn&quot;) boolean testOnReturn) {
-<span class="nc" id="L98">        dataSource.setTestOnReturn(testOnReturn);</span>
-<span class="nc" id="L99">    }</span>
+<span class="nc" id="L96">        dataSource.setTestOnReturn(testOnReturn);</span>
+<span class="nc" id="L97">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setTestWhileIdle(@Named(&quot;DBCP.testWhileIdle&quot;) boolean testWhileIdle) {
-<span class="nc" id="L103">        dataSource.setTestWhileIdle(testWhileIdle);</span>
-<span class="nc" id="L104">    }</span>
+<span class="nc" id="L101">        dataSource.setTestWhileIdle(testWhileIdle);</span>
+<span class="nc" id="L102">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setTimeBetweenEvictionRunsMillis(@Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
-<span class="nc" id="L108">        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
-<span class="nc" id="L109">    }</span>
+<span class="nc" id="L106">        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
+<span class="nc" id="L107">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) String validationQuery) {
-<span class="nc" id="L113">        dataSource.setValidationQuery(validationQuery);</span>
-<span class="nc" id="L114">    }</span>
+<span class="nc" id="L111">        dataSource.setValidationQuery(validationQuery);</span>
+<span class="nc" id="L112">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultMaxActive(@Named(&quot;DBCP.maxActive&quot;) int maxActive) {
-<span class="nc" id="L118">        dataSource.setDefaultMaxActive(maxActive);</span>
-<span class="nc" id="L119">    }</span>
+<span class="nc" id="L116">        dataSource.setDefaultMaxActive(maxActive);</span>
+<span class="nc" id="L117">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) int defaultMaxIdle) {
-<span class="nc" id="L123">        dataSource.setDefaultMaxIdle(defaultMaxIdle);</span>
-<span class="nc" id="L124">    }</span>
+<span class="nc" id="L121">        dataSource.setDefaultMaxIdle(defaultMaxIdle);</span>
+<span class="nc" id="L122">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDefaultMaxWait(@Named(&quot;DBCP.maxWait&quot;) int defaultMaxWait) {
-<span class="nc" id="L128">        dataSource.setDefaultMaxWait(defaultMaxWait);</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L126">        dataSource.setDefaultMaxWait(defaultMaxWait);</span>
+<span class="nc" id="L127">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserDefaultAutoCommit(@PerUserDefaultAutoCommit Map&lt;String, Boolean&gt; perUserDefaultAutoCommit) {
-<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (Entry&lt;String, Boolean&gt; entry : perUserDefaultAutoCommit.entrySet()) {</span>
-<span class="nc" id="L134">            dataSource.setPerUserDefaultAutoCommit(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L135">        }</span>
-<span class="nc" id="L136">    }</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        for (Entry&lt;String, Boolean&gt; entry : perUserDefaultAutoCommit.entrySet()) {</span>
+<span class="nc" id="L132">            dataSource.setPerUserDefaultAutoCommit(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L133">        }</span>
+<span class="nc" id="L134">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserDefaultReadOnly(@PerUserDefaultReadOnly Map&lt;String, Boolean&gt; perUserDefaultReadOnly) {
-<span class="nc bnc" id="L140" title="All 2 branches missed.">        for (Entry&lt;String, Boolean&gt; entry : perUserDefaultReadOnly.entrySet()) {</span>
-<span class="nc" id="L141">            dataSource.setPerUserDefaultReadOnly(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L142">        }</span>
-<span class="nc" id="L143">    }</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (Entry&lt;String, Boolean&gt; entry : perUserDefaultReadOnly.entrySet()) {</span>
+<span class="nc" id="L139">            dataSource.setPerUserDefaultReadOnly(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L140">        }</span>
+<span class="nc" id="L141">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserDefaultTransactionIsolation(@PerUserDefaultTransactionIsolation Map&lt;String, Integer&gt; perUserDefaultTransactionIsolation) {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserDefaultTransactionIsolation.entrySet()) {</span>
-<span class="nc" id="L148">            dataSource.setPerUserDefaultTransactionIsolation(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L149">        }</span>
-<span class="nc" id="L150">    }</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserDefaultTransactionIsolation.entrySet()) {</span>
+<span class="nc" id="L146">            dataSource.setPerUserDefaultTransactionIsolation(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L147">        }</span>
+<span class="nc" id="L148">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserMaxActive(@PerUserMaxActive Map&lt;String, Integer&gt; perUserMaxActive) {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxActive.entrySet()) {</span>
-<span class="nc" id="L155">            dataSource.setPerUserMaxActive(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L156">        }</span>
-<span class="nc" id="L157">    }</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxActive.entrySet()) {</span>
+<span class="nc" id="L153">            dataSource.setPerUserMaxActive(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L154">        }</span>
+<span class="nc" id="L155">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserMaxIdle(@PerUserMaxIdle Map&lt;String, Integer&gt; perUserMaxIdle) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxIdle.entrySet()) {</span>
-<span class="nc" id="L162">            dataSource.setPerUserMaxIdle(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L163">        }</span>
-<span class="nc" id="L164">    }</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxIdle.entrySet()) {</span>
+<span class="nc" id="L160">            dataSource.setPerUserMaxIdle(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L161">        }</span>
+<span class="nc" id="L162">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPerUserMaxWait(@PerUserMaxWait Map&lt;String, Integer&gt; perUserMaxWait) {
-<span class="nc bnc" id="L168" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxWait.entrySet()) {</span>
-<span class="nc" id="L169">            dataSource.setPerUserMaxWait(entry.getKey(), entry.getValue());</span>
-<span class="nc" id="L170">        }</span>
-<span class="nc" id="L171">    }</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        for (Entry&lt;String, Integer&gt; entry : perUserMaxWait.entrySet()) {</span>
+<span class="nc" id="L167">            dataSource.setPerUserMaxWait(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L168">        }</span>
+<span class="nc" id="L169">    }</span>
 
     @Override
     public DataSource get() {
-<span class="nc" id="L175">        return dataSource;</span>
+<span class="nc" id="L173">        return dataSource;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

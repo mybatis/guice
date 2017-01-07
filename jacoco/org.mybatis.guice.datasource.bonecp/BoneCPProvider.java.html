@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BoneCPProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.bonecp</a> &gt; <span class="el_source">BoneCPProvider.java</span></div><h1>BoneCPProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2015 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoneCPProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.bonecp</a> &gt; <span class="el_source">BoneCPProvider.java</span></div><h1>BoneCPProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -27,193 +27,191 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the BoneCP DataSource.
- *
- * @version $Id$
  */
-<span class="nc" id="L33">public final class BoneCPProvider implements Provider&lt;DataSource&gt; {</span>
+<span class="nc" id="L31">public final class BoneCPProvider implements Provider&lt;DataSource&gt; {</span>
 
-<span class="nc" id="L35">    private final BoneCPDataSource dataSource = new BoneCPDataSource();</span>
+<span class="nc" id="L33">    private final BoneCPDataSource dataSource = new BoneCPDataSource();</span>
 
     @com.google.inject.Inject(optional = true)
     public void setAcquireIncrement(@Named(&quot;bonecp.acquireIncrement&quot;) int acquireIncrement) {
-<span class="nc" id="L39">        dataSource.setAcquireIncrement(acquireIncrement);</span>
-<span class="nc" id="L40">    }</span>
+<span class="nc" id="L37">        dataSource.setAcquireIncrement(acquireIncrement);</span>
+<span class="nc" id="L38">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setAcquireRetryAttempts(@Named(&quot;bonecp.acquireRetryAttempts&quot;) int acquireRetryAttempts) {
-<span class="nc" id="L44">        dataSource.setAcquireRetryAttempts(acquireRetryAttempts);</span>
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L42">        dataSource.setAcquireRetryAttempts(acquireRetryAttempts);</span>
+<span class="nc" id="L43">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setClassLoader(@Named(&quot;JDBC.driverClassLoader&quot;) ClassLoader classLoader) {
-<span class="nc" id="L49">        dataSource.setClassLoader(classLoader);</span>
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L47">        dataSource.setClassLoader(classLoader);</span>
+<span class="nc" id="L48">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setCloseConnectionWatch(@Named(&quot;bonecp.closeConnectionWatch&quot;) boolean closeConnectionWatch) {
-<span class="nc" id="L54">        dataSource.setCloseConnectionWatch(closeConnectionWatch);</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L52">        dataSource.setCloseConnectionWatch(closeConnectionWatch);</span>
+<span class="nc" id="L53">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionHook(@Named(&quot;bonecp.connectionHook&quot;) ConnectionHook connectionHook) {
-<span class="nc" id="L59">        dataSource.setConnectionHook(connectionHook);</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L57">        dataSource.setConnectionHook(connectionHook);</span>
+<span class="nc" id="L58">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionHookClassName(@Named(&quot;bonecp.connectionHookClassName&quot;) String connectionHookClassName) {
-<span class="nc" id="L64">        dataSource.setConnectionHookClassName(connectionHookClassName);</span>
-<span class="nc" id="L65">    }</span>
+<span class="nc" id="L62">        dataSource.setConnectionHookClassName(connectionHookClassName);</span>
+<span class="nc" id="L63">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setConnectionTestStatement(@Named(&quot;bonecp.connectionTestStatement&quot;) String connectionTestStatement) {
-<span class="nc" id="L69">        dataSource.setConnectionTestStatement(connectionTestStatement);</span>
-<span class="nc" id="L70">    }</span>
+<span class="nc" id="L67">        dataSource.setConnectionTestStatement(connectionTestStatement);</span>
+<span class="nc" id="L68">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDisableConnectionTracking(@Named(&quot;bonecp.disableConnectionTracking&quot;) boolean disableConnectionTracking) {
-<span class="nc" id="L74">        dataSource.setDisableConnectionTracking(disableConnectionTracking);</span>
-<span class="nc" id="L75">    }</span>
+<span class="nc" id="L72">        dataSource.setDisableConnectionTracking(disableConnectionTracking);</span>
+<span class="nc" id="L73">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDisableJMX(@Named(&quot;bonecp.disableJMX&quot;) boolean disableJMX) {
-<span class="nc" id="L79">        dataSource.setDisableJMX(disableJMX);</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L77">        dataSource.setDisableJMX(disableJMX);</span>
+<span class="nc" id="L78">    }</span>
 
     @Inject
     public void setDriverClass(@Named(&quot;JDBC.driver&quot;) final String driverClass) {
-<span class="nc" id="L84">        dataSource.setDriverClass(driverClass);</span>
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L82">        dataSource.setDriverClass(driverClass);</span>
+<span class="nc" id="L83">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named(&quot;bonecp.driverProperties&quot;) Properties driverProperties) {
-<span class="nc" id="L89">        dataSource.setDriverProperties(driverProperties);</span>
-<span class="nc" id="L90">    }</span>
+<span class="nc" id="L87">        dataSource.setDriverProperties(driverProperties);</span>
+<span class="nc" id="L88">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriod(@Named(&quot;bonecp.idleConnectionTestPeriod&quot;) long idleConnectionTestPeriod,
             @Named(&quot;bonecp.timeUnit&quot;) TimeUnit timeUnit) {
-<span class="nc" id="L95">        dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L93">        dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod, timeUnit);</span>
+<span class="nc" id="L94">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInMinutes(@Named(&quot;bonecp.idleConnectionTestPeriod&quot;) long idleConnectionTestPeriod) {
-<span class="nc" id="L100">        dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);</span>
-<span class="nc" id="L101">    }</span>
+<span class="nc" id="L98">        dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);</span>
+<span class="nc" id="L99">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriodInSeconds(@Named(&quot;bonecp.idleConnectionTestPeriod&quot;) long idleConnectionTestPeriod) {
-<span class="nc" id="L105">        dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L103">        dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);</span>
+<span class="nc" id="L104">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setIdleMaxAge(@Named(&quot;bonecp.idleMaxAge&quot;) long idleMaxAge, @Named(&quot;bonecp.timeUnit&quot;) TimeUnit timeUnit) {
-<span class="nc" id="L110">        dataSource.setIdleMaxAge(idleMaxAge, timeUnit);</span>
-<span class="nc" id="L111">    }</span>
+<span class="nc" id="L108">        dataSource.setIdleMaxAge(idleMaxAge, timeUnit);</span>
+<span class="nc" id="L109">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setInitSQL(@Named(&quot;bonecp.initSQL&quot;) String initSQL) {
-<span class="nc" id="L115">        dataSource.setInitSQL(initSQL);</span>
-<span class="nc" id="L116">    }</span>
+<span class="nc" id="L113">        dataSource.setInitSQL(initSQL);</span>
+<span class="nc" id="L114">    }</span>
 
     @Inject
     public void setJdbcUrl(@Named(&quot;JDBC.url&quot;) String jdbcUrl) {
-<span class="nc" id="L120">        dataSource.setJdbcUrl(jdbcUrl);</span>
-<span class="nc" id="L121">    }</span>
+<span class="nc" id="L118">        dataSource.setJdbcUrl(jdbcUrl);</span>
+<span class="nc" id="L119">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setLazyInit(@Named(&quot;bonecp.lazyInit&quot;) boolean lazyInit) {
-<span class="nc" id="L125">        dataSource.setLazyInit(lazyInit);</span>
-<span class="nc" id="L126">    }</span>
+<span class="nc" id="L123">        dataSource.setLazyInit(lazyInit);</span>
+<span class="nc" id="L124">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setLogStatementsEnabled(@Named(&quot;bonecp.logStatementsEnabled&quot;) boolean logStatementsEnabled) {
-<span class="nc" id="L130">        dataSource.setLogStatementsEnabled(logStatementsEnabled);</span>
-<span class="nc" id="L131">    }</span>
+<span class="nc" id="L128">        dataSource.setLogStatementsEnabled(logStatementsEnabled);</span>
+<span class="nc" id="L129">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAge(@Named(&quot;bonecp.maxConnectionAge&quot;) long maxConnectionAge,
             @Named(&quot;bonecp.timeUnit&quot;) TimeUnit timeUnit) {
-<span class="nc" id="L136">        dataSource.setMaxConnectionAge(maxConnectionAge, timeUnit);</span>
-<span class="nc" id="L137">    }</span>
+<span class="nc" id="L134">        dataSource.setMaxConnectionAge(maxConnectionAge, timeUnit);</span>
+<span class="nc" id="L135">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAgeInSeconds(@Named(&quot;bonecp.maxConnectionAgeInSeconds&quot;) long maxConnectionAgeInSeconds) {
-<span class="nc" id="L141">        dataSource.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);</span>
-<span class="nc" id="L142">    }</span>
+<span class="nc" id="L139">        dataSource.setMaxConnectionAgeInSeconds(maxConnectionAgeInSeconds);</span>
+<span class="nc" id="L140">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionsPerPartition(@Named(&quot;bonecp.maxConnectionsPerPartition&quot;) int maxConnectionsPerPartition) {
-<span class="nc" id="L146">        dataSource.setMaxConnectionsPerPartition(maxConnectionsPerPartition);</span>
-<span class="nc" id="L147">    }</span>
+<span class="nc" id="L144">        dataSource.setMaxConnectionsPerPartition(maxConnectionsPerPartition);</span>
+<span class="nc" id="L145">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setMinConnectionsPerPartition(@Named(&quot;bonecp.minConnectionsPerPartition&quot;) int minConnectionsPerPartition) {
-<span class="nc" id="L151">        dataSource.setMinConnectionsPerPartition(minConnectionsPerPartition);</span>
-<span class="nc" id="L152">    }</span>
+<span class="nc" id="L149">        dataSource.setMinConnectionsPerPartition(minConnectionsPerPartition);</span>
+<span class="nc" id="L150">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPartitionCount(@Named(&quot;bonecp.partitionCount&quot;) int partitionCount) {
-<span class="nc" id="L156">        dataSource.setPartitionCount(partitionCount);</span>
-<span class="nc" id="L157">    }</span>
+<span class="nc" id="L154">        dataSource.setPartitionCount(partitionCount);</span>
+<span class="nc" id="L155">    }</span>
 
     @Inject
     public void setPassword(@Named(&quot;JDBC.password&quot;) String password) {
-<span class="nc" id="L161">        dataSource.setPassword(password);</span>
-<span class="nc" id="L162">    }</span>
+<span class="nc" id="L159">        dataSource.setPassword(password);</span>
+<span class="nc" id="L160">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPoolAvailabilityThreshold(@Named(&quot;bonecp.poolAvailabilityThreshold&quot;) int poolAvailabilityThreshold) {
-<span class="nc" id="L166">        dataSource.setPoolAvailabilityThreshold(poolAvailabilityThreshold);</span>
-<span class="nc" id="L167">    }</span>
+<span class="nc" id="L164">        dataSource.setPoolAvailabilityThreshold(poolAvailabilityThreshold);</span>
+<span class="nc" id="L165">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setPoolName(@Named(&quot;bonecp.poolName&quot;) String poolName) {
-<span class="nc" id="L171">        dataSource.setPoolName(poolName);</span>
-<span class="nc" id="L172">    }</span>
+<span class="nc" id="L169">        dataSource.setPoolName(poolName);</span>
+<span class="nc" id="L170">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setQueryExecuteTimeLimit(@Named(&quot;bonecp.queryExecuteTimeLimit&quot;) int queryExecuteTimeLimit,
             @Named(&quot;bonecp.timeUnit&quot;) TimeUnit timeUnit) {
-<span class="nc" id="L177">        dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);</span>
-<span class="nc" id="L178">    }</span>
+<span class="nc" id="L175">        dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);</span>
+<span class="nc" id="L176">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setReleaseHelperThreads(@Named(&quot;bonecp.releaseHelperThreads&quot;) int releaseHelperThreads) {
-<span class="nc" id="L182">        dataSource.setReleaseHelperThreads(releaseHelperThreads);</span>
-<span class="nc" id="L183">    }</span>
+<span class="nc" id="L180">        dataSource.setReleaseHelperThreads(releaseHelperThreads);</span>
+<span class="nc" id="L181">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setServiceOrder(@Named(&quot;bonecp.serviceOrder&quot;) String serviceOrder) {
-<span class="nc" id="L187">        dataSource.setServiceOrder(serviceOrder);</span>
-<span class="nc" id="L188">    }</span>
+<span class="nc" id="L185">        dataSource.setServiceOrder(serviceOrder);</span>
+<span class="nc" id="L186">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setStatementReleaseHelperThreads(@Named(&quot;bonecp.statementReleaseHelperThreads&quot;) int statementReleaseHelperThreads) {
-<span class="nc" id="L192">        dataSource.setStatementReleaseHelperThreads(statementReleaseHelperThreads);</span>
-<span class="nc" id="L193">    }</span>
+<span class="nc" id="L190">        dataSource.setStatementReleaseHelperThreads(statementReleaseHelperThreads);</span>
+<span class="nc" id="L191">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setStatementsCacheSize(@Named(&quot;bonecp.statementsCacheSize&quot;) int statementsCacheSize) {
-<span class="nc" id="L197">        dataSource.setStatementsCacheSize(statementsCacheSize);</span>
-<span class="nc" id="L198">    }</span>
+<span class="nc" id="L195">        dataSource.setStatementsCacheSize(statementsCacheSize);</span>
+<span class="nc" id="L196">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setTransactionRecoveryEnabled(@Named(&quot;bonecp.transactionRecoveryEnabled&quot;) boolean transactionRecoveryEnabled) {
-<span class="nc" id="L202">        dataSource.setTransactionRecoveryEnabled(transactionRecoveryEnabled);</span>
-<span class="nc" id="L203">    }</span>
+<span class="nc" id="L200">        dataSource.setTransactionRecoveryEnabled(transactionRecoveryEnabled);</span>
+<span class="nc" id="L201">    }</span>
 
     @Inject
     public void setUsername(@Named(&quot;JDBC.username&quot;) String username) {
-<span class="nc" id="L207">        dataSource.setUsername(username);</span>
-<span class="nc" id="L208">    }</span>
+<span class="nc" id="L205">        dataSource.setUsername(username);</span>
+<span class="nc" id="L206">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public DataSource get() {
-<span class="nc" id="L215">        return dataSource;</span>
+<span class="nc" id="L213">        return dataSource;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

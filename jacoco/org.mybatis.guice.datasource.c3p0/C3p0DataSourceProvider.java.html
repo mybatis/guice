@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>C3p0DataSourceProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.c3p0</a> &gt; <span class="el_source">C3p0DataSourceProvider.java</span></div><h1>C3p0DataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2015 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>C3p0DataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.c3p0</a> &gt; <span class="el_source">C3p0DataSourceProvider.java</span></div><h1>C3p0DataSourceProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,15 +26,13 @@ import java.util.Properties;
 
 /**
  * Provides the C3P0 DataSource.
- *
- * @version $Id$
  */
 public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; {
 
     /**
      * The ComboPooledDataSource reference.
      */
-<span class="nc" id="L37">    private final ComboPooledDataSource dataSource = new ComboPooledDataSource();</span>
+<span class="nc" id="L35">    private final ComboPooledDataSource dataSource = new ComboPooledDataSource();</span>
 
     /**
      * Creates a new ComboPooledDataSource using the needed parameter.
@@ -44,16 +42,16 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @Inject
     public C3p0DataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
-<span class="nc" id="L47">            @Named(&quot;JDBC.url&quot;) final String url) {</span>
+<span class="nc" id="L45">            @Named(&quot;JDBC.url&quot;) final String url) {</span>
         try {
-<span class="nc" id="L49">            dataSource.setDriverClass(driver);</span>
-<span class="nc" id="L50">        } catch (PropertyVetoException e) {</span>
-<span class="nc" id="L51">            throw new RuntimeException(&quot;Impossible to initialize C3P0 Data Source with driver class '&quot;</span>
+<span class="nc" id="L47">            dataSource.setDriverClass(driver);</span>
+<span class="nc" id="L48">        } catch (PropertyVetoException e) {</span>
+<span class="nc" id="L49">            throw new RuntimeException(&quot;Impossible to initialize C3P0 Data Source with driver class '&quot;</span>
                     + driver
                     + &quot;', see nested exceptions&quot;, e);
-<span class="nc" id="L54">        }</span>
-<span class="nc" id="L55">        dataSource.setJdbcUrl(url);</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">        dataSource.setJdbcUrl(url);</span>
+<span class="nc" id="L54">    }</span>
 
     /**
      *
@@ -62,8 +60,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="nc" id="L65">        dataSource.setUser(username);</span>
-<span class="nc" id="L66">    }</span>
+<span class="nc" id="L63">        dataSource.setUser(username);</span>
+<span class="nc" id="L64">    }</span>
 
     /**
      *
@@ -72,8 +70,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="nc" id="L75">        dataSource.setPassword(password);</span>
-<span class="nc" id="L76">    }</span>
+<span class="nc" id="L73">        dataSource.setPassword(password);</span>
+<span class="nc" id="L74">    }</span>
 
     /**
      *
@@ -82,8 +80,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setAcquireIncrement(@Named(&quot;c3p0.acquireIncrement&quot;) final int acquireIncrement) {
-<span class="nc" id="L85">        dataSource.setAcquireIncrement(acquireIncrement);</span>
-<span class="nc" id="L86">    }</span>
+<span class="nc" id="L83">        dataSource.setAcquireIncrement(acquireIncrement);</span>
+<span class="nc" id="L84">    }</span>
 
     /**
      *
@@ -92,8 +90,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setAcquireRetryAttempts(@Named(&quot;c3p0.acquireRetryAttempts&quot;) final int acquireRetryAttempts) {
-<span class="nc" id="L95">        dataSource.setAcquireRetryAttempts(acquireRetryAttempts);</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L93">        dataSource.setAcquireRetryAttempts(acquireRetryAttempts);</span>
+<span class="nc" id="L94">    }</span>
 
     /**
      *
@@ -102,8 +100,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setAcquireRetryDelay(@Named(&quot;c3p0.acquireRetryDelay&quot;) final int acquireRetryDelay) {
-<span class="nc" id="L105">        dataSource.setAcquireRetryDelay(acquireRetryDelay);</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L103">        dataSource.setAcquireRetryDelay(acquireRetryDelay);</span>
+<span class="nc" id="L104">    }</span>
 
     /**
      *
@@ -112,8 +110,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setAutoCommitOnClose(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="nc" id="L115">        dataSource.setAutoCommitOnClose(autoCommit);</span>
-<span class="nc" id="L116">    }</span>
+<span class="nc" id="L113">        dataSource.setAutoCommitOnClose(autoCommit);</span>
+<span class="nc" id="L114">    }</span>
 
     /**
      *
@@ -121,8 +119,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="nc" id="L124">        dataSource.setProperties(driverProperties);</span>
-<span class="nc" id="L125">    }</span>
+<span class="nc" id="L122">        dataSource.setProperties(driverProperties);</span>
+<span class="nc" id="L123">    }</span>
 
     /**
      *
@@ -131,8 +129,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setAautomaticTestTable(@Named(&quot;c3p0.automaticTestTable&quot;) final String automaticTestTable) {
-<span class="nc" id="L134">        dataSource.setAutomaticTestTable(automaticTestTable);</span>
-<span class="nc" id="L135">    }</span>
+<span class="nc" id="L132">        dataSource.setAutomaticTestTable(automaticTestTable);</span>
+<span class="nc" id="L133">    }</span>
 
     /**
      *
@@ -141,8 +139,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setBreakAfterAcquireFailure(@Named(&quot;c3p0.breakAfterAcquireFailure&quot;) final boolean breakAfterAcquireFailure) {
-<span class="nc" id="L144">        dataSource.setBreakAfterAcquireFailure(breakAfterAcquireFailure);</span>
-<span class="nc" id="L145">    }</span>
+<span class="nc" id="L142">        dataSource.setBreakAfterAcquireFailure(breakAfterAcquireFailure);</span>
+<span class="nc" id="L143">    }</span>
 
     /**
      *
@@ -151,8 +149,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setCheckoutTimeout(@Named(&quot;c3p0.checkoutTimeout&quot;) final int checkoutTimeout) {
-<span class="nc" id="L154">        dataSource.setCheckoutTimeout(checkoutTimeout);</span>
-<span class="nc" id="L155">    }</span>
+<span class="nc" id="L152">        dataSource.setCheckoutTimeout(checkoutTimeout);</span>
+<span class="nc" id="L153">    }</span>
 
     /**
      *
@@ -161,8 +159,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setConnectionCustomizerClassName(@Named(&quot;c3p0.connectionCustomizerClassName&quot;) final String connectionCustomizerClassName) {
-<span class="nc" id="L164">        dataSource.setConnectionCustomizerClassName(connectionCustomizerClassName);</span>
-<span class="nc" id="L165">    }</span>
+<span class="nc" id="L162">        dataSource.setConnectionCustomizerClassName(connectionCustomizerClassName);</span>
+<span class="nc" id="L163">    }</span>
 
     /**
      *
@@ -172,13 +170,13 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
     @com.google.inject.Inject(optional = true)
     public void setConnectionTesterClassName(@Named(&quot;c3p0.connectionTesterClassName&quot;) final String connectionTesterClassName) {
         try {
-<span class="nc" id="L175">            dataSource.setConnectionTesterClassName(connectionTesterClassName);</span>
-<span class="nc" id="L176">        } catch (PropertyVetoException e) {</span>
-<span class="nc" id="L177">            throw new RuntimeException(&quot;Impossible to set C3P0 Data Source connection tester class name '&quot;</span>
+<span class="nc" id="L173">            dataSource.setConnectionTesterClassName(connectionTesterClassName);</span>
+<span class="nc" id="L174">        } catch (PropertyVetoException e) {</span>
+<span class="nc" id="L175">            throw new RuntimeException(&quot;Impossible to set C3P0 Data Source connection tester class name '&quot;</span>
                     + connectionTesterClassName
                     + &quot;', see nested exceptions&quot;, e);
-<span class="nc" id="L180">        }</span>
-<span class="nc" id="L181">    }</span>
+<span class="nc" id="L178">        }</span>
+<span class="nc" id="L179">    }</span>
 
     /**
      *
@@ -187,8 +185,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setIdleConnectionTestPeriod(@Named(&quot;c3p0.idleConnectionTestPeriod&quot;) final int idleConnectionTestPeriod) {
-<span class="nc" id="L190">        dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod);</span>
-<span class="nc" id="L191">    }</span>
+<span class="nc" id="L188">        dataSource.setIdleConnectionTestPeriod(idleConnectionTestPeriod);</span>
+<span class="nc" id="L189">    }</span>
 
     /**
      *
@@ -197,8 +195,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setInitialPoolSize(@Named(&quot;c3p0.initialPoolSize&quot;) final int initialPoolSize) {
-<span class="nc" id="L200">        dataSource.setInitialPoolSize(initialPoolSize);</span>
-<span class="nc" id="L201">    }</span>
+<span class="nc" id="L198">        dataSource.setInitialPoolSize(initialPoolSize);</span>
+<span class="nc" id="L199">    }</span>
 
     /**
      *
@@ -207,8 +205,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxAdministrativeTaskTime(@Named(&quot;c3p0.maxAdministrativeTaskTime&quot;) final int maxAdministrativeTaskTime) {
-<span class="nc" id="L210">        dataSource.setMaxAdministrativeTaskTime(maxAdministrativeTaskTime);</span>
-<span class="nc" id="L211">    }</span>
+<span class="nc" id="L208">        dataSource.setMaxAdministrativeTaskTime(maxAdministrativeTaskTime);</span>
+<span class="nc" id="L209">    }</span>
 
     /**
      *
@@ -217,8 +215,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxConnectionAge(@Named(&quot;c3p0.maxConnectionAge&quot;) final int maxConnectionAge) {
-<span class="nc" id="L220">        dataSource.setMaxConnectionAge(maxConnectionAge);</span>
-<span class="nc" id="L221">    }</span>
+<span class="nc" id="L218">        dataSource.setMaxConnectionAge(maxConnectionAge);</span>
+<span class="nc" id="L219">    }</span>
 
     /**
      *
@@ -227,8 +225,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxIdleTime(@Named(&quot;c3p0.maxIdleTime&quot;) final int maxIdleTime) {
-<span class="nc" id="L230">        dataSource.setMaxIdleTime(maxIdleTime);</span>
-<span class="nc" id="L231">    }</span>
+<span class="nc" id="L228">        dataSource.setMaxIdleTime(maxIdleTime);</span>
+<span class="nc" id="L229">    }</span>
 
     /**
      *
@@ -237,8 +235,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxIdleTimeExcessConnections(@Named(&quot;c3p0.maxIdleTimeExcessConnections&quot;) final int maxIdleTimeExcessConnections) {
-<span class="nc" id="L240">        dataSource.setMaxIdleTimeExcessConnections(maxIdleTimeExcessConnections);</span>
-<span class="nc" id="L241">    }</span>
+<span class="nc" id="L238">        dataSource.setMaxIdleTimeExcessConnections(maxIdleTimeExcessConnections);</span>
+<span class="nc" id="L239">    }</span>
 
     /**
      *
@@ -247,8 +245,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxPoolSize(@Named(&quot;c3p0.maxPoolSize&quot;) final int maxPoolSize) {
-<span class="nc" id="L250">        dataSource.setMaxPoolSize(maxPoolSize);</span>
-<span class="nc" id="L251">    }</span>
+<span class="nc" id="L248">        dataSource.setMaxPoolSize(maxPoolSize);</span>
+<span class="nc" id="L249">    }</span>
 
     /**
      *
@@ -257,8 +255,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxStatements(@Named(&quot;c3p0.maxStatements&quot;) final int maxStatements) {
-<span class="nc" id="L260">        dataSource.setMaxStatements(maxStatements);</span>
-<span class="nc" id="L261">    }</span>
+<span class="nc" id="L258">        dataSource.setMaxStatements(maxStatements);</span>
+<span class="nc" id="L259">    }</span>
 
     /**
      *
@@ -267,8 +265,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMaxStatementsPerConnection(@Named(&quot;c3p0.maxStatementsPerConnection&quot;) final int maxStatementsPerConnection) {
-<span class="nc" id="L270">        dataSource.setMaxStatementsPerConnection(maxStatementsPerConnection);</span>
-<span class="nc" id="L271">    }</span>
+<span class="nc" id="L268">        dataSource.setMaxStatementsPerConnection(maxStatementsPerConnection);</span>
+<span class="nc" id="L269">    }</span>
 
     /**
      *
@@ -277,8 +275,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setMinPoolSize(@Named(&quot;c3p0.minPoolSize&quot;) final int minPoolSize) {
-<span class="nc" id="L280">        dataSource.setMinPoolSize(minPoolSize);</span>
-<span class="nc" id="L281">    }</span>
+<span class="nc" id="L278">        dataSource.setMinPoolSize(minPoolSize);</span>
+<span class="nc" id="L279">    }</span>
 
     /**
      *
@@ -287,8 +285,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setPreferredTestQuery(@Named(&quot;c3p0.preferredTestQuery&quot;) final String preferredTestQuery) {
-<span class="nc" id="L290">        dataSource.setPreferredTestQuery(preferredTestQuery);</span>
-<span class="nc" id="L291">    }</span>
+<span class="nc" id="L288">        dataSource.setPreferredTestQuery(preferredTestQuery);</span>
+<span class="nc" id="L289">    }</span>
 
     /**
      *
@@ -297,8 +295,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setPropertyCycle(@Named(&quot;c3p0.propertyCycle&quot;) final int propertyCycle) {
-<span class="nc" id="L300">        dataSource.setPropertyCycle(propertyCycle);</span>
-<span class="nc" id="L301">    }</span>
+<span class="nc" id="L298">        dataSource.setPropertyCycle(propertyCycle);</span>
+<span class="nc" id="L299">    }</span>
 
     /**
      *
@@ -307,8 +305,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setTestConnectionOnCheckin(@Named(&quot;c3p0.testConnectionOnCheckin&quot;) final boolean testConnectionOnCheckin) {
-<span class="nc" id="L310">        dataSource.setTestConnectionOnCheckin(testConnectionOnCheckin);</span>
-<span class="nc" id="L311">    }</span>
+<span class="nc" id="L308">        dataSource.setTestConnectionOnCheckin(testConnectionOnCheckin);</span>
+<span class="nc" id="L309">    }</span>
 
     /**
      *
@@ -317,8 +315,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setTestConnectionOnCheckout(@Named(&quot;c3p0.testConnectionOnCheckout&quot;) final boolean testConnectionOnCheckout) {
-<span class="nc" id="L320">        dataSource.setTestConnectionOnCheckout(testConnectionOnCheckout);</span>
-<span class="nc" id="L321">    }</span>
+<span class="nc" id="L318">        dataSource.setTestConnectionOnCheckout(testConnectionOnCheckout);</span>
+<span class="nc" id="L319">    }</span>
 
     /**
      *
@@ -327,8 +325,8 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setUnreturnedConnectionTimeout(@Named(&quot;c3p0.unreturnedConnectionTimeout&quot;) final int unreturnedConnectionTimeout) {
-<span class="nc" id="L330">        dataSource.setUnreturnedConnectionTimeout(unreturnedConnectionTimeout);</span>
-<span class="nc" id="L331">    }</span>
+<span class="nc" id="L328">        dataSource.setUnreturnedConnectionTimeout(unreturnedConnectionTimeout);</span>
+<span class="nc" id="L329">    }</span>
 
     /**
      *
@@ -337,16 +335,16 @@ public final class C3p0DataSourceProvider implements Provider&lt;DataSource&gt; 
      */
     @com.google.inject.Inject(optional = true)
     public void setUsesTraditionalReflectiveProxies(@Named(&quot;c3p0.usesTraditionalReflectiveProxies&quot;) final boolean usesTraditionalReflectiveProxies) {
-<span class="nc" id="L340">        dataSource.setUsesTraditionalReflectiveProxies(usesTraditionalReflectiveProxies);</span>
-<span class="nc" id="L341">    }</span>
+<span class="nc" id="L338">        dataSource.setUsesTraditionalReflectiveProxies(usesTraditionalReflectiveProxies);</span>
+<span class="nc" id="L339">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public DataSource get() {
-<span class="nc" id="L348">        return dataSource;</span>
+<span class="nc" id="L346">        return dataSource;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

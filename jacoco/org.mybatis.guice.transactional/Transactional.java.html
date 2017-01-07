@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Transactional.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">Transactional.java</span></div><h1>Transactional.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2015 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transactional.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">Transactional.java</span></div><h1>Transactional.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ import java.lang.annotation.Target;
 /**
  * Any method marked with this annotation will be considered for
  * transactionality.
- *
- * @version $Id$
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -116,7 +114,7 @@ public @interface Transactional {
      * executed within a transaction context where the values provide the following
      * corresponding behavior.
      */
-<span class="pc" id="L119">    public enum TxType {</span>
+<span class="pc" id="L117">    public enum TxType {</span>
         /**
          *  &lt;p&gt;If called outside a transaction context, the interceptor must begin a new
          *  JTA transaction, the managed bean method execution must then continue
@@ -125,7 +123,7 @@ public @interface Transactional {
          *  &lt;p&gt;If called inside a transaction context, the managed bean
          *  method execution must then continue inside this transaction context.&lt;/p&gt;
          */
-<span class="fc" id="L128">        REQUIRED,</span>
+<span class="fc" id="L126">        REQUIRED,</span>
 
         /**
          *  &lt;p&gt;If called outside a transaction context, the interceptor must begin a new
@@ -137,7 +135,7 @@ public @interface Transactional {
          *  execution must then continue inside this transaction context, the transaction
          *  must be completed, and the previously suspended transaction must be resumed.&lt;/p&gt;
          */
-<span class="fc" id="L140">        REQUIRES_NEW,</span>
+<span class="fc" id="L138">        REQUIRES_NEW,</span>
 
         /**
          *  &lt;p&gt;If called outside a transaction context, a TransactionalException with a
@@ -145,7 +143,7 @@ public @interface Transactional {
          *  &lt;p&gt;If called inside a transaction context, managed bean method execution will
          *  then continue under that context.&lt;/p&gt;
          */
-<span class="fc" id="L148">        MANDATORY,</span>
+<span class="fc" id="L146">        MANDATORY,</span>
 
         /**
          *  &lt;p&gt;If called outside a transaction context, managed bean method execution
@@ -153,7 +151,7 @@ public @interface Transactional {
          *  &lt;p&gt;If called inside a transaction context, the managed bean method execution
          *  must then continue inside this transaction context.&lt;/p&gt;
          */
-<span class="fc" id="L156">        SUPPORTS,</span>
+<span class="fc" id="L154">        SUPPORTS,</span>
 
         /**
          *  &lt;p&gt;If called outside a transaction context, managed bean method execution
@@ -164,7 +162,7 @@ public @interface Transactional {
          *  must be resumed by the interceptor that suspended it after the method
          *  execution has completed.&lt;/p&gt;
          */
-<span class="fc" id="L167">        NOT_SUPPORTED,</span>
+<span class="fc" id="L165">        NOT_SUPPORTED,</span>
 
         /**
          *  &lt;p&gt;If called outside a transaction context, managed bean method execution
@@ -172,7 +170,7 @@ public @interface Transactional {
          *  &lt;p&gt;If called inside a transaction context, a TransactionalException with
          *  a nested InvalidTransactionException must be thrown.&lt;/p&gt;
          */
-<span class="fc" id="L175">        NEVER</span>
+<span class="fc" id="L173">        NEVER</span>
     }
 
     /**
@@ -201,4 +199,4 @@ public @interface Transactional {
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

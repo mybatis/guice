@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UnpooledDataSourceProvider.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.builtin</a> &gt; <span class="el_source">UnpooledDataSourceProvider.java</span></div><h1>UnpooledDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2015 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UnpooledDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.builtin</a> &gt; <span class="el_source">UnpooledDataSourceProvider.java</span></div><h1>UnpooledDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2009-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ import java.util.Properties;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.
- *
- * @version $Id$
  */
 public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&gt; {
 
@@ -46,9 +44,9 @@ public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&
     @Inject
     public UnpooledDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
             @Named(&quot;JDBC.url&quot;) final String url,
-<span class="nc" id="L49">            @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
-<span class="nc" id="L50">        unpooledDataSource = new UnpooledDataSource(driverClassLoader, driver, url, null, null);</span>
-<span class="nc" id="L51">    }</span>
+<span class="nc" id="L47">            @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
+<span class="nc" id="L48">        unpooledDataSource = new UnpooledDataSource(driverClassLoader, driver, url, null, null);</span>
+<span class="nc" id="L49">    }</span>
 
     /**
      *
@@ -57,8 +55,8 @@ public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&
      */
     @com.google.inject.Inject(optional = true)
     public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="nc" id="L60">        unpooledDataSource.setUsername(username);</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L58">        unpooledDataSource.setUsername(username);</span>
+<span class="nc" id="L59">    }</span>
 
     /**
      *
@@ -67,8 +65,8 @@ public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&
      */
     @com.google.inject.Inject(optional = true)
     public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="nc" id="L70">        unpooledDataSource.setPassword(password);</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L68">        unpooledDataSource.setPassword(password);</span>
+<span class="nc" id="L69">    }</span>
 
     /**
      *
@@ -77,8 +75,8 @@ public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&
      */
     @com.google.inject.Inject(optional = true)
     public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="nc" id="L80">        unpooledDataSource.setAutoCommit(autoCommit);</span>
-<span class="nc" id="L81">    }</span>
+<span class="nc" id="L78">        unpooledDataSource.setAutoCommit(autoCommit);</span>
+<span class="nc" id="L79">    }</span>
 
     /**
      *
@@ -88,26 +86,26 @@ public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&
     @com.google.inject.Inject(optional = true)
     public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
         try {
-<span class="nc" id="L91">            unpooledDataSource.setLoginTimeout(loginTimeout);</span>
-<span class="nc" id="L92">        } catch (SQLException e) {</span>
-<span class="nc" id="L93">            throw new RuntimeException(&quot;Impossible to set login timeout '&quot;</span>
+<span class="nc" id="L89">            unpooledDataSource.setLoginTimeout(loginTimeout);</span>
+<span class="nc" id="L90">        } catch (SQLException e) {</span>
+<span class="nc" id="L91">            throw new RuntimeException(&quot;Impossible to set login timeout '&quot;</span>
                     + loginTimeout
                     + &quot;' to Unpooled Data Source&quot;, e);
-<span class="nc" id="L96">        }</span>
-<span class="nc" id="L97">    }</span>
+<span class="nc" id="L94">        }</span>
+<span class="nc" id="L95">    }</span>
 
     @com.google.inject.Inject(optional = true)
     public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="nc" id="L101">        unpooledDataSource.setDriverProperties(driverProperties);</span>
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L99">        unpooledDataSource.setDriverProperties(driverProperties);</span>
+<span class="nc" id="L100">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public DataSource get() {
-<span class="nc" id="L109">        return unpooledDataSource;</span>
+<span class="nc" id="L107">        return unpooledDataSource;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
