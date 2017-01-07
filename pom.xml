@@ -91,6 +91,7 @@
     <gcu.product>Guice</gcu.product>
     <guice.version>4.1.0</guice.version>
     <osgi.import>com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp.*;resolution:=optional,*,javax.transaction.*;resolution:=optional</osgi.import>
+    <findbugs.omitVisitors>UnreadFields</findbugs.omitVisitors>
   </properties>
 
   <dependencies>
