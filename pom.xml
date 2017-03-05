@@ -142,7 +142,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
-      <version>1.0.27</version>
+      <version>1.0.28</version>
       <optional>true</optional>
     </dependency>
 
@@ -187,7 +187,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.22</version>
+      <version>1.7.24</version>
       <scope>test</scope>
     </dependency>
 
