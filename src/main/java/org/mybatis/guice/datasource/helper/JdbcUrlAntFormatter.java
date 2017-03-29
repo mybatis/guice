@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-final class Formatter implements Provider<String> {
+public final class JdbcUrlAntFormatter implements Provider<String> {
 
     private static final String VAR_BEGIN = "$";
 
@@ -34,7 +34,7 @@ final class Formatter implements Provider<String> {
 
     private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
 
-    public Formatter(final String pattern) {
+    public JdbcUrlAntFormatter(final String pattern) {
         int prev = 0;
         int pos;
         while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {

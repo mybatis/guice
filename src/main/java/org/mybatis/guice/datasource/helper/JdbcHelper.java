@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -139,7 +139,7 @@ public enum JdbcHelper implements Module {
     @Override
     public void configure(Binder binder) {
         binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);
-        binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new Formatter(urlTemplate)));
+        binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new JdbcUrlAntFormatter(urlTemplate)));
     }
 
 }
