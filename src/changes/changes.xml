@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2017 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -26,12 +26,33 @@
   </properties>
 
   <body>
+    <release version="3.10" date="" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Make JdbcUrlAntFormatter class public to allow users to format their custom URLs like in JdbcHelper.
+      </action>
+    </release>
+
+    <release version="3.9" date="2017-01-05" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Restored setting configuration using properties. Only properties that existed in version 3.7 will be supported in the future.
+      </action>
+      <action dev="christian.poitras" type="update">
+        Fixes constructor injection for TypeHandlers.
+      </action>
+      <action dev="christian.poitras" type="add">
+        Added support for Druid data source.
+      </action>
+    </release>
+
     <release version="3.8" date="2016-02-01" description="maintenance release">
       <action dev="christian.poitras" type="update">
         Default Environment ID for XML configuration changed from "development" to the value of "default" attribute of &lt;environments&gt; element.
       </action>
       <action dev="christian.poitras" type="add">
         Added support for Druid data source.
+      </action>
+      <action dev="christian.poitras" type="add">
+        Configuration can be customized using ConfigurationSetting interface.
       </action>
     </release>
 
