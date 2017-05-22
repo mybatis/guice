@@ -86,7 +86,7 @@
   </distributionManagement>
 
   <properties>
-    <clirr.comparisonVersion>3.6</clirr.comparisonVersion>
+    <clirr.comparisonVersion>3.9</clirr.comparisonVersion>
     <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
     <guice.version>4.1.0</guice.version>
