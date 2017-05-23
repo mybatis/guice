@@ -31,9 +31,9 @@ echo "Current commit detected: ${commit_message}"
 # 4. Notify Coveralls.
 # 5. Deploy site
 
-if [ "$mybatis_repo" == "https://github.com/mybatis/guice.git" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [[ "$commit_message" != *"[maven-release-plugin]"* ]]; then
+if [ $TRAVIS_REPO_SLUG == "mybatis/guice" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [[ "$commit_message" != *"[maven-release-plugin]"* ]]; then
 
-  if [ $VER == "16" ]; then
+  if [ $TRAVIS_JDK_VERSION == "oraclejdk8" ]; then
 
     # Deploy to sonatype
     ./mvnw clean deploy -q --settings ./travis/settings.xml
