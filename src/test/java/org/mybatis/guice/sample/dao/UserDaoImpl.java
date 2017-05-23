@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,21 +22,21 @@ import javax.inject.Inject;
 
 public class UserDaoImpl implements UserDao {
 
-    private SqlSession sqlSession;
+  private SqlSession sqlSession;
 
-    @Inject
-    public void setSqlSession(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
+  @Inject
+  public void setSqlSession(SqlSession sqlSession) {
+    this.sqlSession = sqlSession;
+  }
 
-    @Override
-    public User getUser(String userId) {
-        return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
-    }
+  @Override
+  public User getUser(String userId) {
+    return (User) this.sqlSession.selectOne("org.mybatis.guice.sample.mapper.UserMapper.getUser", userId);
+  }
 
-    @Override
-    public void brokenInsert(User user) {
-        this.sqlSession.insert("org.mybatis.guice.sample.mapper.UserMapper.brokenAdd", user);
-    }
+  @Override
+  public void brokenInsert(User user) {
+    this.sqlSession.insert("org.mybatis.guice.sample.mapper.UserMapper.brokenAdd", user);
+  }
 
 }

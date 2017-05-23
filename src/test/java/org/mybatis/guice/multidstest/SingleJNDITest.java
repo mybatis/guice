@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,53 +35,49 @@ import com.google.inject.name.Names;
 
 public class SingleJNDITest {
 
-    @Test
-    public void testSingleDSWithJNDI() throws Exception {
-        setupJNDI();
-        Injector injector = setupInjector();
-        Schema1Service schema1Service = injector
-                .getInstance(Schema1Service.class);
-        schema1Service.createSchema1();
-        Integer int1 = schema1Service.getNextValueFromSchema1();
-        assertEquals(100, int1.intValue());
-    }
+  @Test
+  public void testSingleDSWithJNDI() throws Exception {
+    setupJNDI();
+    Injector injector = setupInjector();
+    Schema1Service schema1Service = injector.getInstance(Schema1Service.class);
+    schema1Service.createSchema1();
+    Integer int1 = schema1Service.getNextValueFromSchema1();
+    assertEquals(100, int1.intValue());
+  }
 
-    private void setupJNDI() throws NamingException {
-        Properties properties = new Properties();
-        properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                MockInitialContextFactory.class.getName());
-        InitialContext ic = new InitialContext(properties);
+  private void setupJNDI() throws NamingException {
+    Properties properties = new Properties();
+    properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.class.getName());
+    InitialContext ic = new InitialContext(properties);
 
-        JDBCDataSource ds1 = new JDBCDataSource();
-        ds1.setDatabaseName("schema1");
-        ds1.setUser("sa");
-        ds1.setUrl("jdbc:hsqldb:mem:schema1");
+    JDBCDataSource ds1 = new JDBCDataSource();
+    ds1.setDatabaseName("schema1");
+    ds1.setUser("sa");
+    ds1.setUrl("jdbc:hsqldb:mem:schema1");
 
-        ic.bind("java:comp/env/jdbc/DS1", ds1);
-    }
+    ic.bind("java:comp/env/jdbc/DS1", ds1);
+  }
 
-    private Injector setupInjector() {
-        Injector injector = Guice.createInjector(new MyBatisModule() {
+  private Injector setupInjector() {
+    Injector injector = Guice.createInjector(new MyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                bindDataSourceProviderType(JndiDataSourceProvider.class);
+      @Override
+      protected void initialize() {
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        bindDataSourceProviderType(JndiDataSourceProvider.class);
 
-                Properties connectionProps = new Properties();
-                connectionProps.setProperty("mybatis.environment.id",
-                        "jndi");
-                connectionProps.setProperty("jndi.dataSource", "java:comp/env/jdbc/DS1");
-                connectionProps.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-                        MockInitialContextFactory.class.getName());
+        Properties connectionProps = new Properties();
+        connectionProps.setProperty("mybatis.environment.id", "jndi");
+        connectionProps.setProperty("jndi.dataSource", "java:comp/env/jdbc/DS1");
+        connectionProps.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.class.getName());
 
-                Names.bindProperties(binder(), connectionProps);
+        Names.bindProperties(binder(), connectionProps);
 
-                addMapperClass(Schema1Mapper.class);
-                bind(Schema1Service.class);
-            }
-        });
+        addMapperClass(Schema1Mapper.class);
+        bind(Schema1Service.class);
+      }
+    });
 
-        return injector;
-    }
+    return injector;
+  }
 }

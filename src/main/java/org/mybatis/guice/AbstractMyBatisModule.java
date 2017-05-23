@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,112 +36,112 @@ import static com.google.inject.util.Providers.guicify;
 
 abstract class AbstractMyBatisModule extends AbstractModule {
 
-    protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
-        @Override
-        public boolean matches(Method method) {
-            return method.getDeclaringClass() == Object.class;
-        }
-    };
-    protected static final AbstractMatcher<Method> SYNTHETIC = new AbstractMatcher<Method>() {
-        @Override
-        public boolean matches(Method method) {
-        	return method.isSynthetic();
-        }
-    };
-
-    private ClassLoader resourcesClassLoader = getDefaultClassLoader();
-
-    private ClassLoader driverClassLoader = getDefaultClassLoader();
-
-    /**
-     * {@inheritDoc}
-     */
+  protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
     @Override
-    protected final void configure() {
-        try {
-            // sql session manager
-            bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
-            bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
-
-            internalConfigure();
-
-            bindTransactionInterceptors();
-
-            bind(ClassLoader.class)
-                .annotatedWith(named("JDBC.driverClassLoader"))
-                .toInstance(driverClassLoader);
-        } finally {
-            resourcesClassLoader = getDefaultClassLoader();
-            driverClassLoader = getDefaultClassLoader();
-        }
+    public boolean matches(Method method) {
+      return method.getDeclaringClass() == Object.class;
     }
-    
-    /**
-     * bind transactional interceptors
-     */
-    protected void bindTransactionInterceptors() {
-            // transactional interceptor
-            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-            requestInjection(interceptor);
-            bindInterceptor(any(), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(annotatedWith(Transactional.class)), interceptor);
-            // Intercept classes annotated with Transactional, but avoid "double"
-            // interception when a mathod is also annotated inside an annotated
-            // class.
-            bindInterceptor(annotatedWith(Transactional.class), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(not(annotatedWith(Transactional.class))), interceptor);
+  };
+  protected static final AbstractMatcher<Method> SYNTHETIC = new AbstractMatcher<Method>() {
+    @Override
+    public boolean matches(Method method) {
+      return method.isSynthetic();
     }
+  };
 
-    /**
-     *
-     * @param mapperType
-     */
-    final <T> void bindMapper(Class<T> mapperType) {
-        bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+  private ClassLoader resourcesClassLoader = getDefaultClassLoader();
+
+  private ClassLoader driverClassLoader = getDefaultClassLoader();
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected final void configure() {
+    try {
+      // sql session manager
+      bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);
+      bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);
+
+      internalConfigure();
+
+      bindTransactionInterceptors();
+
+      bind(ClassLoader.class).annotatedWith(named("JDBC.driverClassLoader")).toInstance(driverClassLoader);
+    } finally {
+      resourcesClassLoader = getDefaultClassLoader();
+      driverClassLoader = getDefaultClassLoader();
     }
+  }
 
-    /**
-     *
-     * @return
-     * @since 3.3
-     */
-    public void useResourceClassLoader(ClassLoader resourceClassLoader) {
-        this.resourcesClassLoader = resourceClassLoader;
-    }
+  /**
+   * bind transactional interceptors
+   */
+  protected void bindTransactionInterceptors() {
+    // transactional interceptor
+    TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+    requestInjection(interceptor);
+    bindInterceptor(any(), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(annotatedWith(Transactional.class)),
+        interceptor);
+    // Intercept classes annotated with Transactional, but avoid "double"
+    // interception when a mathod is also annotated inside an annotated
+    // class.
+    bindInterceptor(annotatedWith(Transactional.class),
+        not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(not(annotatedWith(Transactional.class))), interceptor);
+  }
 
-    /**
-     *
-     * @return
-     * @since 3.3
-     */
-    protected final ClassLoader getResourceClassLoader() {
-        return resourcesClassLoader;
-    }
+  /**
+   *
+   * @param mapperType
+   */
+  final <T> void bindMapper(Class<T> mapperType) {
+    bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+  }
 
-   /**
-    *
-    * @return
-    * @since 3.3
-    */
-   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
-        this.driverClassLoader = driverClassLoader;
-    }
+  /**
+   *
+   * @return
+   * @since 3.3
+   */
+  public void useResourceClassLoader(ClassLoader resourceClassLoader) {
+    this.resourcesClassLoader = resourceClassLoader;
+  }
 
-    /**
-     *
-     * @return
-     * @since 3.3
-     */
-    private ClassLoader getDefaultClassLoader() {
-        return getClass().getClassLoader();
-    }
+  /**
+   *
+   * @return
+   * @since 3.3
+   */
+  protected final ClassLoader getResourceClassLoader() {
+    return resourcesClassLoader;
+  }
 
-    /**
-     * Configures a {@link Binder} via the exposed methods.
-     */
-    abstract void internalConfigure();
+  /**
+   *
+   * @return
+   * @since 3.3
+   */
+  public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
+    this.driverClassLoader = driverClassLoader;
+  }
 
-    /**
-     *
-     */
-    protected abstract void initialize();
+  /**
+   *
+   * @return
+   * @since 3.3
+   */
+  private ClassLoader getDefaultClassLoader() {
+    return getClass().getClassLoader();
+  }
+
+  /**
+   * Configures a {@link Binder} via the exposed methods.
+   */
+  abstract void internalConfigure();
+
+  /**
+   *
+   */
+  protected abstract void initialize();
 
 }

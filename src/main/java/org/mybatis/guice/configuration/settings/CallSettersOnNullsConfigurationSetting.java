@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,16 +17,16 @@ package org.mybatis.guice.configuration.settings;
 
 import org.apache.ibatis.session.Configuration;
 
-public class CallSettersOnNullsConfigurationSetting implements ConfigurationSetting  {
+public class CallSettersOnNullsConfigurationSetting implements ConfigurationSetting {
 
-	private final boolean callSettersOnNulls;
-	
-	public CallSettersOnNullsConfigurationSetting(final boolean callSettersOnNulls){
-		this.callSettersOnNulls = callSettersOnNulls;
-	}
-	
-	@Override
-	public void applyConfigurationSetting(Configuration configuration) {
-		configuration.setCallSettersOnNulls(callSettersOnNulls);
-	}
+  private final boolean callSettersOnNulls;
+
+  public CallSettersOnNullsConfigurationSetting(final boolean callSettersOnNulls) {
+    this.callSettersOnNulls = callSettersOnNulls;
+  }
+
+  @Override
+  public void applyConfigurationSetting(Configuration configuration) {
+    configuration.setCallSettersOnNulls(callSettersOnNulls);
+  }
 }

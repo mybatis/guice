@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,27 +25,27 @@ import com.google.inject.Module;
 
 public final class XMLGuicePackageTestRunner extends AbstractGuiceTestRunner {
 
-    public XMLGuicePackageTestRunner(Class<?> klass) throws InitializationError {
-        super(klass);
-    }
+  public XMLGuicePackageTestRunner(Class<?> klass) throws InitializationError {
+    super(klass);
+  }
 
-    @Override
-    protected List<Module> createMyBatisModule() {
-        List<Module> modules = new ArrayList<Module>(2);
-        modules.add(new XMLMyBatisModule() {
+  @Override
+  protected List<Module> createMyBatisModule() {
+    List<Module> modules = new ArrayList<Module>(2);
+    modules.add(new XMLMyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                setClassPathResource("mybatis-package-config.xml");
-            }
+      @Override
+      protected void initialize() {
+        setClassPathResource("mybatis-package-config.xml");
+      }
 
-        });
-        return modules;
-    }
+    });
+    return modules;
+  }
 
-    @Override
-    protected Properties createTestProperties() {
-        return new Properties();
-    }
+  @Override
+  protected Properties createTestProperties() {
+    return new Properties();
+  }
 
 }

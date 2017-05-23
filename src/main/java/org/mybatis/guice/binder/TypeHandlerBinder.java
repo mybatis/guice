@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,32 +25,32 @@ import com.google.inject.binder.AnnotatedBindingBuilder;
  */
 public interface TypeHandlerBinder<T> {
 
-    /**
-     * Bind the given {@code TypeHandler} to an already defined type.
-     *
-     * @param handler The {@code TypeHandler} has to be bound
-     */
-	void with(Class<? extends TypeHandler<? extends T>> handler);
-    
-    /**
-     * Bind the given {@code TypeHandler} to an already defined type.
-     *
-     * @param handler The {@code TypeHandler} has to be bound
-     */
-	void with(TypeLiteral<? extends TypeHandler<? extends T>> handler);
-	
-    /**
-     * Bind the given {@code TypeHandler} to an already defined type.
-     *
-     * @param handler The {@code TypeHandler} has to be bound
-     */
-	void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler);
-    
-    /**
-     * Bind the given {@code TypeHandler} to an already defined type.
-     *
-     * @param handler The {@code TypeHandler} has to be bound
-     */
-	void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler);
+  /**
+   * Bind the given {@code TypeHandler} to an already defined type.
+   *
+   * @param handler The {@code TypeHandler} has to be bound
+   */
+  void with(Class<? extends TypeHandler<? extends T>> handler);
+
+  /**
+   * Bind the given {@code TypeHandler} to an already defined type.
+   *
+   * @param handler The {@code TypeHandler} has to be bound
+   */
+  void with(TypeLiteral<? extends TypeHandler<? extends T>> handler);
+
+  /**
+   * Bind the given {@code TypeHandler} to an already defined type.
+   *
+   * @param handler The {@code TypeHandler} has to be bound
+   */
+  void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler);
+
+  /**
+   * Bind the given {@code TypeHandler} to an already defined type.
+   *
+   * @param handler The {@code TypeHandler} has to be bound
+   */
+  void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler);
 
 }

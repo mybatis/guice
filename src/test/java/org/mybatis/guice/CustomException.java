@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@ package org.mybatis.guice;
 
 public final class CustomException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    public CustomException(Throwable cause) {
-        super(cause);
-    }
+  public CustomException(Throwable cause) {
+    super(cause);
+  }
 
-    public CustomException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public CustomException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

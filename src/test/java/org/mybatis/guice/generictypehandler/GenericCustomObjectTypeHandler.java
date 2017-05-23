@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,69 +29,69 @@ import javax.inject.Inject;
 
 @MappedTypes(CustomObject.class)
 public class GenericCustomObjectTypeHandler<E extends CustomObject> extends BaseTypeHandler<E> {
-    @Inject
-    private InjectedObject injectedObject;
-    private Class<E> type;
-    
-    public GenericCustomObjectTypeHandler(Class<E> type) {
-        this.type = type;
-    }
-    
-    public GenericCustomObjectTypeHandler() {
-    }
+  @Inject
+  private InjectedObject injectedObject;
+  private Class<E> type;
 
-    @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
-        ps.setString(i, parameter.getName());
-    }
+  public GenericCustomObjectTypeHandler(Class<E> type) {
+    this.type = type;
+  }
 
-    @Override
-    public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        String name = rs.getString(columnName);
-        if (rs.wasNull()) {
-            return null;
-        } else {
-            return createResult(name);
-        }
-    }
+  public GenericCustomObjectTypeHandler() {
+  }
 
-    @Override
-    public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        String name = rs.getString(columnIndex);
-        if (rs.wasNull()) {
-            return null;
-        } else {
-            return createResult(name);
-        }
-    }
+  @Override
+  public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
+    ps.setString(i, parameter.getName());
+  }
 
-    @Override
-    public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String name = cs.getString(columnIndex);
-        if (cs.wasNull()) {
-            return null;
-        } else {
-            return createResult(name);
-        }
+  @Override
+  public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    String name = rs.getString(columnName);
+    if (rs.wasNull()) {
+      return null;
+    } else {
+      return createResult(name);
     }
-    
-    private E createResult(String name) {
-        try {
-            E customObject = type.newInstance();
-            customObject.setName(name);
-            return customObject;
-        } catch (InstantiationException e) {
-            throw new PersistenceException(e);
-        } catch (IllegalAccessException e) {
-            throw new PersistenceException(e);
-        }
-    }
+  }
 
-    public InjectedObject getInjectedObject() {
-        return injectedObject;
+  @Override
+  public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    String name = rs.getString(columnIndex);
+    if (rs.wasNull()) {
+      return null;
+    } else {
+      return createResult(name);
     }
+  }
 
-    public Class<E> getType() {
-        return type;
+  @Override
+  public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    String name = cs.getString(columnIndex);
+    if (cs.wasNull()) {
+      return null;
+    } else {
+      return createResult(name);
     }
+  }
+
+  private E createResult(String name) {
+    try {
+      E customObject = type.newInstance();
+      customObject.setName(name);
+      return customObject;
+    } catch (InstantiationException e) {
+      throw new PersistenceException(e);
+    } catch (IllegalAccessException e) {
+      throw new PersistenceException(e);
+    }
+  }
+
+  public InjectedObject getInjectedObject() {
+    return injectedObject;
+  }
+
+  public Class<E> getType() {
+    return type;
+  }
 }

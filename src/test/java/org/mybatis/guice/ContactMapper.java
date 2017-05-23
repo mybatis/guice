@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@ import java.util.List;
 
 public interface ContactMapper {
 
-    void brokenAdd(Contact contact);
+  void brokenAdd(Contact contact);
 
-    void add(Contact contact);
+  void add(Contact contact);
 
-    void update(Contact contact);
+  void update(Contact contact);
 
-    void delete(Integer id);
+  void delete(Integer id);
 
-    Contact getById(Integer id);
+  Contact getById(Integer id);
 
-    Contact getByIdWithTypeHandler(Integer id);
+  Contact getByIdWithTypeHandler(Integer id);
 
-    List<Contact> selectAll();
+  List<Contact> selectAll();
 
-    List<Contact> selectAllWithDatabaseId();
+  List<Contact> selectAllWithDatabaseId();
 }

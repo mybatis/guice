@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,29 +22,19 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface Schema1Mapper {
-    
-    @Update({
-        "drop schema schema1 if exists cascade;"
-    })
-    int createSchema1Step1();
 
-    @Update({
-        "create schema schema1;"
-    })
-    int createSchema1Step2();
+  @Update({ "drop schema schema1 if exists cascade;" })
+  int createSchema1Step1();
 
-    @Update({
-        "create table schema1.name (id int not null, name varchar(50) not null);"
-    })
-    int createSchema1Step3();
+  @Update({ "create schema schema1;" })
+  int createSchema1Step2();
 
-    @Select({
-        "select id, name from schema1.name order by id"
-    })
-    List<Name> getAllNames();
-    
-    @Insert ({
-        "insert into schema1.name (id, name) values (#{id}, #{name})"
-    })
-    int insertName(Name name);
+  @Update({ "create table schema1.name (id int not null, name varchar(50) not null);" })
+  int createSchema1Step3();
+
+  @Select({ "select id, name from schema1.name order by id" })
+  List<Name> getAllNames();
+
+  @Insert({ "insert into schema1.name (id, name) values (#{id}, #{name})" })
+  int insertName(Name name);
 }

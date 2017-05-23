@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@ import org.apache.ibatis.session.Configuration;
 
 public class AggressiveLazyLoadingConfigurationSetting implements ConfigurationSetting {
 
-	private final boolean aggressiveLazyLoading;
-	
-	public AggressiveLazyLoadingConfigurationSetting(final boolean aggressiveLazyLoading) {
-		this.aggressiveLazyLoading = aggressiveLazyLoading;
-	}
+  private final boolean aggressiveLazyLoading;
 
-	@Override
-	public void applyConfigurationSetting(Configuration configuration) {
-		configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
-	}
+  public AggressiveLazyLoadingConfigurationSetting(final boolean aggressiveLazyLoading) {
+    this.aggressiveLazyLoading = aggressiveLazyLoading;
+  }
+
+  @Override
+  public void applyConfigurationSetting(Configuration configuration) {
+    configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
+  }
 }

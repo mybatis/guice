@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,61 +30,61 @@ import javax.inject.Inject;
 @MappedTypes(Address.class)
 public class AddressTypeHandler implements TypeHandler<Address> {
 
-    private AddressConverter addressConverter;
+  private AddressConverter addressConverter;
 
-    @Override
-    public void setParameter(PreparedStatement ps, int i, Address parameter, JdbcType jdbcType) throws SQLException {
-        if (parameter == null) {
-            ps.setNull(i, jdbcType.TYPE_CODE);
-        } else {
-            ps.setString(i, addressConverter.convert(parameter));
-        }
+  @Override
+  public void setParameter(PreparedStatement ps, int i, Address parameter, JdbcType jdbcType) throws SQLException {
+    if (parameter == null) {
+      ps.setNull(i, jdbcType.TYPE_CODE);
+    } else {
+      ps.setString(i, addressConverter.convert(parameter));
+    }
+  }
+
+  @Override
+  public Address getResult(ResultSet rs, String columnName) throws SQLException {
+    String input = rs.getString(columnName);
+    if (rs.wasNull()) {
+      return null;
     }
 
-    @Override
-    public Address getResult(ResultSet rs, String columnName) throws SQLException {
-        String input = rs.getString(columnName);
-        if (rs.wasNull()) {
-            return null;
-        }
+    try {
+      return addressConverter.convert(input);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-        try {
-            return addressConverter.convert(input);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+  @Override
+  public Address getResult(CallableStatement cs, int columnIndex) throws SQLException {
+    String input = cs.getString(columnIndex);
+    if (cs.wasNull()) {
+      return null;
     }
 
-    @Override
-    public Address getResult(CallableStatement cs, int columnIndex) throws SQLException {
-        String input = cs.getString(columnIndex);
-        if (cs.wasNull()) {
-            return null;
-        }
+    try {
+      return addressConverter.convert(input);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-        try {
-            return addressConverter.convert(input);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+  @Override
+  public Address getResult(ResultSet rs, int columnIndex) throws SQLException {
+    String input = rs.getString(columnIndex);
+    if (rs.wasNull()) {
+      return null;
     }
 
-    @Override
-    public Address getResult(ResultSet rs, int columnIndex) throws SQLException {
-        String input = rs.getString(columnIndex);
-        if (rs.wasNull()) {
-            return null;
-        }
-
-        try {
-            return addressConverter.convert(input);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-	}
-
-	@Inject
-    public void setAddressConverter(AddressConverter addressConverter) {
-        this.addressConverter = addressConverter;
+    try {
+      return addressConverter.convert(input);
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
     }
+  }
+
+  @Inject
+  public void setAddressConverter(AddressConverter addressConverter) {
+    this.addressConverter = addressConverter;
+  }
 }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,29 +28,29 @@ import javax.inject.Inject;
  *
  * FooService simply receives a userId and uses a mapper/dao to get a record from the database.
  */
-@Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=CustomException.class)
+@Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class)
 public class FooServiceMapperImpl implements FooService {
 
-    private UserMapper userMapper;
+  private UserMapper userMapper;
 
-    @Inject
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+  @Inject
+  public void setUserMapper(UserMapper userMapper) {
+    this.userMapper = userMapper;
+  }
 
-    @Override
-    public User doSomeBusinessStuff(String userId) {
-        return this.userMapper.getUser(userId);
-    }
+  @Override
+  public User doSomeBusinessStuff(String userId) {
+    return this.userMapper.getUser(userId);
+  }
 
-    @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
-    public void brokenInsert(User user) {
-    	this.userMapper.brokenAdd(user);
-    }
+  @Override
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = IllegalArgumentException.class)
+  public void brokenInsert(User user) {
+    this.userMapper.brokenAdd(user);
+  }
 
-    @Override
-    public void brokenInsert2(User user) {
-    	this.userMapper.brokenAdd(user);
-    }
+  @Override
+  public void brokenInsert2(User user) {
+    this.userMapper.brokenAdd(user);
+  }
 }

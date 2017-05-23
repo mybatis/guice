@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,78 +35,80 @@ import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
-    private final Log log = LogFactory.getLog(getClass());
+  private final Log log = LogFactory.getLog(getClass());
 
-    private TransactionManager transactionManager;
-    private Class<? extends Provider<? extends XAResource>> xaResourceProvider = XASqlSessionManagerProvider.class;
+  private TransactionManager transactionManager;
+  private Class<? extends Provider<? extends XAResource>> xaResourceProvider = XASqlSessionManagerProvider.class;
 
-    public MyBatisJtaModule() {
+  public MyBatisJtaModule() {
+  }
+
+  public MyBatisJtaModule(TransactionManager transactionManager) {
+    this.transactionManager = transactionManager;
+  }
+
+  @Override
+  protected void bindTransactionInterceptors() {
+    TransactionManager manager = getTransactionManager();
+
+    if (manager == null) {
+      log.debug("bind default transaction interceptors");
+      super.bindTransactionInterceptors();
+    } else {
+      log.debug("bind XA transaction interceptors");
+
+      // transactional interceptor
+      TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
+      requestInjection(interceptor);
+
+      // jta transactional interceptor
+      TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
+      requestInjection(interceptorTx);
+      bind(XAResource.class).toProvider(xaResourceProvider);
+
+      bind(TransactionManager.class).toInstance(manager);
+
+      bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx,
+          interceptor);
+      // Intercept classes annotated with Transactional, but avoid "double"
+      // interception when a mathod is also annotated inside an annotated
+      // class.
+      bindInterceptor(annotatedWith(Transactional.class),
+          not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);
     }
+  }
 
-    public MyBatisJtaModule(TransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
+  protected TransactionManager getTransactionManager() {
+    return transactionManager;
+  }
+
+  protected void setTransactionManager(TransactionManager transactionManager) {
+    this.transactionManager = transactionManager;
+  }
+
+  protected void bindDefaultTransactionProvider() {
+    Class<? extends TransactionFactory> factoryType = getTransactionManager() == null ? JdbcTransactionFactory.class
+        : ManagedTransactionFactory.class;
+
+    bindTransactionFactoryType(factoryType);
+  }
+
+  protected void bindXAResourceProvider(Class<? extends Provider<? extends XAResource>> xaResourceProvider) {
+    checkArgument(xaResourceProvider != null, "Parameter 'xaResourceProvider' must be not null");
+    this.xaResourceProvider = xaResourceProvider;
+  }
+
+  protected static class ProviderImpl<T> implements Provider<T> {
+    private T wrapper;
+
+    public ProviderImpl(T wrapper) {
+      this.wrapper = wrapper;
     }
 
     @Override
-    protected void bindTransactionInterceptors() {
-        TransactionManager manager = getTransactionManager();
-
-        if (manager == null) {
-            log.debug("bind default transaction interceptors");
-            super.bindTransactionInterceptors();
-        } else {
-            log.debug("bind XA transaction interceptors");
-
-            // transactional interceptor
-            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();
-            requestInjection(interceptor);
-
-            // jta transactional interceptor
-            TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();
-            requestInjection(interceptorTx);
-            bind(XAResource.class).toProvider(xaResourceProvider);
-
-            bind(TransactionManager.class).toInstance(manager);
-
-            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx, interceptor);
-            // Intercept classes annotated with Transactional, but avoid "double"
-            // interception when a mathod is also annotated inside an annotated
-            // class.
-            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);
-        }
+    public T get() {
+      return wrapper;
     }
 
-    protected TransactionManager getTransactionManager() {
-        return transactionManager;
-    }
-
-    protected void setTransactionManager(TransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-    }
-
-    protected void bindDefaultTransactionProvider() {
-        Class<? extends TransactionFactory> factoryType = getTransactionManager() == null ?
-                JdbcTransactionFactory.class : ManagedTransactionFactory.class;
-
-        bindTransactionFactoryType(factoryType);
-    }
-    
-    protected void bindXAResourceProvider(Class<? extends Provider<? extends XAResource>> xaResourceProvider) {
-        checkArgument(xaResourceProvider != null, "Parameter 'xaResourceProvider' must be not null");
-        this.xaResourceProvider = xaResourceProvider;
-    }
-
-    protected static class ProviderImpl<T> implements Provider<T> {
-        private T wrapper;
-
-        public ProviderImpl(T wrapper) {
-            this.wrapper = wrapper;
-        }
-
-        @Override
-        public T get() {
-            return wrapper;
-        }
-
-    }
+  }
 }

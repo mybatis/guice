@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,23 +22,23 @@ import javax.inject.Inject;
 import org.mybatis.guice.transactional.Transactional;
 
 public class Schema2Service {
-    @Inject
-    private Schema2Mapper mapper;
-    
-    @Transactional
-    public void createSchema2() {
-        mapper.createSchema2Step1();
-        mapper.createSchema2Step2();
-        mapper.createSchema2Step3();
-    }
-    
-    @Transactional
-    public List<Name> getAllNames() {
-        return mapper.getAllNames();
-    }
+  @Inject
+  private Schema2Mapper mapper;
 
-    @Transactional
-    public int insertName(Name name) {
-        return mapper.insertName(name);
-    }
+  @Transactional
+  public void createSchema2() {
+    mapper.createSchema2Step1();
+    mapper.createSchema2Step2();
+    mapper.createSchema2Step3();
+  }
+
+  @Transactional
+  public List<Name> getAllNames() {
+    return mapper.getAllNames();
+  }
+
+  @Transactional
+  public int insertName(Name name) {
+    return mapper.insertName(name);
+  }
 }

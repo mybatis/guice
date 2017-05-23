@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,52 +32,49 @@ import org.mybatis.guice.Counter;
  * @author poitrac
  */
 public class ContactNameTypeHandler implements TypeHandler<String> {
-	private Counter counter;
-	
-	@Override
-	public void setParameter(PreparedStatement ps, int i, String parameter,
-			JdbcType jdbcType) throws SQLException {
-		counter.increment();
-		ps.setString(i, parameter);
-	}
+  private Counter counter;
 
-	@Override
-	public String getResult(ResultSet rs, String columnName)
-			throws SQLException {
-		counter.increment();
-		String ret = rs.getString(columnName);
-		if (rs.wasNull()) {
-			return null;
-		} else {
-			return ret;
-		}
-	}
+  @Override
+  public void setParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
+    counter.increment();
+    ps.setString(i, parameter);
+  }
 
-	@Override
-	public String getResult(ResultSet rs, int columnIndex) throws SQLException {
-		counter.increment();
-		String ret = rs.getString(columnIndex);
-		if (rs.wasNull()) {
-			return null;
-		} else {
-			return ret;
-		}
-	}
+  @Override
+  public String getResult(ResultSet rs, String columnName) throws SQLException {
+    counter.increment();
+    String ret = rs.getString(columnName);
+    if (rs.wasNull()) {
+      return null;
+    } else {
+      return ret;
+    }
+  }
 
-	@Override
-	public String getResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
-		counter.increment();
-		String ret = cs.getString(columnIndex);
-		if (cs.wasNull()) {
-			return null;
-		} else {
-			return ret;
-		}
-	}
+  @Override
+  public String getResult(ResultSet rs, int columnIndex) throws SQLException {
+    counter.increment();
+    String ret = rs.getString(columnIndex);
+    if (rs.wasNull()) {
+      return null;
+    } else {
+      return ret;
+    }
+  }
 
-	@Inject
-	public void setCounter(Counter counter) {
-		this.counter = counter;
-	}
+  @Override
+  public String getResult(CallableStatement cs, int columnIndex) throws SQLException {
+    counter.increment();
+    String ret = cs.getString(columnIndex);
+    if (cs.wasNull()) {
+      return null;
+    } else {
+      return ret;
+    }
+  }
+
+  @Inject
+  public void setCounter(Counter counter) {
+    this.counter = counter;
+  }
 }

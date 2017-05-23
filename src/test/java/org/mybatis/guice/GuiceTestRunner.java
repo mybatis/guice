@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,55 +29,55 @@ import com.google.inject.Module;
 
 public final class GuiceTestRunner extends AbstractGuiceTestRunner {
 
-    public GuiceTestRunner(Class<?> klass) throws InitializationError {
-        super(klass);
-    }
+  public GuiceTestRunner(Class<?> klass) throws InitializationError {
+    super(klass);
+  }
 
-    @Override
-    protected List<Module> createMyBatisModule() {
-        List<Module> modules = new ArrayList<Module>(3);
+  @Override
+  protected List<Module> createMyBatisModule() {
+    List<Module> modules = new ArrayList<Module>(3);
 
-        modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-        modules.add(new MyBatisModule() {
+    modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+    modules.add(new MyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                addMapperClass(ContactMapper.class);
-                handleType(CustomType.class).with(CustomLongTypeHandler.class);
-                handleType(Address.class).with(AddressTypeHandler.class);
-                addInterceptorClass(CountUpdateInterceptor.class);
-                addTypeHandlerClass(ContactIdTypeHandler.class);
-                addTypeHandlerClass(ContactNameTypeHandler.class);
-                bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
-                defaultStatementTimeout(null);
-            }
+      @Override
+      protected void initialize() {
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        addMapperClass(ContactMapper.class);
+        handleType(CustomType.class).with(CustomLongTypeHandler.class);
+        handleType(Address.class).with(AddressTypeHandler.class);
+        addInterceptorClass(CountUpdateInterceptor.class);
+        addTypeHandlerClass(ContactIdTypeHandler.class);
+        addTypeHandlerClass(ContactNameTypeHandler.class);
+        bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
+        defaultStatementTimeout(null);
+      }
 
-        });
-        modules.add(new MyBatisModule() {
+    });
+    modules.add(new MyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                addMapperClass(ContactMapper.class);
-                handleType(CustomType.class).with(CustomLongTypeHandler.class);
-                handleType(Address.class).with(AddressTypeHandler.class);
-                addTypeHandlerClass(ContactIdTypeHandler.class);
-                addTypeHandlerClass(ContactNameTypeHandler.class);
-            }
+      @Override
+      protected void initialize() {
+        addMapperClass(ContactMapper.class);
+        handleType(CustomType.class).with(CustomLongTypeHandler.class);
+        handleType(Address.class).with(AddressTypeHandler.class);
+        addTypeHandlerClass(ContactIdTypeHandler.class);
+        addTypeHandlerClass(ContactNameTypeHandler.class);
+      }
 
-        });
+    });
 
-        return modules;
-    }
+    return modules;
+  }
 
-    @Override
-    protected Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
-        return myBatisProperties;
-    }
+  @Override
+  protected Properties createTestProperties() {
+    final Properties myBatisProperties = new Properties();
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.username", "sa");
+    myBatisProperties.setProperty("JDBC.password", "");
+    myBatisProperties.setProperty("JDBC.autoCommit", "false");
+    return myBatisProperties;
+  }
 }

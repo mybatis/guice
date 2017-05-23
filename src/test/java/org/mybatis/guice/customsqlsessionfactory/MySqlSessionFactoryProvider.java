@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 public class MySqlSessionFactoryProvider implements Provider<SqlSessionFactory> {
-    private final Configuration configuration;
-    
-    @Inject
-    public MySqlSessionFactoryProvider(final Configuration configuration) {
-        this.configuration = configuration;
-    }
-    
-    @Override
-    public SqlSessionFactory get() {
-        return new MySqlSessionFactory(configuration);
-    }
+  private final Configuration configuration;
+
+  @Inject
+  public MySqlSessionFactoryProvider(final Configuration configuration) {
+    this.configuration = configuration;
+  }
+
+  @Override
+  public SqlSessionFactory get() {
+    return new MySqlSessionFactory(configuration);
+  }
 }

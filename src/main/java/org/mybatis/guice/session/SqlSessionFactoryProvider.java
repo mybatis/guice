@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,45 +29,45 @@ import javax.inject.Singleton;
 @Singleton
 public final class SqlSessionFactoryProvider implements Provider<SqlSessionFactory> {
 
-    /**
-     * The SqlSessionFactory reference.
-     */
-    private SqlSessionFactory sqlSessionFactory;
+  /**
+   * The SqlSessionFactory reference.
+   */
+  private SqlSessionFactory sqlSessionFactory;
 
-    /**
-     * @since 1.0.1
-     */
-    public SqlSessionFactoryProvider() {
-        // do nothing
-    }
+  /**
+   * @since 1.0.1
+   */
+  public SqlSessionFactoryProvider() {
+    // do nothing
+  }
 
-    /**
-     * Creates a new SqlSessionFactory from the specified configuration.
-     *
-     * @param configuration the specified configration.
-     */
-    @Deprecated
-    public SqlSessionFactoryProvider(final Configuration configuration) {
-        // do nothing
-    }
+  /**
+   * Creates a new SqlSessionFactory from the specified configuration.
+   *
+   * @param configuration the specified configration.
+   */
+  @Deprecated
+  public SqlSessionFactoryProvider(final Configuration configuration) {
+    // do nothing
+  }
 
-    /**
-     * Creates a new SqlSessionFactory from the specified configuration.
-     *
-     * @param configuration the specified configuration.
-     * @since 1.0.1
-     */
-    @Inject
-    public void createNewSqlSessionFactory(final Configuration configuration) {
-        this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-    }
+  /**
+   * Creates a new SqlSessionFactory from the specified configuration.
+   *
+   * @param configuration the specified configuration.
+   * @since 1.0.1
+   */
+  @Inject
+  public void createNewSqlSessionFactory(final Configuration configuration) {
+    this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SqlSessionFactory get() {
-        return sqlSessionFactory;
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public SqlSessionFactory get() {
+    return sqlSessionFactory;
+  }
 
 }

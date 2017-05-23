@@ -26,79 +26,79 @@ import java.util.StringTokenizer;
 
 public final class JdbcUrlAntFormatter implements Provider<String> {
 
-    private static final String VAR_BEGIN = "$";
+  private static final String VAR_BEGIN = "$";
 
-    private static final String PIPE_SEPARATOR = "|";
+  private static final String PIPE_SEPARATOR = "|";
 
-    private final List<Provider<String>> appenders = new ArrayList<Provider<String>>();
+  private final List<Provider<String>> appenders = new ArrayList<Provider<String>>();
 
-    private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
+  private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
 
-    public JdbcUrlAntFormatter(final String pattern) {
-        int prev = 0;
-        int pos;
-        while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
-            if (pos > 0) {
-                appenders.add(Providers.of(pattern.substring(prev, pos)));
-            }
-            if (pos == pattern.length() - 1) {
-                appenders.add(Providers.of(VAR_BEGIN));
-                prev = pos + 1;
-            } else if (pattern.charAt(pos + 1) != '{') {
-                if (pattern.charAt(pos + 1) == '$') {
-                    appenders.add(Providers.of(VAR_BEGIN));
-                    prev = pos + 2;
-                } else {
-                    appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
-                    prev = pos + 2;
-                }
-            } else {
-                int endName = pattern.indexOf('}', pos);
-                if (endName < 0) {
-                    throw new IllegalArgumentException("Syntax error in property: " + pattern);
-                }
-                StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
-                String key = keyTokenizer.nextToken();
-                String defaultValue = null;
-                if (keyTokenizer.hasMoreTokens()) {
-                    defaultValue = keyTokenizer.nextToken();
-                }
-                KeyResolver resolver = new KeyResolver(key, defaultValue);
-                appenders.add(resolver);
-                resolvers.add(resolver);
-                prev = endName + 1;
-            }
+  public JdbcUrlAntFormatter(final String pattern) {
+    int prev = 0;
+    int pos;
+    while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
+      if (pos > 0) {
+        appenders.add(Providers.of(pattern.substring(prev, pos)));
+      }
+      if (pos == pattern.length() - 1) {
+        appenders.add(Providers.of(VAR_BEGIN));
+        prev = pos + 1;
+      } else if (pattern.charAt(pos + 1) != '{') {
+        if (pattern.charAt(pos + 1) == '$') {
+          appenders.add(Providers.of(VAR_BEGIN));
+          prev = pos + 2;
+        } else {
+          appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
+          prev = pos + 2;
         }
-        if (prev < pattern.length()) {
-            appenders.add(Providers.of(pattern.substring(prev)));
+      } else {
+        int endName = pattern.indexOf('}', pos);
+        if (endName < 0) {
+          throw new IllegalArgumentException("Syntax error in property: " + pattern);
         }
-    }
-
-    @Inject
-    public void setInjector(Injector injector) {
-        for (KeyResolver resolver : resolvers) {
-            resolver.setInjector(injector);
+        StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
+        String key = keyTokenizer.nextToken();
+        String defaultValue = null;
+        if (keyTokenizer.hasMoreTokens()) {
+          defaultValue = keyTokenizer.nextToken();
         }
+        KeyResolver resolver = new KeyResolver(key, defaultValue);
+        appenders.add(resolver);
+        resolvers.add(resolver);
+        prev = endName + 1;
+      }
     }
+    if (prev < pattern.length()) {
+      appenders.add(Providers.of(pattern.substring(prev)));
+    }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String get() {
-        StringBuilder buffer = new StringBuilder();
-        for (Provider<String> appender : appenders) {
-            buffer.append(appender.get());
-        }
-        return buffer.toString();
+  @Inject
+  public void setInjector(Injector injector) {
+    for (KeyResolver resolver : resolvers) {
+      resolver.setInjector(injector);
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return appenders.toString();
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String get() {
+    StringBuilder buffer = new StringBuilder();
+    for (Provider<String> appender : appenders) {
+      buffer.append(appender.get());
     }
+    return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return appenders.toString();
+  }
 
 }

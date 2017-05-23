@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -39,91 +39,89 @@ import com.google.inject.name.Names;
 
 public class NestedTxTest {
 
-    private Injector injector;
-    private NestedTxService service;
+  private Injector injector;
+  private NestedTxService service;
 
-    @Before
-    public void setup() throws Exception {
-        injector = Guice.createInjector(new MyBatisModule() {
-            @Override
-            protected void initialize() {
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
+  @Before
+  public void setup() throws Exception {
+    injector = Guice.createInjector(new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
 
-                install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+        install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
 
-                Properties connectionProps = new Properties();
-                connectionProps.setProperty("mybatis.environment.id", "jdbc");
-                connectionProps.setProperty("JDBC.username", "sa");
-                connectionProps.setProperty("JDBC.password", "");
-                connectionProps.setProperty("JDBC.autoCommit", "false");
+        Properties connectionProps = new Properties();
+        connectionProps.setProperty("mybatis.environment.id", "jdbc");
+        connectionProps.setProperty("JDBC.username", "sa");
+        connectionProps.setProperty("JDBC.password", "");
+        connectionProps.setProperty("JDBC.autoCommit", "false");
 
-                Names.bindProperties(binder(), connectionProps);
+        Names.bindProperties(binder(), connectionProps);
 
-                addMapperClass(NestedTxMapper.class);
-                bind(NestedTxService.class);
-            }
-        });
+        addMapperClass(NestedTxMapper.class);
+        bind(NestedTxService.class);
+      }
+    });
 
-        // prepare the test db
-        Environment environment = this.injector
-                .getInstance(SqlSessionFactory.class).getConfiguration()
-                .getEnvironment();
-        DataSource dataSource = environment.getDataSource();
-        ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
-        runner.setAutoCommit(true);
-        runner.setStopOnError(true);
-        runner.runScript(getResourceAsReader("org/mybatis/guice/nestedtx/setupdb.sql"));
-        runner.closeConnection();
+    // prepare the test db
+    Environment environment = this.injector.getInstance(SqlSessionFactory.class).getConfiguration().getEnvironment();
+    DataSource dataSource = environment.getDataSource();
+    ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
+    runner.setAutoCommit(true);
+    runner.setStopOnError(true);
+    runner.runScript(getResourceAsReader("org/mybatis/guice/nestedtx/setupdb.sql"));
+    runner.closeConnection();
 
-        service = injector.getInstance(NestedTxService.class);
+    service = injector.getInstance(NestedTxService.class);
+  }
+
+  @Test
+  public void testGoodInserts() {
+    service.goodInserts();
+
+    List<TableRow> tableRows = service.selectAllTable1();
+    assertEquals(1, tableRows.size());
+
+    tableRows = service.selectAllTable2();
+    assertEquals(2, tableRows.size());
+  }
+
+  @Test
+  public void testBadInsertRollbackAllRows() {
+    try {
+      service.badInsertRollbackAllRows();
+    } catch (Exception e) {
+      // ignore - should rollback all
     }
 
-    @Test
-    public void testGoodInserts() {
-        service.goodInserts();
+    List<TableRow> tableRows = service.selectAllTable1();
+    assertEquals(0, tableRows.size());
 
-        List<TableRow> tableRows = service.selectAllTable1();
-        assertEquals(1, tableRows.size());
+    tableRows = service.selectAllTable2();
+    assertEquals(0, tableRows.size());
+  }
 
-        tableRows = service.selectAllTable2();
-        assertEquals(2, tableRows.size());
-    }
+  @Test
+  public void testIgnoreBadInsert() {
+    service.ignoreBadInsert();
 
-    @Test
-    public void testBadInsertRollbackAllRows() {
-        try {
-            service.badInsertRollbackAllRows();
-        } catch (Exception e) {
-            // ignore - should rollback all
-        }
+    List<TableRow> tableRows = service.selectAllTable1();
+    assertEquals(1, tableRows.size());
 
-        List<TableRow> tableRows = service.selectAllTable1();
-        assertEquals(0, tableRows.size());
+    tableRows = service.selectAllTable2();
+    assertEquals(1, tableRows.size());
+  }
 
-        tableRows = service.selectAllTable2();
-        assertEquals(0, tableRows.size());
-    }
+  @Test
+  public void testCorrectBadInsert() {
+    service.correctBadInsert();
 
-    @Test
-    public void testIgnoreBadInsert() {
-        service.ignoreBadInsert();
+    List<TableRow> tableRows = service.selectAllTable1();
+    assertEquals(1, tableRows.size());
 
-        List<TableRow> tableRows = service.selectAllTable1();
-        assertEquals(1, tableRows.size());
-
-        tableRows = service.selectAllTable2();
-        assertEquals(1, tableRows.size());
-    }
-
-    @Test
-    public void testCorrectBadInsert() {
-        service.correctBadInsert();
-
-        List<TableRow> tableRows = service.selectAllTable1();
-        assertEquals(1, tableRows.size());
-
-        tableRows = service.selectAllTable2();
-        assertEquals(2, tableRows.size());
-    }
+    tableRows = service.selectAllTable2();
+    assertEquals(2, tableRows.size());
+  }
 }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ import org.apache.ibatis.session.Configuration;
 
 public class UseColumnLabelConfigurationSetting implements ConfigurationSetting {
 
-	private final boolean useColumnLabel;
-	
-	public UseColumnLabelConfigurationSetting(final boolean useColumnLabel) {
-		this.useColumnLabel = useColumnLabel;
-	}
+  private final boolean useColumnLabel;
 
-	@Override
-	public void applyConfigurationSetting(Configuration configuration) {
-		configuration.setUseColumnLabel(useColumnLabel);
-	}
+  public UseColumnLabelConfigurationSetting(final boolean useColumnLabel) {
+    this.useColumnLabel = useColumnLabel;
+  }
+
+  @Override
+  public void applyConfigurationSetting(Configuration configuration) {
+    configuration.setUseColumnLabel(useColumnLabel);
+  }
 
 }

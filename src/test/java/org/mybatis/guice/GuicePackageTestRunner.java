@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,39 +29,39 @@ import com.google.inject.Module;
 
 public final class GuicePackageTestRunner extends AbstractGuiceTestRunner {
 
-    public GuicePackageTestRunner(Class<?> klass) throws InitializationError {
-        super(klass);
-    }
+  public GuicePackageTestRunner(Class<?> klass) throws InitializationError {
+    super(klass);
+  }
 
-    @Override
-    protected List<Module> createMyBatisModule() {
-        List<Module> modules = new ArrayList<Module>(3);
+  @Override
+  protected List<Module> createMyBatisModule() {
+    List<Module> modules = new ArrayList<Module>(3);
 
-        modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-        modules.add(new MyBatisModule() {
+    modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+    modules.add(new MyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                addMapperClass(ContactMapper.class);
-                addInterceptorClass(CountUpdateInterceptor.class);
-                addTypeHandlerClasses("org.mybatis.guice");
-                bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
-            }
+      @Override
+      protected void initialize() {
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        addMapperClass(ContactMapper.class);
+        addInterceptorClass(CountUpdateInterceptor.class);
+        addTypeHandlerClasses("org.mybatis.guice");
+        bindDatabaseIdProvider(VendorDatabaseIdProvider.class);
+      }
 
-        });
+    });
 
-        return modules;
-    }
+    return modules;
+  }
 
-    @Override
-    protected Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
-        return myBatisProperties;
-    }
+  @Override
+  protected Properties createTestProperties() {
+    final Properties myBatisProperties = new Properties();
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.username", "sa");
+    myBatisProperties.setProperty("JDBC.password", "");
+    myBatisProperties.setProperty("JDBC.autoCommit", "false");
+    return myBatisProperties;
+  }
 }

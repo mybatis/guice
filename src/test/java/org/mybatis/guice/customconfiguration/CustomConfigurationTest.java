@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,29 +31,30 @@ import static org.junit.Assert.assertTrue;
 
 public class CustomConfigurationTest {
 
-    protected Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
-        return myBatisProperties;
-    }
+  protected Properties createTestProperties() {
+    final Properties myBatisProperties = new Properties();
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.username", "sa");
+    myBatisProperties.setProperty("JDBC.password", "");
+    myBatisProperties.setProperty("JDBC.autoCommit", "false");
+    return myBatisProperties;
+  }
 
-    @Test
-    public void customConfigurationProviderWithMyBatisModule() throws Exception {
-        Injector injector = Guice.createInjector(new MyBatisModule() {
-            @Override
-            protected void initialize() {
-                install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-                bindProperties(binder(), createTestProperties());
+  @Test
+  public void customConfigurationProviderWithMyBatisModule() throws Exception {
+    Injector injector = Guice.createInjector(new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+        bindProperties(binder(), createTestProperties());
 
-                useConfigurationProvider(MyConfigurationProvider.class);
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-            }
-        });
-        Configuration configuration = injector.getInstance(Configuration.class);
-        assertTrue("Configuration not an instanceof MyConfiguration", MyConfiguration.class.isAssignableFrom(configuration.getClass()));
-    }
+        useConfigurationProvider(MyConfigurationProvider.class);
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+      }
+    });
+    Configuration configuration = injector.getInstance(Configuration.class);
+    assertTrue("Configuration not an instanceof MyConfiguration",
+        MyConfiguration.class.isAssignableFrom(configuration.getClass()));
+  }
 }

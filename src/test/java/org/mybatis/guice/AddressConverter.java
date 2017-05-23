@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,25 +21,25 @@ import java.util.regex.Pattern;
 
 public class AddressConverter {
 
-    public Address convert(String input) throws ParseException {
-        Pattern pattern = Pattern.compile("(\\d+)\\s([\\w\\s]+)");
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.matches()) {
-            Address address = new Address();
-            address.setNumber(new Integer(matcher.group(1)));
-            address.setStreet(matcher.group(2));
-            return address;
-        } else {
-            throw new ParseException("Address did not match expected pattern: " + pattern.pattern(), 0);
-        }
+  public Address convert(String input) throws ParseException {
+    Pattern pattern = Pattern.compile("(\\d+)\\s([\\w\\s]+)");
+    Matcher matcher = pattern.matcher(input);
+    if (matcher.matches()) {
+      Address address = new Address();
+      address.setNumber(new Integer(matcher.group(1)));
+      address.setStreet(matcher.group(2));
+      return address;
+    } else {
+      throw new ParseException("Address did not match expected pattern: " + pattern.pattern(), 0);
     }
+  }
 
-    public String convert(Address address) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(address.getNumber().toString());
-        builder.append(" ");
-        builder.append(address.getStreet());
-        return builder.toString();
-    }
+  public String convert(Address address) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(address.getNumber().toString());
+    builder.append(" ");
+    builder.append(address.getStreet());
+    return builder.toString();
+  }
 
 }

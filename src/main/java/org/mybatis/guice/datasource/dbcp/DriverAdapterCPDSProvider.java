@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,89 +27,87 @@ import javax.sql.ConnectionPoolDataSource;
  */
 public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolDataSource> {
 
-    private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();
+  private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();
 
-    @Inject
-    public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver,
-            @Named("JDBC.url") final String url) {
-        try {
-            adapter.setDriver(driver);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Driver '"
-                    + driver
-                    + "' not found in the classpath", e);
-        }
-        adapter.setUrl(url);
+  @Inject
+  public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver, @Named("JDBC.url") final String url) {
+    try {
+      adapter.setDriver(driver);
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException("Driver '" + driver + "' not found in the classpath", e);
     }
+    adapter.setUrl(url);
+  }
 
-    /**
-     *
-     * @param username
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setUser(@Named("JDBC.username") final String username) {
-        adapter.setUser(username);
-    }
+  /**
+   *
+   * @param username
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setUser(@Named("JDBC.username") final String username) {
+    adapter.setUser(username);
+  }
 
-    /**
-     *
-     * @param password
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setPassword(@Named("JDBC.password") final String password) {
-        adapter.setPassword(password);
-    }
+  /**
+   *
+   * @param password
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setPassword(@Named("JDBC.password") final String password) {
+    adapter.setPassword(password);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setDescription(@Named("DBCP.description") String description) {
-        adapter.setDescription(description);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setDescription(@Named("DBCP.description") String description) {
+    adapter.setDescription(description);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setLoginTimeout(@Named("JDBC.loginTimeout") int seconds) {
-        adapter.setLoginTimeout(seconds);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setLoginTimeout(@Named("JDBC.loginTimeout") int seconds) {
+    adapter.setLoginTimeout(seconds);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setMaxActive(@Named("DBCP.maxActive") int maxActive) {
-        adapter.setMaxActive(maxActive);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setMaxActive(@Named("DBCP.maxActive") int maxActive) {
+    adapter.setMaxActive(maxActive);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setMaxIdle(@Named("DBCP.maxIdle") int maxIdle) {
-        adapter.setMaxIdle(maxIdle);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setMaxIdle(@Named("DBCP.maxIdle") int maxIdle) {
+    adapter.setMaxIdle(maxIdle);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setMaxPreparedStatements(@Named("DBCP.maxOpenPreparedStatements") int maxPreparedStatements) {
-        adapter.setMaxPreparedStatements(maxPreparedStatements);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setMaxPreparedStatements(@Named("DBCP.maxOpenPreparedStatements") int maxPreparedStatements) {
+    adapter.setMaxPreparedStatements(maxPreparedStatements);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
-        adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
+    adapter.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
-        adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
+    adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") boolean poolPreparedStatements) {
-        adapter.setPoolPreparedStatements(poolPreparedStatements);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") boolean poolPreparedStatements) {
+    adapter.setPoolPreparedStatements(poolPreparedStatements);
+  }
 
-    @com.google.inject.Inject(optional = true)
-    public void setTimeBetweenEvictionRunsMillis(@Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-        adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-    }
+  @com.google.inject.Inject(optional = true)
+  public void setTimeBetweenEvictionRunsMillis(
+      @Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
+    adapter.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+  }
 
-    @Override
-    public ConnectionPoolDataSource get() {
-        return adapter;
-    }
+  @Override
+  public ConnectionPoolDataSource get() {
+    return adapter;
+  }
 
 }

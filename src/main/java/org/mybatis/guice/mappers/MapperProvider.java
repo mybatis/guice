@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,35 +27,35 @@ import javax.inject.Provider;
  */
 public final class MapperProvider<T> implements Provider<T> {
 
-    private final Class<T> mapperType;
+  private final Class<T> mapperType;
 
-    @Inject
-    private SqlSessionManager sqlSessionManager;
+  @Inject
+  private SqlSessionManager sqlSessionManager;
 
-    public MapperProvider(Class<T> mapperType) {
-        this.mapperType = mapperType;
+  public MapperProvider(Class<T> mapperType) {
+    this.mapperType = mapperType;
+  }
+
+  public void setSqlSessionManager(SqlSessionManager sqlSessionManager) {
+    this.sqlSessionManager = sqlSessionManager;
+  }
+
+  @Override
+  public T get() {
+    return this.sqlSessionManager.getMapper(mapperType);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.mapperType);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    public void setSqlSessionManager(SqlSessionManager sqlSessionManager) {
-        this.sqlSessionManager = sqlSessionManager;
-    }
-
-    @Override
-    public T get() {
-        return this.sqlSessionManager.getMapper(mapperType);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(this.mapperType);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if(obj == null){
-        return false;
-      }
-      MapperProvider other = (MapperProvider) obj;
-      return Objects.equal(this.mapperType, other.mapperType);
-    }
+    MapperProvider other = (MapperProvider) obj;
+    return Objects.equal(this.mapperType, other.mapperType);
+  }
 }

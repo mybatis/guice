@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,30 +28,30 @@ import javax.inject.Inject;
  *
  * FooService simply receives a userId and uses a mapper/dao to get a record from the database.
  */
-@Transactional(rethrowExceptionsAs=CustomException.class)
+@Transactional(rethrowExceptionsAs = CustomException.class)
 public class FooServiceDaoImpl implements FooService {
 
-    private UserDao userDao;
+  private UserDao userDao;
 
-    @Inject
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+  @Inject
+  public void setUserDao(UserDao userDao) {
+    this.userDao = userDao;
+  }
 
-    @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public User doSomeBusinessStuff(String userId) {
-        return this.userDao.getUser(userId);
-    }
+  @Override
+  @Transactional(isolation = Isolation.SERIALIZABLE)
+  public User doSomeBusinessStuff(String userId) {
+    return this.userDao.getUser(userId);
+  }
 
-    @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs=IllegalArgumentException.class)
-    public void brokenInsert(User user) {
-        this.userDao.brokenInsert(user);
-    }
-    
-    @Override
-    public void brokenInsert2(User user) {
-    	this.userDao.brokenInsert(user);
-    }
+  @Override
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = IllegalArgumentException.class)
+  public void brokenInsert(User user) {
+    this.userDao.brokenInsert(user);
+  }
+
+  @Override
+  public void brokenInsert2(User user) {
+    this.userDao.brokenInsert(user);
+  }
 }

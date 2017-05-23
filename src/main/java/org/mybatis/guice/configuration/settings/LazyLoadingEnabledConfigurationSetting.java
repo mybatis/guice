@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,17 +17,17 @@ package org.mybatis.guice.configuration.settings;
 
 import org.apache.ibatis.session.Configuration;
 
-public class LazyLoadingEnabledConfigurationSetting implements ConfigurationSetting  {
+public class LazyLoadingEnabledConfigurationSetting implements ConfigurationSetting {
 
-	private final boolean lazyLoadingEnabled;
-	
-	public LazyLoadingEnabledConfigurationSetting(final boolean lazyLoadingEnabled) {
-		this.lazyLoadingEnabled = lazyLoadingEnabled;
-	}
+  private final boolean lazyLoadingEnabled;
 
-	@Override
-	public void applyConfigurationSetting(Configuration configuration) {
-		configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
-	}
+  public LazyLoadingEnabledConfigurationSetting(final boolean lazyLoadingEnabled) {
+    this.lazyLoadingEnabled = lazyLoadingEnabled;
+  }
+
+  @Override
+  public void applyConfigurationSetting(Configuration configuration) {
+    configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
+  }
 
 }
