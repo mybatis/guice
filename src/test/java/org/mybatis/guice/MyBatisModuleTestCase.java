@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,50 +25,45 @@ import java.util.List;
 @RunWith(GuiceTestRunner.class)
 public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 
-    @Inject
-    @Named("contactWithAddress")
-    private Contact contactWithAdress;
+  @Inject
+  @Named("contactWithAddress")
+  private Contact contactWithAdress;
 
-    @Inject
-    private ContactMapperClient contactMapperClient;
+  @Inject
+  private ContactMapperClient contactMapperClient;
 
-    @Inject
-    private AddressConverter addressConverter;
+  @Inject
+  private AddressConverter addressConverter;
 
-    @Test
-    public void testAddressConverter() throws Exception {
-        Address address = new Address();
-        address.setNumber(1234);
-        address.setStreet("Elm street");
-        assert "1234 Elm street".equals(addressConverter.convert(address));
-        assert address.equals(addressConverter.convert("1234 Elm street"));
-    }
+  @Test
+  public void testAddressConverter() throws Exception {
+    Address address = new Address();
+    address.setNumber(1234);
+    address.setStreet("Elm street");
+    assert "1234 Elm street".equals(addressConverter.convert(address));
+    assert address.equals(addressConverter.convert("1234 Elm street"));
+  }
 
-    @Test
-    public void insertContactWithAddress() throws Exception {
-        Address address = new Address();
-        address.setNumber(1234);
-        address.setStreet("Elm street");
-        this.contactWithAdress.setAddress(address);
-        this.contactMapperClient.insert(this.contactWithAdress);
-    }
+  @Test
+  public void insertContactWithAddress() throws Exception {
+    Address address = new Address();
+    address.setNumber(1234);
+    address.setStreet("Elm street");
+    this.contactWithAdress.setAddress(address);
+    this.contactMapperClient.insert(this.contactWithAdress);
+  }
 
-    @Test
-    public void selectContactWithAddress() throws Exception {
-        Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
-        assert contact != null : "impossible to retrieve Contact with id '"
-                                + this.contactWithAdress.getId()
-                                + "'";
-        assert this.contactWithAdress.equals(contact) : "Expected "
-                                                + this.contactWithAdress
-                                                + " but found "
-                                                + contact;
-    }
+  @Test
+  public void selectContactWithAddress() throws Exception {
+    Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
+    assert contact != null : "impossible to retrieve Contact with id '" + this.contactWithAdress.getId() + "'";
+    assert this.contactWithAdress.equals(contact) : "Expected " + this.contactWithAdress + " but found " + contact;
+  }
 
-    @Test
-    public void selectAllContactsWithDatabaseId() throws Exception {
-        List<Contact> contacts = this.contactMapperClient.getAllWithDatabaseId();
-        assert contacts.size() > 0 : "Expected not empty contact table";
-    }
+  @Test
+  public void selectAllContactsWithDatabaseId() throws Exception {
+    List<Contact> contacts = this.contactMapperClient.getAllWithDatabaseId();
+    assert contacts.size() > 0 : "Expected not empty contact table";
+  }
 
 }

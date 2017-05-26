@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,108 +23,108 @@ import org.mybatis.guice.transactional.Transactional;
 
 public class NestedTxService {
 
-    @Inject
-    private NestedTxMapper mapper;
+  @Inject
+  private NestedTxMapper mapper;
 
-    @Transactional
-    public int insertTable1(TableRow row) {
-        return mapper.insertTable1(row);
-    }
+  @Transactional
+  public int insertTable1(TableRow row) {
+    return mapper.insertTable1(row);
+  }
 
-    @Transactional
-    public List<TableRow> selectAllTable1() {
-        return mapper.selectAllTable1();
-    }
+  @Transactional
+  public List<TableRow> selectAllTable1() {
+    return mapper.selectAllTable1();
+  }
 
-    @Transactional
-    public int insertTable2(TableRow row) {
-        return mapper.insertTable2(row);
-    }
+  @Transactional
+  public int insertTable2(TableRow row) {
+    return mapper.insertTable2(row);
+  }
 
-    @Transactional
-    public List<TableRow> selectAllTable2() {
-        return mapper.selectAllTable2();
-    }
-    
-    @Transactional
-    public void goodInserts() {
-        TableRow tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Fred");
-        insertTable1(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Barney");
-        insertTable2(tr);
-        
-        tr = new TableRow();
-        tr.setId(2);
-        tr.setName("Betty");
-        insertTable2(tr);
-    }
+  @Transactional
+  public List<TableRow> selectAllTable2() {
+    return mapper.selectAllTable2();
+  }
 
-    @Transactional
-    public void badInsertRollbackAllRows() {
-        TableRow tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Fred");
-        insertTable1(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Barney");
-        insertTable2(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Betty");
-        insertTable2(tr);
-    }
+  @Transactional
+  public void goodInserts() {
+    TableRow tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Fred");
+    insertTable1(tr);
 
-    @Transactional
-    public void ignoreBadInsert() {
-        TableRow tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Fred");
-        insertTable1(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Barney");
-        insertTable2(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Betty");
-        try {
-            insertTable2(tr);
-        } catch (Exception e) {
-            //ignore - the other two inserts should be OK
-        }
-    }
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Barney");
+    insertTable2(tr);
 
-    @Transactional
-    public void correctBadInsert() {
-        TableRow tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Fred");
-        insertTable1(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Barney");
-        insertTable2(tr);
-        
-        tr = new TableRow();
-        tr.setId(1);
-        tr.setName("Betty");
-        try {
-            insertTable2(tr);
-        } catch (Exception e) {
-            // correct and try again
-            tr.setId(2);
-            insertTable2(tr);
-        }
+    tr = new TableRow();
+    tr.setId(2);
+    tr.setName("Betty");
+    insertTable2(tr);
+  }
+
+  @Transactional
+  public void badInsertRollbackAllRows() {
+    TableRow tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Fred");
+    insertTable1(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Barney");
+    insertTable2(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Betty");
+    insertTable2(tr);
+  }
+
+  @Transactional
+  public void ignoreBadInsert() {
+    TableRow tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Fred");
+    insertTable1(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Barney");
+    insertTable2(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Betty");
+    try {
+      insertTable2(tr);
+    } catch (Exception e) {
+      //ignore - the other two inserts should be OK
     }
+  }
+
+  @Transactional
+  public void correctBadInsert() {
+    TableRow tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Fred");
+    insertTable1(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Barney");
+    insertTable2(tr);
+
+    tr = new TableRow();
+    tr.setId(1);
+    tr.setName("Betty");
+    try {
+      insertTable2(tr);
+    } catch (Exception e) {
+      // correct and try again
+      tr.setId(2);
+      insertTable2(tr);
+    }
+  }
 }

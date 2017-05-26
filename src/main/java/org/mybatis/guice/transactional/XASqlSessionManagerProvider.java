@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import javax.transaction.xa.XAResource;
 import org.apache.ibatis.session.SqlSessionManager;
 
 public class XASqlSessionManagerProvider implements Provider<XAResource> {
-    @Inject
-    private SqlSessionManager sqlSessionManager;
-    
-    @Override
-    public XAResource get() {
-        return new XASqlSessionManager(sqlSessionManager);
-    }
+  @Inject
+  private SqlSessionManager sqlSessionManager;
+
+  @Override
+  public XAResource get() {
+    return new XASqlSessionManager(sqlSessionManager);
+  }
 }

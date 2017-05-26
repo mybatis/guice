@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,91 +56,91 @@ import com.google.inject.Module;
  */
 public class SampleSqlSessionTest {
 
-    private Injector injector;
+  private Injector injector;
 
-    private FooService fooService;
+  private FooService fooService;
 
-    @Before
-    public void setupMyBatisGuice() throws Exception {
+  @Before
+  public void setupMyBatisGuice() throws Exception {
 
-        // bindings
-        List<Module> modules = this.createMyBatisModule();
-        this.injector = Guice.createInjector(modules);
+    // bindings
+    List<Module> modules = this.createMyBatisModule();
+    this.injector = Guice.createInjector(modules);
 
-        // prepare the test db
-        Environment environment = this.injector.getInstance(SqlSessionFactory.class).getConfiguration().getEnvironment();
-        DataSource dataSource = environment.getDataSource();
-        ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
-        runner.setAutoCommit(true);
-        runner.setStopOnError(true);
-        runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-schema.sql"));
-        runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-test-data.sql"));
-        runner.closeConnection();
+    // prepare the test db
+    Environment environment = this.injector.getInstance(SqlSessionFactory.class).getConfiguration().getEnvironment();
+    DataSource dataSource = environment.getDataSource();
+    ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
+    runner.setAutoCommit(true);
+    runner.setStopOnError(true);
+    runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-schema.sql"));
+    runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-test-data.sql"));
+    runner.closeConnection();
 
-        this.fooService = this.injector.getInstance(FooService.class);
-    }
+    this.fooService = this.injector.getInstance(FooService.class);
+  }
 
-    protected List<Module> createMyBatisModule() {
-        List<Module> modules = new ArrayList<Module>();
-        modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-        modules.add(new MyBatisModule() {
+  protected List<Module> createMyBatisModule() {
+    List<Module> modules = new ArrayList<Module>();
+    modules.add(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+    modules.add(new MyBatisModule() {
 
-            @Override
-            protected void initialize() {
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                addMapperClass(UserMapper.class);
-            }
+      @Override
+      protected void initialize() {
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        addMapperClass(UserMapper.class);
+      }
 
-        });
-        /* modules.add(new XMLMyBatisModule() {
-
-            @Override
-            protected void initialize() {
-                setEnvironmentId("test");
-                setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml");
-            }
-
-        }); */
-        modules.add(new Module() {
-            @Override
-            public void configure(Binder binder) {
-                bindProperties(binder, createTestProperties());
-                binder.bind(FooService.class).to(FooServiceDaoImpl.class);
-                binder.bind(UserDao.class).to(UserDaoImpl.class);
-            }
-        });
-
-        return modules;
-    }
-
-    protected static Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
-        return myBatisProperties;
-    }
-
-    @Test
-    public void testFooService(){
-        User user = this.fooService.doSomeBusinessStuff("u1");
-        assertNotNull(user);
-        assertEquals("Pocoyo", user.getName());
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testTransactionalOnClassAndMethod() {
-    	User user = new User();
-    	user.setName("Christian Poitras");
-        this.fooService.brokenInsert(user);
-    }
+    });
+    /* modules.add(new XMLMyBatisModule() {
     
-    @Test(expected=CustomException.class)
-    public void testTransactionalOnClass() {
-    	User user = new User();
-    	user.setName("Christian Poitras");
-        this.fooService.brokenInsert2(user);
-    }
+        @Override
+        protected void initialize() {
+            setEnvironmentId("test");
+            setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml");
+        }
+    
+    }); */
+    modules.add(new Module() {
+      @Override
+      public void configure(Binder binder) {
+        bindProperties(binder, createTestProperties());
+        binder.bind(FooService.class).to(FooServiceDaoImpl.class);
+        binder.bind(UserDao.class).to(UserDaoImpl.class);
+      }
+    });
+
+    return modules;
+  }
+
+  protected static Properties createTestProperties() {
+    final Properties myBatisProperties = new Properties();
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.username", "sa");
+    myBatisProperties.setProperty("JDBC.password", "");
+    myBatisProperties.setProperty("JDBC.autoCommit", "false");
+    return myBatisProperties;
+  }
+
+  @Test
+  public void testFooService() {
+    User user = this.fooService.doSomeBusinessStuff("u1");
+    assertNotNull(user);
+    assertEquals("Pocoyo", user.getName());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testTransactionalOnClassAndMethod() {
+    User user = new User();
+    user.setName("Christian Poitras");
+    this.fooService.brokenInsert(user);
+  }
+
+  @Test(expected = CustomException.class)
+  public void testTransactionalOnClass() {
+    User user = new User();
+    user.setName("Christian Poitras");
+    this.fooService.brokenInsert2(user);
+  }
 }

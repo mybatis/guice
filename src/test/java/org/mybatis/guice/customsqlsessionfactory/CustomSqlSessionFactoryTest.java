@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,29 +31,30 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class CustomSqlSessionFactoryTest {
-    protected Properties createTestProperties() {
-        final Properties myBatisProperties = new Properties();
-        myBatisProperties.setProperty("mybatis.environment.id", "test");
-        myBatisProperties.setProperty("JDBC.username", "sa");
-        myBatisProperties.setProperty("JDBC.password", "");
-        myBatisProperties.setProperty("JDBC.autoCommit", "false");
-        return myBatisProperties;
-    }
-    
-    @Test
-    public void customSqlSessionFactoryProvider() throws Exception {
-        Injector injector = Guice.createInjector(new MyBatisModule(){
-            @Override
-            protected void initialize() {
-                install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
-                bindProperties(binder(), createTestProperties());
-                
-                useSqlSessionFactoryProvider(MySqlSessionFactoryProvider.class);
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-            }
-        });
-        SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
-        assertTrue("SqlSessionFactory not an instanceof MySqlSessionFactory", MySqlSessionFactory.class.isAssignableFrom(sqlSessionFactory.getClass()));
-    }
+  protected Properties createTestProperties() {
+    final Properties myBatisProperties = new Properties();
+    myBatisProperties.setProperty("mybatis.environment.id", "test");
+    myBatisProperties.setProperty("JDBC.username", "sa");
+    myBatisProperties.setProperty("JDBC.password", "");
+    myBatisProperties.setProperty("JDBC.autoCommit", "false");
+    return myBatisProperties;
+  }
+
+  @Test
+  public void customSqlSessionFactoryProvider() throws Exception {
+    Injector injector = Guice.createInjector(new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        install(JdbcHelper.HSQLDB_IN_MEMORY_NAMED);
+        bindProperties(binder(), createTestProperties());
+
+        useSqlSessionFactoryProvider(MySqlSessionFactoryProvider.class);
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+      }
+    });
+    SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
+    assertTrue("SqlSessionFactory not an instanceof MySqlSessionFactory",
+        MySqlSessionFactory.class.isAssignableFrom(sqlSessionFactory.getClass()));
+  }
 }

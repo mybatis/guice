@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,53 +18,53 @@ package org.mybatis.guice.transactional;
 import javax.transaction.Transaction;
 
 public class TransactionToken {
-	private Transaction activeTransaction;
-	private Transaction suspendedTransaction;
-	private TransactionAttribute transactionAttribute;
-	private boolean isCompletionAllowed;
+  private Transaction activeTransaction;
+  private Transaction suspendedTransaction;
+  private TransactionAttribute transactionAttribute;
+  private boolean isCompletionAllowed;
 
-	public TransactionToken(Transaction activeTransaction, Transaction suspendedTransaction,
-			TransactionAttribute transactionAttribute) {
-		this(activeTransaction, suspendedTransaction, transactionAttribute, false);
-	}
+  public TransactionToken(Transaction activeTransaction, Transaction suspendedTransaction,
+      TransactionAttribute transactionAttribute) {
+    this(activeTransaction, suspendedTransaction, transactionAttribute, false);
+  }
 
-	TransactionToken(Transaction activeTransaction, Transaction suspendedTransaction,
-			TransactionAttribute transactionAttribute, boolean isCompletionAllowed) {
-		this.activeTransaction = activeTransaction;
-		this.suspendedTransaction = suspendedTransaction;
-		this.transactionAttribute = transactionAttribute;
-		this.isCompletionAllowed = isCompletionAllowed;
-	}
+  TransactionToken(Transaction activeTransaction, Transaction suspendedTransaction,
+      TransactionAttribute transactionAttribute, boolean isCompletionAllowed) {
+    this.activeTransaction = activeTransaction;
+    this.suspendedTransaction = suspendedTransaction;
+    this.transactionAttribute = transactionAttribute;
+    this.isCompletionAllowed = isCompletionAllowed;
+  }
 
-	public Transaction getActiveTransaction() {
-		return activeTransaction;
-	}
+  public Transaction getActiveTransaction() {
+    return activeTransaction;
+  }
 
-	public void setActiveTransaction(Transaction activeTransaction) {
-		this.activeTransaction = activeTransaction;
-	}
+  public void setActiveTransaction(Transaction activeTransaction) {
+    this.activeTransaction = activeTransaction;
+  }
 
-	public Transaction getSuspendedTransaction() {
-		return suspendedTransaction;
-	}
+  public Transaction getSuspendedTransaction() {
+    return suspendedTransaction;
+  }
 
-	public void setSuspendedTransaction(Transaction suspendedTransaction) {
-		this.suspendedTransaction = suspendedTransaction;
-	}
+  public void setSuspendedTransaction(Transaction suspendedTransaction) {
+    this.suspendedTransaction = suspendedTransaction;
+  }
 
-	public TransactionAttribute getTransactionAttribute() {
-		return transactionAttribute;
-	}
+  public TransactionAttribute getTransactionAttribute() {
+    return transactionAttribute;
+  }
 
-	public void setTransactionStrategy(TransactionAttribute transactionAttribute) {
-		this.transactionAttribute = transactionAttribute;
-	}
+  public void setTransactionStrategy(TransactionAttribute transactionAttribute) {
+    this.transactionAttribute = transactionAttribute;
+  }
 
-	public boolean isCompletionAllowed() {
-		return isCompletionAllowed;
-	}
+  public boolean isCompletionAllowed() {
+    return isCompletionAllowed;
+  }
 
-	public void setCompletionAllowed(boolean isCompletionAllowed) {
-		this.isCompletionAllowed = isCompletionAllowed;
-	}
+  public void setCompletionAllowed(boolean isCompletionAllowed) {
+    this.isCompletionAllowed = isCompletionAllowed;
+  }
 }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,31 +32,33 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class ScriptingLanguageTest {
-    private SqlSessionFactory factory;
-    
-    @Before
-    public void beforeClass() {
-        Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
-            @Override
-            protected void initialize() {
-                final Properties myBatisProperties = new Properties();
-                myBatisProperties.setProperty("mybatis.environment.id", "test");
-                myBatisProperties.setProperty("JDBC.username", "sa");
-                myBatisProperties.setProperty("JDBC.password", "");
-                myBatisProperties.setProperty("JDBC.autoCommit", "false");
-                bindProperties(binder(), myBatisProperties);
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                bindDefaultScriptingLanguageType(CustomLanguageDriver.class);
-            }
-        });
-        factory = injector.getInstance(SqlSessionFactory.class);
-    }
+  private SqlSessionFactory factory;
 
-    @Test
-    public void scriptingLanguageAlias() {
-        assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getDefaultScriptingLanuageInstance().getClass());
-        assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getLanguageRegistry().getDefaultDriverClass());
-        assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getLanguageRegistry().getDriver(CustomLanguageDriver.class).getClass());
-    }
+  @Before
+  public void beforeClass() {
+    Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        final Properties myBatisProperties = new Properties();
+        myBatisProperties.setProperty("mybatis.environment.id", "test");
+        myBatisProperties.setProperty("JDBC.username", "sa");
+        myBatisProperties.setProperty("JDBC.password", "");
+        myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        bindProperties(binder(), myBatisProperties);
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        bindDefaultScriptingLanguageType(CustomLanguageDriver.class);
+      }
+    });
+    factory = injector.getInstance(SqlSessionFactory.class);
+  }
+
+  @Test
+  public void scriptingLanguageAlias() {
+    assertEquals(CustomLanguageDriver.class,
+        factory.getConfiguration().getDefaultScriptingLanuageInstance().getClass());
+    assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getLanguageRegistry().getDefaultDriverClass());
+    assertEquals(CustomLanguageDriver.class,
+        factory.getConfiguration().getLanguageRegistry().getDriver(CustomLanguageDriver.class).getClass());
+  }
 }

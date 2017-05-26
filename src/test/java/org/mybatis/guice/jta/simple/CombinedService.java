@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,50 +22,50 @@ import javax.inject.Inject;
 import org.mybatis.guice.transactional.Transactional;
 
 public class CombinedService {
-    @Inject
-    private Schema1Service schema1Service;
-    @Inject
-    private Schema2Service schema2Service;
+  @Inject
+  private Schema1Service schema1Service;
+  @Inject
+  private Schema2Service schema2Service;
 
-    @Transactional
-    public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackAll() {
-        insert2RecordsIntoSchema1And1RecordIntoSchema2();
-        throw new RuntimeException("Exception to force rollback - should rollback all inserts");
-    }
-    
-    @Transactional
-    public void insert2RecordsIntoSchema1And1RecordIntoSchema2() {
-        Name name = new Name(1, "Fred");
-        schema1Service.insertName(name);
-        
-        name = new Name(2, "Wilma");
-        schema1Service.insertName(name);
-        
-        name = new Name(3, "Barney");
-        schema2Service.insertName(name);
-    }
+  @Transactional
+  public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackAll() {
+    insert2RecordsIntoSchema1And1RecordIntoSchema2();
+    throw new RuntimeException("Exception to force rollback - should rollback all inserts");
+  }
 
-    @Transactional
-    public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackSchema2() {
-        Name name = new Name(1, "Fred");
-        schema1Service.insertNameWithNewTransaction(name);
-        
-        name = new Name(2, "Wilma");
-        schema1Service.insertNameWithNewTransaction(name);
-        
-        name = new Name(3, "Barney");
-        schema2Service.insertName(name);
+  @Transactional
+  public void insert2RecordsIntoSchema1And1RecordIntoSchema2() {
+    Name name = new Name(1, "Fred");
+    schema1Service.insertName(name);
 
-        throw new RuntimeException("Exception to force rollback - should rollback all schema 2 inserts");
-    }
+    name = new Name(2, "Wilma");
+    schema1Service.insertName(name);
 
-    @Transactional
-    public List<Name> getAllNamesFromSchema1() {
-        return schema1Service.getAllNames();
-    }
+    name = new Name(3, "Barney");
+    schema2Service.insertName(name);
+  }
 
-    @Transactional
-    public List<Name> getAllNamesFromSchema2() {
-        return schema2Service.getAllNames();
-    }
+  @Transactional
+  public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackSchema2() {
+    Name name = new Name(1, "Fred");
+    schema1Service.insertNameWithNewTransaction(name);
+
+    name = new Name(2, "Wilma");
+    schema1Service.insertNameWithNewTransaction(name);
+
+    name = new Name(3, "Barney");
+    schema2Service.insertName(name);
+
+    throw new RuntimeException("Exception to force rollback - should rollback all schema 2 inserts");
+  }
+
+  @Transactional
+  public List<Name> getAllNamesFromSchema1() {
+    return schema1Service.getAllNames();
+  }
+
+  @Transactional
+  public List<Name> getAllNamesFromSchema2() {
+    return schema2Service.getAllNames();
+  }
 }

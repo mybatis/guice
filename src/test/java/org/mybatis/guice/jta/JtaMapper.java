@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,13 +22,9 @@ import org.apache.ibatis.annotations.Select;
 
 public interface JtaMapper {
 
-    @Insert ({
-        "insert into table1 (id, name) values (#{id}, #{name})"
-    })
-    int insertTable(TableRow row);
-    
-    @Select ({
-        "select * from table1"
-    })
-    List<TableRow> selectAllTable();
+  @Insert({ "insert into table1 (id, name) values (#{id}, #{name})" })
+  int insertTable(TableRow row);
+
+  @Select({ "select * from table1" })
+  List<TableRow> selectAllTable();
 }

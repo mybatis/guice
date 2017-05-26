@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,15 +20,15 @@ import javax.transaction.xa.XAResource;
 import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
 
 public class CustomXaResourceProvider extends XASqlSessionManagerProvider {
-    private static boolean providerCalled = false;
+  private static boolean providerCalled = false;
 
-    @Override
-    public XAResource get() {
-        providerCalled = true;
-        return super.get();
-    }
+  @Override
+  public XAResource get() {
+    providerCalled = true;
+    return super.get();
+  }
 
-    public static boolean isProviderCalled() {
-        return providerCalled;
-    }
+  public static boolean isProviderCalled() {
+    return providerCalled;
+  }
 }

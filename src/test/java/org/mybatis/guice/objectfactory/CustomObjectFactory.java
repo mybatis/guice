@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ import javax.inject.Inject;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 
 public class CustomObjectFactory extends DefaultObjectFactory {
-    private static final long serialVersionUID = 7195913612693620013L;
-    @Inject
-    private CustomObject customObject;
-    
-    public CustomObject getCustomObject() {
-        return customObject;
-    }
+  private static final long serialVersionUID = 7195913612693620013L;
+  @Inject
+  private CustomObject customObject;
+
+  public CustomObject getCustomObject() {
+    return customObject;
+  }
 }

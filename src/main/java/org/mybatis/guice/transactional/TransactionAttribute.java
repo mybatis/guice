@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,146 +26,138 @@ import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
 public enum TransactionAttribute {
-	MANDATORY
-	{
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException
-		{
-			if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {
-				throw new IllegalStateException(
-						"A call is being made on a method that mandates a transaction but there is no current transaction.");
-			}
-			return new TransactionToken(man.getTransaction(), null, MANDATORY);
-		}
-	},
-	NEVER
-	{
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException
-		{
-			if (man.getStatus() == Status.STATUS_ACTIVE) {
-				throw new IllegalStateException(
-						"A call is being made on a method that forbids a transaction but there is a current transaction.");
-			}
-			return new TransactionToken(null, null, NEVER);
-		}
-	},
-	NOTSUPPORTED {
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException {
-			if (man.getStatus() == Status.STATUS_ACTIVE) {
-				return new TransactionToken(null, man.suspend(), this);
-			}
-			return new TransactionToken(null, null, NOTSUPPORTED);
-		}
+  MANDATORY {
+    @Override
+    public TransactionToken begin(TransactionManager man) throws SystemException {
+      if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {
+        throw new IllegalStateException(
+            "A call is being made on a method that mandates a transaction but there is no current transaction.");
+      }
+      return new TransactionToken(man.getTransaction(), null, MANDATORY);
+    }
+  },
+  NEVER {
+    @Override
+    public TransactionToken begin(TransactionManager man) throws SystemException {
+      if (man.getStatus() == Status.STATUS_ACTIVE) {
+        throw new IllegalStateException(
+            "A call is being made on a method that forbids a transaction but there is a current transaction.");
+      }
+      return new TransactionToken(null, null, NEVER);
+    }
+  },
+  NOTSUPPORTED {
+    @Override
+    public TransactionToken begin(TransactionManager man) throws SystemException {
+      if (man.getStatus() == Status.STATUS_ACTIVE) {
+        return new TransactionToken(null, man.suspend(), this);
+      }
+      return new TransactionToken(null, null, NOTSUPPORTED);
+    }
 
-		@Override
-		public void finish(TransactionManager man, TransactionToken tranToken) throws SystemException,
-		InvalidTransactionException, IllegalStateException {
-			Transaction tran = tranToken.getSuspendedTransaction();
-			if (tran != null) {
-				man.resume(tran);
-			}
-		}
-	},
-	REQUIRED {
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException, NotSupportedException {
-			if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {
-				man.begin();
-				return new TransactionToken(man.getTransaction(), null, REQUIRED, true);
-			}
-			return new TransactionToken(man.getTransaction(), null, REQUIRED);
-		}
+    @Override
+    public void finish(TransactionManager man, TransactionToken tranToken)
+        throws SystemException, InvalidTransactionException, IllegalStateException {
+      Transaction tran = tranToken.getSuspendedTransaction();
+      if (tran != null) {
+        man.resume(tran);
+      }
+    }
+  },
+  REQUIRED {
+    @Override
+    public TransactionToken begin(TransactionManager man) throws SystemException, NotSupportedException {
+      if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {
+        man.begin();
+        return new TransactionToken(man.getTransaction(), null, REQUIRED, true);
+      }
+      return new TransactionToken(man.getTransaction(), null, REQUIRED);
+    }
 
-		@Override
-		public void finish(TransactionManager man, TransactionToken tranToken) throws SystemException,
-		InvalidTransactionException, IllegalStateException, SecurityException, RollbackException,
-		HeuristicMixedException, HeuristicRollbackException {
+    @Override
+    public void finish(TransactionManager man, TransactionToken tranToken)
+        throws SystemException, InvalidTransactionException, IllegalStateException, SecurityException,
+        RollbackException, HeuristicMixedException, HeuristicRollbackException {
 
-			if (tranToken.isCompletionAllowed()) {
-				if (man.getStatus() == Status.STATUS_MARKED_ROLLBACK) {
-					man.rollback();
-				} else {
-					man.commit();
-				}
-			}
-		}
-	},
-	REQUIRESNEW
-	{
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException, NotSupportedException,
-		InvalidTransactionException, IllegalStateException
-		{
-			TransactionToken tranToken;
-			if (man.getStatus() == Status.STATUS_ACTIVE) {
-				tranToken = new TransactionToken(null, man.suspend(), REQUIRESNEW);
-			} else {
-				tranToken = new TransactionToken(null, null, REQUIRESNEW);
-			}
+      if (tranToken.isCompletionAllowed()) {
+        if (man.getStatus() == Status.STATUS_MARKED_ROLLBACK) {
+          man.rollback();
+        } else {
+          man.commit();
+        }
+      }
+    }
+  },
+  REQUIRESNEW {
+    @Override
+    public TransactionToken begin(TransactionManager man)
+        throws SystemException, NotSupportedException, InvalidTransactionException, IllegalStateException {
+      TransactionToken tranToken;
+      if (man.getStatus() == Status.STATUS_ACTIVE) {
+        tranToken = new TransactionToken(null, man.suspend(), REQUIRESNEW);
+      } else {
+        tranToken = new TransactionToken(null, null, REQUIRESNEW);
+      }
 
-			try {
-				man.begin();
-			} catch (SystemException e) {
-				man.resume(tranToken.getSuspendedTransaction());
-				throw e;
-			} catch (NotSupportedException e) {
-				man.resume(tranToken.getSuspendedTransaction());
-				throw e;
-			}
+      try {
+        man.begin();
+      } catch (SystemException e) {
+        man.resume(tranToken.getSuspendedTransaction());
+        throw e;
+      } catch (NotSupportedException e) {
+        man.resume(tranToken.getSuspendedTransaction());
+        throw e;
+      }
 
-			tranToken.setActiveTransaction(man.getTransaction());
-			tranToken.setCompletionAllowed(true);
+      tranToken.setActiveTransaction(man.getTransaction());
+      tranToken.setCompletionAllowed(true);
 
-			return tranToken;
-		}
+      return tranToken;
+    }
 
-		@Override
-		public void finish(TransactionManager man, TransactionToken tranToken) throws SystemException,
-		InvalidTransactionException, IllegalStateException, SecurityException, RollbackException,
-		HeuristicMixedException, HeuristicRollbackException
-		{
-			if (tranToken.isCompletionAllowed()) {
-				if (man.getStatus() == Status.STATUS_MARKED_ROLLBACK) {
-					man.rollback();
-				} else {
-					man.commit();
-				}
-			}
+    @Override
+    public void finish(TransactionManager man, TransactionToken tranToken)
+        throws SystemException, InvalidTransactionException, IllegalStateException, SecurityException,
+        RollbackException, HeuristicMixedException, HeuristicRollbackException {
+      if (tranToken.isCompletionAllowed()) {
+        if (man.getStatus() == Status.STATUS_MARKED_ROLLBACK) {
+          man.rollback();
+        } else {
+          man.commit();
+        }
+      }
 
-			Transaction tran = tranToken.getSuspendedTransaction();
-			if (tran != null) {
-				man.resume(tran);
-			}
-		}
-	},
-	SUPPORTS {
-		@Override
-		public TransactionToken begin(TransactionManager man) throws SystemException, NotSupportedException,
-		InvalidTransactionException, IllegalStateException
-		{
-			if (man.getStatus() == Status.STATUS_ACTIVE) {
-				return new TransactionToken(man.getTransaction(), null, SUPPORTS);
-			}
+      Transaction tran = tranToken.getSuspendedTransaction();
+      if (tran != null) {
+        man.resume(tran);
+      }
+    }
+  },
+  SUPPORTS {
+    @Override
+    public TransactionToken begin(TransactionManager man)
+        throws SystemException, NotSupportedException, InvalidTransactionException, IllegalStateException {
+      if (man.getStatus() == Status.STATUS_ACTIVE) {
+        return new TransactionToken(man.getTransaction(), null, SUPPORTS);
+      }
 
-			return new TransactionToken(null, null, SUPPORTS);
-		}
-	};
+      return new TransactionToken(null, null, SUPPORTS);
+    }
+  };
 
-	public static TransactionAttribute fromValue(String value) {
-		return valueOf(value.toUpperCase());
-	}
+  public static TransactionAttribute fromValue(String value) {
+    return valueOf(value.toUpperCase());
+  }
 
-	public TransactionToken begin(TransactionManager man) throws SystemException, NotSupportedException,
-		InvalidTransactionException, IllegalStateException {
+  public TransactionToken begin(TransactionManager man)
+      throws SystemException, NotSupportedException, InvalidTransactionException, IllegalStateException {
 
-		return null;
-	}
+    return null;
+  }
 
-	public void finish(TransactionManager man, TransactionToken tranToken) throws SystemException,
-		InvalidTransactionException, IllegalStateException, SecurityException, RollbackException,
-		HeuristicMixedException, HeuristicRollbackException {
+  public void finish(TransactionManager man, TransactionToken tranToken)
+      throws SystemException, InvalidTransactionException, IllegalStateException, SecurityException, RollbackException,
+      HeuristicMixedException, HeuristicRollbackException {
 
-	}
+  }
 }

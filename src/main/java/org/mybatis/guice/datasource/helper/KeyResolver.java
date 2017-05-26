@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,43 +25,43 @@ import static com.google.inject.name.Names.named;
 
 final class KeyResolver implements Provider<String> {
 
-    private final Key<String> key;
+  private final Key<String> key;
 
-    private final String defaultValue;
+  private final String defaultValue;
 
-    private final String toString;
+  private final String toString;
 
-    @Inject
-    private Injector injector;
+  @Inject
+  private Injector injector;
 
-    public KeyResolver(final String key, final String defaultValue) {
-        this.key = Key.get(String.class, named(key));
-        this.defaultValue = defaultValue;
-        toString = "${" + key + "}";
+  public KeyResolver(final String key, final String defaultValue) {
+    this.key = Key.get(String.class, named(key));
+    this.defaultValue = defaultValue;
+    toString = "${" + key + "}";
+  }
+
+  public void setInjector(Injector injector) {
+    this.injector = injector;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String get() {
+    try {
+      return injector.getInstance(key);
+    } catch (Throwable e) {
+      if (defaultValue != null) {
+        return defaultValue;
+      }
+      return toString;
     }
+  }
 
-    public void setInjector(Injector injector) {
-        this.injector = injector;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String get() {
-        try {
-            return injector.getInstance(key);
-        } catch (Throwable e) {
-            if (defaultValue != null) {
-                return defaultValue;
-            }
-            return toString;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return toString;
-    }
+  @Override
+  public String toString() {
+    return toString;
+  }
 
 }

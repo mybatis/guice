@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,21 +27,19 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  */
 public enum Isolation {
 
-    DEFAULT(null),
-    NONE(TransactionIsolationLevel.NONE),
-    READ_COMMITTED(TransactionIsolationLevel.READ_COMMITTED),
-    READ_UNCOMMITTED(TransactionIsolationLevel.READ_UNCOMMITTED),
-    REPEATABLE_READ(TransactionIsolationLevel.REPEATABLE_READ),
-    SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);
+  DEFAULT(null), NONE(TransactionIsolationLevel.NONE), READ_COMMITTED(
+      TransactionIsolationLevel.READ_COMMITTED), READ_UNCOMMITTED(
+          TransactionIsolationLevel.READ_UNCOMMITTED), REPEATABLE_READ(
+              TransactionIsolationLevel.REPEATABLE_READ), SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);
 
-    private final TransactionIsolationLevel transactionIsolationLevel;
+  private final TransactionIsolationLevel transactionIsolationLevel;
 
-    private Isolation(TransactionIsolationLevel transactionIsolationLevel) {
-        this.transactionIsolationLevel = transactionIsolationLevel;
-    }
+  private Isolation(TransactionIsolationLevel transactionIsolationLevel) {
+    this.transactionIsolationLevel = transactionIsolationLevel;
+  }
 
-    public TransactionIsolationLevel getTransactionIsolationLevel() {
-        return transactionIsolationLevel;
-    }
+  public TransactionIsolationLevel getTransactionIsolationLevel() {
+    return transactionIsolationLevel;
+  }
 
 }

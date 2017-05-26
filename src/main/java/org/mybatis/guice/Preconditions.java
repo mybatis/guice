@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,7 +57,8 @@ import java.util.NoSuchElementException;
  * @author Kevin Bourrillion
  */
 final class Preconditions {
-  private Preconditions() {}
+  private Preconditions() {
+  }
 
   /**
    * Ensures the truth of an expression involving one or more parameters to the
@@ -106,11 +107,9 @@ final class Preconditions {
    *     errorMessageTemplate} or {@code errorMessageArgs} is null (don't let
    *     this happen)
    */
-  public static void checkArgument(boolean expression,
-      String errorMessageTemplate, Object... errorMessageArgs) {
+  public static void checkArgument(boolean expression, String errorMessageTemplate, Object... errorMessageArgs) {
     if (!expression) {
-      throw new IllegalArgumentException(
-          format(errorMessageTemplate, errorMessageArgs));
+      throw new IllegalArgumentException(format(errorMessageTemplate, errorMessageArgs));
     }
   }
 
@@ -161,11 +160,9 @@ final class Preconditions {
    *     errorMessageTemplate} or {@code errorMessageArgs} is null (don't let
    *     this happen)
    */
-  public static void checkState(boolean expression,
-      String errorMessageTemplate, Object... errorMessageArgs) {
+  public static void checkState(boolean expression, String errorMessageTemplate, Object... errorMessageArgs) {
     if (!expression) {
-      throw new IllegalStateException(
-          format(errorMessageTemplate, errorMessageArgs));
+      throw new IllegalStateException(format(errorMessageTemplate, errorMessageArgs));
     }
   }
 
@@ -218,12 +215,10 @@ final class Preconditions {
    * @return the non-null reference that was validated
    * @throws NullPointerException if {@code reference} is null
    */
-  public static <T> T checkNotNull(T reference, String errorMessageTemplate,
-      Object... errorMessageArgs) {
+  public static <T> T checkNotNull(T reference, String errorMessageTemplate, Object... errorMessageArgs) {
     if (reference == null) {
       // If either of these parameters is null, the right thing happens anyway
-      throw new NullPointerException(
-          format(errorMessageTemplate, errorMessageArgs));
+      throw new NullPointerException(format(errorMessageTemplate, errorMessageArgs));
     }
     return reference;
   }
@@ -255,8 +250,7 @@ final class Preconditions {
    * @throws NullPointerException if {@code iterable} is null or contains at
    *     least one null element
    */
-  public static <T extends Iterable<?>> T checkContentsNotNull(
-      T iterable, Object errorMessage) {
+  public static <T extends Iterable<?>> T checkContentsNotNull(T iterable, Object errorMessage) {
     if (containsOrIsNull(iterable)) {
       throw new NullPointerException(String.valueOf(errorMessage));
     }
@@ -281,20 +275,19 @@ final class Preconditions {
    * @throws NullPointerException if {@code iterable} is null or contains at
    *     least one null element
    */
-  public static <T extends Iterable<?>> T checkContentsNotNull(T iterable,
-      String errorMessageTemplate, Object... errorMessageArgs) {
+  public static <T extends Iterable<?>> T checkContentsNotNull(T iterable, String errorMessageTemplate,
+      Object... errorMessageArgs) {
     if (containsOrIsNull(iterable)) {
-      throw new NullPointerException(
-          format(errorMessageTemplate, errorMessageArgs));
+      throw new NullPointerException(format(errorMessageTemplate, errorMessageArgs));
     }
     return iterable;
   }
-  
+
   private static boolean containsOrIsNull(Iterable<?> iterable) {
     if (iterable == null) {
       return true;
     }
-    
+
     if (iterable instanceof Collection) {
       Collection<?> collection = (Collection<?>) iterable;
       try {
@@ -345,12 +338,10 @@ final class Preconditions {
   public static void checkElementIndex(int index, int size, String desc) {
     checkArgument(size >= 0, "negative size: %s", size);
     if (index < 0) {
-      throw new IndexOutOfBoundsException(
-          format("%s (%s) must not be negative", desc, index));
+      throw new IndexOutOfBoundsException(format("%s (%s) must not be negative", desc, index));
     }
     if (index >= size) {
-      throw new IndexOutOfBoundsException(
-          format("%s (%s) must be less than size (%s)", desc, index, size));
+      throw new IndexOutOfBoundsException(format("%s (%s) must be less than size (%s)", desc, index, size));
     }
   }
 
@@ -386,12 +377,10 @@ final class Preconditions {
   public static void checkPositionIndex(int index, int size, String desc) {
     checkArgument(size >= 0, "negative size: %s", size);
     if (index < 0) {
-      throw new IndexOutOfBoundsException(format(
-          "%s (%s) must not be negative", desc, index));
+      throw new IndexOutOfBoundsException(format("%s (%s) must not be negative", desc, index));
     }
     if (index > size) {
-      throw new IndexOutOfBoundsException(format(
-          "%s (%s) must not be greater than size (%s)", desc, index, size));
+      throw new IndexOutOfBoundsException(format("%s (%s) must not be greater than size (%s)", desc, index, size));
     }
   }
 
@@ -413,8 +402,7 @@ final class Preconditions {
     checkPositionIndex(start, size, "start index");
     checkPositionIndex(end, size, "end index");
     if (end < start) {
-      throw new IndexOutOfBoundsException(format(
-          "end index (%s) must not be less than start index (%s)", end, start));
+      throw new IndexOutOfBoundsException(format("end index (%s) must not be less than start index (%s)", end, start));
     }
   }
 
@@ -433,8 +421,7 @@ final class Preconditions {
   // VisibleForTesting
   static String format(String template, Object... args) {
     // start substituting the arguments into the '%s' placeholders
-    StringBuilder builder = new StringBuilder(
-        template.length() + 16 * args.length);
+    StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
     int templateStart = 0;
     int i = 0;
     while (i < args.length) {

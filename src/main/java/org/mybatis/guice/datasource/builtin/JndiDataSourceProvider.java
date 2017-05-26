@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,59 +30,59 @@ import java.util.Properties;
  */
 public final class JndiDataSourceProvider implements Provider<DataSource> {
 
-    /**
-     *
-     */
-    private final Properties properties = new Properties();
+  /**
+   *
+   */
+  private final Properties properties = new Properties();
 
-    /**
-     * Creates a new JndiDataSourceProvider with the specified
-     * JNDI data source.
-     *
-     * @param dataSource the JNDI datasource name (fully qualified)
-     */
-    @Inject
-    public JndiDataSourceProvider(@Named("jndi.dataSource") final String dataSource) {
-        properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
-    }
+  /**
+   * Creates a new JndiDataSourceProvider with the specified
+   * JNDI data source.
+   *
+   * @param dataSource the JNDI datasource name (fully qualified)
+   */
+  @Inject
+  public JndiDataSourceProvider(@Named("jndi.dataSource") final String dataSource) {
+    properties.setProperty(JndiDataSourceFactory.DATA_SOURCE, dataSource);
+  }
 
-    /**
-     *
-     *
-     * @param initialContext
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setInitialContext(@Named("jndi.initialContext") final String initialContext) {
-        properties.setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, initialContext);
-    }
+  /**
+   *
+   *
+   * @param initialContext
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setInitialContext(@Named("jndi.initialContext") final String initialContext) {
+    properties.setProperty(JndiDataSourceFactory.INITIAL_CONTEXT, initialContext);
+  }
 
-    /**
-    *
-    *
-    * @param initialContextFactory
-    */
-    @com.google.inject.Inject(optional = true)
-    public void setEnvInitialContextFactory(@Named(Context.INITIAL_CONTEXT_FACTORY) final String initialContextFactory) {
-        properties.setProperty(JndiDataSourceFactory.ENV_PREFIX+Context.INITIAL_CONTEXT_FACTORY, initialContextFactory);
-    }
+  /**
+  *
+  *
+  * @param initialContextFactory
+  */
+  @com.google.inject.Inject(optional = true)
+  public void setEnvInitialContextFactory(@Named(Context.INITIAL_CONTEXT_FACTORY) final String initialContextFactory) {
+    properties.setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.INITIAL_CONTEXT_FACTORY, initialContextFactory);
+  }
 
-    /**
-    *
-    *
-    * @param providerUrl
-    */
-    @com.google.inject.Inject(optional = true)
-    public void setEnvProviderURL(@Named(Context.PROVIDER_URL) final String providerUrl) {
-        properties.setProperty(JndiDataSourceFactory.ENV_PREFIX+Context.PROVIDER_URL, providerUrl);
-    }
+  /**
+  *
+  *
+  * @param providerUrl
+  */
+  @com.google.inject.Inject(optional = true)
+  public void setEnvProviderURL(@Named(Context.PROVIDER_URL) final String providerUrl) {
+    properties.setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.PROVIDER_URL, providerUrl);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataSource get() {
-        JndiDataSourceFactory factory = new JndiDataSourceFactory();
-        factory.setProperties(properties);
-        return factory.getDataSource();
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public DataSource get() {
+    JndiDataSourceFactory factory = new JndiDataSourceFactory();
+    factory.setProperties(properties);
+    return factory.getDataSource();
+  }
 }

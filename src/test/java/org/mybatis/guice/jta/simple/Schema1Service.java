@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,28 +23,28 @@ import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.Transactional.TxType;
 
 public class Schema1Service {
-    @Inject
-    private Schema1Mapper mapper;
-    
-    @Transactional
-    public void createSchema1() {
-        mapper.createSchema1Step1();
-        mapper.createSchema1Step2();
-        mapper.createSchema1Step3();
-    }
-    
-    @Transactional
-    public List<Name> getAllNames() {
-        return mapper.getAllNames();
-    }
+  @Inject
+  private Schema1Mapper mapper;
 
-    @Transactional
-    public int insertName(Name name) {
-        return mapper.insertName(name);
-    }
+  @Transactional
+  public void createSchema1() {
+    mapper.createSchema1Step1();
+    mapper.createSchema1Step2();
+    mapper.createSchema1Step3();
+  }
 
-    @Transactional(TxType.REQUIRES_NEW)
-    public int insertNameWithNewTransaction(Name name) {
-        return mapper.insertName(name);
-    }
+  @Transactional
+  public List<Name> getAllNames() {
+    return mapper.getAllNames();
+  }
+
+  @Transactional
+  public int insertName(Name name) {
+    return mapper.insertName(name);
+  }
+
+  @Transactional(TxType.REQUIRES_NEW)
+  public int insertNameWithNewTransaction(Name name) {
+    return mapper.insertName(name);
+  }
 }

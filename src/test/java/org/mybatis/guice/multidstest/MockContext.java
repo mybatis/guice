@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,19 +23,19 @@ import javax.naming.NamingException;
 
 public class MockContext extends InitialContext {
 
-    private static Map<String, Object> bindings = new HashMap<String, Object>();
+  private static Map<String, Object> bindings = new HashMap<String, Object>();
 
-    public MockContext(boolean lazy) throws NamingException {
-        super(lazy);
-    }
+  public MockContext(boolean lazy) throws NamingException {
+    super(lazy);
+  }
 
-    @Override
-    public Object lookup(String name) throws NamingException {
-        return bindings.get(name);
-    }
+  @Override
+  public Object lookup(String name) throws NamingException {
+    return bindings.get(name);
+  }
 
-    @Override
-    public void bind(String name, Object obj) throws NamingException {
-        bindings.put(name, obj);
-    }
+  @Override
+  public void bind(String name, Object obj) throws NamingException {
+    bindings.put(name, obj);
+  }
 }

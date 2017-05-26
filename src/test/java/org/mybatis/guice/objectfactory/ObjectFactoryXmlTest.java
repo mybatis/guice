@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,45 +31,45 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class ObjectFactoryXmlTest {
-    @Test
-    public void objectFactoryInjection() {
-        Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
-            @Override
-            protected void initialize() {
-                final Properties myBatisProperties = new Properties();
-                myBatisProperties.setProperty("mybatis.environment.id", "test");
-                myBatisProperties.setProperty("JDBC.username", "sa");
-                myBatisProperties.setProperty("JDBC.password", "");
-                myBatisProperties.setProperty("JDBC.autoCommit", "false");
-                bindProperties(binder(), myBatisProperties);
-                setClassPathResource("org/mybatis/guice/objectfactory/objectfactory.xml");
-            }
-        });
-        SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
-        ObjectFactory objectFactory = factory.getConfiguration().getObjectFactory();
-        assertEquals(CustomObjectFactory.class, objectFactory.getClass());
-        CustomObjectFactory customObjectFactory = (CustomObjectFactory)objectFactory;
-        assertEquals(CustomObject.class, customObjectFactory.getCustomObject().getClass());
-    }
+  @Test
+  public void objectFactoryInjection() {
+    Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
+      @Override
+      protected void initialize() {
+        final Properties myBatisProperties = new Properties();
+        myBatisProperties.setProperty("mybatis.environment.id", "test");
+        myBatisProperties.setProperty("JDBC.username", "sa");
+        myBatisProperties.setProperty("JDBC.password", "");
+        myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        bindProperties(binder(), myBatisProperties);
+        setClassPathResource("org/mybatis/guice/objectfactory/objectfactory.xml");
+      }
+    });
+    SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
+    ObjectFactory objectFactory = factory.getConfiguration().getObjectFactory();
+    assertEquals(CustomObjectFactory.class, objectFactory.getClass());
+    CustomObjectFactory customObjectFactory = (CustomObjectFactory) objectFactory;
+    assertEquals(CustomObject.class, customObjectFactory.getCustomObject().getClass());
+  }
 
-    @Test
-    public void objectWrapperFactoryInjection() {
-        Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
-            @Override
-            protected void initialize() {
-                final Properties myBatisProperties = new Properties();
-                myBatisProperties.setProperty("mybatis.environment.id", "test");
-                myBatisProperties.setProperty("JDBC.username", "sa");
-                myBatisProperties.setProperty("JDBC.password", "");
-                myBatisProperties.setProperty("JDBC.autoCommit", "false");
-                bindProperties(binder(), myBatisProperties);
-                setClassPathResource("org/mybatis/guice/objectfactory/objectwrapperfactory.xml");
-            }
-        });
-        SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
-        ObjectWrapperFactory objectWrapperFactory = factory.getConfiguration().getObjectWrapperFactory();
-        assertEquals(CustomObjectWrapperFactory.class, objectWrapperFactory.getClass());
-        CustomObjectWrapperFactory customObjectWrapperFactory = (CustomObjectWrapperFactory)objectWrapperFactory;
-        assertEquals(CustomObject.class, customObjectWrapperFactory.getCustomObject().getClass());
-    }
+  @Test
+  public void objectWrapperFactoryInjection() {
+    Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
+      @Override
+      protected void initialize() {
+        final Properties myBatisProperties = new Properties();
+        myBatisProperties.setProperty("mybatis.environment.id", "test");
+        myBatisProperties.setProperty("JDBC.username", "sa");
+        myBatisProperties.setProperty("JDBC.password", "");
+        myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        bindProperties(binder(), myBatisProperties);
+        setClassPathResource("org/mybatis/guice/objectfactory/objectwrapperfactory.xml");
+      }
+    });
+    SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
+    ObjectWrapperFactory objectWrapperFactory = factory.getConfiguration().getObjectWrapperFactory();
+    assertEquals(CustomObjectWrapperFactory.class, objectWrapperFactory.getClass());
+    CustomObjectWrapperFactory customObjectWrapperFactory = (CustomObjectWrapperFactory) objectWrapperFactory;
+    assertEquals(CustomObject.class, customObjectWrapperFactory.getCustomObject().getClass());
+  }
 }

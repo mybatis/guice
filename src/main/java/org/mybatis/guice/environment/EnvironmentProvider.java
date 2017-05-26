@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,37 +30,37 @@ import javax.sql.DataSource;
 @Singleton
 public final class EnvironmentProvider implements Provider<Environment> {
 
-    /**
-     * The environment id.
-     */
-    @Inject
-    @Named("mybatis.environment.id")
-    private String id;
+  /**
+   * The environment id.
+   */
+  @Inject
+  @Named("mybatis.environment.id")
+  private String id;
 
-    @Inject
-    private TransactionFactory transactionFactory;
+  @Inject
+  private TransactionFactory transactionFactory;
 
-    @Inject
-    private DataSource dataSource;
+  @Inject
+  private DataSource dataSource;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setTransactionFactory(TransactionFactory transactionFactory) {
-        this.transactionFactory = transactionFactory;
-    }
+  public void setTransactionFactory(TransactionFactory transactionFactory) {
+    this.transactionFactory = transactionFactory;
+  }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+  public void setDataSource(DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Environment get() {
-        return new Environment(id, transactionFactory, dataSource);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Environment get() {
+    return new Environment(id, transactionFactory, dataSource);
+  }
 
 }

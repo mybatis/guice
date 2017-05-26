@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,33 +27,33 @@ import static org.apache.ibatis.session.SqlSessionManager.newInstance;
 @Singleton
 public final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
 
-    private SqlSessionManager sqlSessionManager;
+  private SqlSessionManager sqlSessionManager;
 
-    /**
-     * @since 1.0.1
-     */
-    public SqlSessionManagerProvider() {
-        // do nothing
-    }
+  /**
+   * @since 1.0.1
+   */
+  public SqlSessionManagerProvider() {
+    // do nothing
+  }
 
-    @Deprecated
-    public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionManager = newInstance(sqlSessionFactory);
-    }
+  @Deprecated
+  public SqlSessionManagerProvider(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionManager = newInstance(sqlSessionFactory);
+  }
 
-    /**
-     *
-     * @param sqlSessionFactory
-     * @since 1.0.1
-     */
-    @Inject
-    public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionManager = newInstance(sqlSessionFactory);
-    }
+  /**
+   *
+   * @param sqlSessionFactory
+   * @since 1.0.1
+   */
+  @Inject
+  public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
+    this.sqlSessionManager = newInstance(sqlSessionFactory);
+  }
 
-    @Override
-    public SqlSessionManager get() {
-        return sqlSessionManager;
-    }
+  @Override
+  public SqlSessionManager get() {
+    return sqlSessionManager;
+  }
 
 }

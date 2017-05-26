@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import org.junit.runner.RunWith;
 @RunWith(XMLAlternateEnvironmentGuiceTestRunner.class)
 public final class XMLAlternateEnvironmentMyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 
-    @Inject
-    private SqlSessionFactory sqlSessionFactory;
+  @Inject
+  private SqlSessionFactory sqlSessionFactory;
 
-    @Test
-    public void testEnvironmentId() throws Exception {
-        assert "test2".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
-    }
+  @Test
+  public void testEnvironmentId() throws Exception {
+    assert "test2".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
+  }
 }

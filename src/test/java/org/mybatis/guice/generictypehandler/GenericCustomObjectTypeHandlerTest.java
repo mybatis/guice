@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,29 +33,29 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class GenericCustomObjectTypeHandlerTest {
-    @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void genericTypeHandler() {
-        Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
-            @Override
-            protected void initialize() {
-                final Properties myBatisProperties = new Properties();
-                myBatisProperties.setProperty("mybatis.environment.id", "test");
-                myBatisProperties.setProperty("JDBC.username", "sa");
-                myBatisProperties.setProperty("JDBC.password", "");
-                myBatisProperties.setProperty("JDBC.autoCommit", "false");
-                bindProperties(binder(), myBatisProperties);
-                bindDataSourceProviderType(PooledDataSourceProvider.class);
-                bindTransactionFactoryType(JdbcTransactionFactory.class);
-                Class handlerClass = (Class)GenericCustomObjectTypeHandler.class;
-                handleType(CustomObject.class).withProvidedTypeHandler(handlerClass);
-            }
-        });
-        SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
-        TypeHandler<?> typeHandler = factory.getConfiguration().getTypeHandlerRegistry().getTypeHandler(CustomObject.class);
-        assertEquals(GenericCustomObjectTypeHandler.class, typeHandler.getClass());
-        GenericCustomObjectTypeHandler genericEnumTypeHandler = (GenericCustomObjectTypeHandler)typeHandler;
-        assertEquals(CustomObject.class, genericEnumTypeHandler.getType());
-        assertNotNull(genericEnumTypeHandler.getInjectedObject());
-    }
+  @Test
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public void genericTypeHandler() {
+    Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        final Properties myBatisProperties = new Properties();
+        myBatisProperties.setProperty("mybatis.environment.id", "test");
+        myBatisProperties.setProperty("JDBC.username", "sa");
+        myBatisProperties.setProperty("JDBC.password", "");
+        myBatisProperties.setProperty("JDBC.autoCommit", "false");
+        bindProperties(binder(), myBatisProperties);
+        bindDataSourceProviderType(PooledDataSourceProvider.class);
+        bindTransactionFactoryType(JdbcTransactionFactory.class);
+        Class handlerClass = (Class) GenericCustomObjectTypeHandler.class;
+        handleType(CustomObject.class).withProvidedTypeHandler(handlerClass);
+      }
+    });
+    SqlSessionFactory factory = injector.getInstance(SqlSessionFactory.class);
+    TypeHandler<?> typeHandler = factory.getConfiguration().getTypeHandlerRegistry().getTypeHandler(CustomObject.class);
+    assertEquals(GenericCustomObjectTypeHandler.class, typeHandler.getClass());
+    GenericCustomObjectTypeHandler genericEnumTypeHandler = (GenericCustomObjectTypeHandler) typeHandler;
+    assertEquals(CustomObject.class, genericEnumTypeHandler.getType());
+    assertNotNull(genericEnumTypeHandler.getInjectedObject());
+  }
 }

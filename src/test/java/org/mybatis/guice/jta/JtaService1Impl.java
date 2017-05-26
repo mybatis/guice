@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2015 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,27 +25,29 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.guice.transactional.Transactional;
 
 public class JtaService1Impl {
-    private final Log log = LogFactory.getLog(getClass());
-    
-	@Inject JtaMapper mapper;
-	@Inject SqlSessionFactory factory;
+  private final Log log = LogFactory.getLog(getClass());
 
-	public JtaService1Impl() {
-	}
-	
-	@Transactional
-    public int insertTable(TableRow row) {
-		log.debug(getName() + " insertTable");
-    	return mapper.insertTable(row);
-    }
+  @Inject
+  JtaMapper mapper;
+  @Inject
+  SqlSessionFactory factory;
 
-	@Transactional
-    public List<TableRow> selectAllTable() {
-		log.debug(getName() + " selectAllTable");
-    	return mapper.selectAllTable();
-    }
-	
-	public String getName() {
-		return factory.getConfiguration().getEnvironment().getId();
-	}
+  public JtaService1Impl() {
+  }
+
+  @Transactional
+  public int insertTable(TableRow row) {
+    log.debug(getName() + " insertTable");
+    return mapper.insertTable(row);
+  }
+
+  @Transactional
+  public List<TableRow> selectAllTable() {
+    log.debug(getName() + " selectAllTable");
+    return mapper.selectAllTable();
+  }
+
+  public String getName() {
+    return factory.getConfiguration().getEnvironment().getId();
+  }
 }

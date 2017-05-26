@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,83 +25,51 @@ import java.util.List;
 @Singleton
 public class ContactMapperClient {
 
-    @Inject
-    private ContactMapper contactMapper;
+  @Inject
+  private ContactMapper contactMapper;
 
-    public void setContactMapper(ContactMapper contactMapper) {
-        this.contactMapper = contactMapper;
-    }
+  public void setContactMapper(ContactMapper contactMapper) {
+    this.contactMapper = contactMapper;
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "Impossible to insert %s contact"
-    )
-    public void brokenInsert(final Contact contact) throws CustomException {
-        this.contactMapper.brokenAdd(contact);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "Impossible to insert %s contact")
+  public void brokenInsert(final Contact contact) throws CustomException {
+    this.contactMapper.brokenAdd(contact);
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "Impossible to insert %s contact"
-    )
-    public void insert(final Contact contact) throws CustomException {
-        this.contactMapper.add(contact);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "Impossible to insert %s contact")
+  public void insert(final Contact contact) throws CustomException {
+    this.contactMapper.add(contact);
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "Impossible to delete contact with ID %s"
-    )
-    public void delete(final Integer id) throws CustomException {
-        this.contactMapper.delete(id);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "Impossible to delete contact with ID %s")
+  public void delete(final Integer id) throws CustomException {
+    this.contactMapper.delete(id);
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "An error occurred when selecting contact with ID %s"
-    )
-    public Contact selectById(final Integer id) throws CustomException {
-        return this.contactMapper.getById(id);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "An error occurred when selecting contact with ID %s")
+  public Contact selectById(final Integer id) throws CustomException {
+    return this.contactMapper.getById(id);
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "An error occurred when selecting contact with ID %s"
-    )
-    public Contact selectByIdWithTypeHandler(final Integer id) throws CustomException {
-        return this.contactMapper.getByIdWithTypeHandler(id);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "An error occurred when selecting contact with ID %s")
+  public Contact selectByIdWithTypeHandler(final Integer id) throws CustomException {
+    return this.contactMapper.getByIdWithTypeHandler(id);
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "An error occurred when selecting all stored contacts"
-    )
-    public List<Contact> getAll() throws CustomException {
-        return this.contactMapper.selectAll();
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "An error occurred when selecting all stored contacts")
+  public List<Contact> getAll() throws CustomException {
+    return this.contactMapper.selectAll();
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "An error occurred when selecting all stored contacts using a database id"
-    )
-    public List<Contact> getAllWithDatabaseId() throws CustomException {
-        return this.contactMapper.selectAllWithDatabaseId();
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "An error occurred when selecting all stored contacts using a database id")
+  public List<Contact> getAllWithDatabaseId() throws CustomException {
+    return this.contactMapper.selectAllWithDatabaseId();
+  }
 
-    @Transactional(
-        isolation = Isolation.SERIALIZABLE,
-        rethrowExceptionsAs = CustomException.class,
-        exceptionMessage = "An error occurred when updating contact %s"
-    )
-    public void update(final Contact contact) throws CustomException {
-        this.contactMapper.update(contact);
-    }
+  @Transactional(isolation = Isolation.SERIALIZABLE, rethrowExceptionsAs = CustomException.class, exceptionMessage = "An error occurred when updating contact %s")
+  public void update(final Contact contact) throws CustomException {
+    this.contactMapper.update(contact);
+  }
 
 }

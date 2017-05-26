@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2016 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,23 +22,15 @@ import org.apache.ibatis.annotations.Select;
 
 public interface NestedTxMapper {
 
-    @Insert ({
-        "insert into table1 (id, name) values (#{id}, #{name})"
-    })
-    int insertTable1(TableRow row);
-    
-    @Select ({
-        "select * from table1"
-    })
-    List<TableRow> selectAllTable1();
+  @Insert({ "insert into table1 (id, name) values (#{id}, #{name})" })
+  int insertTable1(TableRow row);
 
-    @Insert ({
-        "insert into table2 (id, name) values (#{id}, #{name})"
-    })
-    int insertTable2(TableRow row);
+  @Select({ "select * from table1" })
+  List<TableRow> selectAllTable1();
 
-    @Select ({
-        "select * from table2"
-    })
-    List<TableRow> selectAllTable2();
+  @Insert({ "insert into table2 (id, name) values (#{id}, #{name})" })
+  int insertTable2(TableRow row);
+
+  @Select({ "select * from table2" })
+  List<TableRow> selectAllTable2();
 }
