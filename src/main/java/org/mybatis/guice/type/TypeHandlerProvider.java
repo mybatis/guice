@@ -15,17 +15,17 @@
  */
 package org.mybatis.guice.type;
 
-import java.lang.reflect.Constructor;
-
-import org.apache.ibatis.type.TypeException;
-import org.apache.ibatis.type.TypeHandler;
-
 import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 
+import java.lang.reflect.Constructor;
+
 import javax.inject.Provider;
+
+import org.apache.ibatis.type.TypeException;
+import org.apache.ibatis.type.TypeHandler;
 
 /**
  * A generic MyBatis type provider.

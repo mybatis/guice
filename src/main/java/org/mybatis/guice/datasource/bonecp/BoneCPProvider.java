@@ -18,12 +18,13 @@ package org.mybatis.guice.datasource.bonecp;
 import com.jolbox.bonecp.BoneCPDataSource;
 import com.jolbox.bonecp.hooks.ConnectionHook;
 
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Provides the BoneCP DataSource.
@@ -212,9 +213,6 @@ public final class BoneCPProvider implements Provider<DataSource> {
     dataSource.setUsername(username);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     return dataSource;

@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
+
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Module;
-
-import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
 
 /**
  * Helper to bind <code>JDBC.driver</code> and <code>JDBC.url</code> properties.

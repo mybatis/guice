@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,16 +23,14 @@ import javax.inject.Provider;
 import javax.naming.Context;
 import javax.sql.DataSource;
 
-import java.util.Properties;
+import org.apache.ibatis.datasource.jndi.JndiDataSourceFactory;
 
 /**
  * Provides the myBatis built-in JndiDataSourceFactory.
  */
 public final class JndiDataSourceProvider implements Provider<DataSource> {
 
-  /**
-   *
-   */
+  /** The properties. */
   private final Properties properties = new Properties();
 
   /**
@@ -47,9 +45,9 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the initial context.
    *
-   *
-   * @param initialContext
+   * @param initialContext the new initial context
    */
   @com.google.inject.Inject(optional = true)
   public void setInitialContext(@Named("jndi.initialContext") final String initialContext) {
@@ -57,28 +55,25 @@ public final class JndiDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
-  *
-  *
-  * @param initialContextFactory
-  */
+   * Sets the env initial context factory.
+   *
+   * @param initialContextFactory the new env initial context factory
+   */
   @com.google.inject.Inject(optional = true)
   public void setEnvInitialContextFactory(@Named(Context.INITIAL_CONTEXT_FACTORY) final String initialContextFactory) {
     properties.setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.INITIAL_CONTEXT_FACTORY, initialContextFactory);
   }
 
   /**
-  *
-  *
-  * @param providerUrl
-  */
+   * Sets the env provider URL.
+   *
+   * @param providerUrl the new env provider URL
+   */
   @com.google.inject.Inject(optional = true)
   public void setEnvProviderURL(@Named(Context.PROVIDER_URL) final String providerUrl) {
     properties.setProperty(JndiDataSourceFactory.ENV_PREFIX + Context.PROVIDER_URL, providerUrl);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     JndiDataSourceFactory factory = new JndiDataSourceFactory();

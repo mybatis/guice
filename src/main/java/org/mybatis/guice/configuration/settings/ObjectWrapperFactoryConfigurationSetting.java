@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.configuration.settings;
 
-import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
-import org.apache.ibatis.session.Configuration;
-
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
+
+import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
+import org.apache.ibatis.session.Configuration;
 
 public class ObjectWrapperFactoryConfigurationSetting implements Provider<ConfigurationSetting> {
 

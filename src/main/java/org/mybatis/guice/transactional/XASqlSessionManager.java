@@ -50,7 +50,6 @@ public class XASqlSessionManager implements XAResource {
     id = sqlSessionManager.getConfiguration().getEnvironment().getId();
   }
 
-  //@Override
   public String getId() {
     return id;
   }
@@ -99,75 +98,76 @@ public class XASqlSessionManager implements XAResource {
     }
   }
 
-  //@Override
   @Override
   public int getTransactionTimeout() throws XAException {
     return transactionTimeout;
   }
 
-  //@Override
   @Override
   public boolean setTransactionTimeout(int second) throws XAException {
     transactionTimeout = second;
     return true;
   }
 
-  //@Override
   @Override
   public void forget(Xid xid) throws XAException {
   }
 
-  //@Override
   @Override
   public Xid[] recover(int flags) throws XAException {
     return new Xid[0];
   }
 
-  //@Override
   @Override
   public boolean isSameRM(XAResource xares) throws XAException {
     return this == xares;
   }
 
-  //@Override
   @Override
   public void start(Xid xid, int flag) throws XAException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(
           id + ": call start old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
+    }
 
-    if (flag != XAResource.TMNOFLAGS && flag != XAResource.TMJOIN)
+    if (flag != XAResource.TMNOFLAGS && flag != XAResource.TMJOIN) {
       throw new MyBatisXAException(id + ": unsupported start flag " + decodeXAResourceFlag(flag),
           XAException.XAER_RMERR);
-    if (xid == null)
+    }
+
+    if (xid == null) {
       throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
+    }
 
     if (state == NO_TX) {
-      if (this.xid != null)
+      if (this.xid != null) {
         throw new MyBatisXAException(id + ": resource already started on XID " + this.xid, XAException.XAER_PROTO);
-      else {
-        if (flag == XAResource.TMJOIN)
+      } else {
+        if (flag == XAResource.TMJOIN) {
           throw new MyBatisXAException(id + ": resource not yet started", XAException.XAER_PROTO);
-        else {
-          if (log.isDebugEnabled())
+        } else {
+          if (log.isDebugEnabled()) {
             log.debug(id + ": OK to start, old state=" + xlatedState() + ", XID=" + xid + ", flag="
                 + decodeXAResourceFlag(flag));
+          }
           this.xid = xid;
         }
       }
     } else if (state == STARTED) {
       throw new MyBatisXAException(id + ": resource already started on XID " + this.xid, XAException.XAER_PROTO);
     } else if (state == ENDED) {
-      if (flag == XAResource.TMNOFLAGS)
+      if (flag == XAResource.TMNOFLAGS) {
         throw new MyBatisXAException(id + ": resource already registered XID " + this.xid, XAException.XAER_DUPID);
-      else {
+      } else {
         if (xid.equals(this.xid)) {
-          if (log.isDebugEnabled())
+          if (log.isDebugEnabled()) {
             log.debug(id + ": OK to join, old state=" + xlatedState() + ", XID=" + xid + ", flag="
                 + decodeXAResourceFlag(flag));
-        } else
+          }
+        } else {
           throw new MyBatisXAException(id + ": resource already started on XID " + this.xid
               + " - cannot start it on more than one XID at a time", XAException.XAER_RMERR);
+        }
       }
     } else if (state == PREPARED) {
       throw new MyBatisXAException(id + ": resource already prepared on XID " + this.xid, XAException.XAER_PROTO);
@@ -177,29 +177,34 @@ public class XASqlSessionManager implements XAResource {
     parentSuspend(xid);
   }
 
-  //@Override
   @Override
   public void end(Xid xid, int flag) throws XAException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(
           id + ": call end old state=" + xlatedState() + ", XID=" + xid + " and flag " + decodeXAResourceFlag(flag));
+    }
 
-    if (flag != XAResource.TMSUCCESS && flag != XAResource.TMFAIL)
+    if (flag != XAResource.TMSUCCESS && flag != XAResource.TMFAIL) {
       throw new MyBatisXAException(id + ": unsupported end flag " + decodeXAResourceFlag(flag), XAException.XAER_RMERR);
-    if (xid == null)
+    }
+
+    if (xid == null) {
       throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
+    }
 
     if (state == NO_TX) {
       throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
     } else if (state == STARTED) {
       if (this.xid.equals(xid)) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug(
               id + ": OK to end, old state=" + xlatedState() + ", XID=" + xid + ", flag=" + decodeXAResourceFlag(flag));
-      } else
+        }
+      } else {
         throw new MyBatisXAException(
             id + ": resource already started on XID " + this.xid + " - cannot end it on another XID " + xid,
             XAException.XAER_PROTO);
+      }
     } else if (state == ENDED) {
       throw new MyBatisXAException(id + ": resource already ended on XID " + xid, XAException.XAER_PROTO);
     } else if (state == PREPARED) {
@@ -208,22 +213,24 @@ public class XASqlSessionManager implements XAResource {
     }
 
     if (flag == XAResource.TMFAIL) {
-      // Rollback transaction. After call method end() call medod roolback()
-      if (log.isDebugEnabled())
+      // Rollback transaction. After call method end() call method rollback()
+      if (log.isDebugEnabled()) {
         log.debug(id + ": after end TMFAIL reset state to ENDED and roolback");
+      }
     }
 
     this.state = ENDED;
   }
 
-  //@Override
   @Override
   public int prepare(Xid xid) throws XAException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(id + ": call prepare old state=" + xlatedState() + ", XID=" + xid);
+    }
 
-    if (xid == null)
+    if (xid == null) {
       throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
+    }
 
     if (state == NO_TX) {
       throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
@@ -231,12 +238,14 @@ public class XASqlSessionManager implements XAResource {
       throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
     } else if (state == ENDED) {
       if (this.xid.equals(xid)) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug(id + ": OK to prepare, old state=" + xlatedState() + ", XID=" + xid);
-      } else
+        }
+      } else {
         throw new MyBatisXAException(
             id + ": resource already started on XID " + this.xid + " - cannot prepare it on another XID " + xid,
             XAException.XAER_PROTO);
+      }
     } else if (state == PREPARED) {
       throw new MyBatisXAException(id + ": resource already prepared on XID " + this.xid, XAException.XAER_PROTO);
     }
@@ -245,14 +254,15 @@ public class XASqlSessionManager implements XAResource {
     return XAResource.XA_OK;
   }
 
-  //@Override
   @Override
   public void commit(Xid xid, boolean onePhase) throws XAException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(id + ": call commit old state=" + xlatedState() + ", XID=" + xid + " onePhase is " + onePhase);
+    }
 
-    if (xid == null)
+    if (xid == null) {
       throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
+    }
 
     if (state == NO_TX) {
       throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
@@ -260,42 +270,49 @@ public class XASqlSessionManager implements XAResource {
       throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
     } else if (state == ENDED) {
       if (onePhase) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug(id + ": OK to commit with 1PC, old state=" + xlatedState() + ", XID=" + xid);
-      } else
+        }
+      } else {
         throw new MyBatisXAException(id + ": resource never prepared on XID " + xid, XAException.XAER_PROTO);
+      }
     } else if (state == PREPARED) {
       if (!onePhase) {
         if (this.xid.equals(xid)) {
-          if (log.isDebugEnabled())
+          if (log.isDebugEnabled()) {
             log.debug(id + ": OK to commit, old state=" + xlatedState() + ", XID=" + xid);
-        } else
+          }
+        } else {
           throw new MyBatisXAException(
               id + ": resource already started on XID " + this.xid + " - cannot commit it on another XID " + xid,
               XAException.XAER_PROTO);
-      } else
+        }
+      } else {
         throw new MyBatisXAException(id + ": cannot commit in one phase as resource has been prepared on XID " + xid,
             XAException.XAER_PROTO);
+      }
     }
 
     try {
       parentResume(xid);
     } finally {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug(id + ": after commit reset state to NO_TX");
+      }
       this.state = NO_TX;
       this.xid = null;
     }
   }
 
-  //@Override
   @Override
   public void rollback(Xid xid) throws XAException {
-    if (log.isDebugEnabled())
+    if (log.isDebugEnabled()) {
       log.debug(id + ": call roolback old state=" + xlatedState() + ", XID=" + xid);
+    }
 
-    if (xid == null)
+    if (xid == null) {
       throw new MyBatisXAException(id + ": XID cannot be null", XAException.XAER_INVAL);
+    }
 
     if (state == NO_TX) {
       throw new MyBatisXAException(id + ": resource never started on XID " + xid, XAException.XAER_PROTO);
@@ -303,15 +320,18 @@ public class XASqlSessionManager implements XAResource {
       throw new MyBatisXAException(id + ": resource never ended on XID " + xid, XAException.XAER_PROTO);
     } else if (state == ENDED) {
       if (this.xid.equals(xid)) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
           log.debug(id + ": OK to rollback, old state=" + xlatedState() + ", XID=" + xid);
-      } else
+        }
+      } else {
         throw new MyBatisXAException(
             id + ": resource already started on XID " + this.xid + " - cannot roll it back on another XID " + xid,
             XAException.XAER_PROTO);
+      }
     } else if (state == PREPARED) {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug(id + ": rollback reset state from PREPARED to NO_TX");
+      }
       this.state = NO_TX;
       throw new MyBatisXAException(id + ": resource committed during prepare on XID " + this.xid,
           XAException.XA_HEURCOM);
@@ -320,8 +340,9 @@ public class XASqlSessionManager implements XAResource {
     try {
       parentResume(xid);
     } finally {
-      if (log.isDebugEnabled())
+      if (log.isDebugEnabled()) {
         log.debug(id + ": after rollback reset state to NO_TX");
+      }
       this.state = NO_TX;
       this.xid = null;
     }
@@ -396,15 +417,22 @@ public class XASqlSessionManager implements XAResource {
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+
+      if (getClass() != obj.getClass()) {
         return false;
+      }
+
       GlobalKey other = (GlobalKey) obj;
-      if (!Arrays.equals(globalId, other.globalId))
+      if (!Arrays.equals(globalId, other.globalId)) {
         return false;
+      }
       return true;
     }
 
@@ -513,8 +541,9 @@ public class XASqlSessionManager implements XAResource {
     }
 
     void parentResume(String id) {
-      if (count > 0)
+      if (count > 0) {
         count--;
+      }
 
       if (isFirst()) {
         if (log.isDebugEnabled()) {

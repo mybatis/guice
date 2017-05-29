@@ -42,6 +42,7 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 
   @Inject
   private TransactionManager manager;
+
   @Inject
   private Provider<XAResource> xaResourceProvider;
 
@@ -72,18 +73,19 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 
     if (manager != null) {
       TxType txType = transactional.value();
-      if (TxType.REQUIRED.equals(txType))
+      if (TxType.REQUIRED.equals(txType)) {
         attribute = TransactionAttribute.REQUIRED;
-      else if (TxType.REQUIRES_NEW.equals(txType))
+      } else if (TxType.REQUIRES_NEW.equals(txType)) {
         attribute = TransactionAttribute.REQUIRESNEW;
-      else if (TxType.MANDATORY.equals(txType))
+      } else if (TxType.MANDATORY.equals(txType)) {
         attribute = TransactionAttribute.MANDATORY;
-      else if (TxType.SUPPORTS.equals(txType))
+      } else if (TxType.SUPPORTS.equals(txType)) {
         attribute = TransactionAttribute.SUPPORTS;
-      else if (TxType.NOT_SUPPORTED.equals(txType))
+      } else if (TxType.NOT_SUPPORTED.equals(txType)) {
         attribute = null; // FIXME add implementation
-      else if (TxType.NEVER.equals(txType))
+      } else if (TxType.NEVER.equals(txType)) {
         attribute = TransactionAttribute.NEVER;
+      }
     }
 
     if (attribute == null) {
@@ -116,8 +118,9 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
         }
         object = invocation.proceed();
 
-        if (needsRollback)
+        if (needsRollback) {
           manager.setRollbackOnly();
+        }
 
       } catch (Throwable t) {
         if (log.isDebugEnabled()) {

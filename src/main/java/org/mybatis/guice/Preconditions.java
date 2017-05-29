@@ -24,18 +24,26 @@ import java.util.NoSuchElementException;
  * <pre>
  *     if (count <= 0) {
  *       throw new IllegalArgumentException("must be positive: " + count);
- *     }</pre>
+ *     }
+ * </pre>
  *
+ * <p>
  * to be replaced with the more compact
- * <pre>
- *     checkArgument(count > 0, "must be positive: %s", count);</pre>
+ * </p>
  *
+ * <pre>
+ *     checkArgument(count > 0, "must be positive: %s", count);
+ * </pre>
+ *
+ * <p>
  * Note that the sense of the expression is inverted; with {@code Preconditions}
  * you declare what you expect to be <i>true</i>, just as you do with an
  * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html">
  * {@code assert}</a> or a JUnit {@code assertTrue()} call.
+ * </p>
  *
- * <p>Take care not to confuse precondition checking with other similar types
+ * <p>
+ * Take care not to confuse precondition checking with other similar types
  * of checks! Precondition exceptions -- including those provided here, but also
  * {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
  * UnsupportedOperationException} and others -- are used to signal that the
@@ -43,16 +51,21 @@ import java.util.NoSuchElementException;
  * not have invoked the method when it did, with the arguments it did, or
  * perhaps <i>ever</i>. Postcondition or other invariant failures should not
  * throw these types of exceptions.
+ * </p>
  *
- * <p><b>Note:</b> The methods of the {@code Preconditions} class are highly
+ * <p>
+ * <b>Note:</b> The methods of the {@code Preconditions} class are highly
  * unusual in one way: they are <i>supposed to</i> throw exceptions, and promise
  * in their specifications to do so even when given perfectly valid input. That
  * is, {@code null} is a valid parameter to the method {@link
  * #checkNotNull(Object)} -- and technically this parameter could be even marked
  * as {@link com.google.inject.internal.util.Nullable} -- yet the method will still throw an exception anyway,
  * because that's what its contract says to do.
+ * </p>
  * 
- * <p>This class may be used with the Google Web Toolkit (GWT).
+ * <p>
+ * This class may be used with the Google Web Toolkit (GWT).
+ * </p>
  *
  * @author Kevin Bourrillion
  */

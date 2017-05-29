@@ -15,14 +15,15 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
@@ -128,6 +129,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     dataSource.setDefaultMaxWait(defaultMaxWait);
   }
 
+  /**
+   * Sets the per user default auto commit.
+   *
+   * @param perUserDefaultAutoCommit the per user default auto commit
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultAutoCommit(@PerUserDefaultAutoCommit Map<String, Boolean> perUserDefaultAutoCommit) {
     for (Entry<String, Boolean> entry : perUserDefaultAutoCommit.entrySet()) {
@@ -135,6 +141,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     }
   }
 
+  /**
+   * Sets the per user default read only.
+   *
+   * @param perUserDefaultReadOnly the per user default read only
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultReadOnly(@PerUserDefaultReadOnly Map<String, Boolean> perUserDefaultReadOnly) {
     for (Entry<String, Boolean> entry : perUserDefaultReadOnly.entrySet()) {
@@ -142,6 +153,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     }
   }
 
+  /**
+   * Sets the per user default transaction isolation.
+   *
+   * @param perUserDefaultTransactionIsolation the per user default transaction isolation
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultTransactionIsolation(
       @PerUserDefaultTransactionIsolation Map<String, Integer> perUserDefaultTransactionIsolation) {
@@ -150,6 +166,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     }
   }
 
+  /**
+   * Sets the per user max active.
+   *
+   * @param perUserMaxActive the per user max active
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxActive(@PerUserMaxActive Map<String, Integer> perUserMaxActive) {
     for (Entry<String, Integer> entry : perUserMaxActive.entrySet()) {
@@ -157,6 +178,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     }
   }
 
+  /**
+   * Sets the per user max idle.
+   *
+   * @param perUserMaxIdle the per user max idle
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxIdle(@PerUserMaxIdle Map<String, Integer> perUserMaxIdle) {
     for (Entry<String, Integer> entry : perUserMaxIdle.entrySet()) {
@@ -164,6 +190,11 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
     }
   }
 
+  /**
+   * Sets the per user max wait.
+   *
+   * @param perUserMaxWait the per user max wait
+   */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxWait(@PerUserMaxWait Map<String, Integer> perUserMaxWait) {
     for (Entry<String, Integer> entry : perUserMaxWait.entrySet()) {

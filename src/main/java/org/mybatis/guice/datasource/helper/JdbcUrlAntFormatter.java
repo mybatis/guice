@@ -19,10 +19,11 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.util.Providers;
 
-import javax.inject.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import javax.inject.Provider;
 
 public final class JdbcUrlAntFormatter implements Provider<String> {
 
@@ -34,6 +35,11 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
 
   private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
 
+  /**
+   * Instantiates a new jdbc url ant formatter.
+   *
+   * @param pattern the pattern
+   */
   public JdbcUrlAntFormatter(final String pattern) {
     int prev = 0;
     int pos;
@@ -74,6 +80,11 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
     }
   }
 
+  /**
+   * Sets the injector.
+   *
+   * @param injector the new injector
+   */
   @Inject
   public void setInjector(Injector injector) {
     for (KeyResolver resolver : resolvers) {
@@ -81,9 +92,6 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String get() {
     StringBuilder buffer = new StringBuilder();
@@ -93,9 +101,6 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
     return buffer.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
     return appenders.toString();

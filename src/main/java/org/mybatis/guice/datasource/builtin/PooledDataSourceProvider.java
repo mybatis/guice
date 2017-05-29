@@ -15,14 +15,15 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
 
 /**
  * Provides the myBatis built-in PooledDataSource.
@@ -48,8 +49,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the user.
    *
-   * @param username
+   * @param username the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -58,8 +60,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the password.
    *
-   * @param password
+   * @param password the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -68,9 +71,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the auto commit.
    *
-   *
-   * @param autoCommit
+   * @param autoCommit the new auto commit
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
@@ -78,9 +81,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the login timeout.
    *
-   *
-   * @param loginTimeout
+   * @param loginTimeout the new login timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
@@ -97,9 +100,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the maximum active connections.
    *
-   *
-   * @param maximumActiveConnections
+   * @param maximumActiveConnections the new maximum active connections
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumActiveConnections(
@@ -108,9 +111,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the maximum checkout time.
    *
-   *
-   * @param maximumCheckoutTime
+   * @param maximumCheckoutTime the new maximum checkout time
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumCheckoutTime(@Named("mybatis.pooled.maximumCheckoutTime") final int maximumCheckoutTime) {
@@ -118,9 +121,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the maximum idle connections.
    *
-   *
-   * @param maximumIdleConnections
+   * @param maximumIdleConnections the new maximum idle connections
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumIdleConnections(
@@ -129,9 +132,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the ping connections not used for.
    *
-   *
-   * @param pingConnectionsNotUsedFor
+   * @param pingConnectionsNotUsedFor the new ping connections not used for
    */
   @com.google.inject.Inject(optional = true)
   public void setPingConnectionsNotUsedFor(
@@ -140,9 +143,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the ping enabled.
    *
-   *
-   * @param pingEnabled
+   * @param pingEnabled the new ping enabled
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named("mybatis.pooled.pingEnabled") final boolean pingEnabled) {
@@ -150,9 +153,9 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the ping enabled.
    *
-   *
-   * @param pingQuery
+   * @param pingQuery the new ping enabled
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named("mybatis.pooled.pingQuery") final String pingQuery) {
@@ -160,18 +163,15 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the time to wait.
    *
-   *
-   * @param timeToWait
+   * @param timeToWait the new time to wait
    */
   @com.google.inject.Inject(optional = true)
   public void setTimeToWait(@Named("mybatis.pooled.timeToWait") final int timeToWait) {
     dataSource.setPoolTimeToWait(timeToWait);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     return dataSource;
