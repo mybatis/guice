@@ -15,10 +15,9 @@
  */
 package org.mybatis.guice.binder;
 
-import org.apache.ibatis.type.TypeHandler;
-
 import com.google.inject.TypeLiteral;
-import com.google.inject.binder.AnnotatedBindingBuilder;
+
+import org.apache.ibatis.type.TypeHandler;
 
 /**
  * Bind the given {@code TypeHandler} to an already defined type.

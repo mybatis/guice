@@ -15,14 +15,15 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
+
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.
@@ -48,8 +49,9 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the user.
    *
-   * @param username
+   * @param username the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -58,8 +60,9 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the password.
    *
-   * @param password
+   * @param password the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -68,9 +71,9 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the auto commit.
    *
-   *
-   * @param autoCommit
+   * @param autoCommit the new auto commit
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
@@ -78,9 +81,9 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the login timeout.
    *
-   *
-   * @param loginTimeout
+   * @param loginTimeout the new login timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
@@ -96,9 +99,6 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
     unpooledDataSource.setDriverProperties(driverProperties);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     return unpooledDataSource;

@@ -15,14 +15,14 @@
  */
 package org.mybatis.guice.session;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionManager;
+import static org.apache.ibatis.session.SqlSessionManager.newInstance;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import static org.apache.ibatis.session.SqlSessionManager.newInstance;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionManager;
 
 @Singleton
 public final class SqlSessionManagerProvider implements Provider<SqlSessionManager> {
@@ -42,8 +42,9 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
   }
 
   /**
+   * Creates the new sql session manager.
    *
-   * @param sqlSessionFactory
+   * @param sqlSessionFactory the sql session factory
    * @since 1.0.1
    */
   @Inject

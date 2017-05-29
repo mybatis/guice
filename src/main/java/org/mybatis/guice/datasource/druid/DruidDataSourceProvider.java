@@ -20,8 +20,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 /**
  * Provides the Druid DataSource.

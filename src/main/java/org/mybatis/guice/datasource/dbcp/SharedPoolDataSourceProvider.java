@@ -16,12 +16,13 @@
 package org.mybatis.guice.datasource.dbcp;
 
 import com.google.inject.Provider;
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
+
+import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code SharedPoolDataSource}.
@@ -113,9 +114,9 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   /**
+   * Sets the max active.
    *
-   *
-   * @param maxActive
+   * @param maxActive the new max active
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
@@ -123,9 +124,9 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   /**
+   * Sets the max idle.
    *
-   *
-   * @param maxIdle
+   * @param maxIdle the new max idle
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxIdle(@Named("DBCP.maxIdle") final int maxIdle) {
@@ -133,18 +134,15 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   /**
+   * Sets the max wait.
    *
-   *
-   * @param maxWait
+   * @param maxWait the new max wait
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxWait(@Named("DBCP.maxWait") final int maxWait) {
     dataSource.setMaxWait(maxWait);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     return dataSource;

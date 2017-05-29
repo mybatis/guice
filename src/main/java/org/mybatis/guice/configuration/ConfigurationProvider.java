@@ -15,6 +15,9 @@
  */
 package org.mybatis.guice.configuration;
 
+import com.google.inject.ProvisionException;
+import com.google.inject.name.Named;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -34,9 +37,6 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSettings;
-
-import com.google.inject.ProvisionException;
-import com.google.inject.name.Named;
 
 /**
  * Provides the myBatis Configuration.
@@ -192,16 +192,15 @@ public class ConfigurationProvider implements Provider<Configuration> {
   }
 
   /**
-   * @param environment
+   * New configuration.
+   *
+   * @param environment the environment
    * @return new configuration
    */
   protected Configuration newConfiguration(Environment environment) {
     return new Configuration(environment);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Configuration get() {
     final Configuration configuration = newConfiguration(environment);

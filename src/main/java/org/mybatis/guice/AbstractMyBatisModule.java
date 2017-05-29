@@ -15,24 +15,25 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.not;
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
 import com.google.inject.matcher.AbstractMatcher;
+
+import java.lang.reflect.Method;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.mappers.MapperProvider;
 import org.mybatis.guice.session.SqlSessionManagerProvider;
 import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
-
-import java.lang.reflect.Method;
-
-import static com.google.inject.matcher.Matchers.annotatedWith;
-import static com.google.inject.matcher.Matchers.any;
-import static com.google.inject.matcher.Matchers.not;
-import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
 
 abstract class AbstractMyBatisModule extends AbstractModule {
 
@@ -42,6 +43,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
       return method.getDeclaringClass() == Object.class;
     }
   };
+
   protected static final AbstractMatcher<Method> SYNTHETIC = new AbstractMatcher<Method>() {
     @Override
     public boolean matches(Method method) {
@@ -53,9 +55,6 @@ abstract class AbstractMyBatisModule extends AbstractModule {
 
   private ClassLoader driverClassLoader = getDefaultClassLoader();
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected final void configure() {
     try {
@@ -75,7 +74,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   }
 
   /**
-   * bind transactional interceptors
+   * bind transactional interceptors.
    */
   protected void bindTransactionInterceptors() {
     // transactional interceptor
@@ -91,16 +90,19 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   }
 
   /**
+   * Bind mapper.
    *
-   * @param mapperType
+   * @param <T> the generic type
+   * @param mapperType the mapper type
    */
   final <T> void bindMapper(Class<T> mapperType) {
     bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
   }
 
   /**
+   * Use resource class loader.
    *
-   * @return
+   * @param resourceClassLoader the resource class loader
    * @since 3.3
    */
   public void useResourceClassLoader(ClassLoader resourceClassLoader) {
@@ -108,8 +110,9 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   }
 
   /**
+   * Gets the resource class loader.
    *
-   * @return
+   * @return the resource class loader
    * @since 3.3
    */
   protected final ClassLoader getResourceClassLoader() {
@@ -117,8 +120,9 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   }
 
   /**
+   * Use jdbc driver class loader.
    *
-   * @return
+   * @param driverClassLoader the driver class loader
    * @since 3.3
    */
   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
@@ -126,8 +130,9 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   }
 
   /**
+   * Gets the default class loader.
    *
-   * @return
+   * @return the default class loader
    * @since 3.3
    */
   private ClassLoader getDefaultClassLoader() {
@@ -140,7 +145,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   abstract void internalConfigure();
 
   /**
-   *
+   * Initialize.
    */
   protected abstract void initialize();
 

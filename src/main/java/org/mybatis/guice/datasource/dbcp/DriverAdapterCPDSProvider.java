@@ -15,12 +15,12 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
+
+import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.
@@ -29,6 +29,12 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
 
   private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();
 
+  /**
+   * Instantiates a new driver adapter CPDS provider.
+   *
+   * @param driver the driver
+   * @param url the url
+   */
   @Inject
   public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver, @Named("JDBC.url") final String url) {
     try {
@@ -40,8 +46,9 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   }
 
   /**
+   * Sets the user.
    *
-   * @param username
+   * @param username the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -50,8 +57,9 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   }
 
   /**
+   * Sets the password.
    *
-   * @param password
+   * @param password the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -59,6 +67,11 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
     adapter.setPassword(password);
   }
 
+  /**
+   * Sets the description.
+   *
+   * @param description the new description
+   */
   @com.google.inject.Inject(optional = true)
   public void setDescription(@Named("DBCP.description") String description) {
     adapter.setDescription(description);

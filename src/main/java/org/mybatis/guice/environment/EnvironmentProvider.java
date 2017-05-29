@@ -15,14 +15,14 @@
  */
 package org.mybatis.guice.environment;
 
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.transaction.TransactionFactory;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
+
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.transaction.TransactionFactory;
 
 /**
  * Provides the myBatis Environment.

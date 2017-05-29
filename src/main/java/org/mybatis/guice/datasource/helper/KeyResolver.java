@@ -15,13 +15,13 @@
  */
 package org.mybatis.guice.datasource.helper;
 
+import static com.google.inject.name.Names.named;
+
 import com.google.inject.Injector;
 import com.google.inject.Key;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-
-import static com.google.inject.name.Names.named;
 
 final class KeyResolver implements Provider<String> {
 

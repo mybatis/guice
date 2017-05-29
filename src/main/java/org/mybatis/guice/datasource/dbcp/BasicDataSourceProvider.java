@@ -15,15 +15,16 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import java.sql.SQLException;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Map.Entry;
-import java.util.Properties;
+
+import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code BasicDataSource}.
@@ -51,8 +52,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the user.
    *
-   * @param username
+   * @param username the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -61,8 +63,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the password.
    *
-   * @param password
+   * @param password the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -71,9 +74,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the auto commit.
    *
-   *
-   * @param autoCommit
+   * @param autoCommit the new auto commit
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
@@ -81,9 +84,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the login timeout.
    *
-   *
-   * @param loginTimeout
+   * @param loginTimeout the new login timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
@@ -96,8 +99,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the driver properties.
    *
-   * @param driverProperties
+   * @param driverProperties the new driver properties
    */
   @com.google.inject.Inject(optional = true)
   public void setDriverProperties(@Named("JDBC.driverProperties") final Properties driverProperties) {
@@ -109,9 +113,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the access to underlying connection allowed.
    *
-   *
-   * @param allow
+   * @param allow the new access to underlying connection allowed
    */
   @com.google.inject.Inject(optional = true)
   public void setAccessToUnderlyingConnectionAllowed(
@@ -120,9 +124,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the default catalog.
    *
-   *
-   * @param defaultCatalog
+   * @param defaultCatalog the new default catalog
    */
   @com.google.inject.Inject(optional = true)
   public void setDefaultCatalog(@Named("DBCP.defaultCatalog") final String defaultCatalog) {
@@ -130,9 +134,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the default read only.
    *
-   *
-   * @param defaultReadOnly
+   * @param defaultReadOnly the new default read only
    */
   @com.google.inject.Inject(optional = true)
   public void setDefaultReadOnly(@Named("DBCP.defaultReadOnly") final boolean defaultReadOnly) {
@@ -140,9 +144,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the default transaction isolation.
    *
-   *
-   * @param defaultTransactionIsolation
+   * @param defaultTransactionIsolation the new default transaction isolation
    */
   @com.google.inject.Inject(optional = true)
   public void setDefaultTransactionIsolation(
@@ -151,9 +155,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the initial size.
    *
-   *
-   * @param initialSize
+   * @param initialSize the new initial size
    */
   @com.google.inject.Inject(optional = true)
   public void setInitialSize(@Named("DBCP.initialSize") final int initialSize) {
@@ -161,9 +165,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the max active.
    *
-   *
-   * @param maxActive
+   * @param maxActive the new max active
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
@@ -171,9 +175,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the max idle.
    *
-   *
-   * @param maxIdle
+   * @param maxIdle the new max idle
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxIdle(@Named("DBCP.maxIdle") final int maxIdle) {
@@ -181,9 +185,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the max open prepared statements.
    *
-   *
-   * @param maxOpenPreparedStatements
+   * @param maxOpenPreparedStatements the new max open prepared statements
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxOpenPreparedStatements(
@@ -192,9 +196,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the max wait.
    *
-   *
-   * @param maxWait
+   * @param maxWait the new max wait
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxWait(@Named("DBCP.maxWait") final long maxWait) {
@@ -202,9 +206,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the min evictable idle time millis.
    *
-   *
-   * @param minEvictableIdleTimeMillis
+   * @param minEvictableIdleTimeMillis the new min evictable idle time millis
    */
   @com.google.inject.Inject(optional = true)
   public void setMinEvictableIdleTimeMillis(
@@ -213,9 +217,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the min idle.
    *
-   *
-   * @param minIdle
+   * @param minIdle the new min idle
    */
   @com.google.inject.Inject(optional = true)
   public void setMinIdle(@Named("DBCP.minIdle") final int minIdle) {
@@ -223,9 +227,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the num tests per eviction run.
    *
-   *
-   * @param numTestsPerEvictionRun
+   * @param numTestsPerEvictionRun the new num tests per eviction run
    */
   @com.google.inject.Inject(optional = true)
   public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") final int numTestsPerEvictionRun) {
@@ -233,9 +237,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the pool prepared statements.
    *
-   *
-   * @param poolPreparedStatements
+   * @param poolPreparedStatements the new pool prepared statements
    */
   @com.google.inject.Inject(optional = true)
   public void setPoolPreparedStatements(@Named("DBCP.poolPreparedStatements") final boolean poolPreparedStatements) {
@@ -243,9 +247,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the test on borrow.
    *
-   *
-   * @param testOnBorrow
+   * @param testOnBorrow the new test on borrow
    */
   @com.google.inject.Inject(optional = true)
   public void setTestOnBorrow(@Named("DBCP.testOnBorrow") final boolean testOnBorrow) {
@@ -253,9 +257,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the test on return.
    *
-   *
-   * @param testOnReturn
+   * @param testOnReturn the new test on return
    */
   @com.google.inject.Inject(optional = true)
   public void setTestOnReturn(@Named("DBCP.testOnReturn") final boolean testOnReturn) {
@@ -263,9 +267,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the test while idle.
    *
-   *
-   * @param testWhileIdle
+   * @param testWhileIdle the new test while idle
    */
   @com.google.inject.Inject(optional = true)
   public void setTestWhileIdle(@Named("DBCP.testWhileIdle") final boolean testWhileIdle) {
@@ -273,9 +277,9 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the time between eviction runs millis.
    *
-   *
-   * @param timeBetweenEvictionRunsMillis
+   * @param timeBetweenEvictionRunsMillis the new time between eviction runs millis
    */
   @com.google.inject.Inject(optional = true)
   public void setTimeBetweenEvictionRunsMillis(
@@ -284,18 +288,15 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
+   * Sets the validation query.
    *
-   *
-   * @param validationQuery
+   * @param validationQuery the new validation query
    */
   @com.google.inject.Inject(optional = true)
   public void setValidationQuery(@Named("DBCP.validationQuery") final String validationQuery) {
     dataSource.setValidationQuery(validationQuery);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public DataSource get() {
     return dataSource;

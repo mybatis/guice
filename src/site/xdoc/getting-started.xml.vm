@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2017 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
   <section name="Installation">
         <p>
             Installing the mybatis-guice module it is very easy, just put the
-            <code>mybatis-guice-X.X.jar</code> and
+            <code>mybatis-guice-${project.version}.jar</code> and
             dependencies in the classpath!
         </p>
         <p>
@@ -52,7 +52,7 @@
   <dependency>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-guice</artifactId>
-    <version>X.X</version>
+    <version>${project.version}</version>
   </dependency>
 ...
 </dependencies>]]></source>

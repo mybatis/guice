@@ -22,6 +22,12 @@ import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
 import static org.mybatis.guice.Preconditions.checkState;
 
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
+import com.google.inject.util.Providers;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -72,12 +78,6 @@ import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
-import com.google.inject.util.Providers;
-
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
  * google-guice bindings to create the SqlSessionFactory.
@@ -88,11 +88,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    * The ObjectFactory class reference.
    */
   private Class<? extends ObjectFactory> objectFactoryType = DefaultObjectFactory.class;
+
   /**
    * The ObjectWrapperFactory class reference.
    */
   private Class<? extends ObjectWrapperFactory> objectWrapperFactoryType = DefaultObjectWrapperFactory.class;
   private Class<? extends LanguageDriver> defaultScriptingLanguageType = XMLLanguageDriver.class;
+
   /**
    * The SqlSessionFactory Provider class reference.
    */
@@ -112,9 +114,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Multibinder<ConfigurationSetting> configurationSettings;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   final void internalConfigure() {
     checkState(aliases == null, "Re-entry is not allowed.");
@@ -173,54 +172,62 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Lazy loading enabled.
    *
-   * @param lazyLoadingEnabled
+   * @param lazyLoadingEnabled the lazy loading enabled
    */
   protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
     bindConfigurationSetting(new LazyLoadingEnabledConfigurationSetting(lazyLoadingEnabled));
   }
 
   /**
+   * Aggressive lazy loading.
    *
-   * @param aggressiveLazyLoading
+   * @param aggressiveLazyLoading the aggressive lazy loading
    */
   protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
     bindConfigurationSetting(new AggressiveLazyLoadingConfigurationSetting(aggressiveLazyLoading));
   }
 
   /**
+   * Multiple result sets enabled.
    *
-   * @param multipleResultSetsEnabled
+   * @param multipleResultSetsEnabled the multiple result sets enabled
    */
   protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
     bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));
   }
 
   /**
+   * Use generated keys.
    *
-   * @param useGeneratedKeys
+   * @param useGeneratedKeys the use generated keys
    */
   protected final void useGeneratedKeys(boolean useGeneratedKeys) {
     bindConfigurationSetting(new UseGeneratedKeysConfigurationSetting(useGeneratedKeys));
   }
 
   /**
+   * Use column label.
    *
-   * @param useColumnLabel
+   * @param useColumnLabel the use column label
    */
   protected final void useColumnLabel(boolean useColumnLabel) {
     bindConfigurationSetting(new UseColumnLabelConfigurationSetting(useColumnLabel));
   }
 
   /**
+   * Use cache enabled.
    *
-   * @param useCacheEnabled
+   * @param useCacheEnabled the use cache enabled
    */
   protected final void useCacheEnabled(boolean useCacheEnabled) {
     bindConfigurationSetting(new CacheEnabledConfigurationSetting(useCacheEnabled));
   }
 
   /**
+   * Use configuration provider.
+   *
    * @param configurationProviderType provider for Configuration
    */
   protected final void useConfigurationProvider(
@@ -229,6 +236,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Use sql session factory provider.
+   *
    * @param sqlSessionFactoryProvider provider for SqlSessionFactory
    */
   protected final void useSqlSessionFactoryProvider(
@@ -237,8 +246,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Fail fast.
    *
-   * @param failFast
+   * @param failFast the fail fast
    */
   protected final void failFast(boolean failFast) {
     bindBoolean("mybatis.configuration.failFast", failFast);
@@ -276,9 +286,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Executor type.
    *
-   *
-   * @param executorType
+   * @param executorType the executor type
    */
   protected final void executorType(ExecutorType executorType) {
     checkArgument(executorType != null, "Parameter 'executorType' must be not null");
@@ -297,9 +307,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Auto mapping behavior.
    *
-   *
-   * @param autoMappingBehavior
+   * @param autoMappingBehavior the auto mapping behavior
    */
   protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
     checkArgument(autoMappingBehavior != null, "Parameter 'autoMappingBehavior' must be not null");
@@ -317,9 +327,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Bind data source provider.
    *
-   *
-   * @param dataSourceProvider
+   * @param dataSourceProvider the data source provider
    */
   protected final void bindDataSourceProvider(Provider<DataSource> dataSourceProvider) {
     checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -327,9 +337,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Bind data source provider.
    *
-   *
-   * @param dataSourceProvider
+   * @param dataSourceProvider the data source provider
    */
   protected final void bindDataSourceProvider(com.google.inject.Provider<DataSource> dataSourceProvider) {
     checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -337,7 +347,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   *
+   * Bind database id provider.
    *
    * @param databaseIdProvider The DatabaseIdProvider class.
    */
@@ -347,7 +357,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   *
+   * Bind database id provider.
    *
    * @param databaseIdProvider The DatabaseIdProvider instance.
    */
@@ -367,9 +377,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Bind transaction factory.
    *
-   *
-   * @param transactionFactoryProvider
+   * @param transactionFactoryProvider the transaction factory provider
    */
   protected final void bindTransactionFactory(Provider<TransactionFactory> transactionFactoryProvider) {
     checkArgument(transactionFactoryProvider != null, "Parameter 'transactionFactoryProvider' must be not null");
@@ -377,9 +387,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
+   * Bind transaction factory.
    *
-   *
-   * @param transactionFactoryProvider
+   * @param transactionFactoryProvider the transaction factory provider
    */
   protected final void bindTransactionFactory(
       com.google.inject.Provider<TransactionFactory> transactionFactoryProvider) {

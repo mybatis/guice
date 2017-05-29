@@ -15,19 +15,20 @@
  */
 package org.mybatis.guice.transactional;
 
+import static java.lang.String.format;
+import static java.lang.Thread.currentThread;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+import javax.inject.Inject;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSessionManager;
-
-import javax.inject.Inject;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-
-import static java.lang.String.format;
-import static java.lang.Thread.currentThread;
 
 /**
  * Method interceptor for {@link Transactional} annotation.

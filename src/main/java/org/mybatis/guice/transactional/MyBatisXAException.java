@@ -20,11 +20,24 @@ import javax.transaction.xa.XAException;
 public class MyBatisXAException extends XAException {
   private static final long serialVersionUID = -7280133560046132709L;
 
+  /**
+   * Instantiates a new my batis XA exception.
+   *
+   * @param message the message
+   * @param errorCode the error code
+   */
   public MyBatisXAException(String message, int errorCode) {
     super(message);
     this.errorCode = errorCode;
   }
 
+  /**
+   * Instantiates a new my batis XA exception.
+   *
+   * @param message the message
+   * @param errorCode the error code
+   * @param t the t
+   */
   public MyBatisXAException(String message, int errorCode, Throwable t) {
     super(message);
     this.errorCode = errorCode;

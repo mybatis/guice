@@ -15,19 +15,19 @@
  */
 package org.mybatis.guice;
 
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.type.TypeHandler;
+import static org.apache.ibatis.io.Resources.getResourceAsReader;
+import static org.mybatis.guice.Preconditions.checkArgument;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Properties;
 
-import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.apache.ibatis.io.Resources.getResourceAsReader;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.type.TypeHandler;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
