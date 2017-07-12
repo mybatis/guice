@@ -27,7 +27,6 @@ import java.util.Set;
 
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import javax.swing.JComboBox.KeySelectionManager;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -72,17 +71,15 @@ import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
 import com.google.inject.Binding;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.AbstractMatcher;
-import com.google.inject.matcher.Matcher;
-import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.spi.ProvisionListener;
-import com.google.inject.spi.TypeEncounter;
-import com.google.inject.spi.TypeListener;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -112,20 +109,16 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Multibinder<TypeHandler<?>> mappingTypeHandlers;
 
-  private Multibinder<Interceptor> interceptors;
-
   private Multibinder<Class<?>> mappers;
 
   @Override
   final void internalConfigure() {
     checkState(handlers == null, "Re-entry is not allowed.");
-    checkState(interceptors == null, "Re-entry is not allowed.");
     checkState(mappers == null, "Re-entry is not allowed.");
 
     handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>() {
     }, new TypeLiteral<TypeHandler<?>>() {
     });
-    interceptors = newSetBinder(binder(), Interceptor.class);
     mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>() {
     }, MappingTypeHandlers.class);
     mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>() {
@@ -136,7 +129,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
     } finally {
       handlers = null;
-      interceptors = null;
       mappers = null;
     }
 
@@ -627,9 +619,23 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param interceptorClass The user defined MyBatis interceptor plugin type
    */
-  protected final void addInterceptorClass(Class<? extends Interceptor> interceptorClass) {
+  protected final void addInterceptorClass(final Class<? extends Interceptor> interceptorClass) {
     checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
-    interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
+    bindConfigurationSettingProvider(new Provider<ConfigurationSetting>() {
+    		@Inject
+    		private Injector injector;
+    		
+		@Override
+		public ConfigurationSetting get() {
+			final Interceptor interceptor = injector.getInstance(interceptorClass);
+			return new ConfigurationSetting() {
+				@Override
+				public void applyConfigurationSetting(Configuration configuration) {
+					configuration.addInterceptor(interceptor);
+				}
+			};
+		}
+	});
   }
 
   /**

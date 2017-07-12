@@ -111,9 +111,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private Set<Class<?>> mapperClasses = Collections.emptySet();
 
   @com.google.inject.Inject(optional = true)
-  private Set<Interceptor> plugins = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
   private DatabaseIdProvider databaseIdProvider;
 
   @com.google.inject.Inject
@@ -168,20 +165,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   public void setMapperClasses(Set<Class<?>> mapperClasses) {
     this.mapperClasses = mapperClasses;
   }
-
-  /**
-   * Registers the user defined plugins interceptors to the
-   * myBatis Configuration.
-   *
-   * @param plugins the user defined plugins interceptors.
-   */
-  public void setPlugins(Set<Interceptor> plugins) {
-    this.plugins = plugins;
-  }
-
-  public void setConfigurationSettings(Set<ConfigurationSetting> configurationSettings) {
-    this.configurationSettings = configurationSettings;
-  }
   
   public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
@@ -233,10 +216,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
         if (!configuration.hasMapper(mapperClass)) {
           configuration.addMapper(mapperClass);
         }
-      }
-
-      for (Interceptor interceptor : plugins) {
-        configuration.addInterceptor(interceptor);
       }
 
       if (failFast) {
