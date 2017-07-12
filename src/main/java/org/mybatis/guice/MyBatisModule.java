@@ -22,17 +22,12 @@ import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
 import static org.mybatis.guice.Preconditions.checkState;
 
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
-import com.google.inject.util.Providers;
-
 import java.util.Collection;
 import java.util.Set;
 
 import javax.inject.Provider;
 import javax.sql.DataSource;
+import javax.swing.JComboBox.KeySelectionManager;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -57,12 +52,10 @@ import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.MappingTypeHandlers;
-import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
 import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
@@ -77,6 +70,19 @@ import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSet
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
+
+import com.google.inject.Binding;
+import com.google.inject.Key;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.AbstractMatcher;
+import com.google.inject.matcher.Matcher;
+import com.google.inject.matcher.Matchers;
+import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
+import com.google.inject.spi.ProvisionListener;
+import com.google.inject.spi.TypeEncounter;
+import com.google.inject.spi.TypeListener;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -102,8 +108,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Class<? extends Provider<? extends Configuration>> configurationProviderType = ConfigurationProvider.class;
 
-  private MapBinder<String, Class<?>> aliases;
-
   private MapBinder<Class<?>, TypeHandler<?>> handlers;
 
   private Multibinder<TypeHandler<?>> mappingTypeHandlers;
@@ -112,19 +116,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Multibinder<Class<?>> mappers;
 
-  private Multibinder<ConfigurationSetting> configurationSettings;
-
   @Override
   final void internalConfigure() {
-    checkState(aliases == null, "Re-entry is not allowed.");
     checkState(handlers == null, "Re-entry is not allowed.");
     checkState(interceptors == null, "Re-entry is not allowed.");
     checkState(mappers == null, "Re-entry is not allowed.");
-    checkState(configurationSettings == null, "Re-entry is not allowed.");
 
-    aliases = newMapBinder(binder(), new TypeLiteral<String>() {
-    }, new TypeLiteral<Class<?>>() {
-    }, TypeAliases.class);
     handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>() {
     }, new TypeLiteral<TypeHandler<?>>() {
     });
@@ -133,13 +130,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     }, MappingTypeHandlers.class);
     mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>() {
     }, Mappers.class);
-    configurationSettings = newSetBinder(binder(), ConfigurationSetting.class, ConfigurationSettings.class);
 
     try {
       initialize();
 
     } finally {
-      aliases = null;
       handlers = null;
       interceptors = null;
       mappers = null;
@@ -272,13 +267,38 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));
   }
 
+  public static class KeyMatcher <T> extends AbstractMatcher<Binding<?>> {
+	  private final Key<T> key;
+	  KeyMatcher(Key<T> key){
+		  this.key = key;
+	  }
+	  @Override
+	  public boolean matches(Binding<?> t) {
+		  return key.equals(t.getKey());
+	  }
+  }
+  
   public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    configurationSettings.addBinding().toProvider(Providers.of(configurationSetting));
+	  bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
+		  @Override
+		  public <T> void onProvision(ProvisionInvocation<T> provision) {
+			  ((ConfigurationProvider)provision.provision()).addConfigurationSetting(configurationSetting);
+		  }
+	  });
   }
 
   public void bindConfigurationSettingProvider(
       final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    configurationSettings.addBinding().toProvider(guicify(configurationSettingProvider));
+	  
+	  
+	  bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
+		  @Override
+		  public <T> void onProvision(ProvisionInvocation<T> provision) {
+			  ConfigurationProvider configurationProvider = (ConfigurationProvider)provision.provision();
+			  configurationProvider.getInjector().injectMembers(configurationSettingProvider);
+			  configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
+		  }
+	  });
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -443,7 +463,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void to(final Class<?> clazz) {
         checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
-        aliases.addBinding(alias).toInstance(clazz);
+        bindConfigurationSetting(new ConfigurationSetting() {
+			@Override
+			public void applyConfigurationSetting(Configuration configuration) {
+				configuration.getTypeAliasRegistry().registerAlias(alias, clazz);
+			}
+        });
       }
 
     };

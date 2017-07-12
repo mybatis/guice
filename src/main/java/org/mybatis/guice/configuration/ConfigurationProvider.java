@@ -15,10 +15,8 @@
  */
 package org.mybatis.guice.configuration;
 
-import com.google.inject.ProvisionException;
-import com.google.inject.name.Named;
-
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,7 +34,10 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
+
+import com.google.inject.Injector;
+import com.google.inject.ProvisionException;
+import com.google.inject.name.Named;
 
 /**
  * Provides the myBatis Configuration.
@@ -99,10 +100,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private boolean failFast = false;
 
   @com.google.inject.Inject(optional = true)
-  @TypeAliases
-  private Map<String, Class<?>> typeAliases;
-
-  @com.google.inject.Inject(optional = true)
   private Map<Class<?>, TypeHandler<?>> typeHandlers = Collections.emptyMap();
 
   @com.google.inject.Inject(optional = true)
@@ -122,9 +119,13 @@ public class ConfigurationProvider implements Provider<Configuration> {
   @com.google.inject.Inject
   private DataSource dataSource;
 
-  @com.google.inject.Inject(optional = true)
-  @ConfigurationSettings
-  private Set<ConfigurationSetting> configurationSettings = Collections.emptySet();
+  private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
+  
+  @com.google.inject.Inject
+  private Injector injector;
+  public Injector getInjector() {
+	  return injector;
+  }
 
   /**
    * @since 1.0.1
@@ -147,15 +148,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
    */
   public void setFailFast(boolean failFast) {
     this.failFast = failFast;
-  }
-
-  /**
-   * Adds the user defined type aliases to the myBatis Configuration.
-   *
-   * @param typeAliases the user defined type aliases.
-   */
-  public void setTypeAliases(Map<String, Class<?>> typeAliases) {
-    this.typeAliases = typeAliases;
   }
 
   /**
@@ -190,6 +182,10 @@ public class ConfigurationProvider implements Provider<Configuration> {
   public void setConfigurationSettings(Set<ConfigurationSetting> configurationSettings) {
     this.configurationSettings = configurationSettings;
   }
+  
+  public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
+    this.configurationSettings.add(configurationSetting);
+  }
 
   /**
    * New configuration.
@@ -223,10 +219,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
     try {
       if (databaseIdProvider != null) {
         configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));
-      }
-
-      for (Map.Entry<String, Class<?>> alias : typeAliases.entrySet()) {
-        configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
       }
 
       for (Map.Entry<Class<?>, TypeHandler<?>> typeHandler : typeHandlers.entrySet()) {
@@ -264,5 +256,4 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private <T> void registerTypeHandler(Configuration configuration, Class<?> type, TypeHandler<?> handler) {
     configuration.getTypeHandlerRegistry().register((Class<T>) type, (TypeHandler<T>) handler);
   }
-
 }
