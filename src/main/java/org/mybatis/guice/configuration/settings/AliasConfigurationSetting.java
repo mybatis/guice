@@ -2,7 +2,7 @@ package org.mybatis.guice.configuration.settings;
 
 import org.apache.ibatis.session.Configuration;
 
-public class AliasConfigurationSetting implements ConfigurationSetting {
+public final class AliasConfigurationSetting implements ConfigurationSetting {
 
   private final String alias;
   private final Class<?> clazz;

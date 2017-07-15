@@ -2,7 +2,7 @@ package org.mybatis.guice.configuration.settings;
 
 import org.apache.ibatis.session.Configuration;
 
-public class MapperConfigurationSetting implements ConfigurationSetting {
+public final class MapperConfigurationSetting implements ConfigurationSetting {
 
   private final Class<?> mapperClass;
   

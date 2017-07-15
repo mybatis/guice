@@ -8,7 +8,7 @@ import javax.inject.Provider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
 
-public class InterceptorConfigurationSettingProvider implements Provider<ConfigurationSetting> {
+public final class InterceptorConfigurationSettingProvider implements Provider<ConfigurationSetting> {
 
   @Inject
   private Injector injector;

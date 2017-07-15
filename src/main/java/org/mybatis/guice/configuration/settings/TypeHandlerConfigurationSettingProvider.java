@@ -9,7 +9,7 @@ import javax.inject.Provider;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 
-public class TypeHandlerConfigurationSettingProvider implements Provider<ConfigurationSetting> {
+public final class TypeHandlerConfigurationSettingProvider implements Provider<ConfigurationSetting> {
   @Inject private Injector injector;
 
   private final Key<? extends TypeHandler<?>> key;
