@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice.configuration;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +30,7 @@ import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
@@ -97,16 +97,13 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private boolean failFast = false;
 
   @com.google.inject.Inject(optional = true)
-  @Mappers
-  private Set<Class<?>> mapperClasses = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
   private DatabaseIdProvider databaseIdProvider;
 
   @com.google.inject.Inject
   private DataSource dataSource;
 
   private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
+  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<MapperConfigurationSetting>();
 
   @com.google.inject.Inject
   private Injector injector;
@@ -137,17 +134,12 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
-  /**
-   * Adds the user defined Mapper classes to the myBatis Configuration.
-   *
-   * @param mapperClasses the user defined Mapper classes.
-   */
-  public void setMapperClasses(Set<Class<?>> mapperClasses) {
-    this.mapperClasses = mapperClasses;
-  }
-
   public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
+  }
+  
+  public void addMapperConfigurationSetting(final MapperConfigurationSetting configurationSetting) {
+    this.mapperConfigurationSettings.add(configurationSetting);
   }
 
   /**
@@ -184,10 +176,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));
       }
 
-      for (Class<?> mapperClass : mapperClasses) {
-        if (!configuration.hasMapper(mapperClass)) {
-          configuration.addMapper(mapperClass);
-        }
+      for (MapperConfigurationSetting setting : mapperConfigurationSettings) {
+        setting.applyConfigurationSetting(configuration);
       }
 
       if (failFast) {

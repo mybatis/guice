@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
@@ -48,7 +47,6 @@ import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
-import org.mybatis.guice.configuration.Mappers;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
@@ -59,6 +57,7 @@ import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigura
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
@@ -77,7 +76,6 @@ import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.AbstractMatcher;
-import com.google.inject.multibindings.Multibinder;
 import com.google.inject.spi.ProvisionListener;
 
 /**
@@ -104,20 +102,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Class<? extends Provider<? extends Configuration>> configurationProviderType = ConfigurationProvider.class;
 
-  private Multibinder<Class<?>> mappers;
-
   @Override
   final void internalConfigure() {
-    checkState(mappers == null, "Re-entry is not allowed.");
-
-    mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>() {
-    }, Mappers.class);
-
     try {
       initialize();
 
     } finally {
-      mappers = null;
+      
     }
 
     // fixed bindings
@@ -263,6 +254,15 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public <T> void onProvision(ProvisionInvocation<T> provision) {
         ((ConfigurationProvider)provision.provision()).addConfigurationSetting(configurationSetting);
+      }
+    });
+  }
+  
+  public void bindMapperConfigurationSetting(final MapperConfigurationSetting configurationSetting) {
+    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
+      @Override
+      public <T> void onProvision(ProvisionInvocation<T> provision) {
+        ((ConfigurationProvider)provision.provision()).addMapperConfigurationSetting(configurationSetting);
       }
     });
   }
@@ -659,7 +659,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    mappers.addBinding().toInstance(mapperClass);
+    bindMapperConfigurationSetting(new MapperConfigurationSetting(mapperClass));
     bindMapper(mapperClass);
   }
 
