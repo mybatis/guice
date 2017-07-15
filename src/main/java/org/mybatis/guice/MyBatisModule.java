@@ -18,7 +18,6 @@ package org.mybatis.guice;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.mybatis.guice.Preconditions.checkState;
 
 import java.util.Collection;
 import java.util.Set;
@@ -54,6 +53,7 @@ import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
+import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
@@ -70,8 +70,6 @@ import org.mybatis.guice.type.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
 import com.google.inject.Binding;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
@@ -608,21 +606,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    */
   protected final void addInterceptorClass(final Class<? extends Interceptor> interceptorClass) {
     checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
-    bindConfigurationSettingProvider(new Provider<ConfigurationSetting>() {
-      @Inject
-      private Injector injector;
-
-      @Override
-      public ConfigurationSetting get() {
-        final Interceptor interceptor = injector.getInstance(interceptorClass);
-        return new ConfigurationSetting() {
-          @Override
-          public void applyConfigurationSetting(Configuration configuration) {
-            configuration.addInterceptor(interceptor);
-          }
-        };
-      }
-    });
+    bindConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(interceptorClass));
   }
 
   /**
