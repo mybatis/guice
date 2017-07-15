@@ -17,7 +17,6 @@ package org.mybatis.guice.configuration;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -28,11 +27,9 @@ import javax.sql.DataSource;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 
 import com.google.inject.Injector;
@@ -100,13 +97,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private boolean failFast = false;
 
   @com.google.inject.Inject(optional = true)
-  private Map<Class<?>, TypeHandler<?>> typeHandlers = Collections.emptyMap();
-
-  @com.google.inject.Inject(optional = true)
-  @MappingTypeHandlers
-  private Set<TypeHandler<?>> mappingTypeHandlers = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
   @Mappers
   private Set<Class<?>> mapperClasses = Collections.emptySet();
 
@@ -117,11 +107,11 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private DataSource dataSource;
 
   private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
-  
+
   @com.google.inject.Inject
   private Injector injector;
   public Injector getInjector() {
-	  return injector;
+    return injector;
   }
 
   /**
@@ -148,16 +138,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   }
 
   /**
-   * Adds the user defined type handlers to the myBatis Configuration.
-   *
-   * @param typeHandlers the user defined type handlers.
-   */
-  @com.google.inject.Inject(optional = true)
-  public void registerTypeHandlers(final Map<Class<?>, TypeHandler<?>> typeHandlers) {
-    this.typeHandlers = typeHandlers;
-  }
-
-  /**
    * Adds the user defined Mapper classes to the myBatis Configuration.
    *
    * @param mapperClasses the user defined Mapper classes.
@@ -165,7 +145,7 @@ public class ConfigurationProvider implements Provider<Configuration> {
   public void setMapperClasses(Set<Class<?>> mapperClasses) {
     this.mapperClasses = mapperClasses;
   }
-  
+
   public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
   }
@@ -204,14 +184,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));
       }
 
-      for (Map.Entry<Class<?>, TypeHandler<?>> typeHandler : typeHandlers.entrySet()) {
-        registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());
-      }
-
-      for (TypeHandler<?> typeHandler : mappingTypeHandlers) {
-        configuration.getTypeHandlerRegistry().register(typeHandler);
-      }
-
       for (Class<?> mapperClass : mapperClasses) {
         if (!configuration.hasMapper(mapperClass)) {
           configuration.addMapper(mapperClass);
@@ -229,10 +201,5 @@ public class ConfigurationProvider implements Provider<Configuration> {
     }
 
     return configuration;
-  }
-
-  @SuppressWarnings("unchecked")
-  private <T> void registerTypeHandler(Configuration configuration, Class<?> type, TypeHandler<?> handler) {
-    configuration.getTypeHandlerRegistry().register((Class<T>) type, (TypeHandler<T>) handler);
   }
 }

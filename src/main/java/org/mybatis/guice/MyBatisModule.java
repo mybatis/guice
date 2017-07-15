@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.multibindings.MapBinder.newMapBinder;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
@@ -50,7 +49,6 @@ import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.Mappers;
-import org.mybatis.guice.configuration.MappingTypeHandlers;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
@@ -68,6 +66,8 @@ import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetti
 import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
+import org.mybatis.guice.type.JavaTypeAndHandlerConfigurationSettingProvider;
+import org.mybatis.guice.type.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
 import com.google.inject.Binding;
@@ -77,7 +77,6 @@ import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.AbstractMatcher;
-import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.spi.ProvisionListener;
 
@@ -105,22 +104,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Class<? extends Provider<? extends Configuration>> configurationProviderType = ConfigurationProvider.class;
 
-  private MapBinder<Class<?>, TypeHandler<?>> handlers;
-
-  private Multibinder<TypeHandler<?>> mappingTypeHandlers;
-
   private Multibinder<Class<?>> mappers;
 
   @Override
   final void internalConfigure() {
-    checkState(handlers == null, "Re-entry is not allowed.");
     checkState(mappers == null, "Re-entry is not allowed.");
 
-    handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>() {
-    }, new TypeLiteral<TypeHandler<?>>() {
-    });
-    mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>() {
-    }, MappingTypeHandlers.class);
     mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>() {
     }, Mappers.class);
 
@@ -128,7 +117,6 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       initialize();
 
     } finally {
-      handlers = null;
       mappers = null;
     }
 
@@ -260,37 +248,36 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   public static class KeyMatcher <T> extends AbstractMatcher<Binding<?>> {
-	  private final Key<T> key;
-	  KeyMatcher(Key<T> key){
-		  this.key = key;
-	  }
-	  @Override
-	  public boolean matches(Binding<?> t) {
-		  return key.equals(t.getKey());
-	  }
+    private final Key<T> key;
+    KeyMatcher(Key<T> key){
+      this.key = key;
+    }
+    @Override
+    public boolean matches(Binding<?> t) {
+      return key.equals(t.getKey());
+    }
   }
-  
+
   public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-	  bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
-		  @Override
-		  public <T> void onProvision(ProvisionInvocation<T> provision) {
-			  ((ConfigurationProvider)provision.provision()).addConfigurationSetting(configurationSetting);
-		  }
-	  });
+    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
+      @Override
+      public <T> void onProvision(ProvisionInvocation<T> provision) {
+        ((ConfigurationProvider)provision.provision()).addConfigurationSetting(configurationSetting);
+      }
+    });
   }
 
   public void bindConfigurationSettingProvider(
       final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-	  
-	  
-	  bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
-		  @Override
-		  public <T> void onProvision(ProvisionInvocation<T> provision) {
-			  ConfigurationProvider configurationProvider = (ConfigurationProvider)provision.provision();
-			  configurationProvider.getInjector().injectMembers(configurationSettingProvider);
-			  configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
-		  }
-	  });
+
+    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
+      @Override
+      public <T> void onProvision(ProvisionInvocation<T> provision) {
+        ConfigurationProvider configurationProvider = (ConfigurationProvider)provision.provision();
+        configurationProvider.getInjector().injectMembers(configurationSettingProvider);
+        configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
+      }
+    });
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -456,10 +443,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       public void to(final Class<?> clazz) {
         checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
         bindConfigurationSetting(new ConfigurationSetting() {
-			@Override
-			public void applyConfigurationSetting(Configuration configuration) {
-				configuration.getTypeAliasRegistry().registerAlias(alias, clazz);
-			}
+          @Override
+          public void applyConfigurationSetting(Configuration configuration) {
+            configuration.getTypeAliasRegistry().registerAlias(alias, clazz);
+          }
         });
       }
 
@@ -534,33 +521,32 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void with(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindTypeHandler(TypeLiteral.get(handler));
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
       public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindTypeHandler(handler);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
-      public void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler) {
+      public void withProvidedTypeHandler(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
-
         bindProvidedTypeHandler(TypeLiteral.get(handler), type);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
-      public void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+      public void withProvidedTypeHandler(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindProvidedTypeHandler(handler, type);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       final <TH extends TypeHandler<? extends T>> void bindTypeHandler(TypeLiteral<TH> typeHandlerType) {
@@ -570,7 +556,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType,
           Class<T> type) {
         bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type)))
-            .in(Scopes.SINGLETON);
+        .in(Scopes.SINGLETON);
       }
     };
   }
@@ -581,10 +567,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param handlerClass the handler type.
    */
-  protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
+  protected final void addTypeHandlerClass(final Class<? extends TypeHandler<?>> handlerClass) {
     checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
-    mappingTypeHandlers.addBinding().to(handlerClass);
     bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);
+    
+    bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));
   }
 
   /**
@@ -622,20 +609,20 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addInterceptorClass(final Class<? extends Interceptor> interceptorClass) {
     checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
     bindConfigurationSettingProvider(new Provider<ConfigurationSetting>() {
-    		@Inject
-    		private Injector injector;
-    		
-		@Override
-		public ConfigurationSetting get() {
-			final Interceptor interceptor = injector.getInstance(interceptorClass);
-			return new ConfigurationSetting() {
-				@Override
-				public void applyConfigurationSetting(Configuration configuration) {
-					configuration.addInterceptor(interceptor);
-				}
-			};
-		}
-	});
+      @Inject
+      private Injector injector;
+
+      @Override
+      public ConfigurationSetting get() {
+        final Interceptor interceptor = injector.getInstance(interceptorClass);
+        return new ConfigurationSetting() {
+          @Override
+          public void applyConfigurationSetting(Configuration configuration) {
+            configuration.addInterceptor(interceptor);
+          }
+        };
+      }
+    });
   }
 
   /**
