@@ -47,6 +47,7 @@ import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
+import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
@@ -64,17 +65,16 @@ import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfiguratio
 import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
 import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
+import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.type.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
-import com.google.inject.Binding;
 import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.matcher.AbstractMatcher;
-import com.google.inject.spi.ProvisionListener;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -236,46 +236,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));
   }
 
-  public static class KeyMatcher <T> extends AbstractMatcher<Binding<?>> {
-    private final Key<T> key;
-    KeyMatcher(Key<T> key){
-      this.key = key;
-    }
-    @Override
-    public boolean matches(Binding<?> t) {
-      return key.equals(t.getKey());
-    }
-  }
-
   public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
-      @Override
-      public <T> void onProvision(ProvisionInvocation<T> provision) {
-        ((ConfigurationProvider)provision.provision()).addConfigurationSetting(configurationSetting);
-      }
-    });
-  }
-  
-  public void bindMapperConfigurationSetting(final MapperConfigurationSetting configurationSetting) {
-    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
-      @Override
-      public <T> void onProvision(ProvisionInvocation<T> provision) {
-        ((ConfigurationProvider)provision.provision()).addMapperConfigurationSetting(configurationSetting);
-      }
-    });
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
   public void bindConfigurationSettingProvider(
       final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-
-    bindListener(new KeyMatcher<ConfigurationProvider>(Key.get(ConfigurationProvider.class)), new ProvisionListener() {
-      @Override
-      public <T> void onProvision(ProvisionInvocation<T> provision) {
-        ConfigurationProvider configurationProvider = (ConfigurationProvider)provision.provision();
-        configurationProvider.getInjector().injectMembers(configurationSettingProvider);
-        configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
-      }
-    });
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSettingProvider)); 
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -440,12 +407,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void to(final Class<?> clazz) {
         checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
-        bindConfigurationSetting(new ConfigurationSetting() {
-          @Override
-          public void applyConfigurationSetting(Configuration configuration) {
-            configuration.getTypeAliasRegistry().registerAlias(alias, clazz);
-          }
-        });
+        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));
       }
 
     };
@@ -535,6 +497,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void withProvidedTypeHandler(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
+        
         bindProvidedTypeHandler(TypeLiteral.get(handler), type);
         bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
@@ -643,7 +606,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    bindMapperConfigurationSetting(new MapperConfigurationSetting(mapperClass));
+    bindConfigurationSetting(new MapperConfigurationSetting(mapperClass));
     bindMapper(mapperClass);
   }
 

@@ -135,11 +135,11 @@ public class ConfigurationProvider implements Provider<Configuration> {
   }
 
   public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    this.configurationSettings.add(configurationSetting);
-  }
-  
-  public void addMapperConfigurationSetting(final MapperConfigurationSetting configurationSetting) {
-    this.mapperConfigurationSettings.add(configurationSetting);
+    if(configurationSetting instanceof MapperConfigurationSetting) {
+      this.mapperConfigurationSettings.add((MapperConfigurationSetting)configurationSetting);
+    } else {
+      this.configurationSettings.add(configurationSetting);
+    }
   }
 
   /**
