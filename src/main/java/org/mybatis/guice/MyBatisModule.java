@@ -55,6 +55,7 @@ import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfiguration
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
 import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
+import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
@@ -62,14 +63,13 @@ import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
+import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
 import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
 import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
-import org.mybatis.guice.type.JavaTypeAndHandlerConfigurationSettingProvider;
-import org.mybatis.guice.type.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
 import com.google.inject.Key;

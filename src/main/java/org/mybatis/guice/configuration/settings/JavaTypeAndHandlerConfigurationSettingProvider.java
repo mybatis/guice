@@ -1,10 +1,9 @@
-package org.mybatis.guice.type;
+package org.mybatis.guice.configuration.settings;
 
 import javax.inject.Provider;
 
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
