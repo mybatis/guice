@@ -1,12 +1,12 @@
 package org.mybatis.guice.provision;
 
+import com.google.inject.spi.ProvisionListener;
+import com.google.inject.util.Providers;
+
 import javax.inject.Provider;
 
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-
-import com.google.inject.spi.ProvisionListener;
-import com.google.inject.util.Providers;
 
 public final class ConfigurationProviderProvisionListener implements ProvisionListener {
 

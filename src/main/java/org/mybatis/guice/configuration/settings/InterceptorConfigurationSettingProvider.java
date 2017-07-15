@@ -1,12 +1,12 @@
 package org.mybatis.guice.configuration.settings;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 import javax.inject.Provider;
 
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
-
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 public class InterceptorConfigurationSettingProvider implements Provider<ConfigurationSetting> {
 

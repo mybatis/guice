@@ -15,6 +15,10 @@
  */
 package org.mybatis.guice.configuration;
 
+import com.google.inject.Injector;
+import com.google.inject.ProvisionException;
+import com.google.inject.name.Named;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,10 +35,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
-
-import com.google.inject.Injector;
-import com.google.inject.ProvisionException;
-import com.google.inject.name.Named;
 
 /**
  * Provides the myBatis Configuration.

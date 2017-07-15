@@ -1,13 +1,13 @@
 package org.mybatis.guice.configuration.settings;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+
 import javax.inject.Provider;
 
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
-
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
 
 public class JavaTypeAndHandlerConfigurationSettingProvider<T> implements Provider<ConfigurationSetting> {
   @Inject private Injector injector;

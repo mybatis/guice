@@ -19,6 +19,10 @@ import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
 
+import com.google.inject.Key;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -71,10 +75,6 @@ import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
 import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
-
-import com.google.inject.Key;
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
