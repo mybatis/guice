@@ -18,8 +18,7 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
   @Override
   public <T> void onProvision(ProvisionInvocation<T> provision) {
     ConfigurationProvider configurationProvider = (ConfigurationProvider)provision.provision();
-    configurationProvider.getInjector().injectMembers(configurationSettingProvider);
-    configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
+    configurationProvider.addConfigurationSettingProvider(configurationSettingProvider);
   }
 
   public static ConfigurationProviderProvisionListener create(final Provider<? extends ConfigurationSetting> configurationSettingProvider) {

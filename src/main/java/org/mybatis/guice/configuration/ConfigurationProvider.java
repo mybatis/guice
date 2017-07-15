@@ -107,9 +107,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
 
   @com.google.inject.Inject
   private Injector injector;
-  public Injector getInjector() {
-    return injector;
-  }
 
   /**
    * @since 1.0.1
@@ -134,7 +131,9 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
-  public void addConfigurationSetting(final ConfigurationSetting configurationSetting) {
+  public void addConfigurationSettingProvider(final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
+    injector.injectMembers(configurationSettingProvider);
+    ConfigurationSetting configurationSetting = configurationSettingProvider.get();
     if(configurationSetting instanceof MapperConfigurationSetting) {
       this.mapperConfigurationSettings.add((MapperConfigurationSetting)configurationSetting);
     } else {
