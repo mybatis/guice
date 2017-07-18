@@ -15,7 +15,9 @@
  */
 package org.mybatis.guice.type;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
 
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
@@ -52,7 +54,10 @@ public class TypeHandlerProviderTest {
   public void get() {
     CustomLongTypeHandler typeHandler = typeHandlerProvider.get();
     assertNotNull(typeHandler);
+    verify(injector).injectMembers(typeHandler);
     GenericCustomObjectTypeHandler<CustomObject> genericTypeHandler = genericTypeHandlerProvider.get();
     assertNotNull(genericTypeHandler);
+    verify(injector).injectMembers(genericTypeHandler);
+    assertEquals(CustomObject.class, genericTypeHandler.getType());
   }
 }
