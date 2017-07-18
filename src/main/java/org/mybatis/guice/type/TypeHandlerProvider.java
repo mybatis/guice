@@ -20,12 +20,12 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 
+import org.apache.ibatis.type.TypeException;
+import org.apache.ibatis.type.TypeHandler;
+
 import java.lang.reflect.Constructor;
 
 import javax.inject.Provider;
-
-import org.apache.ibatis.type.TypeException;
-import org.apache.ibatis.type.TypeHandler;
 
 /**
  * A generic MyBatis type provider.
@@ -44,6 +44,16 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
   public TypeHandlerProvider(TypeLiteral<TH> typeHandlerType, Class<T> handledType) {
     this.typeHandlerTypeLiteral = typeHandlerType;
     this.handledType = handledType;
+  }
+
+  TypeHandlerProvider(Injector injector, Class<TH> typeHandlerType, Class<T> handledType) {
+    this(typeHandlerType, handledType);
+    this.injector = injector;
+  }
+
+  TypeHandlerProvider(Injector injector, TypeLiteral<TH> typeHandlerType, Class<T> handledType) {
+    this(typeHandlerType, handledType);
+    this.injector = injector;
   }
 
   @Override
