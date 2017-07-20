@@ -185,8 +185,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.getMappedStatementNames();
       }
     } catch (Throwable cause) {
-      throw new ProvisionException(
-          "An error occurred while building the org.apache.ibatis.session.Configuration", cause);
+      throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration",
+          cause);
     } finally {
       ErrorContext.instance().reset();
     }
