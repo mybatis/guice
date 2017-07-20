@@ -153,35 +153,31 @@ public class ConfigurationProviderTest {
       protected void configure() {
         bind(Environment.class).toInstance(environment);
         bind(DataSource.class).toInstance(dataSource);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
-            .to(true);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.aggressiveLazyLoading"))
-            .to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.multipleResultSetsEnabled"))
-            .to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.useGeneratedKeys"))
-            .to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.aggressiveLazyLoading")).to(false);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.multipleResultSetsEnabled")).to(false);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.useGeneratedKeys")).to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.useColumnLabel")).to(false);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.cacheEnabled")).to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultExecutorType"))
-            .to(ExecutorType.REUSE);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultExecutorType")).to(ExecutorType.REUSE);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.autoMappingBehavior"))
             .to(AutoMappingBehavior.FULL);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.callSettersOnNulls"))
-            .to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.callSettersOnNulls")).to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultStatementTimeout"))
             .to(defaultStatementTimeout);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.mapUnderscoreToCamelCase"))
-            .to(true);
-        bind(Key.get(new TypeLiteral<Map<String, Class<?>>>() {}, TypeAliases.class))
-            .toInstance(typeAliases);
-        bind(new TypeLiteral<Map<Class<?>, TypeHandler<?>>>() {}).toInstance(typeHandlers);
-        bind(Key.get(new TypeLiteral<Set<TypeHandler<?>>>() {}, MappingTypeHandlers.class))
-            .toInstance(mappingTypeHandlers);
-        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {}, Mappers.class)).toInstance(mapperClasses);
-        bind(new TypeLiteral<Set<Interceptor>>() {}).toInstance(plugins);
-        bind(Key.get(new TypeLiteral<Set<ConfigurationSetting>>() {}, ConfigurationSettings.class))
-            .toInstance(configurationSettings);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.mapUnderscoreToCamelCase")).to(true);
+        bind(Key.get(new TypeLiteral<Map<String, Class<?>>>() {
+        }, TypeAliases.class)).toInstance(typeAliases);
+        bind(new TypeLiteral<Map<Class<?>, TypeHandler<?>>>() {
+        }).toInstance(typeHandlers);
+        bind(Key.get(new TypeLiteral<Set<TypeHandler<?>>>() {
+        }, MappingTypeHandlers.class)).toInstance(mappingTypeHandlers);
+        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {
+        }, Mappers.class)).toInstance(mapperClasses);
+        bind(new TypeLiteral<Set<Interceptor>>() {
+        }).toInstance(plugins);
+        bind(Key.get(new TypeLiteral<Set<ConfigurationSetting>>() {
+        }, ConfigurationSettings.class)).toInstance(configurationSettings);
         bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);
         bind(Configuration.class).toProvider(configurationProvider);
       }
@@ -223,7 +219,8 @@ public class ConfigurationProviderTest {
         bind(Environment.class).toInstance(environment);
         bind(DataSource.class).toInstance(dataSource);
         bind(Configuration.class).toProvider(configurationProvider);
-        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {}, Mappers.class)).toInstance(mapperClasses);
+        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {
+        }, Mappers.class)).toInstance(mapperClasses);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.failFast")).to(true);
       }
     });
