@@ -18,15 +18,6 @@ package org.mybatis.guice.configuration;
 import com.google.inject.ProvisionException;
 import com.google.inject.name.Named;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-import javax.sql.DataSource;
-
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -37,6 +28,15 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSettings;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+import javax.sql.DataSource;
 
 /**
  * Provides the myBatis Configuration.
@@ -100,7 +100,7 @@ public class ConfigurationProvider implements Provider<Configuration> {
 
   @com.google.inject.Inject(optional = true)
   @TypeAliases
-  private Map<String, Class<?>> typeAliases;
+  private Map<String, Class<?>> typeAliases = Collections.emptyMap();
 
   @com.google.inject.Inject(optional = true)
   private Map<Class<?>, TypeHandler<?>> typeHandlers = Collections.emptyMap();
@@ -142,7 +142,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * Flag to check all statements are completed.
    *
-   * @param failFast flag to check all statements are completed
+   * @param failFast
+   *          flag to check all statements are completed
    * @since 1.0.1
    */
   public void setFailFast(boolean failFast) {
@@ -152,7 +153,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * Adds the user defined type aliases to the myBatis Configuration.
    *
-   * @param typeAliases the user defined type aliases.
+   * @param typeAliases
+   *          the user defined type aliases.
    */
   public void setTypeAliases(Map<String, Class<?>> typeAliases) {
     this.typeAliases = typeAliases;
@@ -161,7 +163,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * Adds the user defined type handlers to the myBatis Configuration.
    *
-   * @param typeHandlers the user defined type handlers.
+   * @param typeHandlers
+   *          the user defined type handlers.
    */
   @com.google.inject.Inject(optional = true)
   public void registerTypeHandlers(final Map<Class<?>, TypeHandler<?>> typeHandlers) {
@@ -171,17 +174,18 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * Adds the user defined Mapper classes to the myBatis Configuration.
    *
-   * @param mapperClasses the user defined Mapper classes.
+   * @param mapperClasses
+   *          the user defined Mapper classes.
    */
   public void setMapperClasses(Set<Class<?>> mapperClasses) {
     this.mapperClasses = mapperClasses;
   }
 
   /**
-   * Registers the user defined plugins interceptors to the
-   * myBatis Configuration.
+   * Registers the user defined plugins interceptors to the myBatis Configuration.
    *
-   * @param plugins the user defined plugins interceptors.
+   * @param plugins
+   *          the user defined plugins interceptors.
    */
   public void setPlugins(Set<Interceptor> plugins) {
     this.plugins = plugins;
@@ -194,7 +198,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * New configuration.
    *
-   * @param environment the environment
+   * @param environment
+   *          the environment
    * @return new configuration
    */
   protected Configuration newConfiguration(Environment environment) {
@@ -251,8 +256,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.getMappedStatementNames();
       }
     } catch (Throwable cause) {
-      throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration",
-          cause);
+      throw new ProvisionException(
+          "An error occurred while building the org.apache.ibatis.session.Configuration", cause);
     } finally {
       ErrorContext.instance().reset();
     }
@@ -261,7 +266,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   }
 
   @SuppressWarnings("unchecked")
-  private <T> void registerTypeHandler(Configuration configuration, Class<?> type, TypeHandler<?> handler) {
+  private <T> void registerTypeHandler(Configuration configuration, Class<?> type,
+      TypeHandler<?> handler) {
     configuration.getTypeHandlerRegistry().register((Class<T>) type, (TypeHandler<T>) handler);
   }
 
