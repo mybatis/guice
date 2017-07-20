@@ -124,7 +124,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * Flag to check all statements are completed.
    *
-   * @param failFast flag to check all statements are completed
+   * @param failFast
+   *          flag to check all statements are completed
    * @since 1.0.1
    */
   public void setFailFast(boolean failFast) {
@@ -144,7 +145,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
   /**
    * New configuration.
    *
-   * @param environment the environment
+   * @param environment
+   *          the environment
    * @return new configuration
    */
   protected Configuration newConfiguration(Environment environment) {
@@ -183,8 +185,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.getMappedStatementNames();
       }
     } catch (Throwable cause) {
-      throw new ProvisionException("An error occurred while building the org.apache.ibatis.session.Configuration",
-          cause);
+      throw new ProvisionException(
+          "An error occurred while building the org.apache.ibatis.session.Configuration", cause);
     } finally {
       ErrorContext.instance().reset();
     }
