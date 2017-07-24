@@ -190,6 +190,31 @@ public class ConfigurationProviderTest {
     assertEquals(defaultFetchSize, configuration.getDefaultFetchSize());
   }
 
+  @Test
+  public void get_ConfigurationSettingOverwritesNamed() throws Throwable {
+    configurationSettings.add(new ConfigurationSetting() {
+      @Override
+      public void applyConfigurationSetting(Configuration configuration) {
+        configuration.setLazyLoadingEnabled(false);
+      }
+    });
+    injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bind(Environment.class).toInstance(environment);
+        bind(DataSource.class).toInstance(dataSource);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
+        bind(Key.get(new TypeLiteral<Set<ConfigurationSetting>>() {
+        }, ConfigurationSettings.class)).toInstance(configurationSettings);
+      }
+    });
+
+    Configuration configuration = injector.getInstance(Configuration.class);
+
+    configuration.getMappedStatementNames(); // Test that configuration is valid.
+    assertFalse(configuration.isLazyLoadingEnabled());
+  }
+
   @Test(expected = ProvisionException.class)
   public void get_FailFast() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
