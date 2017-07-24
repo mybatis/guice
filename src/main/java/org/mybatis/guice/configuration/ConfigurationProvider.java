@@ -132,11 +132,12 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
-  public void addConfigurationSettingProvider(final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
+  public void addConfigurationSettingProvider(
+      final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
     injector.injectMembers(configurationSettingProvider);
     ConfigurationSetting configurationSetting = configurationSettingProvider.get();
-    if(configurationSetting instanceof MapperConfigurationSetting) {
-      this.mapperConfigurationSettings.add((MapperConfigurationSetting)configurationSetting);
+    if (configurationSetting instanceof MapperConfigurationSetting) {
+      this.mapperConfigurationSettings.add((MapperConfigurationSetting) configurationSetting);
     } else {
       this.configurationSettings.add(configurationSetting);
     }

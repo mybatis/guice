@@ -106,7 +106,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       initialize();
 
     } finally {
-      
+
     }
 
     // fixed bindings
@@ -237,12 +237,14 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSetting));
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+        ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
   public void bindConfigurationSettingProvider(
       final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSettingProvider)); 
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+        ConfigurationProviderProvisionListener.create(configurationSettingProvider));
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -497,7 +499,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void withProvidedTypeHandler(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        
+
         bindProvidedTypeHandler(TypeLiteral.get(handler), type);
         bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
@@ -517,7 +519,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType,
           Class<T> type) {
         bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type)))
-        .in(Scopes.SINGLETON);
+            .in(Scopes.SINGLETON);
       }
     };
   }
@@ -531,7 +533,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addTypeHandlerClass(final Class<? extends TypeHandler<?>> handlerClass) {
     checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
     bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);
-    
+
     bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));
   }
 
