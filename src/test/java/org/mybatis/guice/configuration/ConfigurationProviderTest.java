@@ -15,6 +15,7 @@
  */
 package org.mybatis.guice.configuration;
 
+import static com.google.inject.util.Providers.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -49,17 +50,17 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
+import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
+import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
+import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -79,23 +80,11 @@ public class ConfigurationProviderTest {
   public MockitoRule mockitoRule = MockitoJUnit.rule();
   private Injector injector;
   private Environment environment;
-  private Map<String, Class<?>> typeAliases;
-  private Map<Class<?>, TypeHandler<?>> typeHandlers;
-  private Set<TypeHandler<?>> mappingTypeHandlers;
-  private Set<Class<?>> mapperClasses;
-  private Set<Interceptor> plugins;
-  private Set<ConfigurationSetting> configurationSettings;
 
   @Before
   public void beforeTest() {
     environment = new Environment("test", transactionFactory, dataSource);
     configurationProvider = new ConfigurationProvider(environment);
-    typeAliases = new HashMap<String, Class<?>>();
-    typeHandlers = new HashMap<Class<?>, TypeHandler<?>>();
-    mappingTypeHandlers = new HashSet<TypeHandler<?>>();
-    mapperClasses = new HashSet<Class<?>>();
-    configurationSettings = new HashSet<ConfigurationSetting>();
-    plugins = new HashSet<Interceptor>();
   }
 
   @Test
@@ -134,54 +123,59 @@ public class ConfigurationProviderTest {
   @Test
   public void get_Optionals() throws Throwable {
     String databaseId = "test_database_id";
-    typeAliases.put("alias", Alias.class);
-    typeHandlers.put(Alias.class, aliasTypeHandler);
-    mappingTypeHandlers.add(new HumanTypeHandler());
-    mapperClasses.add(TestMapper.class);
-    plugins.add(interceptor);
     final Integer defaultFetchSize = 200;
     final Integer defaultStatementTimeout = 2000;
-    configurationSettings.add(new ConfigurationSetting() {
-      @Override
-      public void applyConfigurationSetting(Configuration configuration) {
-        configuration.setDefaultFetchSize(defaultFetchSize);
-      }
-    });
     when(databaseIdProvider.getDatabaseId(dataSource)).thenReturn(databaseId);
+    final Key<TypeHandler<Alias>> aliasTypeHandlerKey =
+        Key.get(new TypeLiteral<TypeHandler<Alias>>() {});
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
         bind(Environment.class).toInstance(environment);
         bind(DataSource.class).toInstance(dataSource);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.aggressiveLazyLoading")).to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.multipleResultSetsEnabled")).to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.useGeneratedKeys")).to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
+            .to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.aggressiveLazyLoading"))
+            .to(false);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.multipleResultSetsEnabled"))
+            .to(false);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.useGeneratedKeys"))
+            .to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.useColumnLabel")).to(false);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.cacheEnabled")).to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultExecutorType")).to(ExecutorType.REUSE);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultExecutorType"))
+            .to(ExecutorType.REUSE);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.autoMappingBehavior"))
             .to(AutoMappingBehavior.FULL);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.callSettersOnNulls")).to(true);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.callSettersOnNulls"))
+            .to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.defaultStatementTimeout"))
             .to(defaultStatementTimeout);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.mapUnderscoreToCamelCase")).to(true);
-        bind(Key.get(new TypeLiteral<Map<String, Class<?>>>() {
-        }, TypeAliases.class)).toInstance(typeAliases);
-        bind(new TypeLiteral<Map<Class<?>, TypeHandler<?>>>() {
-        }).toInstance(typeHandlers);
-        bind(Key.get(new TypeLiteral<Set<TypeHandler<?>>>() {
-        }, MappingTypeHandlers.class)).toInstance(mappingTypeHandlers);
-        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {
-        }, Mappers.class)).toInstance(mapperClasses);
-        bind(new TypeLiteral<Set<Interceptor>>() {
-        }).toInstance(plugins);
-        bind(Key.get(new TypeLiteral<Set<ConfigurationSetting>>() {
-        }, ConfigurationSettings.class)).toInstance(configurationSettings);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.mapUnderscoreToCamelCase"))
+            .to(true);
         bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);
         bind(Configuration.class).toProvider(configurationProvider);
+        bind(aliasTypeHandlerKey).toInstance(aliasTypeHandler);
+        bind(Interceptor.class).toInstance(interceptor);
       }
     });
+    configurationProvider
+        .addConfigurationSettingProvider(of(new AliasConfigurationSetting("alias", Alias.class)));
+    configurationProvider.addConfigurationSettingProvider(
+        new JavaTypeAndHandlerConfigurationSettingProvider<Alias>(Alias.class,
+            aliasTypeHandlerKey));
+    configurationProvider.addConfigurationSettingProvider(
+        new TypeHandlerConfigurationSettingProvider(Key.get(HumanTypeHandler.class)));
+    configurationProvider
+        .addConfigurationSettingProvider(of(new MapperConfigurationSetting(TestMapper.class)));
+    configurationProvider.addConfigurationSettingProvider(
+        new InterceptorConfigurationSettingProvider(Interceptor.class));
+    configurationProvider.addConfigurationSettingProvider(of((new ConfigurationSetting() {
+      @Override
+      public void applyConfigurationSetting(Configuration configuration) {
+        configuration.setDefaultFetchSize(defaultFetchSize);
+      }
+    })));
 
     Configuration configuration = injector.getInstance(Configuration.class);
 
@@ -212,22 +206,22 @@ public class ConfigurationProviderTest {
 
   @Test
   public void get_ConfigurationSettingOverwritesNamed() throws Throwable {
-    configurationSettings.add(new ConfigurationSetting() {
-      @Override
-      public void applyConfigurationSetting(Configuration configuration) {
-        configuration.setLazyLoadingEnabled(false);
-      }
-    });
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
         bind(Environment.class).toInstance(environment);
         bind(DataSource.class).toInstance(dataSource);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
-        bind(Key.get(new TypeLiteral<Set<ConfigurationSetting>>() {
-        }, ConfigurationSettings.class)).toInstance(configurationSettings);
+        bind(Configuration.class).toProvider(configurationProvider);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled"))
+            .to(true);
       }
     });
+    configurationProvider.addConfigurationSettingProvider(of(new ConfigurationSetting() {
+      @Override
+      public void applyConfigurationSetting(Configuration configuration) {
+        configuration.setLazyLoadingEnabled(false);
+      }
+    }));
 
     Configuration configuration = injector.getInstance(Configuration.class);
 
@@ -237,19 +231,18 @@ public class ConfigurationProviderTest {
 
   @Test(expected = ProvisionException.class)
   public void get_FailFast() throws Throwable {
-    mapperClasses.add(ErrorMapper.class);
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
         bind(Environment.class).toInstance(environment);
         bind(DataSource.class).toInstance(dataSource);
         bind(Configuration.class).toProvider(configurationProvider);
-        bind(Key.get(new TypeLiteral<Set<Class<?>>>() {
-        }, Mappers.class)).toInstance(mapperClasses);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.failFast")).to(true);
       }
     });
 
+    configurationProvider
+        .addConfigurationSettingProvider(of(new MapperConfigurationSetting(ErrorMapper.class)));
     injector.getInstance(Configuration.class);
   }
 

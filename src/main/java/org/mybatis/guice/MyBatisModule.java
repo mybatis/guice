@@ -15,18 +15,13 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.mybatis.guice.Preconditions.checkState;
 
+import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
-import com.google.inject.util.Providers;
 
 import java.util.Collection;
 import java.util.Set;
@@ -55,26 +50,29 @@ import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
-import org.mybatis.guice.configuration.Mappers;
-import org.mybatis.guice.configuration.MappingTypeHandlers;
-import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
+import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
 import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
+import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
+import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
+import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
 import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
+import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
@@ -102,47 +100,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
   private Class<? extends Provider<? extends Configuration>> configurationProviderType = ConfigurationProvider.class;
 
-  private MapBinder<String, Class<?>> aliases;
-
-  private MapBinder<Class<?>, TypeHandler<?>> handlers;
-
-  private Multibinder<TypeHandler<?>> mappingTypeHandlers;
-
-  private Multibinder<Interceptor> interceptors;
-
-  private Multibinder<Class<?>> mappers;
-
-  private Multibinder<ConfigurationSetting> configurationSettings;
-
   @Override
   final void internalConfigure() {
-    checkState(aliases == null, "Re-entry is not allowed.");
-    checkState(handlers == null, "Re-entry is not allowed.");
-    checkState(interceptors == null, "Re-entry is not allowed.");
-    checkState(mappers == null, "Re-entry is not allowed.");
-    checkState(configurationSettings == null, "Re-entry is not allowed.");
-
-    aliases = newMapBinder(binder(), new TypeLiteral<String>() {
-    }, new TypeLiteral<Class<?>>() {
-    }, TypeAliases.class);
-    handlers = newMapBinder(binder(), new TypeLiteral<Class<?>>() {
-    }, new TypeLiteral<TypeHandler<?>>() {
-    });
-    interceptors = newSetBinder(binder(), Interceptor.class);
-    mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral<TypeHandler<?>>() {
-    }, MappingTypeHandlers.class);
-    mappers = newSetBinder(binder(), new TypeLiteral<Class<?>>() {
-    }, Mappers.class);
-    configurationSettings = newSetBinder(binder(), ConfigurationSetting.class, ConfigurationSettings.class);
-
     try {
       initialize();
 
     } finally {
-      aliases = null;
-      handlers = null;
-      interceptors = null;
-      mappers = null;
+      
     }
 
     // fixed bindings
@@ -273,12 +237,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    configurationSettings.addBinding().toProvider(Providers.of(configurationSetting));
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
   public void bindConfigurationSettingProvider(
       final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    configurationSettings.addBinding().toProvider(guicify(configurationSettingProvider));
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)), ConfigurationProviderProvisionListener.create(configurationSettingProvider)); 
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -443,7 +407,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void to(final Class<?> clazz) {
         checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
-        aliases.addBinding(alias).toInstance(clazz);
+        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));
       }
 
     };
@@ -517,33 +481,33 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       @Override
       public void with(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindTypeHandler(TypeLiteral.get(handler));
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
       public void with(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindTypeHandler(handler);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
-      public void withProvidedTypeHandler(Class<? extends TypeHandler<? extends T>> handler) {
+      public void withProvidedTypeHandler(final Class<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
-
+        
         bindProvidedTypeHandler(TypeLiteral.get(handler), type);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       @Override
-      public void withProvidedTypeHandler(TypeLiteral<? extends TypeHandler<? extends T>> handler) {
+      public void withProvidedTypeHandler(final TypeLiteral<? extends TypeHandler<? extends T>> handler) {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
-        handlers.addBinding(type).to(handler);
 
         bindProvidedTypeHandler(handler, type);
+        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
       }
 
       final <TH extends TypeHandler<? extends T>> void bindTypeHandler(TypeLiteral<TH> typeHandlerType) {
@@ -553,7 +517,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
       final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType,
           Class<T> type) {
         bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type)))
-            .in(Scopes.SINGLETON);
+        .in(Scopes.SINGLETON);
       }
     };
   }
@@ -564,10 +528,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param handlerClass the handler type.
    */
-  protected final void addTypeHandlerClass(Class<? extends TypeHandler<?>> handlerClass) {
+  protected final void addTypeHandlerClass(final Class<? extends TypeHandler<?>> handlerClass) {
     checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
-    mappingTypeHandlers.addBinding().to(handlerClass);
     bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);
+    
+    bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));
   }
 
   /**
@@ -602,9 +567,9 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param interceptorClass The user defined MyBatis interceptor plugin type
    */
-  protected final void addInterceptorClass(Class<? extends Interceptor> interceptorClass) {
+  protected final void addInterceptorClass(final Class<? extends Interceptor> interceptorClass) {
     checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
-    interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);
+    bindConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(interceptorClass));
   }
 
   /**
@@ -641,7 +606,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    mappers.addBinding().toInstance(mapperClass);
+    bindConfigurationSetting(new MapperConfigurationSetting(mapperClass));
     bindMapper(mapperClass);
   }
 

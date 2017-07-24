@@ -15,28 +15,26 @@
  */
 package org.mybatis.guice.configuration;
 
+import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import com.google.inject.name.Named;
 
-import org.apache.ibatis.executor.ErrorContext;
-import org.apache.ibatis.mapping.DatabaseIdProvider;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
-
-import java.util.Collections;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
+
+import org.apache.ibatis.executor.ErrorContext;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.AutoMappingBehavior;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
+import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
 /**
  * Provides the myBatis Configuration.
@@ -99,32 +97,16 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private boolean failFast = false;
 
   @com.google.inject.Inject(optional = true)
-  @TypeAliases
-  private Map<String, Class<?>> typeAliases = Collections.emptyMap();
-
-  @com.google.inject.Inject(optional = true)
-  private Map<Class<?>, TypeHandler<?>> typeHandlers = Collections.emptyMap();
-
-  @com.google.inject.Inject(optional = true)
-  @MappingTypeHandlers
-  private Set<TypeHandler<?>> mappingTypeHandlers = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
-  @Mappers
-  private Set<Class<?>> mapperClasses = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
-  private Set<Interceptor> plugins = Collections.emptySet();
-
-  @com.google.inject.Inject(optional = true)
   private DatabaseIdProvider databaseIdProvider;
 
   @com.google.inject.Inject
   private DataSource dataSource;
 
-  @com.google.inject.Inject(optional = true)
-  @ConfigurationSettings
-  private Set<ConfigurationSetting> configurationSettings = Collections.emptySet();
+  private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
+  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<MapperConfigurationSetting>();
+
+  @com.google.inject.Inject
+  private Injector injector;
 
   /**
    * @since 1.0.1
@@ -150,49 +132,14 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
-  /**
-   * Adds the user defined type aliases to the myBatis Configuration.
-   *
-   * @param typeAliases
-   *          the user defined type aliases.
-   */
-  public void setTypeAliases(Map<String, Class<?>> typeAliases) {
-    this.typeAliases = typeAliases;
-  }
-
-  /**
-   * Adds the user defined type handlers to the myBatis Configuration.
-   *
-   * @param typeHandlers
-   *          the user defined type handlers.
-   */
-  @com.google.inject.Inject(optional = true)
-  public void registerTypeHandlers(final Map<Class<?>, TypeHandler<?>> typeHandlers) {
-    this.typeHandlers = typeHandlers;
-  }
-
-  /**
-   * Adds the user defined Mapper classes to the myBatis Configuration.
-   *
-   * @param mapperClasses
-   *          the user defined Mapper classes.
-   */
-  public void setMapperClasses(Set<Class<?>> mapperClasses) {
-    this.mapperClasses = mapperClasses;
-  }
-
-  /**
-   * Registers the user defined plugins interceptors to the myBatis Configuration.
-   *
-   * @param plugins
-   *          the user defined plugins interceptors.
-   */
-  public void setPlugins(Set<Interceptor> plugins) {
-    this.plugins = plugins;
-  }
-
-  public void setConfigurationSettings(Set<ConfigurationSetting> configurationSettings) {
-    this.configurationSettings = configurationSettings;
+  public void addConfigurationSettingProvider(final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
+    injector.injectMembers(configurationSettingProvider);
+    ConfigurationSetting configurationSetting = configurationSettingProvider.get();
+    if(configurationSetting instanceof MapperConfigurationSetting) {
+      this.mapperConfigurationSettings.add((MapperConfigurationSetting)configurationSetting);
+    } else {
+      this.configurationSettings.add(configurationSetting);
+    }
   }
 
   /**
@@ -230,26 +177,8 @@ public class ConfigurationProvider implements Provider<Configuration> {
         configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));
       }
 
-      for (Map.Entry<String, Class<?>> alias : typeAliases.entrySet()) {
-        configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());
-      }
-
-      for (Map.Entry<Class<?>, TypeHandler<?>> typeHandler : typeHandlers.entrySet()) {
-        registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());
-      }
-
-      for (TypeHandler<?> typeHandler : mappingTypeHandlers) {
-        configuration.getTypeHandlerRegistry().register(typeHandler);
-      }
-
-      for (Class<?> mapperClass : mapperClasses) {
-        if (!configuration.hasMapper(mapperClass)) {
-          configuration.addMapper(mapperClass);
-        }
-      }
-
-      for (Interceptor interceptor : plugins) {
-        configuration.addInterceptor(interceptor);
+      for (MapperConfigurationSetting setting : mapperConfigurationSettings) {
+        setting.applyConfigurationSetting(configuration);
       }
 
       if (failFast) {
@@ -264,10 +193,4 @@ public class ConfigurationProvider implements Provider<Configuration> {
 
     return configuration;
   }
-
-  @SuppressWarnings("unchecked")
-  private <T> void registerTypeHandler(Configuration configuration, Class<?> type, TypeHandler<?> handler) {
-    configuration.getTypeHandlerRegistry().register((Class<T>) type, (TypeHandler<T>) handler);
-  }
-
 }
