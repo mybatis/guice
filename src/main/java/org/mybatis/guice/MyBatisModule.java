@@ -236,12 +236,12 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
     bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));
   }
 
-  public void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
+  protected final void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
     bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
         ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
-  public <P extends Provider<? extends ConfigurationSetting>> void bindConfigurationSettingProvider(
+  protected final <P extends Provider<? extends ConfigurationSetting>> void bindConfigurationSettingProvider(
       P configurationSettingProvider) {
     bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
         ConfigurationProviderProvisionListener.create(configurationSettingProvider, binder()));
