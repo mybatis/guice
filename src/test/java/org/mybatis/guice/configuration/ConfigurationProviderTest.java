@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice.configuration;
 
-import static com.google.inject.util.Providers.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -30,6 +29,13 @@ import com.google.inject.Key;
 import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.ResultMap;
@@ -56,13 +62,6 @@ import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingP
 import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
-
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 public class ConfigurationProviderTest {
   private ConfigurationProvider configurationProvider;
@@ -152,20 +151,27 @@ public class ConfigurationProviderTest {
         bind(Interceptor.class).toInstance(interceptor);
       }
     });
-    configurationProvider.addConfigurationSettingProvider(of(new AliasConfigurationSetting("alias", Alias.class)));
-    configurationProvider.addConfigurationSettingProvider(
-        new JavaTypeAndHandlerConfigurationSettingProvider<Alias>(Alias.class, aliasTypeHandlerKey));
     configurationProvider
-        .addConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(HumanTypeHandler.class)));
-    configurationProvider.addConfigurationSettingProvider(of(new MapperConfigurationSetting(TestMapper.class)));
-    configurationProvider
-        .addConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(Interceptor.class));
-    configurationProvider.addConfigurationSettingProvider(of((new ConfigurationSetting() {
+        .addConfigurationSetting(new AliasConfigurationSetting("alias", Alias.class));
+    JavaTypeAndHandlerConfigurationSettingProvider aliasTypeHandlerSetting =
+        JavaTypeAndHandlerConfigurationSettingProvider.create(Alias.class, aliasTypeHandlerKey);
+    injector.injectMembers(aliasTypeHandlerSetting);
+    configurationProvider.addConfigurationSetting(aliasTypeHandlerSetting.get());
+    TypeHandlerConfigurationSettingProvider humanTypeHandlerSetting =
+        new TypeHandlerConfigurationSettingProvider(Key.get(HumanTypeHandler.class));
+    injector.injectMembers(humanTypeHandlerSetting);
+    configurationProvider.addConfigurationSetting(humanTypeHandlerSetting.get());
+    configurationProvider.addMapperConfigurationSetting(new MapperConfigurationSetting(TestMapper.class));
+    InterceptorConfigurationSettingProvider interceptorSetting =
+        new InterceptorConfigurationSettingProvider(Interceptor.class);
+    injector.injectMembers(interceptorSetting);
+    configurationProvider.addConfigurationSetting(interceptorSetting.get());
+    configurationProvider.addConfigurationSetting((new ConfigurationSetting() {
       @Override
       public void applyConfigurationSetting(Configuration configuration) {
         configuration.setDefaultFetchSize(defaultFetchSize);
       }
-    })));
+    }));
 
     Configuration configuration = injector.getInstance(Configuration.class);
 
@@ -205,12 +211,12 @@ public class ConfigurationProviderTest {
         bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
       }
     });
-    configurationProvider.addConfigurationSettingProvider(of(new ConfigurationSetting() {
+    configurationProvider.addConfigurationSetting(new ConfigurationSetting() {
       @Override
       public void applyConfigurationSetting(Configuration configuration) {
         configuration.setLazyLoadingEnabled(false);
       }
-    }));
+    });
 
     Configuration configuration = injector.getInstance(Configuration.class);
 
@@ -230,7 +236,7 @@ public class ConfigurationProviderTest {
       }
     });
 
-    configurationProvider.addConfigurationSettingProvider(of(new MapperConfigurationSetting(ErrorMapper.class)));
+    configurationProvider.addMapperConfigurationSetting(new MapperConfigurationSetting(ErrorMapper.class));
     injector.getInstance(Configuration.class);
   }
 

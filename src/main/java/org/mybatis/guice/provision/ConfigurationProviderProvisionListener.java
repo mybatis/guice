@@ -15,34 +15,62 @@
  */
 package org.mybatis.guice.provision;
 
+import com.google.inject.Binder;
+import com.google.inject.MembersInjector;
 import com.google.inject.spi.ProvisionListener;
-import com.google.inject.util.Providers;
 
 import javax.inject.Provider;
 
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
 public final class ConfigurationProviderProvisionListener implements ProvisionListener {
-
-  private final Provider<? extends ConfigurationSetting> configurationSettingProvider;
-
-  ConfigurationProviderProvisionListener(final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    this.configurationSettingProvider = configurationSettingProvider;
+  
+  private final ConfigurationProviderProvisionAction action;
+  ConfigurationProviderProvisionListener(ConfigurationProviderProvisionAction action){
+    this.action = action;
   }
 
   @Override
   public <T> void onProvision(ProvisionInvocation<T> provision) {
     ConfigurationProvider configurationProvider = (ConfigurationProvider) provision.provision();
-    configurationProvider.addConfigurationSettingProvider(configurationSettingProvider);
+    this.action.perform(configurationProvider);
   }
 
-  public static ConfigurationProviderProvisionListener create(
-      final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    return new ConfigurationProviderProvisionListener(configurationSettingProvider);
+  public static <P extends Provider<? extends ConfigurationSetting>> ConfigurationProviderProvisionListener create(
+      final P configurationSettingProvider, final Binder binder) {
+    @SuppressWarnings("unchecked")
+    final MembersInjector<P> membersInjector =
+        (MembersInjector<P>) binder.getMembersInjector(configurationSettingProvider.getClass());
+    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
+      @Override
+      public void perform(ConfigurationProvider configurationProvider) {
+        membersInjector.injectMembers(configurationSettingProvider);
+        configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
+      }
+    });
   }
 
   public static ConfigurationProviderProvisionListener create(final ConfigurationSetting configurationSetting) {
-    return new ConfigurationProviderProvisionListener(Providers.of(configurationSetting));
+    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
+      @Override
+      public void perform(ConfigurationProvider configurationProvider) {
+        configurationProvider.addConfigurationSetting(configurationSetting);
+      }
+    });
+  }
+  
+  public static ConfigurationProviderProvisionListener create(final MapperConfigurationSetting mapperConfigurationSetting) {
+    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
+      @Override
+      public void perform(ConfigurationProvider configurationProvider) {
+        configurationProvider.addMapperConfigurationSetting(mapperConfigurationSetting);
+      }
+    });
+  }
+  
+  private static interface ConfigurationProviderProvisionAction {
+    void perform(ConfigurationProvider configurationProvider);
   }
 }

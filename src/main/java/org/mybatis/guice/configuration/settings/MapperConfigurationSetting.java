@@ -17,7 +17,7 @@ package org.mybatis.guice.configuration.settings;
 
 import org.apache.ibatis.session.Configuration;
 
-public final class MapperConfigurationSetting implements ConfigurationSetting {
+public final class MapperConfigurationSetting {
 
   private final Class<?> mapperClass;
 
@@ -25,7 +25,6 @@ public final class MapperConfigurationSetting implements ConfigurationSetting {
     this.mapperClass = mapperClass;
   }
 
-  @Override
   public void applyConfigurationSetting(Configuration configuration) {
     if (!configuration.hasMapper(mapperClass)) {
       configuration.addMapper(mapperClass);

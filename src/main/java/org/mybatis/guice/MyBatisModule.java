@@ -241,10 +241,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
-  public void bindConfigurationSettingProvider(
-      final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
+  public <P extends Provider<? extends ConfigurationSetting>> void bindConfigurationSettingProvider(
+      P configurationSettingProvider) {
     bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
-        ConfigurationProviderProvisionListener.create(configurationSettingProvider));
+        ConfigurationProviderProvisionListener.create(configurationSettingProvider, binder()));
   }
 
   private final void bindBoolean(String name, boolean value) {
@@ -485,7 +485,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
 
         bindTypeHandler(TypeLiteral.get(handler));
-        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
+        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));
       }
 
       @Override
@@ -493,7 +493,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
 
         bindTypeHandler(handler);
-        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
+        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));
       }
 
       @Override
@@ -501,7 +501,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
 
         bindProvidedTypeHandler(TypeLiteral.get(handler), type);
-        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
+        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));
       }
 
       @Override
@@ -509,7 +509,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
         checkArgument(handler != null, "TypeHandler must not be null for '%s'", type.getName());
 
         bindProvidedTypeHandler(handler, type);
-        bindConfigurationSettingProvider(new JavaTypeAndHandlerConfigurationSettingProvider<T>(type, Key.get(handler)));
+        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));
       }
 
       final <TH extends TypeHandler<? extends T>> void bindTypeHandler(TypeLiteral<TH> typeHandlerType) {
@@ -608,7 +608,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    bindConfigurationSetting(new MapperConfigurationSetting(mapperClass));
+    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+        ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));
     bindMapper(mapperClass);
   }
 

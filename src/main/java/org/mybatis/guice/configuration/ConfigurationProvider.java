@@ -105,9 +105,6 @@ public class ConfigurationProvider implements Provider<Configuration> {
   private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
   private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<MapperConfigurationSetting>();
 
-  @com.google.inject.Inject
-  private Injector injector;
-
   /**
    * @since 1.0.1
    */
@@ -132,15 +129,12 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
-  public void addConfigurationSettingProvider(
-      final Provider<? extends ConfigurationSetting> configurationSettingProvider) {
-    injector.injectMembers(configurationSettingProvider);
-    ConfigurationSetting configurationSetting = configurationSettingProvider.get();
-    if (configurationSetting instanceof MapperConfigurationSetting) {
-      this.mapperConfigurationSettings.add((MapperConfigurationSetting) configurationSetting);
-    } else {
-      this.configurationSettings.add(configurationSetting);
-    }
+  public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
+    this.configurationSettings.add(configurationSetting);
+  }
+  
+  public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
+    this.mapperConfigurationSettings.add((MapperConfigurationSetting) mapperConfigurationSetting);
   }
 
   /**
