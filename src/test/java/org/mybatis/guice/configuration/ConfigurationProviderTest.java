@@ -151,19 +151,18 @@ public class ConfigurationProviderTest {
         bind(Interceptor.class).toInstance(interceptor);
       }
     });
-    configurationProvider
-        .addConfigurationSetting(new AliasConfigurationSetting("alias", Alias.class));
-    JavaTypeAndHandlerConfigurationSettingProvider aliasTypeHandlerSetting =
-        JavaTypeAndHandlerConfigurationSettingProvider.create(Alias.class, aliasTypeHandlerKey);
+    configurationProvider.addConfigurationSetting(new AliasConfigurationSetting("alias", Alias.class));
+    JavaTypeAndHandlerConfigurationSettingProvider aliasTypeHandlerSetting = JavaTypeAndHandlerConfigurationSettingProvider
+        .create(Alias.class, aliasTypeHandlerKey);
     injector.injectMembers(aliasTypeHandlerSetting);
     configurationProvider.addConfigurationSetting(aliasTypeHandlerSetting.get());
-    TypeHandlerConfigurationSettingProvider humanTypeHandlerSetting =
-        new TypeHandlerConfigurationSettingProvider(Key.get(HumanTypeHandler.class));
+    TypeHandlerConfigurationSettingProvider humanTypeHandlerSetting = new TypeHandlerConfigurationSettingProvider(
+        Key.get(HumanTypeHandler.class));
     injector.injectMembers(humanTypeHandlerSetting);
     configurationProvider.addConfigurationSetting(humanTypeHandlerSetting.get());
     configurationProvider.addMapperConfigurationSetting(new MapperConfigurationSetting(TestMapper.class));
-    InterceptorConfigurationSettingProvider interceptorSetting =
-        new InterceptorConfigurationSettingProvider(Interceptor.class);
+    InterceptorConfigurationSettingProvider interceptorSetting = new InterceptorConfigurationSettingProvider(
+        Interceptor.class);
     injector.injectMembers(interceptorSetting);
     configurationProvider.addConfigurationSetting(interceptorSetting.get());
     configurationProvider.addConfigurationSetting((new ConfigurationSetting() {

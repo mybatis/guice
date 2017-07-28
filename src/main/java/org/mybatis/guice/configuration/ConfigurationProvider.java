@@ -132,7 +132,7 @@ public class ConfigurationProvider implements Provider<Configuration> {
   public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
   }
-  
+
   public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
     this.mapperConfigurationSettings.add((MapperConfigurationSetting) mapperConfigurationSetting);
   }

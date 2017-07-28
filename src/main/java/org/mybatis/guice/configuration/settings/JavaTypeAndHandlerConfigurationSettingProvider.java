@@ -39,22 +39,20 @@ public final class JavaTypeAndHandlerConfigurationSettingProvider implements Pro
     return wrapper.get(injector);
   }
 
-  public static <T> JavaTypeAndHandlerConfigurationSettingProvider create(
-      final Class<T> type,
+  public static <T> JavaTypeAndHandlerConfigurationSettingProvider create(final Class<T> type,
       final Key<? extends TypeHandler<? extends T>> key) {
     return new JavaTypeAndHandlerConfigurationSettingProvider(new Wrapper<T>(type, key));
   }
-  
+
   private static class Wrapper<T> {
     private final Class<T> type;
     private final Key<? extends TypeHandler<? extends T>> key;
-    
-    private Wrapper(final Class<T> type,
-        final Key<? extends TypeHandler<? extends T>> key) {
+
+    private Wrapper(final Class<T> type, final Key<? extends TypeHandler<? extends T>> key) {
       this.type = type;
       this.key = key;
     }
-    
+
     ConfigurationSetting get(Injector injector) {
       final TypeHandler<? extends T> handlerInstance = injector.getInstance(key);
       return new ConfigurationSetting() {

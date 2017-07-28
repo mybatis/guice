@@ -26,9 +26,10 @@ import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
 public final class ConfigurationProviderProvisionListener implements ProvisionListener {
-  
+
   private final ConfigurationProviderProvisionAction action;
-  ConfigurationProviderProvisionListener(ConfigurationProviderProvisionAction action){
+
+  ConfigurationProviderProvisionListener(ConfigurationProviderProvisionAction action) {
     this.action = action;
   }
 
@@ -41,8 +42,8 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
   public static <P extends Provider<? extends ConfigurationSetting>> ConfigurationProviderProvisionListener create(
       final P configurationSettingProvider, final Binder binder) {
     @SuppressWarnings("unchecked")
-    final MembersInjector<P> membersInjector =
-        (MembersInjector<P>) binder.getMembersInjector(configurationSettingProvider.getClass());
+    final MembersInjector<P> membersInjector = (MembersInjector<P>) binder
+        .getMembersInjector(configurationSettingProvider.getClass());
     return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
       @Override
       public void perform(ConfigurationProvider configurationProvider) {
@@ -60,8 +61,9 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
       }
     });
   }
-  
-  public static ConfigurationProviderProvisionListener create(final MapperConfigurationSetting mapperConfigurationSetting) {
+
+  public static ConfigurationProviderProvisionListener create(
+      final MapperConfigurationSetting mapperConfigurationSetting) {
     return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
       @Override
       public void perform(ConfigurationProvider configurationProvider) {
@@ -69,7 +71,7 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
       }
     });
   }
-  
+
   private static interface ConfigurationProviderProvisionAction {
     void perform(ConfigurationProvider configurationProvider);
   }
