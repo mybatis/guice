@@ -24,28 +24,45 @@ import javax.inject.Provider;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 
-public final class JavaTypeAndHandlerConfigurationSettingProvider<T> implements Provider<ConfigurationSetting> {
+public final class JavaTypeAndHandlerConfigurationSettingProvider implements Provider<ConfigurationSetting> {
   @Inject
   private Injector injector;
 
-  private final Class<T> type;
-  private final Key<? extends TypeHandler<? extends T>> key;
+  private final Wrapper<?> wrapper;
 
-  public JavaTypeAndHandlerConfigurationSettingProvider(final Class<T> type,
-      final Key<? extends TypeHandler<? extends T>> key) {
-    this.type = type;
-    this.key = key;
+  private JavaTypeAndHandlerConfigurationSettingProvider(final Wrapper<?> wrapper) {
+    this.wrapper = wrapper;
   }
 
   @Override
   public ConfigurationSetting get() {
-    final TypeHandler<? extends T> handlerInstance = injector.getInstance(key);
-    return new ConfigurationSetting() {
-      @Override
-      public void applyConfigurationSetting(Configuration configuration) {
-        configuration.getTypeHandlerRegistry().register(type, handlerInstance);
-      }
-    };
+    return wrapper.get(injector);
   }
 
+  public static <T> JavaTypeAndHandlerConfigurationSettingProvider create(
+      final Class<T> type,
+      final Key<? extends TypeHandler<? extends T>> key) {
+    return new JavaTypeAndHandlerConfigurationSettingProvider(new Wrapper<T>(type, key));
+  }
+  
+  private static class Wrapper<T> {
+    private final Class<T> type;
+    private final Key<? extends TypeHandler<? extends T>> key;
+    
+    private Wrapper(final Class<T> type,
+        final Key<? extends TypeHandler<? extends T>> key) {
+      this.type = type;
+      this.key = key;
+    }
+    
+    ConfigurationSetting get(Injector injector) {
+      final TypeHandler<? extends T> handlerInstance = injector.getInstance(key);
+      return new ConfigurationSetting() {
+        @Override
+        public void applyConfigurationSetting(Configuration configuration) {
+          configuration.getTypeHandlerRegistry().register(type, handlerInstance);
+        }
+      };
+    }
+  }
 }
