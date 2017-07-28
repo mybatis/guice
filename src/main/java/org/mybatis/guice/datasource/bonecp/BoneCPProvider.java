@@ -97,13 +97,13 @@ public final class BoneCPProvider implements Provider<DataSource> {
 
   @com.google.inject.Inject(optional = true)
   public void setIdleConnectionTestPeriodInMinutes(
-      @Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
+      @Named("bonecp.idleConnectionTestPeriodInMinutes") long idleConnectionTestPeriod) {
     dataSource.setIdleConnectionTestPeriodInMinutes(idleConnectionTestPeriod);
   }
 
   @com.google.inject.Inject(optional = true)
   public void setIdleConnectionTestPeriodInSeconds(
-      @Named("bonecp.idleConnectionTestPeriod") long idleConnectionTestPeriod) {
+      @Named("bonecp.idleConnectionTestPeriodInSeconds") long idleConnectionTestPeriod) {
     dataSource.setIdleConnectionTestPeriodInSeconds(idleConnectionTestPeriod);
   }
 
@@ -176,7 +176,7 @@ public final class BoneCPProvider implements Provider<DataSource> {
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setQueryExecuteTimeLimit(@Named("bonecp.queryExecuteTimeLimit") int queryExecuteTimeLimit,
+  public void setQueryExecuteTimeLimit(@Named("bonecp.queryExecuteTimeLimit") long queryExecuteTimeLimit,
       @Named("bonecp.timeUnit") TimeUnit timeUnit) {
     dataSource.setQueryExecuteTimeLimit(queryExecuteTimeLimit, timeUnit);
   }
