@@ -15,12 +15,14 @@
  */
 package org.mybatis.guice.datasource.druid;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
+import com.alibaba.druid.pool.DruidDataSource;
+
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -56,11 +58,6 @@ public class DruidDataSourceProvider implements Provider<DataSource> {
   @Inject(optional = true)
   public void setDefaultAutoCommit(@Named("JDBC.autoCommit") final boolean defaultAutoCommit) {
     dataSource.setDefaultAutoCommit(defaultAutoCommit);
-  }
-
-  @Inject(optional = true)
-  public void setDefaultReadOnly(@Named("JDBC.readOnly") final boolean defaultReadOnly) {
-    dataSource.setDefaultAutoCommit(defaultReadOnly);
   }
 
   @Inject(optional = true)
@@ -161,6 +158,11 @@ public class DruidDataSourceProvider implements Provider<DataSource> {
   public void setMaxOpenPreparedStatements(
       @Named("JDBC.maxOpenPreparedStatements") final int maxOpenPreparedStatements) {
     dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);
+  }
+
+  @Inject(optional = true)
+  public void setConnectProperties(@Named("JDBC.connectProperties") final Properties connectionProperties) {
+    dataSource.setConnectProperties(connectionProperties);
   }
 
   @Inject(optional = true)
