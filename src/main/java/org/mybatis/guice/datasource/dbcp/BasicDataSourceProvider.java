@@ -17,7 +17,6 @@ package org.mybatis.guice.datasource.dbcp;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
-import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -87,24 +86,6 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
     dataSource.setDefaultAutoCommit(autoCommit);
-  }
-
-  /**
-   * Sets the login timeout.
-   *
-   * @param loginTimeout
-   *          the new login timeout
-   * @deprecated BasicDataSource does not support setLoginTimeout
-   */
-  @com.google.inject.Inject(optional = true)
-  @Deprecated
-  public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
-    try {
-      dataSource.setLoginTimeout(loginTimeout);
-    } catch (SQLException e) {
-      throw new RuntimeException("Impossible to set DBCP login timeout '" + loginTimeout + "', see nested exceptions",
-          e);
-    }
   }
 
   /**

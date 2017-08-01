@@ -16,13 +16,10 @@
 package org.mybatis.guice.datasource.dbcp;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.ProvisionException;
 import com.google.inject.name.Names;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -212,27 +209,5 @@ public class BasicDataSourceProviderTest {
     assertEquals(testWhileIdle, dataSource.getTestWhileIdle());
     assertEquals(timeBetweenEvictionRunsMillis, dataSource.getTimeBetweenEvictionRunsMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
-  }
-
-  @Test
-  public void get_LoginTimeout() throws Throwable {
-    final String driver = "org.mybatis.guice.TestDriver";
-    final String url = "jdbc:h2:mem:testdb";
-    final int loginTimeout = 10;
-    Injector injector = Guice.createInjector(new AbstractModule() {
-      @Override
-      protected void configure() {
-        bind(ClassLoader.class).annotatedWith(Names.named("JDBC.driverClassLoader")).toInstance(driverClassLoader);
-        bindConstant().annotatedWith(Names.named("JDBC.driver")).to(driver);
-        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
-        bindConstant().annotatedWith(Names.named("JDBC.loginTimeout")).to(loginTimeout);
-      }
-    });
-    try {
-      injector.getInstance(BasicDataSourceProvider.class);
-      fail("Expected ProvisionException");
-    } catch (ProvisionException e) {
-      assertTrue(e.getCause() instanceof UnsupportedOperationException);
-    }
   }
 }
