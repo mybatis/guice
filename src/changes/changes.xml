@@ -27,8 +27,23 @@
 
   <body>
     <release version="3.10" date="" description="maintenance release">
+      <action dev="christian.poitras" type="add">
+        <fixes issue="112"/>
+        Allow Druid connection properties to be set using an instance of Properties.
+      </action>
       <action dev="christian.poitras" type="update">
         Make JdbcUrlAntFormatter class public to allow users to format their custom URLs like in JdbcHelper.
+      </action>
+      <action dev="christian.poitras" type="update">
+        <fixes issue="111"/>
+        Fixes following configuration properties for BoneCP data source.
+        idleConnectionTestPeriod,
+        idleConnectionTestPeriodInMinutes,
+        idleConnectionTestPeriodInSeconds
+      </action>
+      <action dev="christian.poitras" type="update">
+        <fixes issue="110"/>
+        Fixes ProvisionException when setting login timeout for BasicDataSource
       </action>
     </release>
 
