@@ -37,12 +37,6 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   @com.google.inject.Inject(optional = true)
-  @Deprecated
-  public void setDataSourceName(@Named("DBCP.name") String name) {
-    dataSource.setDataSourceName(name);
-  }
-
-  @com.google.inject.Inject(optional = true)
   public void setDefaultAutoCommit(@Named("JDBC.autoCommit") boolean autoCommit) {
     dataSource.setDefaultAutoCommit(autoCommit);
   }
