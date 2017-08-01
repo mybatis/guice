@@ -49,6 +49,9 @@
         <fixes issue="113"/>
         Removed data source name configuration property from SharedPoolDataSourceProvider.
       </action>
+      <action dev="christian.poitras" type="remove">
+        Removed dependency on guice multibindings.
+      </action>
     </release>
 
     <release version="3.9" date="2017-01-05" description="maintenance release">
