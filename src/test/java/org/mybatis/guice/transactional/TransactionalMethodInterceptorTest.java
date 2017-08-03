@@ -32,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class TransactionalMethodInterceptorTest {
@@ -104,7 +105,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_Exception() throws Throwable {
+  public void invoke_RuntimeException() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -126,17 +127,132 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_Exception_Rethrow() throws Throwable {
+  public void invoke_IllegalStateException() throws Throwable {
+    Method method = MethodAnnotation.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    when(invocation.proceed()).thenThrow(new IllegalStateException("test"));
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected IllegalStateException");
+    } catch (IllegalStateException e) {
+      // Success.
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager, never()).commit();
+    verify(sqlSessionManager, never()).commit(anyBoolean());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  public void invoke_IOException_Declared() throws Throwable {
+    Method method = MethodAnnotationIOException.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    when(invocation.proceed()).thenThrow(new IOException("test"));
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected IOException");
+    } catch (IOException e) {
+      // Success.
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager, never()).commit();
+    verify(sqlSessionManager, never()).commit(anyBoolean());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  public void invoke_IOException_Undeclared() throws Throwable {
+    Method method = MethodAnnotation.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    when(invocation.proceed()).thenThrow(new IOException("test"));
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected IOException");
+    } catch (IOException e) {
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager, never()).commit();
+    verify(sqlSessionManager, never()).commit(anyBoolean());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  public void invoke_RuntimeException_Rethrow() throws Throwable {
     Method method = MethodAnnotationRethrow.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
-    when(invocation.proceed()).thenThrow(new RuntimeException("test"));
+    Exception exception = new RuntimeException("test");
+    when(invocation.proceed()).thenThrow(exception);
 
     try {
       transactionalMethodInterceptor.invoke(invocation);
       fail("Expected UnsupportedOperationException");
     } catch (UnsupportedOperationException e) {
       assertEquals("test message", e.getMessage());
+      assertEquals(exception, e.getCause());
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager, never()).commit();
+    verify(sqlSessionManager, never()).commit(anyBoolean());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  public void invoke_IllegalStateException_Rethrow() throws Throwable {
+    Method method = MethodAnnotationRethrow.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    Exception exception = new IllegalStateException("test");
+    when(invocation.proceed()).thenThrow(exception);
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected UnsupportedOperationException");
+    } catch (UnsupportedOperationException e) {
+      assertEquals("test message", e.getMessage());
+      assertEquals(exception, e.getCause());
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager, never()).commit();
+    verify(sqlSessionManager, never()).commit(anyBoolean());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  public void invoke_UnsupportedOperationException_Rethrow() throws Throwable {
+    Method method = MethodAnnotationRethrow.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    Exception exception = new UnsupportedOperationException("test");
+    when(invocation.proceed()).thenThrow(exception);
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected UnsupportedOperationException");
+    } catch (UnsupportedOperationException e) {
+      assertEquals("test", e.getMessage());
+      assertEquals(exception, e);
     }
 
     verify(sqlSessionManager).startManagedSession(transactional.executorType(),
@@ -218,6 +334,12 @@ public class TransactionalMethodInterceptorTest {
   private static class MethodAnnotationCustom {
     @Transactional(executorType = ExecutorType.REUSE, isolation = Isolation.REPEATABLE_READ, force = true)
     public void transaction() {
+    }
+  }
+
+  private static class MethodAnnotationIOException {
+    @Transactional()
+    public void transaction() throws IOException {
     }
   }
 
