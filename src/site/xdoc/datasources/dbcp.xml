@@ -468,9 +468,9 @@ import org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider;
 
 Injector injector = Guice.createInjector(
     new MyBatisModule(PerUserPoolDataSourceProvider.class),
-    new PerUserPoolDataSourceModule()
+    new PerUserPoolDataSourceModule.Builder()
         .setPerUserDefaultAutoCommitProviderClass(
-            MyPerUserDefaultAutoCommit.class);
+            MyPerUserDefaultAutoCommit.class).create();
 );]]></source>
         </p>
         <p>
