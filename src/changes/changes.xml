@@ -49,6 +49,10 @@
         <fixes issue="113"/>
         Removed data source name configuration property from SharedPoolDataSourceProvider.
       </action>
+      <action dev="christian.poitras" type="update">
+        <fixes issue="114"/>
+        Fixes generic types in PerUserPoolDataSourceModule.
+      </action>
       <action dev="christian.poitras" type="remove">
         Removed dependency on guice multibindings.
       </action>
