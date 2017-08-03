@@ -34,12 +34,16 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
    * The ComboPooledDataSource reference.
    */
   private final ComboPooledDataSource dataSource = new ComboPooledDataSource();
+  private String username;
+  private String password;
 
   /**
    * Creates a new ComboPooledDataSource using the needed parameter.
    *
-   * @param driver The JDBC driver class.
-   * @param url the database URL of the form <code>jdbc:subprotocol:subname</code>.
+   * @param driver
+   *          The JDBC driver class.
+   * @param url
+   *          the database URL of the form <code>jdbc:subprotocol:subname</code>.
    */
   @Inject
   public C3p0DataSourceProvider(@Named("JDBC.driver") final String driver, @Named("JDBC.url") final String url) {
@@ -55,29 +59,32 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the user.
    *
-   * @param username the new user
+   * @param username
+   *          the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setUser(@Named("JDBC.username") final String username) {
-    dataSource.setUser(username);
+    this.username = username;
   }
 
   /**
    * Sets the password.
    *
-   * @param password the new password
+   * @param password
+   *          the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setPassword(@Named("JDBC.password") final String password) {
-    dataSource.setPassword(password);
+    this.password = password;
   }
 
   /**
    * Sets the acquire increment.
    *
-   * @param acquireIncrement the new acquire increment
+   * @param acquireIncrement
+   *          the new acquire increment
    */
   @com.google.inject.Inject(optional = true)
   public void setAcquireIncrement(@Named("c3p0.acquireIncrement") final int acquireIncrement) {
@@ -87,7 +94,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the acquire retry attempts.
    *
-   * @param acquireRetryAttempts the new acquire retry attempts
+   * @param acquireRetryAttempts
+   *          the new acquire retry attempts
    */
   @com.google.inject.Inject(optional = true)
   public void setAcquireRetryAttempts(@Named("c3p0.acquireRetryAttempts") final int acquireRetryAttempts) {
@@ -97,7 +105,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the acquire retry delay.
    *
-   * @param acquireRetryDelay the new acquire retry delay
+   * @param acquireRetryDelay
+   *          the new acquire retry delay
    */
   @com.google.inject.Inject(optional = true)
   public void setAcquireRetryDelay(@Named("c3p0.acquireRetryDelay") final int acquireRetryDelay) {
@@ -107,7 +116,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the auto commit on close.
    *
-   * @param autoCommit the new auto commit on close
+   * @param autoCommit
+   *          the new auto commit on close
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommitOnClose(@Named("JDBC.autoCommit") final boolean autoCommit) {
@@ -117,7 +127,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the driver properties.
    *
-   * @param driverProperties the new driver properties
+   * @param driverProperties
+   *          the new driver properties
    */
   @com.google.inject.Inject(optional = true)
   public void setDriverProperties(@Named("JDBC.driverProperties") final Properties driverProperties) {
@@ -127,7 +138,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the aautomatic test table.
    *
-   * @param automaticTestTable the new aautomatic test table
+   * @param automaticTestTable
+   *          the new aautomatic test table
    */
   @com.google.inject.Inject(optional = true)
   public void setAautomaticTestTable(@Named("c3p0.automaticTestTable") final String automaticTestTable) {
@@ -137,7 +149,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the break after acquire failure.
    *
-   * @param breakAfterAcquireFailure the new break after acquire failure
+   * @param breakAfterAcquireFailure
+   *          the new break after acquire failure
    */
   @com.google.inject.Inject(optional = true)
   public void setBreakAfterAcquireFailure(
@@ -148,7 +161,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the checkout timeout.
    *
-   * @param checkoutTimeout the new checkout timeout
+   * @param checkoutTimeout
+   *          the new checkout timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setCheckoutTimeout(@Named("c3p0.checkoutTimeout") final int checkoutTimeout) {
@@ -158,7 +172,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the connection customizer class name.
    *
-   * @param connectionCustomizerClassName the new connection customizer class name
+   * @param connectionCustomizerClassName
+   *          the new connection customizer class name
    */
   @com.google.inject.Inject(optional = true)
   public void setConnectionCustomizerClassName(
@@ -169,7 +184,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the connection tester class name.
    *
-   * @param connectionTesterClassName the new connection tester class name
+   * @param connectionTesterClassName
+   *          the new connection tester class name
    */
   @com.google.inject.Inject(optional = true)
   public void setConnectionTesterClassName(
@@ -185,7 +201,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the idle connection test period.
    *
-   * @param idleConnectionTestPeriod the new idle connection test period
+   * @param idleConnectionTestPeriod
+   *          the new idle connection test period
    */
   @com.google.inject.Inject(optional = true)
   public void setIdleConnectionTestPeriod(@Named("c3p0.idleConnectionTestPeriod") final int idleConnectionTestPeriod) {
@@ -195,7 +212,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the initial pool size.
    *
-   * @param initialPoolSize the new initial pool size
+   * @param initialPoolSize
+   *          the new initial pool size
    */
   @com.google.inject.Inject(optional = true)
   public void setInitialPoolSize(@Named("c3p0.initialPoolSize") final int initialPoolSize) {
@@ -205,7 +223,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max administrative task time.
    *
-   * @param maxAdministrativeTaskTime the new max administrative task time
+   * @param maxAdministrativeTaskTime
+   *          the new max administrative task time
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxAdministrativeTaskTime(
@@ -216,7 +235,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max connection age.
    *
-   * @param maxConnectionAge the new max connection age
+   * @param maxConnectionAge
+   *          the new max connection age
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxConnectionAge(@Named("c3p0.maxConnectionAge") final int maxConnectionAge) {
@@ -226,7 +246,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max idle time.
    *
-   * @param maxIdleTime the new max idle time
+   * @param maxIdleTime
+   *          the new max idle time
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxIdleTime(@Named("c3p0.maxIdleTime") final int maxIdleTime) {
@@ -236,7 +257,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max idle time excess connections.
    *
-   * @param maxIdleTimeExcessConnections the new max idle time excess connections
+   * @param maxIdleTimeExcessConnections
+   *          the new max idle time excess connections
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxIdleTimeExcessConnections(
@@ -247,7 +269,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max pool size.
    *
-   * @param maxPoolSize the new max pool size
+   * @param maxPoolSize
+   *          the new max pool size
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxPoolSize(@Named("c3p0.maxPoolSize") final int maxPoolSize) {
@@ -257,7 +280,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max statements.
    *
-   * @param maxStatements the new max statements
+   * @param maxStatements
+   *          the new max statements
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxStatements(@Named("c3p0.maxStatements") final int maxStatements) {
@@ -267,7 +291,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the max statements per connection.
    *
-   * @param maxStatementsPerConnection the new max statements per connection
+   * @param maxStatementsPerConnection
+   *          the new max statements per connection
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxStatementsPerConnection(
@@ -278,7 +303,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the min pool size.
    *
-   * @param minPoolSize the new min pool size
+   * @param minPoolSize
+   *          the new min pool size
    */
   @com.google.inject.Inject(optional = true)
   public void setMinPoolSize(@Named("c3p0.minPoolSize") final int minPoolSize) {
@@ -288,7 +314,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the preferred test query.
    *
-   * @param preferredTestQuery the new preferred test query
+   * @param preferredTestQuery
+   *          the new preferred test query
    */
   @com.google.inject.Inject(optional = true)
   public void setPreferredTestQuery(@Named("c3p0.preferredTestQuery") final String preferredTestQuery) {
@@ -298,7 +325,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the property cycle.
    *
-   * @param propertyCycle the new property cycle
+   * @param propertyCycle
+   *          the new property cycle
    */
   @com.google.inject.Inject(optional = true)
   public void setPropertyCycle(@Named("c3p0.propertyCycle") final int propertyCycle) {
@@ -308,7 +336,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the test connection on checkin.
    *
-   * @param testConnectionOnCheckin the new test connection on checkin
+   * @param testConnectionOnCheckin
+   *          the new test connection on checkin
    */
   @com.google.inject.Inject(optional = true)
   public void setTestConnectionOnCheckin(@Named("c3p0.testConnectionOnCheckin") final boolean testConnectionOnCheckin) {
@@ -318,7 +347,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the test connection on checkout.
    *
-   * @param testConnectionOnCheckout the new test connection on checkout
+   * @param testConnectionOnCheckout
+   *          the new test connection on checkout
    */
   @com.google.inject.Inject(optional = true)
   public void setTestConnectionOnCheckout(
@@ -329,7 +359,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the unreturned connection timeout.
    *
-   * @param unreturnedConnectionTimeout the new unreturned connection timeout
+   * @param unreturnedConnectionTimeout
+   *          the new unreturned connection timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setUnreturnedConnectionTimeout(
@@ -340,7 +371,8 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the uses traditional reflective proxies.
    *
-   * @param usesTraditionalReflectiveProxies the new uses traditional reflective proxies
+   * @param usesTraditionalReflectiveProxies
+   *          the new uses traditional reflective proxies
    */
   @com.google.inject.Inject(optional = true)
   public void setUsesTraditionalReflectiveProxies(
@@ -350,6 +382,12 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
 
   @Override
   public DataSource get() {
+    if (username != null) {
+      dataSource.setUser(username);
+    }
+    if (password != null) {
+      dataSource.setPassword(password);
+    }
     return dataSource;
   }
 

@@ -273,6 +273,46 @@ public class C3p0DataSourceProviderTest {
     assertEquals(driverProperties, dataSource.getProperties());
   }
 
+  @Test
+  public void get_UserPasswordAndProperties() {
+    final String driver = "org.mybatis.guice.TestDriver";
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final String propUsername = "test_user2";
+    final String propPassword = "test_password2";
+    final boolean autoCommit = true;
+    final Properties driverProperties = new Properties();
+    driverProperties.setProperty("my_property", "true");
+    driverProperties.setProperty(SqlUtils.DRIVER_MANAGER_USER_PROPERTY, propUsername);
+    driverProperties.setProperty(SqlUtils.DRIVER_MANAGER_PASSWORD_PROPERTY, propPassword);
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.driver")).to(driver);
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bindConstant().annotatedWith(Names.named("JDBC.autoCommit")).to(autoCommit);
+        bind(Properties.class).annotatedWith(Names.named("JDBC.driverProperties")).toInstance(driverProperties);
+      }
+    });
+    C3p0DataSourceProvider provider = injector.getInstance(C3p0DataSourceProvider.class);
+
+    ComboPooledDataSource dataSource = (ComboPooledDataSource) provider.get();
+
+    assertEquals(driver, dataSource.getDriverClass());
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUser());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(autoCommit, dataSource.isAutoCommitOnClose());
+    final Properties expectedDriverProperties = new Properties();
+    expectedDriverProperties.setProperty("my_property", "true");
+    expectedDriverProperties.setProperty(SqlUtils.DRIVER_MANAGER_USER_PROPERTY, username);
+    expectedDriverProperties.setProperty(SqlUtils.DRIVER_MANAGER_PASSWORD_PROPERTY, password);
+    assertEquals(expectedDriverProperties, dataSource.getProperties());
+  }
+
   @SuppressWarnings("serial")
   public static final class TestConnectionTester implements ConnectionTester {
     @Override
