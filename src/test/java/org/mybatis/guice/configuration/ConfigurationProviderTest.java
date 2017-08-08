@@ -30,16 +30,6 @@ import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.apache.ibatis.annotations.CacheNamespaceRef;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
@@ -62,6 +52,13 @@ import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingP
 import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 public class ConfigurationProviderTest {
   private ConfigurationProvider configurationProvider;
@@ -224,7 +221,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test(expected = ProvisionException.class)
-  public void get_FailFast() throws Throwable {
+  public void get_FailFast_True() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -239,17 +236,28 @@ public class ConfigurationProviderTest {
     injector.getInstance(Configuration.class);
   }
 
+  @Test
+  public void get_FailFast_False() throws Throwable {
+    injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bind(Environment.class).toInstance(environment);
+        bind(DataSource.class).toInstance(dataSource);
+        bind(Configuration.class).toProvider(configurationProvider);
+        bindConstant().annotatedWith(Names.named("mybatis.configuration.failFast")).to(false);
+      }
+    });
+
+    configurationProvider.addMapperConfigurationSetting(new MapperConfigurationSetting(ErrorMapper.class));
+    injector.getInstance(Configuration.class);
+
+    // Success.
+  }
+
   private static class Alias {
   }
 
   public static interface TestMapper {
-  }
-
-  @CacheNamespaceRef(TestMapper.class)
-  public static interface ErrorMapper {
-    @ResultMap("humanMapper")
-    @Select("select count(*) from human")
-    public long countHumans();
   }
 
   public static class Human {
