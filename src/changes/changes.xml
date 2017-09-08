@@ -53,6 +53,10 @@
         <fixes issue="114"/>
         Fixes generic types in PerUserPoolDataSourceModule.
       </action>
+      <action dev="christian.poitras" type="update">
+        <fixes issue="116"/>
+        Fixes readOnly property for Druid data source.
+      </action>
       <action dev="christian.poitras" type="remove">
         Removed dependency on guice multibindings.
       </action>

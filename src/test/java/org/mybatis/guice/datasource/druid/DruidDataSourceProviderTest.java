@@ -47,6 +47,7 @@ public class DruidDataSourceProviderTest {
     final String username = "test_user";
     final String password = "test_password";
     final boolean autoCommit = true;
+    final boolean readOnly = false;
     final Integer transactionIsolation = 10;
     final String catalog = "test";
     final int maxActive = 20;
@@ -78,6 +79,7 @@ public class DruidDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
         bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
         bindConstant().annotatedWith(Names.named("JDBC.autoCommit")).to(autoCommit);
+        bindConstant().annotatedWith(Names.named("JDBC.readOnly")).to(readOnly);
         bindConstant().annotatedWith(Names.named("JDBC.transactionIsolation")).to(transactionIsolation);
         bindConstant().annotatedWith(Names.named("JDBC.catalog")).to(catalog);
         bindConstant().annotatedWith(Names.named("JDBC.maxActive")).to(maxActive);
@@ -113,6 +115,7 @@ public class DruidDataSourceProviderTest {
     assertEquals(username, dataSource.getUsername());
     assertEquals(password, dataSource.getPassword());
     assertEquals(autoCommit, dataSource.isDefaultAutoCommit());
+    assertEquals(readOnly, dataSource.getDefaultReadOnly());
     assertEquals(transactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(catalog, dataSource.getDefaultCatalog());
     assertEquals(maxActive, dataSource.getMaxActive());
@@ -196,6 +199,37 @@ public class DruidDataSourceProviderTest {
     assertEquals(password, dataSource.getPassword());
     assertTrue(dataSource.getExceptionSorter() instanceof TestExceptionSorter);
     assertEquals(exceptionSorter, dataSource.getExceptionSorterClassName());
+  }
+
+  @Test
+  public void get_ReadOnly() {
+    final String driver = "org.mybatis.guice.TestDriver";
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final boolean autoCommit = true;
+    final boolean readOnly = true;
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.driverClassName")).to(driver);
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bindConstant().annotatedWith(Names.named("JDBC.autoCommit")).to(autoCommit);
+        bindConstant().annotatedWith(Names.named("JDBC.readOnly")).to(readOnly);
+      }
+    });
+    DruidDataSourceProvider provider = injector.getInstance(DruidDataSourceProvider.class);
+
+    DruidDataSource dataSource = (DruidDataSource) provider.get();
+
+    assertEquals(driver, dataSource.getDriverClassName());
+    assertEquals(url, dataSource.getUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(autoCommit, dataSource.isDefaultAutoCommit());
+    assertEquals(readOnly, dataSource.getDefaultReadOnly());
   }
 
   public static class TestExceptionSorter implements ExceptionSorter {

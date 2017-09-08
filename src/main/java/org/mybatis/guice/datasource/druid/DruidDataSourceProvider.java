@@ -61,6 +61,11 @@ public class DruidDataSourceProvider implements Provider<DataSource> {
   }
 
   @Inject(optional = true)
+  public void setDefaultReadOnly(@Named("JDBC.readOnly") final boolean defaultReadOnly) {
+    dataSource.setDefaultReadOnly(defaultReadOnly);
+  }
+
+  @Inject(optional = true)
   public void setDefaultTransactionIsolation(
       @Named("JDBC.transactionIsolation") final int defaultTransactionIsolation) {
     dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);
