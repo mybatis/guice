@@ -83,11 +83,6 @@
                         <td>boolean</td>
                     </tr>
                     <tr>
-                        <td>JDBC.loginTimeout</td>
-                        <td>false</td>
-                        <td>int</td>
-                    </tr>
-                    <tr>
                         <td>JDBC.driverProperties</td>
                         <td>false</td>
                         <td>java.util.Properties</td>
