@@ -182,6 +182,11 @@
                     <td>java.lang.String</td>
                 </tr>
                 <tr>
+                    <td>JDBC.connectionProperties</td>
+                    <td>false</td>
+                    <td>java.util.Properties</td>
+                </tr>
+                <tr>
                     <td>JDBC.filters</td>
                     <td>false</td>
                     <td>java.lang.String</td>
