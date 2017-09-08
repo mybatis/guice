@@ -46,8 +46,8 @@
         Fixes ProvisionException when setting login timeout for BasicDataSource
       </action>
       <action dev="christian.poitras" type="update">
-        <fixes issue="113"/>
-        Removed data source name configuration property from SharedPoolDataSourceProvider.
+        <fixes issue="115"/>
+        Fixes use of data source name configuration property for SharedPoolDataSourceProvider.
       </action>
       <action dev="christian.poitras" type="update">
         <fixes issue="114"/>

@@ -19,7 +19,6 @@ import com.google.inject.Provider;
 
 import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
@@ -31,9 +30,14 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
 
   private final SharedPoolDataSource dataSource = new SharedPoolDataSource();
 
-  @Inject
-  public SharedPoolDataSourceProvider(ConnectionPoolDataSource cpds) {
+  @com.google.inject.Inject(optional = true)
+  public void setConnectionPoolDataSource(ConnectionPoolDataSource cpds) {
     dataSource.setConnectionPoolDataSource(cpds);
+  }
+
+  @com.google.inject.Inject(optional = true)
+  public void setDataSourceName(@Named("DBCP.name") String name) {
+    dataSource.setDataSourceName(name);
   }
 
   @com.google.inject.Inject(optional = true)
@@ -58,7 +62,8 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setJndiEnvironment(@Named("DBCP.jndi.key") String key, @Named("DBCP.jndi.value") String value) {
+  public void setJndiEnvironment(@Named("DBCP.jndi.key") String key,
+      @Named("DBCP.jndi.value") String value) {
     dataSource.setJndiEnvironment(key, value);
   }
 
@@ -68,17 +73,20 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
+  public void setMinEvictableIdleTimeMillis(
+      @Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
     dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
+  public void
+      setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
     dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setRollbackAfterValidation(@Named("DBCP.rollbackAfterValidation") boolean rollbackAfterValidation) {
+  public void setRollbackAfterValidation(
+      @Named("DBCP.rollbackAfterValidation") boolean rollbackAfterValidation) {
     dataSource.setRollbackAfterValidation(rollbackAfterValidation);
   }
 

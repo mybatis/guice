@@ -66,11 +66,15 @@ public class SharedPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("JDBC.autoCommit")).to(autoCommit);
         bindConstant().annotatedWith(Names.named("JDBC.loginTimeout")).to(loginTimeout);
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
-        bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation"))
+            .to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
-        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
-        bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation")).to(rollbackAfterValidation);
+        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis"))
+            .to(minEvictableIdleTimeMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun"))
+            .to(numTestsPerEvictionRun);
+        bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation"))
+            .to(rollbackAfterValidation);
         bindConstant().annotatedWith(Names.named("DBCP.testOnBorrow")).to(testOnBorrow);
         bindConstant().annotatedWith(Names.named("DBCP.testOnReturn")).to(testOnReturn);
         bindConstant().annotatedWith(Names.named("DBCP.testWhileIdle")).to(testWhileIdle);
@@ -82,7 +86,8 @@ public class SharedPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
       }
     });
-    SharedPoolDataSourceProvider provider = injector.getInstance(SharedPoolDataSourceProvider.class);
+    SharedPoolDataSourceProvider provider =
+        injector.getInstance(SharedPoolDataSourceProvider.class);
 
     SharedPoolDataSource dataSource = (SharedPoolDataSource) provider.get();
 
@@ -130,11 +135,15 @@ public class SharedPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("JDBC.autoCommit")).to(autoCommit);
         bindConstant().annotatedWith(Names.named("JDBC.loginTimeout")).to(loginTimeout);
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
-        bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation"))
+            .to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
-        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
-        bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation")).to(rollbackAfterValidation);
+        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis"))
+            .to(minEvictableIdleTimeMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun"))
+            .to(numTestsPerEvictionRun);
+        bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation"))
+            .to(rollbackAfterValidation);
         bindConstant().annotatedWith(Names.named("DBCP.testOnBorrow")).to(testOnBorrow);
         bindConstant().annotatedWith(Names.named("DBCP.testOnReturn")).to(testOnReturn);
         bindConstant().annotatedWith(Names.named("DBCP.testWhileIdle")).to(testWhileIdle);
@@ -146,7 +155,8 @@ public class SharedPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
       }
     });
-    SharedPoolDataSourceProvider provider = injector.getInstance(SharedPoolDataSourceProvider.class);
+    SharedPoolDataSourceProvider provider =
+        injector.getInstance(SharedPoolDataSourceProvider.class);
 
     SharedPoolDataSource dataSource = (SharedPoolDataSource) provider.get();
 
@@ -181,11 +191,29 @@ public class SharedPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.jndi.value")).to(jndiValue);
       }
     });
-    SharedPoolDataSourceProvider provider = injector.getInstance(SharedPoolDataSourceProvider.class);
+    SharedPoolDataSourceProvider provider =
+        injector.getInstance(SharedPoolDataSourceProvider.class);
 
     SharedPoolDataSource dataSource = (SharedPoolDataSource) provider.get();
 
     assertEquals(connectionPoolDataSource, dataSource.getConnectionPoolDataSource());
     assertEquals(jndiValue, dataSource.getJndiEnvironment(jndiKey));
+  }
+
+  @Test
+  public void get_DataSourceName() throws Throwable {
+    final String name = "test_name";
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("DBCP.name")).to(name);
+      }
+    });
+    SharedPoolDataSourceProvider provider =
+        injector.getInstance(SharedPoolDataSourceProvider.class);
+
+    SharedPoolDataSource dataSource = (SharedPoolDataSource) provider.get();
+
+    assertEquals(name, dataSource.getDataSourceName());
   }
 }
