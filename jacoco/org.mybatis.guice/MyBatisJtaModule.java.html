@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBatisJtaModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice</a> &gt; <span class="el_source">MyBatisJtaModule.java</span></div><h1>MyBatisJtaModule.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice;
 
@@ -35,79 +32,81 @@ import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
-<span class="pc" id="L38">    private final Log log = LogFactory.getLog(getClass());</span>
+<span class="pc" id="L35">  private final Log log = LogFactory.getLog(getClass());</span>
 
-    private TransactionManager transactionManager;
-<span class="pc" id="L41">    private Class&lt;? extends Provider&lt;? extends XAResource&gt;&gt; xaResourceProvider = XASqlSessionManagerProvider.class;</span>
+  private TransactionManager transactionManager;
+<span class="pc" id="L38">  private Class&lt;? extends Provider&lt;? extends XAResource&gt;&gt; xaResourceProvider = XASqlSessionManagerProvider.class;</span>
 
-<span class="nc" id="L43">    public MyBatisJtaModule() {</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L40">  public MyBatisJtaModule() {</span>
+<span class="nc" id="L41">  }</span>
 
-<span class="fc" id="L46">    public MyBatisJtaModule(TransactionManager transactionManager) {</span>
-<span class="fc" id="L47">        this.transactionManager = transactionManager;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L43">  public MyBatisJtaModule(TransactionManager transactionManager) {</span>
+<span class="fc" id="L44">    this.transactionManager = transactionManager;</span>
+<span class="fc" id="L45">  }</span>
+
+  @Override
+  protected void bindTransactionInterceptors() {
+<span class="fc" id="L49">    TransactionManager manager = getTransactionManager();</span>
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">    if (manager == null) {</span>
+<span class="nc" id="L52">      log.debug(&quot;bind default transaction interceptors&quot;);</span>
+<span class="nc" id="L53">      super.bindTransactionInterceptors();</span>
+    } else {
+<span class="fc" id="L55">      log.debug(&quot;bind XA transaction interceptors&quot;);</span>
+
+      // transactional interceptor
+<span class="fc" id="L58">      TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();</span>
+<span class="fc" id="L59">      requestInjection(interceptor);</span>
+
+      // jta transactional interceptor
+<span class="fc" id="L62">      TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();</span>
+<span class="fc" id="L63">      requestInjection(interceptorTx);</span>
+<span class="fc" id="L64">      bind(XAResource.class).toProvider(xaResourceProvider);</span>
+
+<span class="fc" id="L66">      bind(TransactionManager.class).toInstance(manager);</span>
+
+<span class="fc" id="L68">      bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx,</span>
+          interceptor);
+      // Intercept classes annotated with Transactional, but avoid &quot;double&quot;
+      // interception when a mathod is also annotated inside an annotated
+      // class.
+<span class="fc" id="L73">      bindInterceptor(annotatedWith(Transactional.class),</span>
+<span class="fc" id="L74">          not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);</span>
+    }
+<span class="fc" id="L76">  }</span>
+
+  protected TransactionManager getTransactionManager() {
+<span class="fc" id="L79">    return transactionManager;</span>
+  }
+
+  protected void setTransactionManager(TransactionManager transactionManager) {
+<span class="nc" id="L83">    this.transactionManager = transactionManager;</span>
+<span class="nc" id="L84">  }</span>
+
+  protected void bindDefaultTransactionProvider() {
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">    Class&lt;? extends TransactionFactory&gt; factoryType = getTransactionManager() == null ? JdbcTransactionFactory.class</span>
+        : ManagedTransactionFactory.class;
+
+<span class="fc" id="L90">    bindTransactionFactoryType(factoryType);</span>
+<span class="fc" id="L91">  }</span>
+
+  protected void bindXAResourceProvider(Class&lt;? extends Provider&lt;? extends XAResource&gt;&gt; xaResourceProvider) {
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">    checkArgument(xaResourceProvider != null, &quot;Parameter 'xaResourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L95">    this.xaResourceProvider = xaResourceProvider;</span>
+<span class="fc" id="L96">  }</span>
+
+  protected static class ProviderImpl&lt;T&gt; implements Provider&lt;T&gt; {
+    private T wrapper;
+
+<span class="fc" id="L101">    public ProviderImpl(T wrapper) {</span>
+<span class="fc" id="L102">      this.wrapper = wrapper;</span>
+<span class="fc" id="L103">    }</span>
 
     @Override
-    protected void bindTransactionInterceptors() {
-<span class="fc" id="L52">        TransactionManager manager = getTransactionManager();</span>
-
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (manager == null) {</span>
-<span class="nc" id="L55">            log.debug(&quot;bind default transaction interceptors&quot;);</span>
-<span class="nc" id="L56">            super.bindTransactionInterceptors();</span>
-        } else {
-<span class="fc" id="L58">            log.debug(&quot;bind XA transaction interceptors&quot;);</span>
-
-            // transactional interceptor
-<span class="fc" id="L61">            TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();</span>
-<span class="fc" id="L62">            requestInjection(interceptor);</span>
-
-            // jta transactional interceptor
-<span class="fc" id="L65">            TxTransactionalMethodInterceptor interceptorTx = new TxTransactionalMethodInterceptor();</span>
-<span class="fc" id="L66">            requestInjection(interceptorTx);</span>
-<span class="fc" id="L67">            bind(XAResource.class).toProvider(xaResourceProvider);</span>
-
-<span class="fc" id="L69">            bind(TransactionManager.class).toInstance(manager);</span>
-
-<span class="fc" id="L71">            bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx, interceptor);</span>
-            // Intercept classes annotated with Transactional, but avoid &quot;double&quot;
-            // interception when a mathod is also annotated inside an annotated
-            // class.
-<span class="fc" id="L75">            bindInterceptor(annotatedWith(Transactional.class), not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);</span>
-        }
-<span class="fc" id="L77">    }</span>
-
-    protected TransactionManager getTransactionManager() {
-<span class="fc" id="L80">        return transactionManager;</span>
+    public T get() {
+<span class="fc" id="L107">      return wrapper;</span>
     }
 
-    protected void setTransactionManager(TransactionManager transactionManager) {
-<span class="nc" id="L84">        this.transactionManager = transactionManager;</span>
-<span class="nc" id="L85">    }</span>
-
-    protected void bindDefaultTransactionProvider() {
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        Class&lt;? extends TransactionFactory&gt; factoryType = getTransactionManager() == null ?</span>
-                JdbcTransactionFactory.class : ManagedTransactionFactory.class;
-
-<span class="fc" id="L91">        bindTransactionFactoryType(factoryType);</span>
-<span class="fc" id="L92">    }</span>
-    
-    protected void bindXAResourceProvider(Class&lt;? extends Provider&lt;? extends XAResource&gt;&gt; xaResourceProvider) {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        checkArgument(xaResourceProvider != null, &quot;Parameter 'xaResourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L96">        this.xaResourceProvider = xaResourceProvider;</span>
-<span class="fc" id="L97">    }</span>
-
-    protected static class ProviderImpl&lt;T&gt; implements Provider&lt;T&gt; {
-        private T wrapper;
-
-<span class="fc" id="L102">        public ProviderImpl(T wrapper) {</span>
-<span class="fc" id="L103">            this.wrapper = wrapper;</span>
-<span class="fc" id="L104">        }</span>
-
-        @Override
-        public T get() {
-<span class="fc" id="L108">            return wrapper;</span>
-        }
-
-    }
+  }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Preconditions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice</a> &gt; <span class="el_source">Preconditions.java</span></div><h1>Preconditions.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice;
 
@@ -24,18 +21,26 @@ import java.util.NoSuchElementException;
  * &lt;pre&gt;
  *     if (count &lt;= 0) {
  *       throw new IllegalArgumentException(&quot;must be positive: &quot; + count);
- *     }&lt;/pre&gt;
+ *     }
+ * &lt;/pre&gt;
  *
+ * &lt;p&gt;
  * to be replaced with the more compact
- * &lt;pre&gt;
- *     checkArgument(count &gt; 0, &quot;must be positive: %s&quot;, count);&lt;/pre&gt;
+ * &lt;/p&gt;
  *
+ * &lt;pre&gt;
+ *     checkArgument(count &gt; 0, &quot;must be positive: %s&quot;, count);
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;
  * Note that the sense of the expression is inverted; with {@code Preconditions}
  * you declare what you expect to be &lt;i&gt;true&lt;/i&gt;, just as you do with an
  * &lt;a href=&quot;http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html&quot;&gt;
  * {@code assert}&lt;/a&gt; or a JUnit {@code assertTrue()} call.
+ * &lt;/p&gt;
  *
- * &lt;p&gt;Take care not to confuse precondition checking with other similar types
+ * &lt;p&gt;
+ * Take care not to confuse precondition checking with other similar types
  * of checks! Precondition exceptions -- including those provided here, but also
  * {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
  * UnsupportedOperationException} and others -- are used to signal that the
@@ -43,21 +48,27 @@ import java.util.NoSuchElementException;
  * not have invoked the method when it did, with the arguments it did, or
  * perhaps &lt;i&gt;ever&lt;/i&gt;. Postcondition or other invariant failures should not
  * throw these types of exceptions.
+ * &lt;/p&gt;
  *
- * &lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; The methods of the {@code Preconditions} class are highly
+ * &lt;p&gt;
+ * &lt;b&gt;Note:&lt;/b&gt; The methods of the {@code Preconditions} class are highly
  * unusual in one way: they are &lt;i&gt;supposed to&lt;/i&gt; throw exceptions, and promise
  * in their specifications to do so even when given perfectly valid input. That
  * is, {@code null} is a valid parameter to the method {@link
  * #checkNotNull(Object)} -- and technically this parameter could be even marked
  * as {@link com.google.inject.internal.util.Nullable} -- yet the method will still throw an exception anyway,
  * because that's what its contract says to do.
+ * &lt;/p&gt;
  * 
- * &lt;p&gt;This class may be used with the Google Web Toolkit (GWT).
+ * &lt;p&gt;
+ * This class may be used with the Google Web Toolkit (GWT).
+ * &lt;/p&gt;
  *
  * @author Kevin Bourrillion
  */
 final class Preconditions {
-<span class="nc" id="L60">  private Preconditions() {}</span>
+<span class="nc" id="L70">  private Preconditions() {</span>
+<span class="nc" id="L71">  }</span>
 
   /**
    * Ensures the truth of an expression involving one or more parameters to the
@@ -67,10 +78,10 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code expression} is false
    */
   public static void checkArgument(boolean expression) {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L71">      throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L82">      throw new IllegalArgumentException();</span>
     }
-<span class="nc" id="L73">  }</span>
+<span class="nc" id="L84">  }</span>
 
   /**
    * Ensures the truth of an expression involving one or more parameters to the
@@ -82,10 +93,10 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code expression} is false
    */
   public static void checkArgument(boolean expression, Object errorMessage) {
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L86">      throw new IllegalArgumentException(String.valueOf(errorMessage));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L97">      throw new IllegalArgumentException(String.valueOf(errorMessage));</span>
     }
-<span class="fc" id="L88">  }</span>
+<span class="fc" id="L99">  }</span>
 
   /**
    * Ensures the truth of an expression involving one or more parameters to the
@@ -106,13 +117,11 @@ final class Preconditions {
    *     errorMessageTemplate} or {@code errorMessageArgs} is null (don't let
    *     this happen)
    */
-  public static void checkArgument(boolean expression,
-      String errorMessageTemplate, Object... errorMessageArgs) {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L112">      throw new IllegalArgumentException(</span>
-<span class="nc" id="L113">          format(errorMessageTemplate, errorMessageArgs));</span>
+  public static void checkArgument(boolean expression, String errorMessageTemplate, Object... errorMessageArgs) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L122">      throw new IllegalArgumentException(format(errorMessageTemplate, errorMessageArgs));</span>
     }
-<span class="fc" id="L115">  }</span>
+<span class="fc" id="L124">  }</span>
 
   /**
    * Ensures the truth of an expression involving the state of the calling
@@ -122,10 +131,10 @@ final class Preconditions {
    * @throws IllegalStateException if {@code expression} is false
    */
   public static void checkState(boolean expression) {
-<span class="nc bnc" id="L125" title="All 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L126">      throw new IllegalStateException();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L135">      throw new IllegalStateException();</span>
     }
-<span class="nc" id="L128">  }</span>
+<span class="nc" id="L137">  }</span>
 
   /**
    * Ensures the truth of an expression involving the state of the calling
@@ -137,10 +146,10 @@ final class Preconditions {
    * @throws IllegalStateException if {@code expression} is false
    */
   public static void checkState(boolean expression, Object errorMessage) {
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L141">      throw new IllegalStateException(String.valueOf(errorMessage));</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L150">      throw new IllegalStateException(String.valueOf(errorMessage));</span>
     }
-<span class="fc" id="L143">  }</span>
+<span class="nc" id="L152">  }</span>
 
   /**
    * Ensures the truth of an expression involving the state of the calling
@@ -161,13 +170,11 @@ final class Preconditions {
    *     errorMessageTemplate} or {@code errorMessageArgs} is null (don't let
    *     this happen)
    */
-  public static void checkState(boolean expression,
-      String errorMessageTemplate, Object... errorMessageArgs) {
-<span class="nc bnc" id="L166" title="All 2 branches missed.">    if (!expression) {</span>
-<span class="nc" id="L167">      throw new IllegalStateException(</span>
-<span class="nc" id="L168">          format(errorMessageTemplate, errorMessageArgs));</span>
+  public static void checkState(boolean expression, String errorMessageTemplate, Object... errorMessageArgs) {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">    if (!expression) {</span>
+<span class="nc" id="L175">      throw new IllegalStateException(format(errorMessageTemplate, errorMessageArgs));</span>
     }
-<span class="nc" id="L170">  }</span>
+<span class="nc" id="L177">  }</span>
 
   /**
    * Ensures that an object reference passed as a parameter to the calling
@@ -178,10 +185,10 @@ final class Preconditions {
    * @throws NullPointerException if {@code reference} is null
    */
   public static &lt;T&gt; T checkNotNull(T reference) {
-<span class="nc bnc" id="L181" title="All 2 branches missed.">    if (reference == null) {</span>
-<span class="nc" id="L182">      throw new NullPointerException();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">    if (reference == null) {</span>
+<span class="nc" id="L189">      throw new NullPointerException();</span>
     }
-<span class="nc" id="L184">    return reference;</span>
+<span class="nc" id="L191">    return reference;</span>
   }
 
   /**
@@ -195,10 +202,10 @@ final class Preconditions {
    * @throws NullPointerException if {@code reference} is null
    */
   public static &lt;T&gt; T checkNotNull(T reference, Object errorMessage) {
-<span class="nc bnc" id="L198" title="All 2 branches missed.">    if (reference == null) {</span>
-<span class="nc" id="L199">      throw new NullPointerException(String.valueOf(errorMessage));</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">    if (reference == null) {</span>
+<span class="nc" id="L206">      throw new NullPointerException(String.valueOf(errorMessage));</span>
     }
-<span class="nc" id="L201">    return reference;</span>
+<span class="nc" id="L208">    return reference;</span>
   }
 
   /**
@@ -218,14 +225,12 @@ final class Preconditions {
    * @return the non-null reference that was validated
    * @throws NullPointerException if {@code reference} is null
    */
-  public static &lt;T&gt; T checkNotNull(T reference, String errorMessageTemplate,
-      Object... errorMessageArgs) {
-<span class="nc bnc" id="L223" title="All 2 branches missed.">    if (reference == null) {</span>
+  public static &lt;T&gt; T checkNotNull(T reference, String errorMessageTemplate, Object... errorMessageArgs) {
+<span class="nc bnc" id="L229" title="All 2 branches missed.">    if (reference == null) {</span>
       // If either of these parameters is null, the right thing happens anyway
-<span class="nc" id="L225">      throw new NullPointerException(</span>
-<span class="nc" id="L226">          format(errorMessageTemplate, errorMessageArgs));</span>
+<span class="nc" id="L231">      throw new NullPointerException(format(errorMessageTemplate, errorMessageArgs));</span>
     }
-<span class="nc" id="L228">    return reference;</span>
+<span class="nc" id="L233">    return reference;</span>
   }
 
   /**
@@ -238,10 +243,10 @@ final class Preconditions {
    *     least one null element
    */
   public static &lt;T extends Iterable&lt;?&gt;&gt; T checkContentsNotNull(T iterable) {
-<span class="nc bnc" id="L241" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
-<span class="nc" id="L242">      throw new NullPointerException();</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
+<span class="nc" id="L247">      throw new NullPointerException();</span>
     }
-<span class="nc" id="L244">    return iterable;</span>
+<span class="nc" id="L249">    return iterable;</span>
   }
 
   /**
@@ -255,12 +260,11 @@ final class Preconditions {
    * @throws NullPointerException if {@code iterable} is null or contains at
    *     least one null element
    */
-  public static &lt;T extends Iterable&lt;?&gt;&gt; T checkContentsNotNull(
-      T iterable, Object errorMessage) {
-<span class="nc bnc" id="L260" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
-<span class="nc" id="L261">      throw new NullPointerException(String.valueOf(errorMessage));</span>
+  public static &lt;T extends Iterable&lt;?&gt;&gt; T checkContentsNotNull(T iterable, Object errorMessage) {
+<span class="nc bnc" id="L264" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
+<span class="nc" id="L265">      throw new NullPointerException(String.valueOf(errorMessage));</span>
     }
-<span class="nc" id="L263">    return iterable;</span>
+<span class="nc" id="L267">    return iterable;</span>
   }
 
   /**
@@ -281,35 +285,34 @@ final class Preconditions {
    * @throws NullPointerException if {@code iterable} is null or contains at
    *     least one null element
    */
-  public static &lt;T extends Iterable&lt;?&gt;&gt; T checkContentsNotNull(T iterable,
-      String errorMessageTemplate, Object... errorMessageArgs) {
-<span class="nc bnc" id="L286" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
-<span class="nc" id="L287">      throw new NullPointerException(</span>
-<span class="nc" id="L288">          format(errorMessageTemplate, errorMessageArgs));</span>
+  public static &lt;T extends Iterable&lt;?&gt;&gt; T checkContentsNotNull(T iterable, String errorMessageTemplate,
+      Object... errorMessageArgs) {
+<span class="nc bnc" id="L290" title="All 2 branches missed.">    if (containsOrIsNull(iterable)) {</span>
+<span class="nc" id="L291">      throw new NullPointerException(format(errorMessageTemplate, errorMessageArgs));</span>
     }
-<span class="nc" id="L290">    return iterable;</span>
+<span class="nc" id="L293">    return iterable;</span>
   }
-  
+
   private static boolean containsOrIsNull(Iterable&lt;?&gt; iterable) {
-<span class="nc bnc" id="L294" title="All 2 branches missed.">    if (iterable == null) {</span>
-<span class="nc" id="L295">      return true;</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">    if (iterable == null) {</span>
+<span class="nc" id="L298">      return true;</span>
     }
-    
-<span class="nc bnc" id="L298" title="All 2 branches missed.">    if (iterable instanceof Collection) {</span>
-<span class="nc" id="L299">      Collection&lt;?&gt; collection = (Collection&lt;?&gt;) iterable;</span>
+
+<span class="nc bnc" id="L301" title="All 2 branches missed.">    if (iterable instanceof Collection) {</span>
+<span class="nc" id="L302">      Collection&lt;?&gt; collection = (Collection&lt;?&gt;) iterable;</span>
       try {
-<span class="nc" id="L301">        return collection.contains(null);</span>
-<span class="nc" id="L302">      } catch (NullPointerException e) {</span>
+<span class="nc" id="L304">        return collection.contains(null);</span>
+<span class="nc" id="L305">      } catch (NullPointerException e) {</span>
         // A NPE implies that the collection doesn't contain null.
-<span class="nc" id="L304">        return false;</span>
+<span class="nc" id="L307">        return false;</span>
       }
     } else {
-<span class="nc bnc" id="L307" title="All 2 branches missed.">      for (Object element : iterable) {</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">        if (element == null) {</span>
-<span class="nc" id="L309">          return true;</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">      for (Object element : iterable) {</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">        if (element == null) {</span>
+<span class="nc" id="L312">          return true;</span>
         }
-<span class="nc" id="L311">      }</span>
-<span class="nc" id="L312">      return false;</span>
+<span class="nc" id="L314">      }</span>
+<span class="nc" id="L315">      return false;</span>
     }
   }
 
@@ -326,8 +329,8 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code size} is negative
    */
   public static void checkElementIndex(int index, int size) {
-<span class="nc" id="L329">    checkElementIndex(index, size, &quot;index&quot;);</span>
-<span class="nc" id="L330">  }</span>
+<span class="nc" id="L332">    checkElementIndex(index, size, &quot;index&quot;);</span>
+<span class="nc" id="L333">  }</span>
 
   /**
    * Ensures that {@code index} specifies a valid &lt;i&gt;element&lt;/i&gt; in an array,
@@ -343,16 +346,14 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code size} is negative
    */
   public static void checkElementIndex(int index, int size, String desc) {
-<span class="nc bnc" id="L346" title="All 2 branches missed.">    checkArgument(size &gt;= 0, &quot;negative size: %s&quot;, size);</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">    if (index &lt; 0) {</span>
-<span class="nc" id="L348">      throw new IndexOutOfBoundsException(</span>
-<span class="nc" id="L349">          format(&quot;%s (%s) must not be negative&quot;, desc, index));</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">    checkArgument(size &gt;= 0, &quot;negative size: %s&quot;, size);</span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">    if (index &lt; 0) {</span>
+<span class="nc" id="L351">      throw new IndexOutOfBoundsException(format(&quot;%s (%s) must not be negative&quot;, desc, index));</span>
     }
-<span class="nc bnc" id="L351" title="All 2 branches missed.">    if (index &gt;= size) {</span>
-<span class="nc" id="L352">      throw new IndexOutOfBoundsException(</span>
-<span class="nc" id="L353">          format(&quot;%s (%s) must be less than size (%s)&quot;, desc, index, size));</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">    if (index &gt;= size) {</span>
+<span class="nc" id="L354">      throw new IndexOutOfBoundsException(format(&quot;%s (%s) must be less than size (%s)&quot;, desc, index, size));</span>
     }
-<span class="nc" id="L355">  }</span>
+<span class="nc" id="L356">  }</span>
 
   /**
    * Ensures that {@code index} specifies a valid &lt;i&gt;position&lt;/i&gt; in an array,
@@ -367,8 +368,8 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code size} is negative
    */
   public static void checkPositionIndex(int index, int size) {
-<span class="nc" id="L370">    checkPositionIndex(index, size, &quot;index&quot;);</span>
-<span class="nc" id="L371">  }</span>
+<span class="nc" id="L371">    checkPositionIndex(index, size, &quot;index&quot;);</span>
+<span class="nc" id="L372">  }</span>
 
   /**
    * Ensures that {@code index} specifies a valid &lt;i&gt;position&lt;/i&gt; in an array,
@@ -384,16 +385,14 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code size} is negative
    */
   public static void checkPositionIndex(int index, int size, String desc) {
-<span class="nc bnc" id="L387" title="All 2 branches missed.">    checkArgument(size &gt;= 0, &quot;negative size: %s&quot;, size);</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">    if (index &lt; 0) {</span>
-<span class="nc" id="L389">      throw new IndexOutOfBoundsException(format(</span>
-<span class="nc" id="L390">          &quot;%s (%s) must not be negative&quot;, desc, index));</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">    checkArgument(size &gt;= 0, &quot;negative size: %s&quot;, size);</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">    if (index &lt; 0) {</span>
+<span class="nc" id="L390">      throw new IndexOutOfBoundsException(format(&quot;%s (%s) must not be negative&quot;, desc, index));</span>
     }
 <span class="nc bnc" id="L392" title="All 2 branches missed.">    if (index &gt; size) {</span>
-<span class="nc" id="L393">      throw new IndexOutOfBoundsException(format(</span>
-<span class="nc" id="L394">          &quot;%s (%s) must not be greater than size (%s)&quot;, desc, index, size));</span>
+<span class="nc" id="L393">      throw new IndexOutOfBoundsException(format(&quot;%s (%s) must not be greater than size (%s)&quot;, desc, index, size));</span>
     }
-<span class="nc" id="L396">  }</span>
+<span class="nc" id="L395">  }</span>
 
   /**
    * Ensures that {@code start} and {@code end} specify a valid &lt;i&gt;positions&lt;/i&gt;
@@ -410,13 +409,12 @@ final class Preconditions {
    * @throws IllegalArgumentException if {@code size} is negative
    */
   public static void checkPositionIndexes(int start, int end, int size) {
-<span class="nc" id="L413">    checkPositionIndex(start, size, &quot;start index&quot;);</span>
-<span class="nc" id="L414">    checkPositionIndex(end, size, &quot;end index&quot;);</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">    if (end &lt; start) {</span>
-<span class="nc" id="L416">      throw new IndexOutOfBoundsException(format(</span>
-<span class="nc" id="L417">          &quot;end index (%s) must not be less than start index (%s)&quot;, end, start));</span>
+<span class="nc" id="L412">    checkPositionIndex(start, size, &quot;start index&quot;);</span>
+<span class="nc" id="L413">    checkPositionIndex(end, size, &quot;end index&quot;);</span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">    if (end &lt; start) {</span>
+<span class="nc" id="L415">      throw new IndexOutOfBoundsException(format(&quot;end index (%s) must not be less than start index (%s)&quot;, end, start));</span>
     }
-<span class="nc" id="L419">  }</span>
+<span class="nc" id="L417">  }</span>
 
   /**
    * Substitutes each {@code %s} in {@code template} with an argument. These
@@ -433,33 +431,32 @@ final class Preconditions {
   // VisibleForTesting
   static String format(String template, Object... args) {
     // start substituting the arguments into the '%s' placeholders
-<span class="nc" id="L436">    StringBuilder builder = new StringBuilder(</span>
-<span class="nc" id="L437">        template.length() + 16 * args.length);</span>
-<span class="nc" id="L438">    int templateStart = 0;</span>
-<span class="nc" id="L439">    int i = 0;</span>
-<span class="nc bnc" id="L440" title="All 2 branches missed.">    while (i &lt; args.length) {</span>
-<span class="nc" id="L441">      int placeholderStart = template.indexOf(&quot;%s&quot;, templateStart);</span>
-<span class="nc bnc" id="L442" title="All 2 branches missed.">      if (placeholderStart == -1) {</span>
-<span class="nc" id="L443">        break;</span>
+<span class="nc" id="L434">    StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);</span>
+<span class="nc" id="L435">    int templateStart = 0;</span>
+<span class="nc" id="L436">    int i = 0;</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">    while (i &lt; args.length) {</span>
+<span class="nc" id="L438">      int placeholderStart = template.indexOf(&quot;%s&quot;, templateStart);</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">      if (placeholderStart == -1) {</span>
+<span class="nc" id="L440">        break;</span>
       }
-<span class="nc" id="L445">      builder.append(template.substring(templateStart, placeholderStart));</span>
-<span class="nc" id="L446">      builder.append(args[i++]);</span>
-<span class="nc" id="L447">      templateStart = placeholderStart + 2;</span>
-<span class="nc" id="L448">    }</span>
-<span class="nc" id="L449">    builder.append(template.substring(templateStart));</span>
+<span class="nc" id="L442">      builder.append(template.substring(templateStart, placeholderStart));</span>
+<span class="nc" id="L443">      builder.append(args[i++]);</span>
+<span class="nc" id="L444">      templateStart = placeholderStart + 2;</span>
+<span class="nc" id="L445">    }</span>
+<span class="nc" id="L446">    builder.append(template.substring(templateStart));</span>
 
     // if we run out of placeholders, append the extra args in square braces
-<span class="nc bnc" id="L452" title="All 2 branches missed.">    if (i &lt; args.length) {</span>
-<span class="nc" id="L453">      builder.append(&quot; [&quot;);</span>
-<span class="nc" id="L454">      builder.append(args[i++]);</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">      while (i &lt; args.length) {</span>
-<span class="nc" id="L456">        builder.append(&quot;, &quot;);</span>
-<span class="nc" id="L457">        builder.append(args[i++]);</span>
+<span class="nc bnc" id="L449" title="All 2 branches missed.">    if (i &lt; args.length) {</span>
+<span class="nc" id="L450">      builder.append(&quot; [&quot;);</span>
+<span class="nc" id="L451">      builder.append(args[i++]);</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">      while (i &lt; args.length) {</span>
+<span class="nc" id="L453">        builder.append(&quot;, &quot;);</span>
+<span class="nc" id="L454">        builder.append(args[i++]);</span>
       }
-<span class="nc" id="L459">      builder.append(&quot;]&quot;);</span>
+<span class="nc" id="L456">      builder.append(&quot;]&quot;);</span>
     }
 
-<span class="nc" id="L462">    return builder.toString();</span>
+<span class="nc" id="L459">    return builder.toString();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

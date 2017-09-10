@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBatisModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice</a> &gt; <span class="el_source">MyBatisModule.java</span></div><h1>MyBatisModule.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice;
 
-import static com.google.inject.multibindings.MapBinder.newMapBinder;
-import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 import static org.mybatis.guice.Preconditions.checkArgument;
-import static org.mybatis.guice.Preconditions.checkState;
+
+import com.google.inject.Key;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
 
 import java.util.Collection;
 import java.util.Set;
@@ -49,636 +47,623 @@ import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
-import org.mybatis.guice.configuration.Mappers;
-import org.mybatis.guice.configuration.MappingTypeHandlers;
-import org.mybatis.guice.configuration.TypeAliases;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
+import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
 import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
 import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
+import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
+import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
+import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
 import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
 import org.mybatis.guice.environment.EnvironmentProvider;
+import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
+import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
-
-import com.google.inject.Scopes;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-import com.google.inject.multibindings.Multibinder;
-import com.google.inject.util.Providers;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
  * google-guice bindings to create the SqlSessionFactory.
  */
-<span class="fc" id="L85">public abstract class MyBatisModule extends AbstractMyBatisModule {</span>
+<span class="fc" id="L80">public abstract class MyBatisModule extends AbstractMyBatisModule {</span>
 
-    /**
-     * The ObjectFactory class reference.
-     */
-<span class="fc" id="L90">    private Class&lt;? extends ObjectFactory&gt; objectFactoryType = DefaultObjectFactory.class;</span>
-    /**
-     * The ObjectWrapperFactory class reference.
-     */
-<span class="fc" id="L94">    private Class&lt;? extends ObjectWrapperFactory&gt; objectWrapperFactoryType = DefaultObjectWrapperFactory.class;</span>
-<span class="fc" id="L95">    private Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType = XMLLanguageDriver.class;</span>
-    /**
-     * The SqlSessionFactory Provider class reference.
-     */
-<span class="fc" id="L99">    private Class&lt;? extends Provider&lt;? extends SqlSessionFactory&gt;&gt; sqlSessionFactoryProviderType = SqlSessionFactoryProvider.class;</span>
+  /**
+   * The ObjectFactory class reference.
+   */
+<span class="fc" id="L85">  private Class&lt;? extends ObjectFactory&gt; objectFactoryType = DefaultObjectFactory.class;</span>
 
-<span class="fc" id="L101">    private Class&lt;? extends Provider&lt;? extends Configuration&gt;&gt; configurationProviderType = ConfigurationProvider.class;</span>
+  /**
+   * The ObjectWrapperFactory class reference.
+   */
+<span class="fc" id="L90">  private Class&lt;? extends ObjectWrapperFactory&gt; objectWrapperFactoryType = DefaultObjectWrapperFactory.class;</span>
+<span class="fc" id="L91">  private Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType = XMLLanguageDriver.class;</span>
 
-    private MapBinder&lt;String, Class&lt;?&gt;&gt; aliases;
+  /**
+   * The SqlSessionFactory Provider class reference.
+   */
+<span class="fc" id="L96">  private Class&lt;? extends Provider&lt;? extends SqlSessionFactory&gt;&gt; sqlSessionFactoryProviderType = SqlSessionFactoryProvider.class;</span>
 
-    private MapBinder&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; handlers;
+<span class="fc" id="L98">  private Class&lt;? extends Provider&lt;? extends Configuration&gt;&gt; configurationProviderType = ConfigurationProvider.class;</span>
 
-    private Multibinder&lt;TypeHandler&lt;?&gt;&gt; mappingTypeHandlers;
+  @Override
+  final void internalConfigure() {
+    try {
+<span class="fc" id="L103">      initialize();</span>
 
-    private Multibinder&lt;Interceptor&gt; interceptors;
+    } finally {
 
-    private Multibinder&lt;Class&lt;?&gt;&gt; mappers;
-    
-    private Multibinder&lt;ConfigurationSetting&gt; configurationSettings;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    final void internalConfigure() {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        checkState( aliases == null, &quot;Re-entry is not allowed.&quot; );</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        checkState( handlers == null, &quot;Re-entry is not allowed.&quot; );</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        checkState( interceptors == null, &quot;Re-entry is not allowed.&quot; );</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        checkState( mappers == null, &quot;Re-entry is not allowed.&quot; );</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        checkState( configurationSettings == null, &quot;Re-entry is not allowed.&quot; );</span>
-
-<span class="fc" id="L126">        aliases = newMapBinder(binder(), new TypeLiteral&lt;String&gt;(){}, new TypeLiteral&lt;Class&lt;?&gt;&gt;(){}, TypeAliases.class);</span>
-<span class="fc" id="L127">        handlers = newMapBinder(binder(), new TypeLiteral&lt;Class&lt;?&gt;&gt;(){}, new TypeLiteral&lt;TypeHandler&lt;?&gt;&gt;(){});</span>
-<span class="fc" id="L128">        interceptors = newSetBinder(binder(), Interceptor.class);</span>
-<span class="fc" id="L129">        mappingTypeHandlers = newSetBinder(binder(), new TypeLiteral&lt;TypeHandler&lt;?&gt;&gt;(){}, MappingTypeHandlers.class);</span>
-<span class="fc" id="L130">        mappers = newSetBinder(binder(), new TypeLiteral&lt;Class&lt;?&gt;&gt;(){}, Mappers.class);</span>
-<span class="fc" id="L131">        configurationSettings = newSetBinder(binder(), ConfigurationSetting.class, ConfigurationSettings.class);</span>
-
-        try {
-<span class="fc" id="L134">            initialize();</span>
-
-        } finally {
-<span class="pc" id="L137">            aliases = null;</span>
-<span class="pc" id="L138">            handlers = null;</span>
-<span class="pc" id="L139">            interceptors = null;</span>
-<span class="pc" id="L140">            mappers = null;</span>
-<span class="fc" id="L141">        }</span>
-
-        // fixed bindings
-<span class="fc" id="L144">        bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);</span>
-        
-        // replaceable bindings.
-<span class="fc" id="L147">        bind(Configuration.class).toProvider(configurationProviderType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L148">        bind(SqlSessionFactory.class).toProvider(sqlSessionFactoryProviderType);</span>
-
-        // parametric bindings
-<span class="fc" id="L151">        bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L152">        bind(ObjectWrapperFactory.class).to(objectWrapperFactoryType).in(Scopes.SINGLETON);</span>
-        
-
-<span class="fc" id="L155">        bindConfigurationSettingProvider(new ObjectFactoryConfigurationSetting(objectFactoryType));</span>
-<span class="fc" id="L156">        bindConfigurationSettingProvider(new ObjectWrapperFactoryConfigurationSetting(objectWrapperFactoryType));</span>
-<span class="fc" id="L157">        bindConfigurationSetting(new DefaultScriptingLanguageTypeConfigurationSetting(defaultScriptingLanguageType));</span>
-<span class="fc" id="L158">    }</span>
-
-    /**
-     * Set the MyBatis configuration environment id.
-     *
-     * @param environmentId the MyBatis configuration environment id
-     */
-    protected final void environmentId(String environmentId) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        checkArgument( environmentId != null, &quot;Parameter 'environmentId' must be not null&quot;);</span>
-<span class="fc" id="L167">        bindConstant().annotatedWith(named(&quot;mybatis.environment.id&quot;)).to(environmentId);</span>
-<span class="fc" id="L168">    }</span>
-
-    /**
-     *
-     * @param lazyLoadingEnabled
-     */
-    protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
-<span class="nc" id="L175">        bindConfigurationSetting(new LazyLoadingEnabledConfigurationSetting(lazyLoadingEnabled));</span>
-<span class="nc" id="L176">    }</span>
-
-    /**
-     *
-     * @param aggressiveLazyLoading
-     */
-    protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
-<span class="nc" id="L183">        bindConfigurationSetting(new AggressiveLazyLoadingConfigurationSetting(aggressiveLazyLoading));</span>
-<span class="nc" id="L184">    }</span>
-
-    /**
-     *
-     * @param multipleResultSetsEnabled
-     */
-    protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
-<span class="nc" id="L191">        bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));</span>
-<span class="nc" id="L192">    }</span>
-
-    /**
-     *
-     * @param useGeneratedKeys
-     */
-    protected final void useGeneratedKeys(boolean useGeneratedKeys) {
-<span class="nc" id="L199">        bindConfigurationSetting(new UseGeneratedKeysConfigurationSetting(useGeneratedKeys));</span>
-<span class="nc" id="L200">    }</span>
-
-    /**
-     *
-     * @param useColumnLabel
-     */
-    protected final void useColumnLabel(boolean useColumnLabel) {
-<span class="nc" id="L207">        bindConfigurationSetting(new UseColumnLabelConfigurationSetting(useColumnLabel));</span>
-<span class="nc" id="L208">    }</span>
-
-    /**
-     *
-     * @param useCacheEnabled
-     */
-    protected final void useCacheEnabled(boolean useCacheEnabled) {
-<span class="nc" id="L215">        bindConfigurationSetting(new CacheEnabledConfigurationSetting(useCacheEnabled));</span>
-<span class="nc" id="L216">    }</span>
-
-    /**
-     * @param configurationProviderType provider for Configuration
-     */
-    protected final void useConfigurationProvider(Class&lt;? extends Provider&lt;? extends Configuration&gt;&gt; configurationProviderType) {
-<span class="fc" id="L222">        this.configurationProviderType = configurationProviderType;</span>
-<span class="fc" id="L223">    }</span>
-
-    /**
-     * @param sqlSessionFactoryProvider provider for SqlSessionFactory
-     */
-    protected final void useSqlSessionFactoryProvider(Class&lt;? extends Provider&lt;? extends SqlSessionFactory&gt;&gt; sqlSessionFactoryProvider) {
-<span class="fc" id="L229">        this.sqlSessionFactoryProviderType = sqlSessionFactoryProvider;</span>
-<span class="fc" id="L230">    }</span>
-
-    /**
-     *
-     * @param failFast
-     */
-    protected final void failFast(boolean failFast) {
-<span class="nc" id="L237">        bindBoolean(&quot;mybatis.configuration.failFast&quot;, failFast);</span>
-<span class="nc" id="L238">    }</span>
-
-    /**
-     * Maps underscores to camel case.
-     *
-     * @param mapUnderscoreToCamelCase Toggles this settings value.
-     */
-    protected final void mapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
-<span class="nc" id="L246">    	bindConfigurationSetting(new MapUnderscoreToCamelCaseConfigurationSetting(mapUnderscoreToCamelCase));</span>
-<span class="nc" id="L247">    }</span>
-
-    /**
-     * set default statement timeout.
-     *
-     * @param defaultStatementTimeout default statement timeout in seconds.
-     */
-    protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
-<span class="fc" id="L255">    	bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));</span>
-<span class="fc" id="L256">    }</span>
-    
-    public void bindConfigurationSetting(final ConfigurationSetting configurationSetting){
-<span class="fc" id="L259">    	configurationSettings.addBinding().toProvider(Providers.of(configurationSetting));</span>
-<span class="fc" id="L260">    }</span>
-    
-    public void bindConfigurationSettingProvider(final Provider&lt;? extends ConfigurationSetting&gt; configurationSettingProvider){
-<span class="fc" id="L263">    	configurationSettings.addBinding().toProvider(guicify(configurationSettingProvider));</span>
-<span class="fc" id="L264">    }</span>
-    
-    private final void bindBoolean(String name, boolean value) {
-<span class="nc" id="L267">        bindConstant().annotatedWith(named(name)).to(value);</span>
-<span class="nc" id="L268">    }</span>
-
-    /**
-     *
-     *
-     * @param executorType
-     */
-    protected final void executorType(ExecutorType executorType) {
-<span class="nc bnc" id="L276" title="All 2 branches missed.">        checkArgument(executorType != null, &quot;Parameter 'executorType' must be not null&quot;);</span>
-<span class="nc" id="L277">        bindConfigurationSetting(new DefaultExecutorTypeConfigurationSetting(executorType));</span>
-<span class="nc" id="L278">    }</span>
-
-    /**
-     * Configures the local cache scope setting.
-     *
-     * @param localeCacheScope The cache scope to use.
-     * @since 3.4
-     */
-    protected final void localCacheScope(LocalCacheScope localeCacheScope) {
-<span class="nc bnc" id="L287" title="All 2 branches missed.">        checkArgument(localeCacheScope != null, &quot;Parameter 'localCacheScope' must be not null&quot;);</span>
-<span class="nc" id="L288">        bindConfigurationSetting(new LocalCacheScopeConfigurationSetting(localeCacheScope));</span>
-<span class="nc" id="L289">    }</span>
-
-    /**
-     *
-     *
-     * @param autoMappingBehavior
-     */
-    protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
-<span class="nc bnc" id="L297" title="All 2 branches missed.">        checkArgument(autoMappingBehavior != null, &quot;Parameter 'autoMappingBehavior' must be not null&quot;);</span>
-<span class="nc" id="L298">        bindConfigurationSetting(new AutoMappingBehaviorConfigurationSetting(autoMappingBehavior));</span>
-<span class="nc" id="L299">    }</span>
-
-    /**
-     * Set the DataSource Provider type has to be bound.
-     *
-     * @param dataSourceProviderType the DataSource Provider type
-     */
-    protected final void bindDataSourceProviderType(Class&lt;? extends Provider&lt;DataSource&gt;&gt; dataSourceProviderType) {
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">        checkArgument(dataSourceProviderType != null, &quot;Parameter 'dataSourceProviderType' must be not null&quot;);</span>
-<span class="fc" id="L308">        bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L309">    }</span>
-
-    /**
-     *
-     *
-     * @param dataSourceProvider
-     */
-    protected final void bindDataSourceProvider(Provider&lt;DataSource&gt; dataSourceProvider) {
-<span class="pc bpc" id="L317" title="1 of 2 branches missed.">        checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L318">        bindDataSourceProvider(guicify(dataSourceProvider));</span>
-<span class="fc" id="L319">    }</span>
-
-    /**
-     *
-     *
-     * @param dataSourceProvider
-     */
-    protected final void bindDataSourceProvider(com.google.inject.Provider&lt;DataSource&gt; dataSourceProvider) {
-<span class="pc bpc" id="L327" title="1 of 2 branches missed.">        checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L328">        bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L329">    }</span>
-
-    /**
-     *
-     *
-     * @param databaseIdProvider The DatabaseIdProvider class.
-     */
-    protected final void bindDatabaseIdProvider(Class&lt;? extends DatabaseIdProvider&gt; databaseIdProvider) {
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">        checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L338">        bind(DatabaseIdProvider.class).to(databaseIdProvider).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L339">    }</span>
-
-    /**
-     *
-     *
-     * @param databaseIdProvider The DatabaseIdProvider instance.
-     */
-    protected final void bindDatabaseIdProvider(DatabaseIdProvider databaseIdProvider) {
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">        checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L348">        bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);</span>
-<span class="fc" id="L349">    }</span>
-
-    /**
-     * Set the TransactionFactory type has to be bound.
-     *
-     * @param transactionFactoryType the TransactionFactory type
-     */
-    protected final void bindTransactionFactoryType(Class&lt;? extends TransactionFactory&gt; transactionFactoryType) {
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">        checkArgument(transactionFactoryType != null, &quot;Parameter 'transactionFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L358">        bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L359">    }</span>
-
-    /**
-     *
-     *
-     * @param transactionFactoryProvider
-     */
-    protected final void bindTransactionFactory(Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
-<span class="nc bnc" id="L367" title="All 2 branches missed.">        checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
-<span class="nc" id="L368">        bindTransactionFactory(guicify(transactionFactoryProvider));</span>
-<span class="nc" id="L369">    }</span>
-
-    /**
-     *
-     *
-     * @param transactionFactoryProvider
-     */
-    protected final void bindTransactionFactory(com.google.inject.Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
-<span class="nc bnc" id="L377" title="All 2 branches missed.">        checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
-<span class="nc" id="L378">        bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);</span>
-<span class="nc" id="L379">    }</span>
-
-    /**
-     * Sets the ObjectFactory class.
-     *
-     * @param objectFactoryType the ObjectFactory type
-     */
-    protected final void bindObjectFactoryType(Class&lt;? extends ObjectFactory&gt; objectFactoryType) {
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">        checkArgument(objectFactoryType != null, &quot;Parameter 'objectFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L388">        this.objectFactoryType = objectFactoryType;</span>
-<span class="fc" id="L389">    }</span>
-    /**
-     * Sets the ObjectWrapperFactory class.
-     *
-     * @param objectWrapperFactoryType the ObjectFactory type
-     */
-    protected final void bindObjectWrapperFactoryType(Class&lt;? extends ObjectWrapperFactory&gt; objectWrapperFactoryType) {
-<span class="pc bpc" id="L396" title="1 of 2 branches missed.">        checkArgument(objectFactoryType != null, &quot;Parameter 'objectWrapperFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L397">        this.objectWrapperFactoryType = objectWrapperFactoryType;</span>
-<span class="fc" id="L398">    }</span>
-
-    /**
-     * Sets the default LanguageDriver class.
-     * &lt;p&gt;
-     * Due to current limitations in MyBatis, &amp;#64;Inject cannot be used in LanguageDriver class.
-     * &lt;/p&gt;
-     *
-     * @param defaultScriptingLanguageType the default LanguageDriver type
-     */
-    protected final void bindDefaultScriptingLanguageType(Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType) {
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">        checkArgument(defaultScriptingLanguageType != null, &quot;Parameter 'defaultScriptingLanguageType' must be not null&quot;);</span>
-<span class="fc" id="L410">        this.defaultScriptingLanguageType = defaultScriptingLanguageType;</span>
-<span class="fc" id="L411">    }</span>
-    
-    /**
-     * Add a user defined binding.
-     *
-     * @param alias the string type alias
-     */
-    protected final AliasBinder addAlias(final String alias) {
-<span class="nc bnc" id="L419" title="All 4 branches missed.">        checkArgument(alias != null &amp;&amp; alias.length() &gt; 0, &quot;Empty or null 'alias' is not valid&quot;);</span>
-
-<span class="nc" id="L421">        return new AliasBinder() {</span>
-
-            @Override
-            public void to(final Class&lt;?&gt; clazz) {
-<span class="nc bnc" id="L425" title="All 2 branches missed.">                checkArgument(clazz != null, &quot;Null type not valid for alias '%s'&quot;, alias);</span>
-<span class="nc" id="L426">                aliases.addBinding(alias).toInstance(clazz);</span>
-<span class="nc" id="L427">            }</span>
-
-        };
     }
 
-    /**
-     * Adding simple aliases means that every specified class will be bound
-     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
-     *
-     * @param type the specified types have to be bind
-     */
-	protected final void addSimpleAlias(final Class&lt;?&gt; type) {
-<span class="nc bnc" id="L439" title="All 2 branches missed.">		checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
+    // fixed bindings
+<span class="fc" id="L110">    bind(Environment.class).toProvider(EnvironmentProvider.class).in(Scopes.SINGLETON);</span>
 
-<span class="nc" id="L441">		String alias = type.getSimpleName();</span>
-		// check if the class uses the Alias annotation.
-<span class="nc" id="L443">		final Alias annotation = type.getAnnotation(Alias.class);</span>
-<span class="nc bnc" id="L444" title="All 2 branches missed.">		if (annotation != null) {</span>
-<span class="nc" id="L445">			alias = annotation.value();</span>
-		}
-<span class="nc" id="L447">		addAlias(alias).to(type);</span>
-<span class="nc" id="L448">	}</span>
+    // replaceable bindings.
+<span class="fc" id="L113">    bind(Configuration.class).toProvider(configurationProviderType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L114">    bind(SqlSessionFactory.class).toProvider(sqlSessionFactoryProviderType);</span>
 
-    /**
-     * Adding simple aliases means that every specified class will be bound
-     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
-     *
-     * @param types the specified types have to be bind
-     */
-    protected final void addSimpleAliases(final Collection&lt;Class&lt;?&gt;&gt; types) {
-<span class="nc bnc" id="L457" title="All 2 branches missed.">        checkArgument(types != null, &quot;Parameter 'types' must be not null&quot;);</span>
+    // parametric bindings
+<span class="fc" id="L117">    bind(ObjectFactory.class).to(objectFactoryType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L118">    bind(ObjectWrapperFactory.class).to(objectWrapperFactoryType).in(Scopes.SINGLETON);</span>
 
-<span class="nc bnc" id="L459" title="All 2 branches missed.">        for (Class&lt;?&gt; type : types) {</span>
-<span class="nc" id="L460">            addSimpleAlias(type);</span>
-<span class="nc" id="L461">        }</span>
-<span class="nc" id="L462">    }</span>
+<span class="fc" id="L120">    bindConfigurationSettingProvider(new ObjectFactoryConfigurationSetting(objectFactoryType));</span>
+<span class="fc" id="L121">    bindConfigurationSettingProvider(new ObjectWrapperFactoryConfigurationSetting(objectWrapperFactoryType));</span>
+<span class="fc" id="L122">    bindConfigurationSetting(new DefaultScriptingLanguageTypeConfigurationSetting(defaultScriptingLanguageType));</span>
+<span class="fc" id="L123">  }</span>
 
-    /**
-     * Adds all Classes in the given package as a simple alias.
-     * Adding simple aliases means that every specified class will be bound
-     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
-     *
-     * @param packageName the specified package to search for classes to alias.
-     * @param test a test to run against the objects found in the specified package
-     */
-    protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
-<span class="nc" id="L473">        addSimpleAliases(getClasses(test, packageName));</span>
-<span class="nc" id="L474">    }</span>
+  /**
+   * Set the MyBatis configuration environment id.
+   *
+   * @param environmentId the MyBatis configuration environment id
+   */
+  protected final void environmentId(String environmentId) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">    checkArgument(environmentId != null, &quot;Parameter 'environmentId' must be not null&quot;);</span>
+<span class="fc" id="L132">    bindConstant().annotatedWith(named(&quot;mybatis.environment.id&quot;)).to(environmentId);</span>
+<span class="fc" id="L133">  }</span>
 
-    /**
-     * Adds all Classes in the given package as a simple alias.
-     * Adding simple aliases means that every specified class will be bound
-     * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
-     *
-     * @param packageName the specified package to search for classes to alias
-     */
-    protected final void addSimpleAliases(final String packageName) {
-<span class="nc" id="L484">        addSimpleAliases(getClasses(packageName));</span>
-<span class="nc" id="L485">    }</span>
+  /**
+   * Lazy loading enabled.
+   *
+   * @param lazyLoadingEnabled the lazy loading enabled
+   */
+  protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
+<span class="fc" id="L141">    bindConfigurationSetting(new LazyLoadingEnabledConfigurationSetting(lazyLoadingEnabled));</span>
+<span class="fc" id="L142">  }</span>
 
-    /**
-     * Add a user defined Type Handler letting google-guice creating it.
-     *
-     * @param type the specified type has to be handled.
-     */
-    protected final &lt;T&gt; TypeHandlerBinder&lt;T&gt; handleType(final Class&lt;T&gt; type) {
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">        checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
+  /**
+   * Aggressive lazy loading.
+   *
+   * @param aggressiveLazyLoading the aggressive lazy loading
+   */
+  protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
+<span class="fc" id="L150">    bindConfigurationSetting(new AggressiveLazyLoadingConfigurationSetting(aggressiveLazyLoading));</span>
+<span class="fc" id="L151">  }</span>
 
-<span class="fc" id="L495">        return new TypeHandlerBinder&lt;T&gt;() {</span>
+  /**
+   * Multiple result sets enabled.
+   *
+   * @param multipleResultSetsEnabled the multiple result sets enabled
+   */
+  protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
+<span class="fc" id="L159">    bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));</span>
+<span class="fc" id="L160">  }</span>
 
-            @Override
-            public void with(final Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L499" title="1 of 2 branches missed.">                checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
-<span class="fc" id="L500">                handlers.addBinding(type).to(handler);</span>
-                
-<span class="fc" id="L502">                bindTypeHandler(TypeLiteral.get(handler));</span>
-<span class="fc" id="L503">            }</span>
+  /**
+   * Use generated keys.
+   *
+   * @param useGeneratedKeys the use generated keys
+   */
+  protected final void useGeneratedKeys(boolean useGeneratedKeys) {
+<span class="fc" id="L168">    bindConfigurationSetting(new UseGeneratedKeysConfigurationSetting(useGeneratedKeys));</span>
+<span class="fc" id="L169">  }</span>
 
-            @Override
-            public void with(final TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="nc bnc" id="L507" title="All 2 branches missed.">                checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
-<span class="nc" id="L508">                handlers.addBinding(type).to(handler);</span>
+  /**
+   * Use column label.
+   *
+   * @param useColumnLabel the use column label
+   */
+  protected final void useColumnLabel(boolean useColumnLabel) {
+<span class="fc" id="L177">    bindConfigurationSetting(new UseColumnLabelConfigurationSetting(useColumnLabel));</span>
+<span class="fc" id="L178">  }</span>
 
-<span class="nc" id="L510">                bindTypeHandler(handler);</span>
-<span class="nc" id="L511">            }</span>
+  /**
+   * Use cache enabled.
+   *
+   * @param useCacheEnabled the use cache enabled
+   */
+  protected final void useCacheEnabled(boolean useCacheEnabled) {
+<span class="fc" id="L186">    bindConfigurationSetting(new CacheEnabledConfigurationSetting(useCacheEnabled));</span>
+<span class="fc" id="L187">  }</span>
 
-            @Override
-            public void withProvidedTypeHandler(Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L515" title="1 of 2 branches missed.">                checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
-<span class="fc" id="L516">                handlers.addBinding(type).to(handler);</span>
-                
-<span class="fc" id="L518">                bindProvidedTypeHandler(TypeLiteral.get(handler), type);</span>
-<span class="fc" id="L519">            }</span>
+  /**
+   * Use configuration provider.
+   *
+   * @param configurationProviderType provider for Configuration
+   */
+  protected final void useConfigurationProvider(
+      Class&lt;? extends Provider&lt;? extends Configuration&gt;&gt; configurationProviderType) {
+<span class="fc" id="L196">    this.configurationProviderType = configurationProviderType;</span>
+<span class="fc" id="L197">  }</span>
 
-            @Override
-            public void withProvidedTypeHandler(TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L523" title="1 of 2 branches missed.">                checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
-<span class="fc" id="L524">                handlers.addBinding(type).to(handler);</span>
-                
-<span class="fc" id="L526">                bindProvidedTypeHandler(handler, type);</span>
-<span class="fc" id="L527">            }</span>
+  /**
+   * Use sql session factory provider.
+   *
+   * @param sqlSessionFactoryProvider provider for SqlSessionFactory
+   */
+  protected final void useSqlSessionFactoryProvider(
+      Class&lt;? extends Provider&lt;? extends SqlSessionFactory&gt;&gt; sqlSessionFactoryProvider) {
+<span class="fc" id="L206">    this.sqlSessionFactoryProviderType = sqlSessionFactoryProvider;</span>
+<span class="fc" id="L207">  }</span>
 
-            final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType) {
-<span class="fc" id="L530">                bind(typeHandlerType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L531">            }</span>
+  /**
+   * Fail fast.
+   *
+   * @param failFast the fail fast
+   */
+  protected final void failFast(boolean failFast) {
+<span class="fc" id="L215">    bindBoolean(&quot;mybatis.configuration.failFast&quot;, failFast);</span>
+<span class="fc" id="L216">  }</span>
 
-            final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindProvidedTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType, Class&lt;T&gt; type) {
-<span class="fc" id="L534">                bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type))).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L535">            }</span>
-        };
+  /**
+   * Maps underscores to camel case.
+   *
+   * @param mapUnderscoreToCamelCase Toggles this settings value.
+   */
+  protected final void mapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
+<span class="fc" id="L224">    bindConfigurationSetting(new MapUnderscoreToCamelCaseConfigurationSetting(mapUnderscoreToCamelCase));</span>
+<span class="fc" id="L225">  }</span>
+
+  /**
+   * set default statement timeout.
+   *
+   * @param defaultStatementTimeout default statement timeout in seconds.
+   */
+  protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
+<span class="fc" id="L233">    bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));</span>
+<span class="fc" id="L234">  }</span>
+
+  protected final void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
+<span class="fc" id="L237">    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),</span>
+<span class="fc" id="L238">        ConfigurationProviderProvisionListener.create(configurationSetting));</span>
+<span class="fc" id="L239">  }</span>
+
+  protected final &lt;P extends Provider&lt;? extends ConfigurationSetting&gt;&gt; void bindConfigurationSettingProvider(
+      P configurationSettingProvider) {
+<span class="fc" id="L243">    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),</span>
+<span class="fc" id="L244">        ConfigurationProviderProvisionListener.create(configurationSettingProvider, binder()));</span>
+<span class="fc" id="L245">  }</span>
+
+  private final void bindBoolean(String name, boolean value) {
+<span class="fc" id="L248">    bindConstant().annotatedWith(named(name)).to(value);</span>
+<span class="fc" id="L249">  }</span>
+
+  /**
+   * Executor type.
+   *
+   * @param executorType the executor type
+   */
+  protected final void executorType(ExecutorType executorType) {
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">    checkArgument(executorType != null, &quot;Parameter 'executorType' must be not null&quot;);</span>
+<span class="fc" id="L258">    bindConfigurationSetting(new DefaultExecutorTypeConfigurationSetting(executorType));</span>
+<span class="fc" id="L259">  }</span>
+
+  /**
+   * Configures the local cache scope setting.
+   *
+   * @param localeCacheScope The cache scope to use.
+   * @since 3.4
+   */
+  protected final void localCacheScope(LocalCacheScope localeCacheScope) {
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">    checkArgument(localeCacheScope != null, &quot;Parameter 'localCacheScope' must be not null&quot;);</span>
+<span class="fc" id="L269">    bindConfigurationSetting(new LocalCacheScopeConfigurationSetting(localeCacheScope));</span>
+<span class="fc" id="L270">  }</span>
+
+  /**
+   * Auto mapping behavior.
+   *
+   * @param autoMappingBehavior the auto mapping behavior
+   */
+  protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">    checkArgument(autoMappingBehavior != null, &quot;Parameter 'autoMappingBehavior' must be not null&quot;);</span>
+<span class="fc" id="L279">    bindConfigurationSetting(new AutoMappingBehaviorConfigurationSetting(autoMappingBehavior));</span>
+<span class="fc" id="L280">  }</span>
+
+  /**
+   * Set the DataSource Provider type has to be bound.
+   *
+   * @param dataSourceProviderType the DataSource Provider type
+   */
+  protected final void bindDataSourceProviderType(Class&lt;? extends Provider&lt;DataSource&gt;&gt; dataSourceProviderType) {
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">    checkArgument(dataSourceProviderType != null, &quot;Parameter 'dataSourceProviderType' must be not null&quot;);</span>
+<span class="fc" id="L289">    bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L290">  }</span>
+
+  /**
+   * Bind data source provider.
+   *
+   * @param dataSourceProvider the data source provider
+   */
+  protected final void bindDataSourceProvider(Provider&lt;DataSource&gt; dataSourceProvider) {
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L299">    bindDataSourceProvider(guicify(dataSourceProvider));</span>
+<span class="fc" id="L300">  }</span>
+
+  /**
+   * Bind data source provider.
+   *
+   * @param dataSourceProvider the data source provider
+   */
+  protected final void bindDataSourceProvider(com.google.inject.Provider&lt;DataSource&gt; dataSourceProvider) {
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L309">    bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L310">  }</span>
+
+  /**
+   * Bind database id provider.
+   *
+   * @param databaseIdProvider The DatabaseIdProvider class.
+   */
+  protected final void bindDatabaseIdProvider(Class&lt;? extends DatabaseIdProvider&gt; databaseIdProvider) {
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L319">    bind(DatabaseIdProvider.class).to(databaseIdProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L320">  }</span>
+
+  /**
+   * Bind database id provider.
+   *
+   * @param databaseIdProvider The DatabaseIdProvider instance.
+   */
+  protected final void bindDatabaseIdProvider(DatabaseIdProvider databaseIdProvider) {
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L329">    bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);</span>
+<span class="fc" id="L330">  }</span>
+
+  /**
+   * Set the TransactionFactory type has to be bound.
+   *
+   * @param transactionFactoryType the TransactionFactory type
+   */
+  protected final void bindTransactionFactoryType(Class&lt;? extends TransactionFactory&gt; transactionFactoryType) {
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">    checkArgument(transactionFactoryType != null, &quot;Parameter 'transactionFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L339">    bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L340">  }</span>
+
+  /**
+   * Bind transaction factory.
+   *
+   * @param transactionFactoryProvider the transaction factory provider
+   */
+  protected final void bindTransactionFactory(Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
+<span class="fc" id="L349">    bindTransactionFactory(guicify(transactionFactoryProvider));</span>
+<span class="fc" id="L350">  }</span>
+
+  /**
+   * Bind transaction factory.
+   *
+   * @param transactionFactoryProvider the transaction factory provider
+   */
+  protected final void bindTransactionFactory(
+      com.google.inject.Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
+<span class="fc" id="L360">    bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L361">  }</span>
+
+  /**
+   * Sets the ObjectFactory class.
+   *
+   * @param objectFactoryType the ObjectFactory type
+   */
+  protected final void bindObjectFactoryType(Class&lt;? extends ObjectFactory&gt; objectFactoryType) {
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L370">    this.objectFactoryType = objectFactoryType;</span>
+<span class="fc" id="L371">  }</span>
+
+  /**
+   * Sets the ObjectWrapperFactory class.
+   *
+   * @param objectWrapperFactoryType the ObjectFactory type
+   */
+  protected final void bindObjectWrapperFactoryType(Class&lt;? extends ObjectWrapperFactory&gt; objectWrapperFactoryType) {
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectWrapperFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L380">    this.objectWrapperFactoryType = objectWrapperFactoryType;</span>
+<span class="fc" id="L381">  }</span>
+
+  /**
+   * Sets the default LanguageDriver class.
+   * &lt;p&gt;
+   * Due to current limitations in MyBatis, &amp;#64;Inject cannot be used in LanguageDriver class.
+   * &lt;/p&gt;
+   *
+   * @param defaultScriptingLanguageType the default LanguageDriver type
+   */
+  protected final void bindDefaultScriptingLanguageType(Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType) {
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">    checkArgument(defaultScriptingLanguageType != null, &quot;Parameter 'defaultScriptingLanguageType' must be not null&quot;);</span>
+<span class="fc" id="L393">    this.defaultScriptingLanguageType = defaultScriptingLanguageType;</span>
+<span class="fc" id="L394">  }</span>
+
+  /**
+   * Add a user defined binding.
+   *
+   * @param alias the string type alias
+   */
+  protected final AliasBinder addAlias(final String alias) {
+<span class="pc bpc" id="L402" title="2 of 4 branches missed.">    checkArgument(alias != null &amp;&amp; alias.length() &gt; 0, &quot;Empty or null 'alias' is not valid&quot;);</span>
+
+<span class="fc" id="L404">    return new AliasBinder() {</span>
+
+      @Override
+      public void to(final Class&lt;?&gt; clazz) {
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">        checkArgument(clazz != null, &quot;Null type not valid for alias '%s'&quot;, alias);</span>
+<span class="fc" id="L409">        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));</span>
+<span class="fc" id="L410">      }</span>
+
+    };
+  }
+
+  /**
+   * Adding simple aliases means that every specified class will be bound
+   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   *
+   * @param type the specified types have to be bind
+   */
+  protected final void addSimpleAlias(final Class&lt;?&gt; type) {
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
+
+<span class="fc" id="L424">    String alias = type.getSimpleName();</span>
+    // check if the class uses the Alias annotation.
+<span class="fc" id="L426">    final Alias annotation = type.getAnnotation(Alias.class);</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">    if (annotation != null) {</span>
+<span class="fc" id="L428">      alias = annotation.value();</span>
     }
+<span class="fc" id="L430">    addAlias(alias).to(type);</span>
+<span class="fc" id="L431">  }</span>
 
-    /**
-     * Adds the user defined MyBatis type handler, letting
-     * google-guice creating it.
-     *
-     * @param handlerClass the handler type.
-     */
-    protected final void addTypeHandlerClass(Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass) {
-<span class="pc bpc" id="L546" title="1 of 2 branches missed.">        checkArgument(handlerClass != null, &quot;Parameter 'handlerClass' must not be null&quot;);</span>
-<span class="fc" id="L547">    	mappingTypeHandlers.addBinding().to(handlerClass);</span>
-<span class="fc" id="L548">    	bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L549">    }</span>
+  /**
+   * Adding simple aliases means that every specified class will be bound
+   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   *
+   * @param types the specified types have to be bind
+   */
+  protected final void addSimpleAliases(final Collection&lt;Class&lt;?&gt;&gt; types) {
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">    checkArgument(types != null, &quot;Parameter 'types' must be not null&quot;);</span>
 
-    /**
-     * Adds the user defined MyBatis type handlers, letting
-     * google-guice creating it.
-     *
-     * @param handlersClasses the handler type.
-     */
-    protected final void addTypeHandlersClasses(Collection&lt;Class&lt;? extends TypeHandler&lt;?&gt;&gt;&gt; handlersClasses) {
-<span class="pc bpc" id="L558" title="1 of 2 branches missed.">        checkArgument(handlersClasses != null, &quot;Parameter 'handlersClasses' must not be null&quot;);</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">    for (Class&lt;?&gt; type : types) {</span>
+<span class="fc" id="L443">      addSimpleAlias(type);</span>
+<span class="fc" id="L444">    }</span>
+<span class="fc" id="L445">  }</span>
 
-<span class="fc bfc" id="L560" title="All 2 branches covered.">        for (Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {</span>
-<span class="fc" id="L561">            addTypeHandlerClass(handlerClass);</span>
-<span class="fc" id="L562">        }</span>
-<span class="fc" id="L563">    }</span>
+  /**
+   * Adds all Classes in the given package as a simple alias.
+   * Adding simple aliases means that every specified class will be bound
+   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   *
+   * @param packageName the specified package to search for classes to alias.
+   * @param test a test to run against the objects found in the specified package
+   */
+  protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
+<span class="fc" id="L456">    addSimpleAliases(getClasses(test, packageName));</span>
+<span class="fc" id="L457">  }</span>
 
-    /**
-     * Adds the user defined MyBatis type handlers in the given package, letting
-     * google-guice creating it.
-     *
-     * @param packageName the package where looking for type handlers.
-     */
-    protected final void addTypeHandlerClasses(String packageName) {
-<span class="pc bpc" id="L572" title="1 of 2 branches missed.">        checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="fc" id="L573">        addTypeHandlersClasses(new ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;()</span>
-<span class="fc" id="L574">                .find(new ResolverUtil.IsA(TypeHandler.class), packageName)</span>
-<span class="fc" id="L575">                .getClasses());</span>
-<span class="fc" id="L576">    }</span>
+  /**
+   * Adds all Classes in the given package as a simple alias.
+   * Adding simple aliases means that every specified class will be bound
+   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   *
+   * @param packageName the specified package to search for classes to alias
+   */
+  protected final void addSimpleAliases(final String packageName) {
+<span class="fc" id="L467">    addSimpleAliases(getClasses(packageName));</span>
+<span class="fc" id="L468">  }</span>
 
-    /**
-     * Adds the user defined myBatis interceptor plugins type, letting
-     * google-guice creating it.
-     *
-     * @param interceptorClass The user defined MyBatis interceptor plugin type
-     */
-    protected final void addInterceptorClass(Class&lt;? extends Interceptor&gt; interceptorClass) {
-<span class="pc bpc" id="L585" title="1 of 2 branches missed.">        checkArgument(interceptorClass != null, &quot;Parameter 'interceptorClass' must not be null&quot;);</span>
-<span class="fc" id="L586">        interceptors.addBinding().to(interceptorClass).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L587">    }</span>
+  /**
+   * Add a user defined Type Handler letting google-guice creating it.
+   *
+   * @param type the specified type has to be handled.
+   */
+  protected final &lt;T&gt; TypeHandlerBinder&lt;T&gt; handleType(final Class&lt;T&gt; type) {
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
 
-    /**
-     * Adds the user defined MyBatis interceptors plugins types, letting
-     * google-guice creating them.
-     *
-     * @param interceptorsClasses the user defined MyBatis Interceptors plugins types
-     */
-    protected final void addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt; interceptorsClasses) {
-<span class="nc bnc" id="L596" title="All 2 branches missed.">        checkArgument(interceptorsClasses != null, &quot;Parameter 'interceptorsClasses' must not be null&quot;);</span>
+<span class="fc" id="L478">    return new TypeHandlerBinder&lt;T&gt;() {</span>
 
-<span class="nc bnc" id="L598" title="All 2 branches missed.">        for (Class&lt;? extends Interceptor&gt; interceptorClass : interceptorsClasses) {</span>
-<span class="nc" id="L599">            addInterceptorClass(interceptorClass);</span>
-<span class="nc" id="L600">        }</span>
-<span class="nc" id="L601">    }</span>
+      @Override
+      public void with(final Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-    /**
-     * Adds the user defined MyBatis interceptors plugins types in the given package,
-     * letting google-guice creating them.
-     *
-     * @param packageName the package where looking for Interceptors plugins types.
-     */
-    protected final void addInterceptorsClasses(String packageName) {
-<span class="nc bnc" id="L610" title="All 2 branches missed.">        checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="nc" id="L611">        addInterceptorsClasses(new ResolverUtil&lt;Interceptor&gt;()</span>
-<span class="nc" id="L612">                .find(new ResolverUtil.IsA(Interceptor.class), packageName)</span>
-<span class="nc" id="L613">                .getClasses());</span>
-<span class="nc" id="L614">    }</span>
+<span class="fc" id="L484">        bindTypeHandler(TypeLiteral.get(handler));</span>
+<span class="fc" id="L485">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L486">      }</span>
 
-    /**
-     * Adds the user defined mapper classes.
-     *
-     * @param mapperClass the user defined mapper classes.
-     */
-    protected final void addMapperClass(Class&lt;?&gt; mapperClass) {
-<span class="pc bpc" id="L622" title="1 of 2 branches missed.">        checkArgument(mapperClass != null, &quot;Parameter 'mapperClass' must not be null&quot;);</span>
+      @Override
+      public void with(final TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
+<span class="pc bpc" id="L490" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="fc" id="L624">        mappers.addBinding().toInstance(mapperClass);</span>
-<span class="fc" id="L625">        bindMapper(mapperClass);</span>
-<span class="fc" id="L626">    }</span>
+<span class="fc" id="L492">        bindTypeHandler(handler);</span>
+<span class="fc" id="L493">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L494">      }</span>
 
-    /**
-     * Adds the user defined mapper classes.
-     *
-     * @param mapperClasses the user defined mapper classes
-     */
-    protected final void addMapperClasses(Collection&lt;Class&lt;?&gt;&gt; mapperClasses) {
-<span class="nc bnc" id="L634" title="All 2 branches missed.">        checkArgument(mapperClasses != null, &quot;Parameter 'mapperClasses' must not be null&quot;);</span>
+      @Override
+      public void withProvidedTypeHandler(final Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="nc bnc" id="L636" title="All 2 branches missed.">        for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
-<span class="nc" id="L637">            addMapperClass(mapperClass);</span>
-<span class="nc" id="L638">        }</span>
-<span class="nc" id="L639">    }</span>
+<span class="fc" id="L500">        bindProvidedTypeHandler(TypeLiteral.get(handler), type);</span>
+<span class="fc" id="L501">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L502">      }</span>
 
-    /**
-     * Adds the user defined mapper classes.
-     *
-     * @param packageName the specified package to search for mappers to add.
-     */
-    protected final void addMapperClasses(final String packageName) {
-<span class="nc" id="L647">        addMapperClasses(getClasses(packageName));</span>
-<span class="nc" id="L648">    }</span>
+      @Override
+      public void withProvidedTypeHandler(final TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-    /**
-     * Adds the user defined mapper classes.
-     *
-     * @param packageName the specified package to search for mappers to add.
-     * @param test a test to run against the objects found in the specified package.
-     */
-    protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
-<span class="nc" id="L657">        addMapperClasses(getClasses(test, packageName));</span>
-<span class="nc" id="L658">    }</span>
+<span class="fc" id="L508">        bindProvidedTypeHandler(handler, type);</span>
+<span class="fc" id="L509">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L510">      }</span>
 
-    /**
-     * Return a set of all classes contained in the given package.
-     *
-     * @param packageName the package has to be analyzed.
-     * @return a set of all classes contained in the given package.
-     */
-    private static Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
-<span class="nc" id="L667">        return getClasses(new ResolverUtil.IsA(Object.class), packageName);</span>
-    }
+      final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType) {
+<span class="fc" id="L513">        bind(typeHandlerType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L514">      }</span>
 
-    /**
-     * Return a set of all classes contained in the given package that match with
-     * the given test requirement.
-     *
-     * @param test the class filter on the given package.
-     * @param packageName the package has to be analyzed.
-     * @return a set of all classes contained in the given package.
-     */
-    private static Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
-<span class="nc bnc" id="L679" title="All 2 branches missed.">        checkArgument(test != null, &quot;Parameter 'test' must not be null&quot;);</span>
-<span class="nc bnc" id="L680" title="All 2 branches missed.">        checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="nc" id="L681">        return new ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();</span>
-    }
+      final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindProvidedTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType,
+          Class&lt;T&gt; type) {
+<span class="fc" id="L518">        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type)))</span>
+<span class="fc" id="L519">            .in(Scopes.SINGLETON);</span>
+<span class="fc" id="L520">      }</span>
+    };
+  }
+
+  /**
+   * Adds the user defined MyBatis type handler, letting
+   * google-guice creating it.
+   *
+   * @param handlerClass the handler type.
+   */
+  protected final void addTypeHandlerClass(final Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass) {
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">    checkArgument(handlerClass != null, &quot;Parameter 'handlerClass' must not be null&quot;);</span>
+<span class="fc" id="L532">    bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);</span>
+
+<span class="fc" id="L534">    bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));</span>
+<span class="fc" id="L535">  }</span>
+
+  /**
+   * Adds the user defined MyBatis type handlers, letting
+   * google-guice creating it.
+   *
+   * @param handlersClasses the handler type.
+   */
+  protected final void addTypeHandlersClasses(Collection&lt;Class&lt;? extends TypeHandler&lt;?&gt;&gt;&gt; handlersClasses) {
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">    checkArgument(handlersClasses != null, &quot;Parameter 'handlersClasses' must not be null&quot;);</span>
+
+<span class="fc bfc" id="L546" title="All 2 branches covered.">    for (Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {</span>
+<span class="fc" id="L547">      addTypeHandlerClass(handlerClass);</span>
+<span class="fc" id="L548">    }</span>
+<span class="fc" id="L549">  }</span>
+
+  /**
+   * Adds the user defined MyBatis type handlers in the given package, letting
+   * google-guice creating it.
+   *
+   * @param packageName the package where looking for type handlers.
+   */
+  protected final void addTypeHandlerClasses(String packageName) {
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L559">    addTypeHandlersClasses(</span>
+<span class="fc" id="L560">        new ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;().find(new ResolverUtil.IsA(TypeHandler.class), packageName).getClasses());</span>
+<span class="fc" id="L561">  }</span>
+
+  /**
+   * Adds the user defined myBatis interceptor plugins type, letting
+   * google-guice creating it.
+   *
+   * @param interceptorClass The user defined MyBatis interceptor plugin type
+   */
+  protected final void addInterceptorClass(final Class&lt;? extends Interceptor&gt; interceptorClass) {
+<span class="pc bpc" id="L570" title="1 of 2 branches missed.">    checkArgument(interceptorClass != null, &quot;Parameter 'interceptorClass' must not be null&quot;);</span>
+<span class="fc" id="L571">    bindConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(interceptorClass));</span>
+<span class="fc" id="L572">  }</span>
+
+  /**
+   * Adds the user defined MyBatis interceptors plugins types, letting
+   * google-guice creating them.
+   *
+   * @param interceptorsClasses the user defined MyBatis Interceptors plugins types
+   */
+  protected final void addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt; interceptorsClasses) {
+<span class="pc bpc" id="L581" title="1 of 2 branches missed.">    checkArgument(interceptorsClasses != null, &quot;Parameter 'interceptorsClasses' must not be null&quot;);</span>
+
+<span class="fc bfc" id="L583" title="All 2 branches covered.">    for (Class&lt;? extends Interceptor&gt; interceptorClass : interceptorsClasses) {</span>
+<span class="fc" id="L584">      addInterceptorClass(interceptorClass);</span>
+<span class="fc" id="L585">    }</span>
+<span class="fc" id="L586">  }</span>
+
+  /**
+   * Adds the user defined MyBatis interceptors plugins types in the given package,
+   * letting google-guice creating them.
+   *
+   * @param packageName the package where looking for Interceptors plugins types.
+   */
+  protected final void addInterceptorsClasses(String packageName) {
+<span class="pc bpc" id="L595" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L596">    addInterceptorsClasses(</span>
+<span class="fc" id="L597">        new ResolverUtil&lt;Interceptor&gt;().find(new ResolverUtil.IsA(Interceptor.class), packageName).getClasses());</span>
+<span class="fc" id="L598">  }</span>
+
+  /**
+   * Adds the user defined mapper classes.
+   *
+   * @param mapperClass the user defined mapper classes.
+   */
+  protected final void addMapperClass(Class&lt;?&gt; mapperClass) {
+<span class="pc bpc" id="L606" title="1 of 2 branches missed.">    checkArgument(mapperClass != null, &quot;Parameter 'mapperClass' must not be null&quot;);</span>
+
+<span class="fc" id="L608">    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),</span>
+<span class="fc" id="L609">        ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));</span>
+<span class="fc" id="L610">    bindMapper(mapperClass);</span>
+<span class="fc" id="L611">  }</span>
+
+  /**
+   * Adds the user defined mapper classes.
+   *
+   * @param mapperClasses the user defined mapper classes
+   */
+  protected final void addMapperClasses(Collection&lt;Class&lt;?&gt;&gt; mapperClasses) {
+<span class="pc bpc" id="L619" title="1 of 2 branches missed.">    checkArgument(mapperClasses != null, &quot;Parameter 'mapperClasses' must not be null&quot;);</span>
+
+<span class="fc bfc" id="L621" title="All 2 branches covered.">    for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
+<span class="fc" id="L622">      addMapperClass(mapperClass);</span>
+<span class="fc" id="L623">    }</span>
+<span class="fc" id="L624">  }</span>
+
+  /**
+   * Adds the user defined mapper classes.
+   *
+   * @param packageName the specified package to search for mappers to add.
+   */
+  protected final void addMapperClasses(final String packageName) {
+<span class="fc" id="L632">    addMapperClasses(getClasses(packageName));</span>
+<span class="fc" id="L633">  }</span>
+
+  /**
+   * Adds the user defined mapper classes.
+   *
+   * @param packageName the specified package to search for mappers to add.
+   * @param test a test to run against the objects found in the specified package.
+   */
+  protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
+<span class="fc" id="L642">    addMapperClasses(getClasses(test, packageName));</span>
+<span class="fc" id="L643">  }</span>
+
+  /**
+   * Return a set of all classes contained in the given package.
+   *
+   * @param packageName the package has to be analyzed.
+   * @return a set of all classes contained in the given package.
+   */
+  private static Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
+<span class="fc" id="L652">    return getClasses(new ResolverUtil.IsA(Object.class), packageName);</span>
+  }
+
+  /**
+   * Return a set of all classes contained in the given package that match with
+   * the given test requirement.
+   *
+   * @param test the class filter on the given package.
+   * @param packageName the package has to be analyzed.
+   * @return a set of all classes contained in the given package.
+   */
+  private static Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
+<span class="pc bpc" id="L664" title="1 of 2 branches missed.">    checkArgument(test != null, &quot;Parameter 'test' must not be null&quot;);</span>
+<span class="pc bpc" id="L665" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L666">    return new ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();</span>
+  }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

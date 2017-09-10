@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.configuration</a> &gt; <span class="el_source">ConfigurationProvider.java</span></div><h1>ConfigurationProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice.configuration;
 
-import java.util.Collections;
-import java.util.Map;
+import com.google.inject.Injector;
+import com.google.inject.ProvisionException;
+import com.google.inject.name.Named;
+
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -27,16 +27,11 @@ import javax.sql.DataSource;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSettings;
-
-import com.google.inject.ProvisionException;
-import com.google.inject.name.Named;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
 /**
  * Provides the myBatis Configuration.
@@ -44,226 +39,151 @@ import com.google.inject.name.Named;
 @Singleton
 public class ConfigurationProvider implements Provider&lt;Configuration&gt; {
 
-    /**
-     * The myBatis Configuration reference.
-     */
-    private final Environment environment;
+  /**
+   * The myBatis Configuration reference.
+   */
+  private final Environment environment;
 
-<span class="fc" id="L52">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.lazyLoadingEnabled&quot;)
-    private boolean lazyLoadingEnabled = false;
+<span class="fc" id="L47">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.lazyLoadingEnabled&quot;)
+  private boolean lazyLoadingEnabled = false;
 
-<span class="fc" id="L56">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.aggressiveLazyLoading&quot;)
-    private boolean aggressiveLazyLoading = true;
+<span class="fc" id="L51">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.aggressiveLazyLoading&quot;)
+  private boolean aggressiveLazyLoading = true;
 
-<span class="fc" id="L60">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.multipleResultSetsEnabled&quot;)
-    private boolean multipleResultSetsEnabled = true;
+<span class="fc" id="L55">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.multipleResultSetsEnabled&quot;)
+  private boolean multipleResultSetsEnabled = true;
 
-<span class="fc" id="L64">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.useGeneratedKeys&quot;)
-    private boolean useGeneratedKeys = false;
+<span class="fc" id="L59">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.useGeneratedKeys&quot;)
+  private boolean useGeneratedKeys = false;
 
-<span class="fc" id="L68">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.useColumnLabel&quot;)
-    private boolean useColumnLabel = true;
+<span class="fc" id="L63">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.useColumnLabel&quot;)
+  private boolean useColumnLabel = true;
 
-<span class="fc" id="L72">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.cacheEnabled&quot;)
-    private boolean cacheEnabled = true;
+<span class="fc" id="L67">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.cacheEnabled&quot;)
+  private boolean cacheEnabled = true;
 
-<span class="fc" id="L76">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.defaultExecutorType&quot;)
-    private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
+<span class="fc" id="L71">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.defaultExecutorType&quot;)
+  private ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
 
-<span class="fc" id="L80">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.autoMappingBehavior&quot;)
-    private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
+<span class="fc" id="L75">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.autoMappingBehavior&quot;)
+  private AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
-<span class="fc" id="L84">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.callSettersOnNulls&quot;)
-    private boolean callSettersOnNulls = false;
+<span class="fc" id="L79">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.callSettersOnNulls&quot;)
+  private boolean callSettersOnNulls = false;
 
-    @com.google.inject.Inject(optional = true)
-    @Named(&quot;mybatis.configuration.defaultStatementTimeout&quot;)
-    @Nullable
-    private Integer defaultStatementTimeout;
+  @com.google.inject.Inject(optional = true)
+  @Named(&quot;mybatis.configuration.defaultStatementTimeout&quot;)
+  @Nullable
+  private Integer defaultStatementTimeout;
 
-<span class="fc" id="L93">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.mapUnderscoreToCamelCase&quot;)
-    private boolean mapUnderscoreToCamelCase = false;
+<span class="fc" id="L88">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.mapUnderscoreToCamelCase&quot;)
+  private boolean mapUnderscoreToCamelCase = false;
 
-<span class="fc" id="L97">    @com.google.inject.Inject(optional = true)</span>
-    @Named(&quot;mybatis.configuration.failFast&quot;)
-    private boolean failFast = false;
+<span class="fc" id="L92">  @com.google.inject.Inject(optional = true)</span>
+  @Named(&quot;mybatis.configuration.failFast&quot;)
+  private boolean failFast = false;
 
-    @com.google.inject.Inject(optional = true)
-    @TypeAliases
-    private Map&lt;String, Class&lt;?&gt;&gt; typeAliases;
+  @com.google.inject.Inject(optional = true)
+  private DatabaseIdProvider databaseIdProvider;
 
-<span class="fc" id="L105">    @com.google.inject.Inject(optional = true)</span>
-<span class="fc" id="L106">    private Map&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; typeHandlers = Collections.emptyMap();</span>
+  @com.google.inject.Inject
+  private DataSource dataSource;
 
-<span class="fc" id="L108">    @com.google.inject.Inject(optional = true)</span>
-    @MappingTypeHandlers
-<span class="fc" id="L110">    private Set&lt;TypeHandler&lt;?&gt;&gt; mappingTypeHandlers = Collections.emptySet();</span>
+<span class="fc" id="L102">  private Set&lt;ConfigurationSetting&gt; configurationSettings = new HashSet&lt;ConfigurationSetting&gt;();</span>
+<span class="fc" id="L103">  private Set&lt;MapperConfigurationSetting&gt; mapperConfigurationSettings = new HashSet&lt;MapperConfigurationSetting&gt;();</span>
 
-<span class="fc" id="L112">    @com.google.inject.Inject(optional = true)</span>
-    @Mappers
-<span class="fc" id="L114">    private Set&lt;Class&lt;?&gt;&gt; mapperClasses = Collections.emptySet();</span>
+  /**
+   * @since 1.0.1
+   */
+  @com.google.inject.Inject
+<span class="fc" id="L109">  public ConfigurationProvider(final Environment environment) {</span>
+<span class="fc" id="L110">    this.environment = environment;</span>
+<span class="fc" id="L111">  }</span>
 
-<span class="fc" id="L116">    @com.google.inject.Inject(optional = true)</span>
-<span class="fc" id="L117">    private Set&lt;Interceptor&gt; plugins = Collections.emptySet();</span>
+  @Deprecated
+  public void setEnvironment(Environment environment) {
+    // do nothing
+<span class="nc" id="L116">  }</span>
 
-    @com.google.inject.Inject(optional = true)
-    private DatabaseIdProvider databaseIdProvider;
+  /**
+   * Flag to check all statements are completed.
+   *
+   * @param failFast
+   *          flag to check all statements are completed
+   * @since 1.0.1
+   */
+  public void setFailFast(boolean failFast) {
+<span class="nc" id="L126">    this.failFast = failFast;</span>
+<span class="nc" id="L127">  }</span>
 
-    @com.google.inject.Inject
-    private DataSource dataSource;
-    
-<span class="fc" id="L125">    @com.google.inject.Inject(optional = true)</span>
-    @ConfigurationSettings
-<span class="fc" id="L127">    private Set&lt;ConfigurationSetting&gt; configurationSettings = Collections.emptySet();</span>
+  public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
+<span class="fc" id="L130">    this.configurationSettings.add(configurationSetting);</span>
+<span class="fc" id="L131">  }</span>
 
-    /**
-     * @since 1.0.1
-     */
-    @com.google.inject.Inject
-<span class="fc" id="L133">    public ConfigurationProvider(final Environment environment) {</span>
-<span class="fc" id="L134">        this.environment = environment;</span>
-<span class="fc" id="L135">    }</span>
+  public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
+<span class="fc" id="L134">    this.mapperConfigurationSettings.add((MapperConfigurationSetting) mapperConfigurationSetting);</span>
+<span class="fc" id="L135">  }</span>
 
-    @Deprecated
-    public void setEnvironment(Environment environment) {
-        // do nothing
-<span class="nc" id="L140">    }</span>
+  /**
+   * New configuration.
+   *
+   * @param environment
+   *          the environment
+   * @return new configuration
+   */
+  protected Configuration newConfiguration(Environment environment) {
+<span class="fc" id="L145">    return new Configuration(environment);</span>
+  }
 
-    /**
-     * Flag to check all statements are completed.
-     *
-     * @param failFast flag to check all statements are completed
-     * @since 1.0.1
-     */
-    public void setFailFast(boolean failFast) {
-<span class="nc" id="L149">        this.failFast = failFast;</span>
-<span class="nc" id="L150">    }</span>
+  @Override
+  public Configuration get() {
+<span class="fc" id="L150">    final Configuration configuration = newConfiguration(environment);</span>
+<span class="fc" id="L151">    configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
+<span class="fc" id="L152">    configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
+<span class="fc" id="L153">    configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
+<span class="fc" id="L154">    configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
+<span class="fc" id="L155">    configuration.setUseColumnLabel(useColumnLabel);</span>
+<span class="fc" id="L156">    configuration.setCacheEnabled(cacheEnabled);</span>
+<span class="fc" id="L157">    configuration.setDefaultExecutorType(defaultExecutorType);</span>
+<span class="fc" id="L158">    configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
+<span class="fc" id="L159">    configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
+<span class="fc" id="L160">    configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
+<span class="fc" id="L161">    configuration.setMapUnderscoreToCamelCase(mapUnderscoreToCamelCase);</span>
 
-    /**
-     * Adds the user defined type aliases to the myBatis Configuration.
-     *
-     * @param typeAliases the user defined type aliases.
-     */
-    public void setTypeAliases(Map&lt;String, Class&lt;?&gt;&gt; typeAliases) {
-<span class="nc" id="L158">        this.typeAliases = typeAliases;</span>
-<span class="nc" id="L159">    }</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">    for (ConfigurationSetting setting : configurationSettings) {</span>
+<span class="fc" id="L164">      setting.applyConfigurationSetting(configuration);</span>
+<span class="fc" id="L165">    }</span>
 
-    /**
-     * Adds the user defined type handlers to the myBatis Configuration.
-     *
-     * @param typeHandlers the user defined type handlers.
-     */
-    @com.google.inject.Inject(optional = true)
-    public void registerTypeHandlers(final Map&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; typeHandlers) {
-<span class="fc" id="L168">        this.typeHandlers = typeHandlers;</span>
-<span class="fc" id="L169">    }</span>
+    try {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">      if (databaseIdProvider != null) {</span>
+<span class="fc" id="L169">        configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
+      }
 
-    /**
-     * Adds the user defined Mapper classes to the myBatis Configuration.
-     *
-     * @param mapperClasses the user defined Mapper classes.
-     */
-    public void setMapperClasses(Set&lt;Class&lt;?&gt;&gt; mapperClasses) {
-<span class="nc" id="L177">        this.mapperClasses = mapperClasses;</span>
-<span class="nc" id="L178">    }</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">      for (MapperConfigurationSetting setting : mapperConfigurationSettings) {</span>
+<span class="fc" id="L173">        setting.applyConfigurationSetting(configuration);</span>
+<span class="fc" id="L174">      }</span>
 
-    /**
-     * Registers the user defined plugins interceptors to the
-     * myBatis Configuration.
-     *
-     * @param plugins the user defined plugins interceptors.
-     */
-    public void setPlugins(Set&lt;Interceptor&gt; plugins) {
-<span class="nc" id="L187">        this.plugins = plugins;</span>
-<span class="nc" id="L188">    }</span>
-    
-    public void setConfigurationSettings(Set&lt;ConfigurationSetting&gt; configurationSettings){
-<span class="nc" id="L191">    	this.configurationSettings = configurationSettings;</span>
-<span class="nc" id="L192">    }</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">      if (failFast) {</span>
+<span class="nc" id="L177">        configuration.getMappedStatementNames();</span>
+      }
+<span class="fc" id="L179">    } catch (Throwable cause) {</span>
+<span class="fc" id="L180">      throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;,</span>
+          cause);
+    } finally {
+<span class="fc" id="L183">      ErrorContext.instance().reset();</span>
+<span class="fc" id="L184">    }</span>
 
-    /**
-     * @param environment
-     * @return new configuration
-     */
-    protected Configuration newConfiguration(Environment environment) {
-<span class="fc" id="L199">        return new Configuration(environment);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Configuration get() {
-<span class="fc" id="L207">        final Configuration configuration = newConfiguration(environment);</span>
-<span class="fc" id="L208">        configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
-<span class="fc" id="L209">        configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
-<span class="fc" id="L210">        configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
-<span class="fc" id="L211">        configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
-<span class="fc" id="L212">        configuration.setUseColumnLabel(useColumnLabel);</span>
-<span class="fc" id="L213">        configuration.setCacheEnabled(cacheEnabled);</span>
-<span class="fc" id="L214">        configuration.setDefaultExecutorType(defaultExecutorType);</span>
-<span class="fc" id="L215">        configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
-<span class="fc" id="L216">        configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
-<span class="fc" id="L217">        configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
-<span class="fc" id="L218">        configuration.setMapUnderscoreToCamelCase(mapUnderscoreToCamelCase);</span>
-
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        for(ConfigurationSetting setting : configurationSettings){</span>
-<span class="fc" id="L221">        	setting.applyConfigurationSetting(configuration);</span>
-<span class="fc" id="L222">        }</span>
-        
-        try {
-<span class="fc bfc" id="L225" title="All 2 branches covered.">            if (databaseIdProvider != null) {</span>
-<span class="fc" id="L226">                configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
-            }
-
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            for (Map.Entry&lt;String,Class&lt;?&gt;&gt; alias : typeAliases.entrySet()) {</span>
-<span class="nc" id="L230">                configuration.getTypeAliasRegistry().registerAlias(alias.getKey(), alias.getValue());</span>
-<span class="nc" id="L231">            }</span>
-
-<span class="fc bfc" id="L233" title="All 2 branches covered.">            for (Map.Entry&lt;Class&lt;?&gt;,TypeHandler&lt;?&gt;&gt; typeHandler : typeHandlers.entrySet()) {</span>
-<span class="fc" id="L234">                registerTypeHandler(configuration, typeHandler.getKey(), typeHandler.getValue());</span>
-<span class="fc" id="L235">            }</span>
-
-<span class="fc bfc" id="L237" title="All 2 branches covered.">            for (TypeHandler&lt;?&gt; typeHandler : mappingTypeHandlers) {</span>
-<span class="fc" id="L238">                configuration.getTypeHandlerRegistry().register(typeHandler);</span>
-<span class="fc" id="L239">            }</span>
-
-<span class="fc bfc" id="L241" title="All 2 branches covered.">            for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">                if (!configuration.hasMapper(mapperClass)) {</span>
-<span class="fc" id="L243">                    configuration.addMapper(mapperClass);</span>
-                }
-<span class="fc" id="L245">            }</span>
-
-<span class="fc bfc" id="L247" title="All 2 branches covered.">            for (Interceptor interceptor : plugins) {</span>
-<span class="fc" id="L248">                configuration.addInterceptor(interceptor);</span>
-<span class="fc" id="L249">            }</span>
-
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">            if (failFast) {</span>
-<span class="nc" id="L252">                configuration.getMappedStatementNames();</span>
-            }
-<span class="nc" id="L254">        } catch (Throwable cause) {</span>
-<span class="nc" id="L255">            throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;, cause);</span>
-        } finally {
-<span class="pc" id="L257">            ErrorContext.instance().reset();</span>
-<span class="fc" id="L258">        }</span>
-
-<span class="fc" id="L260">        return configuration;</span>
-    }
-
-    @SuppressWarnings(&quot;unchecked&quot;)
-    private &lt;T&gt; void registerTypeHandler(Configuration configuration, Class&lt;?&gt; type, TypeHandler&lt;?&gt; handler) {
-<span class="fc" id="L265">        configuration.getTypeHandlerRegistry().register((Class&lt;T&gt;)type, (TypeHandler&lt;T&gt;)handler);</span>
-<span class="fc" id="L266">    }</span>
-
+<span class="fc" id="L186">    return configuration;</span>
+  }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,302 +1,312 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">BasicDataSourceProvider.java</span></div><h1>BasicDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice.datasource.dbcp;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
+import java.util.Map.Entry;
+import java.util.Properties;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Map.Entry;
-import java.util.Properties;
 
 /**
  * Provides the Apache commons-dbcp {@code BasicDataSource}.
  */
 public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt; {
 
-    /**
-     * The BasicDataSource reference.
-     */
-<span class="nc" id="L36">    private final BasicDataSource dataSource = new BasicDataSource();</span>
+  /**
+   * The BasicDataSource reference.
+   */
+<span class="fc" id="L33">  private final BasicDataSource dataSource = new BasicDataSource();</span>
 
-    /**
-     * Creates a new BasicDataSource using the needed parameter.
-     *
-     * @param driver The JDBC driver class.
-     * @param url the database URL of the form &lt;code&gt;jdbc:subprotocol:subname&lt;/code&gt;.
-     * @param driverClassLoader ClassLoader to use to load JDBC driver class.
-     */
-    @Inject
-    public BasicDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
-            @Named(&quot;JDBC.url&quot;) final String url,
-<span class="nc" id="L48">            @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
-<span class="nc" id="L49">        dataSource.setDriverClassLoader(driverClassLoader);</span>
-<span class="nc" id="L50">        dataSource.setDriverClassName(driver);</span>
-<span class="nc" id="L51">        dataSource.setUrl(url);</span>
-<span class="nc" id="L52">    }</span>
+  /**
+   * Creates a new BasicDataSource using the needed parameter.
+   *
+   * @param driver
+   *          The JDBC driver class.
+   * @param url
+   *          the database URL of the form &lt;code&gt;jdbc:subprotocol:subname&lt;/code&gt;.
+   * @param driverClassLoader
+   *          ClassLoader to use to load JDBC driver class.
+   */
+  @Inject
+  public BasicDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver, @Named(&quot;JDBC.url&quot;) final String url,
+<span class="fc" id="L47">      @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
+<span class="fc" id="L48">    dataSource.setDriverClassLoader(driverClassLoader);</span>
+<span class="fc" id="L49">    dataSource.setDriverClassName(driver);</span>
+<span class="fc" id="L50">    dataSource.setUrl(url);</span>
+<span class="fc" id="L51">  }</span>
 
-    /**
-     *
-     * @param username
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="nc" id="L61">        dataSource.setUsername(username);</span>
-<span class="nc" id="L62">    }</span>
+  /**
+   * Sets the user.
+   *
+   * @param username
+   *          the new user
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="fc" id="L62">    dataSource.setUsername(username);</span>
+<span class="fc" id="L63">  }</span>
 
-    /**
-     *
-     * @param password
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="nc" id="L71">        dataSource.setPassword(password);</span>
-<span class="nc" id="L72">    }</span>
+  /**
+   * Sets the password.
+   *
+   * @param password
+   *          the new password
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="fc" id="L74">    dataSource.setPassword(password);</span>
+<span class="fc" id="L75">  }</span>
 
-    /**
-     *
-     *
-     * @param autoCommit
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="nc" id="L81">        dataSource.setDefaultAutoCommit(autoCommit);</span>
-<span class="nc" id="L82">    }</span>
+  /**
+   * Sets the auto commit.
+   *
+   * @param autoCommit
+   *          the new auto commit
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
+<span class="fc" id="L85">    dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L86">  }</span>
 
-    /**
-     *
-     *
-     * @param loginTimeout
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
-        try {
-<span class="nc" id="L92">            dataSource.setLoginTimeout(loginTimeout);</span>
-<span class="nc" id="L93">        } catch (SQLException e) {</span>
-<span class="nc" id="L94">            throw new RuntimeException(&quot;Impossible to set DBCP login timeout '&quot;</span>
-                    + loginTimeout
-                    + &quot;', see nested exceptions&quot;, e);
-<span class="nc" id="L97">        }</span>
-<span class="nc" id="L98">    }</span>
+  /**
+   * Sets the driver properties.
+   *
+   * @param driverProperties
+   *          the new driver properties
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">    for (Entry&lt;Object, Object&gt; property : driverProperties.entrySet()) {</span>
+<span class="fc" id="L97">      String name = property.getKey().toString();</span>
+<span class="fc" id="L98">      String value = property.getValue().toString();</span>
+<span class="fc" id="L99">      dataSource.addConnectionProperty(name, value);</span>
+<span class="fc" id="L100">    }</span>
+<span class="fc" id="L101">  }</span>
 
-    /**
-     *
-     * @param driverProperties
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">        for (Entry&lt;Object, Object&gt; property : driverProperties.entrySet()) {</span>
-<span class="nc" id="L107">            String name = property.getKey().toString();</span>
-<span class="nc" id="L108">            String value = property.getValue().toString();</span>
-<span class="nc" id="L109">            dataSource.addConnectionProperty(name, value);</span>
-<span class="nc" id="L110">        }</span>
-<span class="nc" id="L111">    }</span>
+  /**
+   * Sets the access to underlying connection allowed.
+   *
+   * @param allow
+   *          the new access to underlying connection allowed
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setAccessToUnderlyingConnectionAllowed(
+      @Named(&quot;DBCP.accessToUnderlyingConnectionAllowed&quot;) final boolean allow) {
+<span class="fc" id="L112">    dataSource.setAccessToUnderlyingConnectionAllowed(allow);</span>
+<span class="fc" id="L113">  }</span>
 
-    /**
-     *
-     *
-     * @param allow
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setAccessToUnderlyingConnectionAllowed(@Named(&quot;DBCP.accessToUnderlyingConnectionAllowed&quot;) final boolean allow) {
-<span class="nc" id="L120">        dataSource.setAccessToUnderlyingConnectionAllowed(allow);</span>
-<span class="nc" id="L121">    }</span>
+  /**
+   * Sets the default catalog.
+   *
+   * @param defaultCatalog
+   *          the new default catalog
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultCatalog(@Named(&quot;DBCP.defaultCatalog&quot;) final String defaultCatalog) {
+<span class="fc" id="L123">    dataSource.setDefaultCatalog(defaultCatalog);</span>
+<span class="fc" id="L124">  }</span>
 
-    /**
-     *
-     *
-     * @param defaultCatalog
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setDefaultCatalog(@Named(&quot;DBCP.defaultCatalog&quot;) final String defaultCatalog) {
-<span class="nc" id="L130">        dataSource.setDefaultCatalog(defaultCatalog);</span>
-<span class="nc" id="L131">    }</span>
+  /**
+   * Sets the default read only.
+   *
+   * @param defaultReadOnly
+   *          the new default read only
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) final boolean defaultReadOnly) {
+<span class="fc" id="L134">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
+<span class="fc" id="L135">  }</span>
 
-    /**
-     *
-     *
-     * @param defaultReadOnly
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) final boolean defaultReadOnly) {
-<span class="nc" id="L140">        dataSource.setDefaultReadOnly(defaultReadOnly);</span>
-<span class="nc" id="L141">    }</span>
+  /**
+   * Sets the default transaction isolation.
+   *
+   * @param defaultTransactionIsolation
+   *          the new default transaction isolation
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTransactionIsolation(
+      @Named(&quot;DBCP.defaultTransactionIsolation&quot;) final int defaultTransactionIsolation) {
+<span class="fc" id="L146">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="fc" id="L147">  }</span>
 
-    /**
-     *
-     *
-     * @param defaultTransactionIsolation
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setDefaultTransactionIsolation(@Named(&quot;DBCP.defaultTransactionIsolation&quot;) final int defaultTransactionIsolation) {
-<span class="nc" id="L150">        dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
-<span class="nc" id="L151">    }</span>
+  /**
+   * Sets the initial size.
+   *
+   * @param initialSize
+   *          the new initial size
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setInitialSize(@Named(&quot;DBCP.initialSize&quot;) final int initialSize) {
+<span class="fc" id="L157">    dataSource.setInitialSize(initialSize);</span>
+<span class="fc" id="L158">  }</span>
 
-    /**
-     *
-     *
-     * @param initialSize
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setInitialSize(@Named(&quot;DBCP.initialSize&quot;) final int initialSize) {
-<span class="nc" id="L160">        dataSource.setInitialSize(initialSize);</span>
-<span class="nc" id="L161">    }</span>
+  /**
+   * Sets the max active.
+   *
+   * @param maxActive
+   *          the new max active
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMaxActive(@Named(&quot;DBCP.maxActive&quot;) final int maxActive) {
+<span class="fc" id="L168">    dataSource.setMaxActive(maxActive);</span>
+<span class="fc" id="L169">  }</span>
 
-    /**
-     *
-     *
-     * @param maxActive
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMaxActive(@Named(&quot;DBCP.maxActive&quot;) final int maxActive) {
-<span class="nc" id="L170">        dataSource.setMaxActive(maxActive);</span>
-<span class="nc" id="L171">    }</span>
+  /**
+   * Sets the max idle.
+   *
+   * @param maxIdle
+   *          the new max idle
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) final int maxIdle) {
+<span class="fc" id="L179">    dataSource.setMaxIdle(maxIdle);</span>
+<span class="fc" id="L180">  }</span>
 
-    /**
-     *
-     *
-     * @param maxIdle
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) final int maxIdle) {
-<span class="nc" id="L180">        dataSource.setMaxIdle(maxIdle);</span>
-<span class="nc" id="L181">    }</span>
+  /**
+   * Sets the max open prepared statements.
+   *
+   * @param maxOpenPreparedStatements
+   *          the new max open prepared statements
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMaxOpenPreparedStatements(
+      @Named(&quot;DBCP.maxOpenPreparedStatements&quot;) final int maxOpenPreparedStatements) {
+<span class="fc" id="L191">    dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);</span>
+<span class="fc" id="L192">  }</span>
 
-    /**
-     *
-     *
-     * @param maxOpenPreparedStatements
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMaxOpenPreparedStatements(@Named(&quot;DBCP.maxOpenPreparedStatements&quot;) final int maxOpenPreparedStatements) {
-<span class="nc" id="L190">        dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);</span>
-<span class="nc" id="L191">    }</span>
+  /**
+   * Sets the max wait.
+   *
+   * @param maxWait
+   *          the new max wait
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMaxWait(@Named(&quot;DBCP.maxWait&quot;) final long maxWait) {
+<span class="fc" id="L202">    dataSource.setMaxWait(maxWait);</span>
+<span class="fc" id="L203">  }</span>
 
-    /**
-     *
-     *
-     * @param maxWait
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMaxWait(@Named(&quot;DBCP.maxWait&quot;) final long maxWait) {
-<span class="nc" id="L200">        dataSource.setMaxWait(maxWait);</span>
-<span class="nc" id="L201">    }</span>
+  /**
+   * Sets the min evictable idle time millis.
+   *
+   * @param minEvictableIdleTimeMillis
+   *          the new min evictable idle time millis
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMinEvictableIdleTimeMillis(
+      @Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) final long minEvictableIdleTimeMillis) {
+<span class="nc" id="L214">    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
+<span class="nc" id="L215">  }</span>
 
-    /**
-     *
-     *
-     * @param minEvictableIdleTimeMillis
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMinEvictableIdleTimeMillis(@Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) final long minEvictableIdleTimeMillis) {
-<span class="nc" id="L210">        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
-<span class="nc" id="L211">    }</span>
+  /**
+   * Sets the min idle.
+   *
+   * @param minIdle
+   *          the new min idle
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setMinIdle(@Named(&quot;DBCP.minIdle&quot;) final int minIdle) {
+<span class="fc" id="L225">    dataSource.setMinIdle(minIdle);</span>
+<span class="fc" id="L226">  }</span>
 
-    /**
-     *
-     *
-     * @param minIdle
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setMinIdle(@Named(&quot;DBCP.minIdle&quot;) final int minIdle) {
-<span class="nc" id="L220">        dataSource.setMinIdle(minIdle);</span>
-<span class="nc" id="L221">    }</span>
+  /**
+   * Sets the num tests per eviction run.
+   *
+   * @param numTestsPerEvictionRun
+   *          the new num tests per eviction run
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) final int numTestsPerEvictionRun) {
+<span class="fc" id="L236">    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
+<span class="fc" id="L237">  }</span>
 
-    /**
-     *
-     *
-     * @param numTestsPerEvictionRun
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) final int numTestsPerEvictionRun) {
-<span class="nc" id="L230">        dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
-<span class="nc" id="L231">    }</span>
+  /**
+   * Sets the pool prepared statements.
+   *
+   * @param poolPreparedStatements
+   *          the new pool prepared statements
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setPoolPreparedStatements(@Named(&quot;DBCP.poolPreparedStatements&quot;) final boolean poolPreparedStatements) {
+<span class="fc" id="L247">    dataSource.setPoolPreparedStatements(poolPreparedStatements);</span>
+<span class="fc" id="L248">  }</span>
 
-    /**
-     *
-     *
-     * @param poolPreparedStatements
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setPoolPreparedStatements(@Named(&quot;DBCP.poolPreparedStatements&quot;) final boolean poolPreparedStatements) {
-<span class="nc" id="L240">        dataSource.setPoolPreparedStatements(poolPreparedStatements);</span>
-<span class="nc" id="L241">    }</span>
+  /**
+   * Sets the test on borrow.
+   *
+   * @param testOnBorrow
+   *          the new test on borrow
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setTestOnBorrow(@Named(&quot;DBCP.testOnBorrow&quot;) final boolean testOnBorrow) {
+<span class="fc" id="L258">    dataSource.setTestOnBorrow(testOnBorrow);</span>
+<span class="fc" id="L259">  }</span>
 
-    /**
-     *
-     *
-     * @param testOnBorrow
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setTestOnBorrow(@Named(&quot;DBCP.testOnBorrow&quot;) final boolean testOnBorrow) {
-<span class="nc" id="L250">        dataSource.setTestOnBorrow(testOnBorrow);</span>
-<span class="nc" id="L251">    }</span>
+  /**
+   * Sets the test on return.
+   *
+   * @param testOnReturn
+   *          the new test on return
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setTestOnReturn(@Named(&quot;DBCP.testOnReturn&quot;) final boolean testOnReturn) {
+<span class="fc" id="L269">    dataSource.setTestOnReturn(testOnReturn);</span>
+<span class="fc" id="L270">  }</span>
 
-    /**
-     *
-     *
-     * @param testOnReturn
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setTestOnReturn(@Named(&quot;DBCP.testOnReturn&quot;) final boolean testOnReturn) {
-<span class="nc" id="L260">        dataSource.setTestOnReturn(testOnReturn);</span>
-<span class="nc" id="L261">    }</span>
+  /**
+   * Sets the test while idle.
+   *
+   * @param testWhileIdle
+   *          the new test while idle
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setTestWhileIdle(@Named(&quot;DBCP.testWhileIdle&quot;) final boolean testWhileIdle) {
+<span class="fc" id="L280">    dataSource.setTestWhileIdle(testWhileIdle);</span>
+<span class="fc" id="L281">  }</span>
 
-    /**
-     *
-     *
-     * @param testWhileIdle
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setTestWhileIdle(@Named(&quot;DBCP.testWhileIdle&quot;) final boolean testWhileIdle) {
-<span class="nc" id="L270">        dataSource.setTestWhileIdle(testWhileIdle);</span>
-<span class="nc" id="L271">    }</span>
+  /**
+   * Sets the time between eviction runs millis.
+   *
+   * @param timeBetweenEvictionRunsMillis
+   *          the new time between eviction runs millis
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setTimeBetweenEvictionRunsMillis(
+      @Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
+<span class="fc" id="L292">    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
+<span class="fc" id="L293">  }</span>
 
-    /**
-     *
-     *
-     * @param timeBetweenEvictionRunsMillis
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setTimeBetweenEvictionRunsMillis(@Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
-<span class="nc" id="L280">        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
-<span class="nc" id="L281">    }</span>
+  /**
+   * Sets the validation query.
+   *
+   * @param validationQuery
+   *          the new validation query
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) final String validationQuery) {
+<span class="fc" id="L303">    dataSource.setValidationQuery(validationQuery);</span>
+<span class="fc" id="L304">  }</span>
 
-    /**
-     *
-     *
-     * @param validationQuery
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) final String validationQuery) {
-<span class="nc" id="L290">        dataSource.setValidationQuery(validationQuery);</span>
-<span class="nc" id="L291">    }</span>
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataSource get() {
-<span class="nc" id="L298">        return dataSource;</span>
-    }
+  @Override
+  public DataSource get() {
+<span class="fc" id="L308">    return dataSource;</span>
+  }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

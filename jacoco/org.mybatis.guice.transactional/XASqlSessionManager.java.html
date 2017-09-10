@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XASqlSessionManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">XASqlSessionManager.java</span></div><h1>XASqlSessionManager.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice.transactional;
 
@@ -30,484 +27,540 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 
 public class XASqlSessionManager implements XAResource {
-<span class="fc" id="L33">    private static final Log log = LogFactory.getLog(XASqlSessionManager.class);</span>
+<span class="fc" id="L30">  private static final Log log = LogFactory.getLog(XASqlSessionManager.class);</span>
 
-    public static final int NO_TX = 0;
-    public static final int STARTED = 1;
-    public static final int ENDED = 2;
-    public static final int PREPARED = 3;
+  public static final int NO_TX = 0;
+  public static final int STARTED = 1;
+  public static final int ENDED = 2;
+  public static final int PREPARED = 3;
 
-    private SqlSessionManager sqlSessionManager;
-    private int transactionTimeout;
-    private String id;
-    private Xid xid;
-<span class="fc" id="L44">    private int state = NO_TX;</span>
+  private SqlSessionManager sqlSessionManager;
+  private int transactionTimeout;
+  private String id;
+  private Xid xid;
+<span class="fc" id="L41">  private int state = NO_TX;</span>
 
-<span class="fc" id="L46">    private static ConcurrentHashMap&lt;GlobalKey, GlobalToken&gt; globalTokens = new ConcurrentHashMap&lt;XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken&gt;();</span>
+<span class="fc" id="L43">  private static ConcurrentHashMap&lt;GlobalKey, GlobalToken&gt; globalTokens = new ConcurrentHashMap&lt;XASqlSessionManager.GlobalKey, XASqlSessionManager.GlobalToken&gt;();</span>
 
-<span class="fc" id="L48">    public XASqlSessionManager(SqlSessionManager sqlSessionManager) {</span>
-<span class="fc" id="L49">        this.sqlSessionManager = sqlSessionManager;</span>
-<span class="fc" id="L50">        id = sqlSessionManager.getConfiguration().getEnvironment().getId();</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L45">  public XASqlSessionManager(SqlSessionManager sqlSessionManager) {</span>
+<span class="fc" id="L46">    this.sqlSessionManager = sqlSessionManager;</span>
+<span class="fc" id="L47">    id = sqlSessionManager.getConfiguration().getEnvironment().getId();</span>
+<span class="fc" id="L48">  }</span>
 
-    //@Override
-    public String getId() {
-<span class="nc" id="L55">        return id;</span>
+  public String getId() {
+<span class="nc" id="L51">    return id;</span>
+  }
+
+  public int getState() {
+<span class="nc" id="L55">    return state;</span>
+  }
+
+  private String xlatedState() {
+<span class="nc bnc" id="L59" title="All 5 branches missed.">    switch (state) {</span>
+      case NO_TX:
+<span class="nc" id="L61">        return &quot;NO_TX&quot;;</span>
+      case STARTED:
+<span class="nc" id="L63">        return &quot;STARTED&quot;;</span>
+      case ENDED:
+<span class="nc" id="L65">        return &quot;ENDED&quot;;</span>
+      case PREPARED:
+<span class="nc" id="L67">        return &quot;PREPARED&quot;;</span>
+      default:
+<span class="nc" id="L69">        return &quot;!invalid state (&quot; + state + &quot;)!&quot;;</span>
+    }
+  }
+
+  private String decodeXAResourceFlag(int flag) {
+<span class="nc bnc" id="L74" title="All 10 branches missed.">    switch (flag) {</span>
+      case XAResource.TMENDRSCAN:
+<span class="nc" id="L76">        return &quot;TMENDRSCAN&quot;;</span>
+      case XAResource.TMFAIL:
+<span class="nc" id="L78">        return &quot;TMFAIL&quot;;</span>
+      case XAResource.TMJOIN:
+<span class="nc" id="L80">        return &quot;TMJOIN&quot;;</span>
+      case XAResource.TMNOFLAGS:
+<span class="nc" id="L82">        return &quot;TMNOFLAGS&quot;;</span>
+      case XAResource.TMONEPHASE:
+<span class="nc" id="L84">        return &quot;TMONEPHASE&quot;;</span>
+      case XAResource.TMRESUME:
+<span class="nc" id="L86">        return &quot;TMRESUME&quot;;</span>
+      case XAResource.TMSTARTRSCAN:
+<span class="nc" id="L88">        return &quot;TMSTARTRSCAN&quot;;</span>
+      case XAResource.TMSUCCESS:
+<span class="nc" id="L90">        return &quot;TMSUCCESS&quot;;</span>
+      case XAResource.TMSUSPEND:
+<span class="nc" id="L92">        return &quot;TMSUSPEND&quot;;</span>
+      default:
+<span class="nc" id="L94">        return &quot;&quot; + flag;</span>
+    }
+  }
+
+  @Override
+  public int getTransactionTimeout() throws XAException {
+<span class="nc" id="L100">    return transactionTimeout;</span>
+  }
+
+  @Override
+  public boolean setTransactionTimeout(int second) throws XAException {
+<span class="fc" id="L105">    transactionTimeout = second;</span>
+<span class="fc" id="L106">    return true;</span>
+  }
+
+  @Override
+  public void forget(Xid xid) throws XAException {
+<span class="nc" id="L111">  }</span>
+
+  @Override
+  public Xid[] recover(int flags) throws XAException {
+<span class="nc" id="L115">    return new Xid[0];</span>
+  }
+
+  @Override
+  public boolean isSameRM(XAResource xares) throws XAException {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">    return this == xares;</span>
+  }
+
+  @Override
+  public void start(Xid xid, int flag) throws XAException {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L126">      log.debug(</span>
+<span class="nc" id="L127">          id + &quot;: call start old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
     }
 
-    public int getState() {
-<span class="nc" id="L59">        return state;</span>
+<span class="pc bpc" id="L130" title="3 of 4 branches missed.">    if (flag != XAResource.TMNOFLAGS &amp;&amp; flag != XAResource.TMJOIN) {</span>
+<span class="nc" id="L131">      throw new MyBatisXAException(id + &quot;: unsupported start flag &quot; + decodeXAResourceFlag(flag),</span>
+          XAException.XAER_RMERR);
     }
 
-    private String xlatedState() {
-<span class="nc bnc" id="L63" title="All 5 branches missed.">        switch (state) {</span>
-<span class="nc" id="L64">            case NO_TX: return &quot;NO_TX&quot;;</span>
-<span class="nc" id="L65">            case STARTED: return &quot;STARTED&quot;;</span>
-<span class="nc" id="L66">            case ENDED: return &quot;ENDED&quot;;</span>
-<span class="nc" id="L67">            case PREPARED: return &quot;PREPARED&quot;;</span>
-<span class="nc" id="L68">            default: return &quot;!invalid state (&quot; + state + &quot;)!&quot;;</span>
-        }
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">    if (xid == null) {</span>
+<span class="nc" id="L136">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
-    private String decodeXAResourceFlag(int flag) {
-<span class="nc bnc" id="L73" title="All 10 branches missed.">        switch(flag) {</span>
-<span class="nc" id="L74">        case XAResource.TMENDRSCAN: return &quot;TMENDRSCAN&quot;;</span>
-<span class="nc" id="L75">        case XAResource.TMFAIL: return &quot;TMFAIL&quot;;</span>
-<span class="nc" id="L76">        case XAResource.TMJOIN: return &quot;TMJOIN&quot;;</span>
-<span class="nc" id="L77">        case XAResource.TMNOFLAGS: return &quot;TMNOFLAGS&quot;;</span>
-<span class="nc" id="L78">        case XAResource.TMONEPHASE: return &quot;TMONEPHASE&quot;;</span>
-<span class="nc" id="L79">        case XAResource.TMRESUME: return &quot;TMRESUME&quot;;</span>
-<span class="nc" id="L80">        case XAResource.TMSTARTRSCAN: return &quot;TMSTARTRSCAN&quot;;</span>
-<span class="nc" id="L81">        case XAResource.TMSUCCESS: return &quot;TMSUCCESS&quot;;</span>
-<span class="nc" id="L82">        case XAResource.TMSUSPEND: return &quot;TMSUSPEND&quot;;</span>
-<span class="nc" id="L83">        default: return &quot;&quot; + flag;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">      if (this.xid != null) {</span>
+<span class="nc" id="L141">        throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
+      } else {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (flag == XAResource.TMJOIN) {</span>
+<span class="nc" id="L144">          throw new MyBatisXAException(id + &quot;: resource not yet started&quot;, XAException.XAER_PROTO);</span>
+        } else {
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">          if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L147">            log.debug(id + &quot;: OK to start, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot;</span>
+<span class="nc" id="L148">                + decodeXAResourceFlag(flag));</span>
+          }
+<span class="fc" id="L150">          this.xid = xid;</span>
         }
+      }
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    } else if (state == STARTED) {</span>
+<span class="nc" id="L154">      throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">      if (flag == XAResource.TMNOFLAGS) {</span>
+<span class="nc" id="L157">        throw new MyBatisXAException(id + &quot;: resource already registered XID &quot; + this.xid, XAException.XAER_DUPID);</span>
+      } else {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (xid.equals(this.xid)) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">          if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L161">            log.debug(id + &quot;: OK to join, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot;</span>
+<span class="nc" id="L162">                + decodeXAResourceFlag(flag));</span>
+          }
+        } else {
+<span class="nc" id="L165">          throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid</span>
+              + &quot; - cannot start it on more than one XID at a time&quot;, XAException.XAER_RMERR);
+        }
+      }
+<span class="nc bnc" id="L169" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="nc" id="L170">      throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
     }
 
-    //@Override
-    @Override
-    public int getTransactionTimeout() throws XAException {
-<span class="nc" id="L90">        return transactionTimeout;</span>
+<span class="fc" id="L173">    state = STARTED;</span>
+<span class="fc" id="L174">    parentSuspend(xid);</span>
+<span class="fc" id="L175">  }</span>
+
+  @Override
+  public void end(Xid xid, int flag) throws XAException {
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L180">      log.debug(</span>
+<span class="nc" id="L181">          id + &quot;: call end old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot; and flag &quot; + decodeXAResourceFlag(flag));</span>
     }
 
-    //@Override
-    @Override
-    public boolean setTransactionTimeout(int second) throws XAException {
-<span class="fc" id="L96">        transactionTimeout = second;</span>
-<span class="fc" id="L97">        return true;</span>
+<span class="pc bpc" id="L184" title="1 of 4 branches missed.">    if (flag != XAResource.TMSUCCESS &amp;&amp; flag != XAResource.TMFAIL) {</span>
+<span class="nc" id="L185">      throw new MyBatisXAException(id + &quot;: unsupported end flag &quot; + decodeXAResourceFlag(flag), XAException.XAER_RMERR);</span>
     }
 
-    //@Override
-    @Override
-    public void forget(Xid xid) throws XAException {
-<span class="nc" id="L103">    }</span>
-
-    //@Override
-    @Override
-    public Xid[] recover(int flags) throws XAException {
-<span class="nc" id="L108">        return new Xid[0];</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">    if (xid == null) {</span>
+<span class="nc" id="L189">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
-    //@Override
-    @Override
-    public boolean isSameRM(XAResource xares) throws XAException {
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        return this == xares;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="nc" id="L193">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L197">          log.debug(</span>
+<span class="nc" id="L198">              id + &quot;: OK to end, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
+        }
+      } else {
+<span class="nc" id="L201">        throw new MyBatisXAException(</span>
+            id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot end it on another XID &quot; + xid,
+            XAException.XAER_PROTO);
+      }
+<span class="nc bnc" id="L205" title="All 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="nc" id="L206">      throw new MyBatisXAException(id + &quot;: resource already ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="nc" id="L208">      throw new MyBatisXAException(id + &quot;: cannot end, resource already prepared on XID &quot; + xid,</span>
+          XAException.XAER_PROTO);
     }
 
-    //@Override
-    @Override
-    public void start(Xid xid, int flag) throws XAException {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) log.debug(id + &quot;: call start old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
-
-<span class="pc bpc" id="L122" title="3 of 4 branches missed.">        if (flag != XAResource.TMNOFLAGS  &amp;&amp; flag != XAResource.TMJOIN)</span>
-<span class="nc" id="L123">            throw new MyBatisXAException(id + &quot;: unsupported start flag &quot; + decodeXAResourceFlag(flag), XAException.XAER_RMERR);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (xid == null)</span>
-<span class="nc" id="L125">            throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
-
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (state == NO_TX) {</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (this.xid != null)</span>
-<span class="nc" id="L129">                throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
-            else {
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (flag == XAResource.TMJOIN)</span>
-<span class="nc" id="L132">                    throw new MyBatisXAException(id + &quot;: resource not yet started&quot;, XAException.XAER_PROTO);</span>
-                else {
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                    if (log.isDebugEnabled()) log.debug(id + &quot;: OK to start, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
-<span class="fc" id="L135">                    this.xid = xid;</span>
-                }
-            }
-        }
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        else if (state == STARTED) {</span>
-<span class="nc" id="L140">            throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
-        }
-<span class="nc bnc" id="L142" title="All 2 branches missed.">        else if (state == ENDED) {</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (flag == XAResource.TMNOFLAGS)</span>
-<span class="nc" id="L144">                throw new MyBatisXAException(id + &quot;: resource already registered XID &quot; + this.xid, XAException.XAER_DUPID);</span>
-            else {
-<span class="nc bnc" id="L146" title="All 2 branches missed.">                if (xid.equals(this.xid)) {</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">                    if (log.isDebugEnabled()) log.debug(id + &quot;: OK to join, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
-                }
-                else
-<span class="nc" id="L150">                    throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot start it on more than one XID at a time&quot;, XAException.XAER_RMERR);</span>
-            }
-        }
-<span class="nc bnc" id="L153" title="All 2 branches missed.">        else if (state == PREPARED) {</span>
-<span class="nc" id="L154">            throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
-        }
-
-<span class="fc" id="L157">        state = STARTED;</span>
-<span class="fc" id="L158">        parentSuspend(xid);</span>
-<span class="fc" id="L159">    }</span>
-
-    //@Override
-    @Override
-    public void end(Xid xid, int flag) throws XAException {
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) log.debug(id + &quot;: call end old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot; and flag &quot; + decodeXAResourceFlag(flag));</span>
-
-<span class="pc bpc" id="L166" title="1 of 4 branches missed.">        if (flag != XAResource.TMSUCCESS &amp;&amp; flag != XAResource.TMFAIL)</span>
-<span class="nc" id="L167">            throw new MyBatisXAException(id + &quot;: unsupported end flag &quot; + decodeXAResourceFlag(flag), XAException.XAER_RMERR);</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (xid == null)</span>
-<span class="nc" id="L169">            throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
-
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (state == NO_TX) {</span>
-<span class="nc" id="L172">            throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        else if (state == STARTED) {</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (this.xid.equals(xid)) {</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) log.debug(id + &quot;: OK to end, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
-            }
-            else
-<span class="nc" id="L179">                throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot end it on another XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        else if (state == ENDED) {</span>
-<span class="nc" id="L182">            throw new MyBatisXAException(id + &quot;: resource already ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="nc bnc" id="L184" title="All 2 branches missed.">        else if (state == PREPARED) {</span>
-<span class="nc" id="L185">            throw new MyBatisXAException(id + &quot;: cannot end, resource already prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-
-<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (flag == XAResource.TMFAIL) {</span>
-            // Rollback transaction. After call method end() call medod roolback()
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) log.debug(id + &quot;: after end TMFAIL reset state to ENDED and roolback&quot;);</span>
-        }
-
-<span class="fc" id="L193">        this.state = ENDED;</span>
-<span class="fc" id="L194">    }</span>
-
-    //@Override
-    @Override
-    public int prepare(Xid xid) throws XAException {
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) log.debug(id + &quot;: call prepare old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if (xid == null)</span>
-<span class="nc" id="L202">            throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
-
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (state == NO_TX) {</span>
-<span class="nc" id="L205">            throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        else if (state == STARTED) {</span>
-<span class="nc" id="L208">            throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        else if (state == ENDED) {</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if (this.xid.equals(xid)) {</span>
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) log.debug(id + &quot;: OK to prepare, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-            }
-            else
-<span class="nc" id="L215">                throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot prepare it on another XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="nc bnc" id="L217" title="All 2 branches missed.">        else if (state == PREPARED) {</span>
-<span class="nc" id="L218">            throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
-        }
-
-<span class="fc" id="L221">        this.state = PREPARED;</span>
-<span class="fc" id="L222">        return XAResource.XA_OK;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">    if (flag == XAResource.TMFAIL) {</span>
+      // Rollback transaction. After call method end() call method rollback()
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L215">        log.debug(id + &quot;: after end TMFAIL reset state to ENDED and roolback&quot;);</span>
+      }
     }
 
-    //@Override
-    @Override
-    public void commit(Xid xid, boolean onePhase) throws XAException {
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) log.debug(id + &quot;: call commit old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot; onePhase is &quot; + onePhase);</span>
+<span class="fc" id="L219">    this.state = ENDED;</span>
+<span class="fc" id="L220">  }</span>
 
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (xid == null)</span>
-<span class="nc" id="L231">            throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
+  @Override
+  public int prepare(Xid xid) throws XAException {
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L225">      log.debug(id + &quot;: call prepare old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
+    }
 
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (state == NO_TX) {</span>
-<span class="nc" id="L234">            throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        else if (state == STARTED) {</span>
-<span class="nc" id="L237">            throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">        else if (state == ENDED) {</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">            if (onePhase) {</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">                if (log.isDebugEnabled()) log.debug(id + &quot;: OK to commit with 1PC, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-            }
-            else
-<span class="nc" id="L244">                throw new MyBatisXAException(id + &quot;: resource never prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        else if (state == PREPARED) {</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            if (!onePhase) {</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                if (this.xid.equals(xid)) {</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">                    if (log.isDebugEnabled()) log.debug(id + &quot;: OK to commit, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-                }
-                else
-<span class="nc" id="L252">                    throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot commit it on another XID &quot; + xid, XAException.XAER_PROTO);</span>
-            }
-            else
-<span class="nc" id="L255">                throw new MyBatisXAException(id + &quot;: cannot commit in one phase as resource has been prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">    if (xid == null) {</span>
+<span class="nc" id="L229">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
+    }
 
-        try {
-<span class="fc" id="L259">            parentResume(xid);</span>
-        } finally {
-<span class="pc bpc" id="L261" title="3 of 4 branches missed.">            if (log.isDebugEnabled()) log.debug(id + &quot;: after commit reset state to NO_TX&quot;);</span>
-<span class="pc" id="L262">            this.state = NO_TX;</span>
-<span class="pc" id="L263">            this.xid = null;</span>
-<span class="fc" id="L264">        }</span>
-<span class="fc" id="L265">    }</span>
-
-    //@Override
-    @Override
-    public void rollback(Xid xid) throws XAException {
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) log.debug(id + &quot;: call roolback old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (xid == null)</span>
-<span class="nc" id="L273">            throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
-
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">        if (state == NO_TX) {</span>
-<span class="nc" id="L276">            throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="nc" id="L233">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
+<span class="nc" id="L235">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L239">          log.debug(id + &quot;: OK to prepare, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
         }
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        else if (state == STARTED) {</span>
-<span class="nc" id="L279">            throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        else if (state == ENDED) {</span>
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">            if (this.xid.equals(xid)) {</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) log.debug(id + &quot;: OK to rollback, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
-            }
-            else
-<span class="nc" id="L286">                throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot roll it back on another XID &quot; + xid, XAException.XAER_PROTO);</span>
-        }
-<span class="nc bnc" id="L288" title="All 2 branches missed.">        else if (state == PREPARED) {</span>
-<span class="nc bnc" id="L289" title="All 2 branches missed.">            if (log.isDebugEnabled()) log.debug(id + &quot;: rollback reset state from PREPARED to NO_TX&quot;);</span>
-<span class="nc" id="L290">            this.state = NO_TX;</span>
-<span class="nc" id="L291">            throw new MyBatisXAException(id + &quot;: resource committed during prepare on XID &quot; + this.xid, XAException.XA_HEURCOM);</span>
-        }
+      } else {
+<span class="nc" id="L242">        throw new MyBatisXAException(</span>
+            id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot prepare it on another XID &quot; + xid,
+            XAException.XAER_PROTO);
+      }
+<span class="nc bnc" id="L246" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="nc" id="L247">      throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
+    }
 
-        try {
-<span class="fc" id="L295">            parentResume(xid);</span>
-        } finally {
-<span class="pc bpc" id="L297" title="3 of 4 branches missed.">            if (log.isDebugEnabled()) log.debug(id + &quot;: after rollback reset state to NO_TX&quot;);</span>
-<span class="pc" id="L298">            this.state = NO_TX;</span>
-<span class="pc" id="L299">            this.xid = null;</span>
-<span class="fc" id="L300">        }</span>
+<span class="fc" id="L250">    this.state = PREPARED;</span>
+<span class="fc" id="L251">    return XAResource.XA_OK;</span>
+  }
+
+  @Override
+  public void commit(Xid xid, boolean onePhase) throws XAException {
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L257">      log.debug(id + &quot;: call commit old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot; onePhase is &quot; + onePhase);</span>
+    }
+
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">    if (xid == null) {</span>
+<span class="nc" id="L261">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
+    }
+
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="nc" id="L265">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
+<span class="nc" id="L267">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">      if (onePhase) {</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L271">          log.debug(id + &quot;: OK to commit with 1PC, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
+        }
+      } else {
+<span class="nc" id="L274">        throw new MyBatisXAException(id + &quot;: resource never prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
+      }
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">      if (!onePhase) {</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        if (this.xid.equals(xid)) {</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">          if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L280">            log.debug(id + &quot;: OK to commit, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
+          }
+        } else {
+<span class="nc" id="L283">          throw new MyBatisXAException(</span>
+              id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot commit it on another XID &quot; + xid,
+              XAException.XAER_PROTO);
+        }
+      } else {
+<span class="nc" id="L288">        throw new MyBatisXAException(id + &quot;: cannot commit in one phase as resource has been prepared on XID &quot; + xid,</span>
+            XAException.XAER_PROTO);
+      }
+    }
+
+    try {
+<span class="fc" id="L294">      parentResume(xid);</span>
+    } finally {
+<span class="pc bpc" id="L296" title="3 of 4 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L297">        log.debug(id + &quot;: after commit reset state to NO_TX&quot;);</span>
+      }
+<span class="pc" id="L299">      this.state = NO_TX;</span>
+<span class="pc" id="L300">      this.xid = null;</span>
 <span class="fc" id="L301">    }</span>
+<span class="fc" id="L302">  }</span>
 
-    private void parentSuspend(Xid xid) {
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L305">            log.debug(id + &quot;: suspend parent session &quot; + xid);</span>
-        }
-
-<span class="fc" id="L308">        byte[] trId = xid.getGlobalTransactionId();</span>
-<span class="fc" id="L309">        GlobalKey key = new GlobalKey(trId);</span>
-<span class="fc" id="L310">        GlobalToken globalToken = globalTokens.get(key);</span>
-
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if(globalToken == null) {</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">            if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L314">                log.debug(id + &quot;: add GlobalToken &quot; + key);</span>
-            }
-
-<span class="fc" id="L317">            globalTokens.put(key, globalToken = new GlobalToken());</span>
-        } else {
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">            if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L320">                log.debug(id + &quot;: present GlobalToken &quot; + key);</span>
-            }
-        }
-<span class="fc" id="L323">        globalToken.parentSuspend(id, sqlSessionManager);</span>
-<span class="fc" id="L324">    }</span>
-
-    private void parentResume(Xid xid) {
-<span class="pc bpc" id="L327" title="1 of 2 branches missed.">        if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L328">            log.debug(id + &quot;: resume parent session &quot; + xid);</span>
-        }
-
-<span class="fc" id="L331">        byte[] trId = xid.getGlobalTransactionId();</span>
-<span class="fc" id="L332">        GlobalKey key = new GlobalKey(trId);</span>
-<span class="fc" id="L333">        GlobalToken globalToken = globalTokens.get(key);</span>
-
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">        if(globalToken != null) {</span>
-<span class="fc" id="L336">            globalToken.parentResume(id, sqlSessionManager);</span>
-
-<span class="fc bfc" id="L338" title="All 2 branches covered.">            if(globalToken.isEmpty()) {</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L340">                    log.debug(id + &quot;: remove GlobalToken &quot; + key);</span>
-                }
-
-<span class="fc" id="L343">                globalTokens.remove(key);</span>
-            } else {
-<span class="pc bpc" id="L345" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L346">                    log.debug(id + &quot;: not remove GlobalToken &quot; + key);</span>
-                }
-            }
-        } else {
-<span class="nc bnc" id="L350" title="All 2 branches missed.">            if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L351">                log.debug(id + &quot;: not find GlobalToken &quot; + key);</span>
-            }
-        }
-<span class="fc" id="L354">    }</span>
-
-    static class GlobalKey {
-        final byte[] globalId;
-        final int arrayHash;
-
-<span class="fc" id="L360">        public GlobalKey(byte[] globalId) {</span>
-<span class="fc" id="L361">            this.globalId = globalId;</span>
-<span class="fc" id="L362">            this.arrayHash = Arrays.hashCode(globalId);</span>
-<span class="fc" id="L363">        }</span>
-
-        @Override
-        public int hashCode() {
-<span class="fc" id="L367">            return arrayHash;</span>
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">            if (this == obj)</span>
-<span class="nc" id="L373">                return true;</span>
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">            if (obj == null)</span>
-<span class="nc" id="L375">                return false;</span>
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">            if (getClass() != obj.getClass())</span>
-<span class="nc" id="L377">                return false;</span>
-<span class="fc" id="L378">            GlobalKey other = (GlobalKey) obj;</span>
-<span class="pc bpc" id="L379" title="1 of 2 branches missed.">            if (!Arrays.equals(globalId, other.globalId))</span>
-<span class="nc" id="L380">                return false;</span>
-<span class="fc" id="L381">            return true;</span>
-        }
-
-        @Override
-        public String toString() {
-<span class="nc" id="L386">            StringBuilder s = new StringBuilder();</span>
-<span class="nc" id="L387">            s.append(&quot;[Xid:globalId=&quot;);</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">            for (int i = 0; i &lt; globalId.length; i++) {</span>
-<span class="nc" id="L389">                s.append(Integer.toHexString(globalId[i]));</span>
-            }
-<span class="nc" id="L391">            s.append(&quot;,length=&quot;).append(globalId.length);</span>
-<span class="nc" id="L392">            return s.toString();</span>
-        }
+  @Override
+  public void rollback(Xid xid) throws XAException {
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L307">      log.debug(id + &quot;: call roolback old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
     }
 
-    static class GlobalToken {
-<span class="fc" id="L397">        private final Log log = LogFactory.getLog(getClass());</span>
-<span class="fc" id="L398">        IdentityHashMap&lt;SqlSessionManager, Token&gt; tokens = new IdentityHashMap&lt;SqlSessionManager, XASqlSessionManager.Token&gt;();</span>
-
-<span class="fc" id="L400">        public GlobalToken() {</span>
-<span class="fc" id="L401">        }</span>
-
-        void parentSuspend(String id, SqlSessionManager sqlSessionManager) {
-<span class="fc" id="L404">            Token token = tokens.get(sqlSessionManager);</span>
-
-<span class="fc bfc" id="L406" title="All 2 branches covered.">            if(token == null) {</span>
-<span class="pc bpc" id="L407" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L408">                    log.debug(id + &quot;: add Token &quot; + sqlSessionManager);</span>
-                }
-
-<span class="fc" id="L411">                token = new Token(sqlSessionManager);</span>
-<span class="fc" id="L412">                tokens.put(sqlSessionManager, token);</span>
-            } else {
-<span class="pc bpc" id="L414" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L415">                    log.debug(id + &quot;: present Token &quot; + sqlSessionManager);</span>
-                }
-            }
-<span class="fc" id="L418">            token.parentSuspend(id);</span>
-<span class="fc" id="L419">        }</span>
-
-        void parentResume(String id, SqlSessionManager sqlSessionManager) {
-<span class="fc" id="L422">            Token token = tokens.get(sqlSessionManager);</span>
-
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">            if(token != null) {</span>
-<span class="fc" id="L425">                token.parentResume(id);</span>
-
-                // remove last
-<span class="fc bfc" id="L428" title="All 2 branches covered.">                if(token.isFirst()) {</span>
-<span class="pc bpc" id="L429" title="1 of 2 branches missed.">                    if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L430">                        log.debug(id + &quot;: remove parent session &quot; + sqlSessionManager);</span>
-                    }
-
-<span class="fc" id="L433">                    tokens.remove(sqlSessionManager);</span>
-                }
-            } else {
-<span class="nc bnc" id="L436" title="All 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L437">                    log.debug(id + &quot;: not find parent session &quot; + sqlSessionManager);</span>
-                }
-            }
-<span class="fc" id="L440">        }</span>
-
-        boolean isEmpty() {
-<span class="fc" id="L443">            return tokens.isEmpty();</span>
-        }
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">    if (xid == null) {</span>
+<span class="nc" id="L311">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
-    static class Token {
-<span class="fc" id="L448">        private final Log log = LogFactory.getLog(getClass());</span>
-        final SqlSessionManager sqlSessionManager;
-        ThreadLocal&lt;SqlSession&gt; localSqlSession;
-        SqlSession suspendedSqlSession;
-        int count;
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="nc" id="L315">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
+<span class="nc" id="L317">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L321">          log.debug(id + &quot;: OK to rollback, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
+        }
+      } else {
+<span class="nc" id="L324">        throw new MyBatisXAException(</span>
+            id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot roll it back on another XID &quot; + xid,
+            XAException.XAER_PROTO);
+      }
+<span class="nc bnc" id="L328" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L330">        log.debug(id + &quot;: rollback reset state from PREPARED to NO_TX&quot;);</span>
+      }
+<span class="nc" id="L332">      this.state = NO_TX;</span>
+<span class="nc" id="L333">      throw new MyBatisXAException(id + &quot;: resource committed during prepare on XID &quot; + this.xid,</span>
+          XAException.XA_HEURCOM);
+    }
 
-        @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L455">        public Token(SqlSessionManager sqlSessionManager) {</span>
-<span class="fc" id="L456">            this.sqlSessionManager = sqlSessionManager;</span>
-<span class="fc" id="L457">            this.count = 0;</span>
-            try {
-<span class="fc" id="L459">                Field field = SqlSessionManager.class.getDeclaredField(&quot;localSqlSession&quot;);</span>
-<span class="fc" id="L460">                field.setAccessible(true);</span>
-<span class="fc" id="L461">                localSqlSession = (ThreadLocal&lt;SqlSession&gt;) field.get(sqlSessionManager);</span>
-<span class="nc" id="L462">            } catch(Exception e) {</span>
-<span class="fc" id="L463">            }</span>
-<span class="fc" id="L464">        }</span>
+    try {
+<span class="fc" id="L338">      parentResume(xid);</span>
+    } finally {
+<span class="pc bpc" id="L340" title="3 of 4 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L341">        log.debug(id + &quot;: after rollback reset state to NO_TX&quot;);</span>
+      }
+<span class="pc" id="L343">      this.state = NO_TX;</span>
+<span class="pc" id="L344">      this.xid = null;</span>
+<span class="fc" id="L345">    }</span>
+<span class="fc" id="L346">  }</span>
 
-        boolean isFirst() {
-<span class="fc bfc" id="L467" title="All 2 branches covered.">            return count == 0;</span>
+  private void parentSuspend(Xid xid) {
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L350">      log.debug(id + &quot;: suspend parent session &quot; + xid);</span>
+    }
+
+<span class="fc" id="L353">    byte[] trId = xid.getGlobalTransactionId();</span>
+<span class="fc" id="L354">    GlobalKey key = new GlobalKey(trId);</span>
+<span class="fc" id="L355">    GlobalToken globalToken = globalTokens.get(key);</span>
+
+<span class="fc bfc" id="L357" title="All 2 branches covered.">    if (globalToken == null) {</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L359">        log.debug(id + &quot;: add GlobalToken &quot; + key);</span>
+      }
+
+<span class="fc" id="L362">      globalTokens.put(key, globalToken = new GlobalToken());</span>
+    } else {
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L365">        log.debug(id + &quot;: present GlobalToken &quot; + key);</span>
+      }
+    }
+<span class="fc" id="L368">    globalToken.parentSuspend(id, sqlSessionManager);</span>
+<span class="fc" id="L369">  }</span>
+
+  private void parentResume(Xid xid) {
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">    if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L373">      log.debug(id + &quot;: resume parent session &quot; + xid);</span>
+    }
+
+<span class="fc" id="L376">    byte[] trId = xid.getGlobalTransactionId();</span>
+<span class="fc" id="L377">    GlobalKey key = new GlobalKey(trId);</span>
+<span class="fc" id="L378">    GlobalToken globalToken = globalTokens.get(key);</span>
+
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">    if (globalToken != null) {</span>
+<span class="fc" id="L381">      globalToken.parentResume(id, sqlSessionManager);</span>
+
+<span class="fc bfc" id="L383" title="All 2 branches covered.">      if (globalToken.isEmpty()) {</span>
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L385">          log.debug(id + &quot;: remove GlobalToken &quot; + key);</span>
         }
 
-        void parentSuspend(String id) {
-<span class="fc bfc" id="L471" title="All 2 branches covered.">            if(isFirst()) {</span>
-<span class="pc bpc" id="L472" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L473">                    log.debug(id + &quot; suspend parent session&quot;);</span>
-                }
-
-<span class="pc bpc" id="L476" title="1 of 2 branches missed.">                if(localSqlSession != null) {</span>
-<span class="fc" id="L477">                    suspendedSqlSession = localSqlSession.get();</span>
-<span class="fc" id="L478">                    localSqlSession.remove();</span>
-                }
-            } else {
-<span class="pc bpc" id="L481" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L482">                    log.debug(id + &quot; skip suspend parent session&quot;);</span>
-                }
-            }
-<span class="fc" id="L485">            count++;</span>
-<span class="fc" id="L486">        }</span>
-
-        void parentResume(String id) {
-<span class="pc bpc" id="L489" title="1 of 2 branches missed.">            if(count &gt; 0)</span>
-<span class="fc" id="L490">                count--;</span>
-
-<span class="fc bfc" id="L492" title="All 2 branches covered.">            if(isFirst()) {</span>
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L494">                    log.debug(id + &quot; resume parent session&quot;);</span>
-                }
-
-<span class="pc bpc" id="L497" title="1 of 2 branches missed.">                if(localSqlSession != null) {</span>
-<span class="fc bfc" id="L498" title="All 2 branches covered.">                    if(suspendedSqlSession == null) {</span>
-<span class="fc" id="L499">                        localSqlSession.remove();</span>
-                    } else {
-<span class="fc" id="L501">                        localSqlSession.set(suspendedSqlSession);</span>
-<span class="fc" id="L502">                        suspendedSqlSession = null;</span>
-                    }
-                }
-            } else {
-<span class="pc bpc" id="L506" title="1 of 2 branches missed.">                if(log.isDebugEnabled()) {</span>
-<span class="nc" id="L507">                    log.debug(id + &quot; skip resume parent session&quot;);</span>
-                }
-            }
-<span class="fc" id="L510">        }</span>
+<span class="fc" id="L388">        globalTokens.remove(key);</span>
+      } else {
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L391">          log.debug(id + &quot;: not remove GlobalToken &quot; + key);</span>
+        }
+      }
+    } else {
+<span class="nc bnc" id="L395" title="All 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L396">        log.debug(id + &quot;: not find GlobalToken &quot; + key);</span>
+      }
     }
+<span class="fc" id="L399">  }</span>
+
+  static class GlobalKey {
+    final byte[] globalId;
+    final int arrayHash;
+
+<span class="fc" id="L405">    public GlobalKey(byte[] globalId) {</span>
+<span class="fc" id="L406">      this.globalId = globalId;</span>
+<span class="fc" id="L407">      this.arrayHash = Arrays.hashCode(globalId);</span>
+<span class="fc" id="L408">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L412">      return arrayHash;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">      if (this == obj) {</span>
+<span class="nc" id="L418">        return true;</span>
+      }
+
+<span class="pc bpc" id="L421" title="1 of 2 branches missed.">      if (obj == null) {</span>
+<span class="nc" id="L422">        return false;</span>
+      }
+
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">      if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L426">        return false;</span>
+      }
+
+<span class="fc" id="L429">      GlobalKey other = (GlobalKey) obj;</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">      if (!Arrays.equals(globalId, other.globalId)) {</span>
+<span class="nc" id="L431">        return false;</span>
+      }
+<span class="fc" id="L433">      return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L438">      StringBuilder s = new StringBuilder();</span>
+<span class="nc" id="L439">      s.append(&quot;[Xid:globalId=&quot;);</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">      for (int i = 0; i &lt; globalId.length; i++) {</span>
+<span class="nc" id="L441">        s.append(Integer.toHexString(globalId[i]));</span>
+      }
+<span class="nc" id="L443">      s.append(&quot;,length=&quot;).append(globalId.length);</span>
+<span class="nc" id="L444">      return s.toString();</span>
+    }
+  }
+
+  static class GlobalToken {
+<span class="fc" id="L449">    private final Log log = LogFactory.getLog(getClass());</span>
+<span class="fc" id="L450">    IdentityHashMap&lt;SqlSessionManager, Token&gt; tokens = new IdentityHashMap&lt;SqlSessionManager, XASqlSessionManager.Token&gt;();</span>
+
+<span class="fc" id="L452">    public GlobalToken() {</span>
+<span class="fc" id="L453">    }</span>
+
+    void parentSuspend(String id, SqlSessionManager sqlSessionManager) {
+<span class="fc" id="L456">      Token token = tokens.get(sqlSessionManager);</span>
+
+<span class="fc bfc" id="L458" title="All 2 branches covered.">      if (token == null) {</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L460">          log.debug(id + &quot;: add Token &quot; + sqlSessionManager);</span>
+        }
+
+<span class="fc" id="L463">        token = new Token(sqlSessionManager);</span>
+<span class="fc" id="L464">        tokens.put(sqlSessionManager, token);</span>
+      } else {
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L467">          log.debug(id + &quot;: present Token &quot; + sqlSessionManager);</span>
+        }
+      }
+<span class="fc" id="L470">      token.parentSuspend(id);</span>
+<span class="fc" id="L471">    }</span>
+
+    void parentResume(String id, SqlSessionManager sqlSessionManager) {
+<span class="fc" id="L474">      Token token = tokens.get(sqlSessionManager);</span>
+
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">      if (token != null) {</span>
+<span class="fc" id="L477">        token.parentResume(id);</span>
+
+        // remove last
+<span class="fc bfc" id="L480" title="All 2 branches covered.">        if (token.isFirst()) {</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">          if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L482">            log.debug(id + &quot;: remove parent session &quot; + sqlSessionManager);</span>
+          }
+
+<span class="fc" id="L485">          tokens.remove(sqlSessionManager);</span>
+        }
+      } else {
+<span class="nc bnc" id="L488" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L489">          log.debug(id + &quot;: not find parent session &quot; + sqlSessionManager);</span>
+        }
+      }
+<span class="fc" id="L492">    }</span>
+
+    boolean isEmpty() {
+<span class="fc" id="L495">      return tokens.isEmpty();</span>
+    }
+  }
+
+  static class Token {
+<span class="fc" id="L500">    private final Log log = LogFactory.getLog(getClass());</span>
+    final SqlSessionManager sqlSessionManager;
+    ThreadLocal&lt;SqlSession&gt; localSqlSession;
+    SqlSession suspendedSqlSession;
+    int count;
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L507">    public Token(SqlSessionManager sqlSessionManager) {</span>
+<span class="fc" id="L508">      this.sqlSessionManager = sqlSessionManager;</span>
+<span class="fc" id="L509">      this.count = 0;</span>
+      try {
+<span class="fc" id="L511">        Field field = SqlSessionManager.class.getDeclaredField(&quot;localSqlSession&quot;);</span>
+<span class="fc" id="L512">        field.setAccessible(true);</span>
+<span class="fc" id="L513">        localSqlSession = (ThreadLocal&lt;SqlSession&gt;) field.get(sqlSessionManager);</span>
+<span class="nc" id="L514">      } catch (Exception e) {</span>
+<span class="fc" id="L515">      }</span>
+<span class="fc" id="L516">    }</span>
+
+    boolean isFirst() {
+<span class="fc bfc" id="L519" title="All 2 branches covered.">      return count == 0;</span>
+    }
+
+    void parentSuspend(String id) {
+<span class="fc bfc" id="L523" title="All 2 branches covered.">      if (isFirst()) {</span>
+<span class="pc bpc" id="L524" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L525">          log.debug(id + &quot; suspend parent session&quot;);</span>
+        }
+
+<span class="pc bpc" id="L528" title="1 of 2 branches missed.">        if (localSqlSession != null) {</span>
+<span class="fc" id="L529">          suspendedSqlSession = localSqlSession.get();</span>
+<span class="fc" id="L530">          localSqlSession.remove();</span>
+        }
+      } else {
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L534">          log.debug(id + &quot; skip suspend parent session&quot;);</span>
+        }
+      }
+<span class="fc" id="L537">      count++;</span>
+<span class="fc" id="L538">    }</span>
+
+    void parentResume(String id) {
+<span class="pc bpc" id="L541" title="1 of 2 branches missed.">      if (count &gt; 0) {</span>
+<span class="fc" id="L542">        count--;</span>
+      }
+
+<span class="fc bfc" id="L545" title="All 2 branches covered.">      if (isFirst()) {</span>
+<span class="pc bpc" id="L546" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L547">          log.debug(id + &quot; resume parent session&quot;);</span>
+        }
+
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">        if (localSqlSession != null) {</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">          if (suspendedSqlSession == null) {</span>
+<span class="fc" id="L552">            localSqlSession.remove();</span>
+          } else {
+<span class="fc" id="L554">            localSqlSession.set(suspendedSqlSession);</span>
+<span class="fc" id="L555">            suspendedSqlSession = null;</span>
+          }
+        }
+      } else {
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L560">          log.debug(id + &quot; skip resume parent session&quot;);</span>
+        }
+      }
+<span class="fc" id="L563">    }</span>
+  }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

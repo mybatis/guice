@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JdbcUrlAntFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.helper</a> &gt; <span class="el_source">JdbcUrlAntFormatter.java</span></div><h1>JdbcUrlAntFormatter.java</h1><pre class="source lang-java linenums">/**
+ * Copyright 2009-2017 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package org.mybatis.guice.datasource.helper;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.util.Providers;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.inject.Provider;
+
+public final class JdbcUrlAntFormatter implements Provider&lt;String&gt; {
+
+  private static final String VAR_BEGIN = &quot;$&quot;;
+
+  private static final String PIPE_SEPARATOR = &quot;|&quot;;
+
+<span class="fc" id="L31">  private final List&lt;Provider&lt;String&gt;&gt; appenders = new ArrayList&lt;Provider&lt;String&gt;&gt;();</span>
+
+<span class="fc" id="L33">  private final List&lt;KeyResolver&gt; resolvers = new ArrayList&lt;KeyResolver&gt;();</span>
+
+  /**
+   * Instantiates a new jdbc url ant formatter.
+   *
+   * @param pattern the pattern
+   */
+<span class="fc" id="L40">  public JdbcUrlAntFormatter(final String pattern) {</span>
+<span class="fc" id="L41">    int prev = 0;</span>
+    int pos;
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    while ((pos = pattern.indexOf(VAR_BEGIN, prev)) &gt;= 0) {</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">      if (pos &gt; 0) {</span>
+<span class="fc" id="L45">        appenders.add(Providers.of(pattern.substring(prev, pos)));</span>
+      }
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">      if (pos == pattern.length() - 1) {</span>
+<span class="nc" id="L48">        appenders.add(Providers.of(VAR_BEGIN));</span>
+<span class="nc" id="L49">        prev = pos + 1;</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">      } else if (pattern.charAt(pos + 1) != '{') {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (pattern.charAt(pos + 1) == '$') {</span>
+<span class="nc" id="L52">          appenders.add(Providers.of(VAR_BEGIN));</span>
+<span class="nc" id="L53">          prev = pos + 2;</span>
+        } else {
+<span class="nc" id="L55">          appenders.add(Providers.of(pattern.substring(pos, pos + 2)));</span>
+<span class="nc" id="L56">          prev = pos + 2;</span>
+        }
+      } else {
+<span class="fc" id="L59">        int endName = pattern.indexOf('}', pos);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (endName &lt; 0) {</span>
+<span class="nc" id="L61">          throw new IllegalArgumentException(&quot;Syntax error in property: &quot; + pattern);</span>
+        }
+<span class="fc" id="L63">        StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);</span>
+<span class="fc" id="L64">        String key = keyTokenizer.nextToken();</span>
+<span class="fc" id="L65">        String defaultValue = null;</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (keyTokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L67">          defaultValue = keyTokenizer.nextToken();</span>
+        }
+<span class="fc" id="L69">        KeyResolver resolver = new KeyResolver(key, defaultValue);</span>
+<span class="fc" id="L70">        appenders.add(resolver);</span>
+<span class="fc" id="L71">        resolvers.add(resolver);</span>
+<span class="fc" id="L72">        prev = endName + 1;</span>
+<span class="fc" id="L73">      }</span>
+    }
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">    if (prev &lt; pattern.length()) {</span>
+<span class="nc" id="L76">      appenders.add(Providers.of(pattern.substring(prev)));</span>
+    }
+<span class="fc" id="L78">  }</span>
+
+  /**
+   * Sets the injector.
+   *
+   * @param injector the new injector
+   */
+  @Inject
+  public void setInjector(Injector injector) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">    for (KeyResolver resolver : resolvers) {</span>
+<span class="fc" id="L88">      resolver.setInjector(injector);</span>
+<span class="fc" id="L89">    }</span>
+<span class="fc" id="L90">  }</span>
+
+  @Override
+  public String get() {
+<span class="fc" id="L94">    StringBuilder buffer = new StringBuilder();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">    for (Provider&lt;String&gt; appender : appenders) {</span>
+<span class="fc" id="L96">      buffer.append(appender.get());</span>
+<span class="fc" id="L97">    }</span>
+<span class="fc" id="L98">    return buffer.toString();</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="nc" id="L103">    return appenders.toString();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

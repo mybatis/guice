@@ -1,111 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UnpooledDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.builtin</a> &gt; <span class="el_source">UnpooledDataSourceProvider.java</span></div><h1>UnpooledDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2009-2016 the original author or authors.
+ * Copyright 2009-2017 the original author or authors.
  *
- *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.mybatis.guice.datasource.builtin;
 
-import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
+
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 
 /**
  * Provides the myBatis built-in UnpooledDataSource.
  */
 public final class UnpooledDataSourceProvider implements Provider&lt;DataSource&gt; {
 
-    /**
-     * The UnpooledDataSource reference.
-     */
-    private final UnpooledDataSource unpooledDataSource;
+  /**
+   * The UnpooledDataSource reference.
+   */
+  private final UnpooledDataSource unpooledDataSource;
 
-    /**
-     * Creates a new UnpooledDataSource using the needed parameter.
-     *
-     * @param driver The JDBC driver class.
-     * @param url the database URL of the form &lt;code&gt;jdbc:subprotocol:subname&lt;/code&gt;.
-     * @param driverClassLoader ClassLoader to use to load JDBC driver class.
-     */
-    @Inject
-    public UnpooledDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver,
-            @Named(&quot;JDBC.url&quot;) final String url,
-<span class="nc" id="L47">            @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
-<span class="nc" id="L48">        unpooledDataSource = new UnpooledDataSource(driverClassLoader, driver, url, null, null);</span>
-<span class="nc" id="L49">    }</span>
+  /**
+   * Creates a new UnpooledDataSource using the needed parameter.
+   *
+   * @param driver The JDBC driver class.
+   * @param url the database URL of the form &lt;code&gt;jdbc:subprotocol:subname&lt;/code&gt;.
+   * @param driverClassLoader ClassLoader to use to load JDBC driver class.
+   */
+  @Inject
+  public UnpooledDataSourceProvider(@Named(&quot;JDBC.driver&quot;) final String driver, @Named(&quot;JDBC.url&quot;) final String url,
+<span class="fc" id="L44">      @Named(&quot;JDBC.driverClassLoader&quot;) final ClassLoader driverClassLoader) {</span>
+<span class="fc" id="L45">    unpooledDataSource = new UnpooledDataSource(driverClassLoader, driver, url, null, null);</span>
+<span class="fc" id="L46">  }</span>
 
-    /**
-     *
-     * @param username
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="nc" id="L58">        unpooledDataSource.setUsername(username);</span>
-<span class="nc" id="L59">    }</span>
+  /**
+   * Sets the user.
+   *
+   * @param username the new user
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="fc" id="L56">    unpooledDataSource.setUsername(username);</span>
+<span class="fc" id="L57">  }</span>
 
-    /**
-     *
-     * @param password
-     * @since 3.3
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="nc" id="L68">        unpooledDataSource.setPassword(password);</span>
-<span class="nc" id="L69">    }</span>
+  /**
+   * Sets the password.
+   *
+   * @param password the new password
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="fc" id="L67">    unpooledDataSource.setPassword(password);</span>
+<span class="fc" id="L68">  }</span>
 
-    /**
-     *
-     *
-     * @param autoCommit
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="nc" id="L78">        unpooledDataSource.setAutoCommit(autoCommit);</span>
-<span class="nc" id="L79">    }</span>
+  /**
+   * Sets the auto commit.
+   *
+   * @param autoCommit the new auto commit
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
+<span class="fc" id="L77">    unpooledDataSource.setAutoCommit(autoCommit);</span>
+<span class="fc" id="L78">  }</span>
 
-    /**
-     *
-     *
-     * @param loginTimeout
-     */
-    @com.google.inject.Inject(optional = true)
-    public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
-        try {
-<span class="nc" id="L89">            unpooledDataSource.setLoginTimeout(loginTimeout);</span>
-<span class="nc" id="L90">        } catch (SQLException e) {</span>
-<span class="nc" id="L91">            throw new RuntimeException(&quot;Impossible to set login timeout '&quot;</span>
-                    + loginTimeout
-                    + &quot;' to Unpooled Data Source&quot;, e);
-<span class="nc" id="L94">        }</span>
-<span class="nc" id="L95">    }</span>
+  /**
+   * Sets the login timeout.
+   *
+   * @param loginTimeout the new login timeout
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
+    try {
+<span class="fc" id="L88">      unpooledDataSource.setLoginTimeout(loginTimeout);</span>
+<span class="nc" id="L89">    } catch (SQLException e) {</span>
+<span class="nc" id="L90">      throw new RuntimeException(&quot;Impossible to set login timeout '&quot; + loginTimeout + &quot;' to Unpooled Data Source&quot;, e);</span>
+<span class="fc" id="L91">    }</span>
+<span class="fc" id="L92">  }</span>
 
-    @com.google.inject.Inject(optional = true)
-    public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="nc" id="L99">        unpooledDataSource.setDriverProperties(driverProperties);</span>
-<span class="nc" id="L100">    }</span>
+  @com.google.inject.Inject(optional = true)
+  public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
+<span class="fc" id="L96">    unpooledDataSource.setDriverProperties(driverProperties);</span>
+<span class="fc" id="L97">  }</span>
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataSource get() {
-<span class="nc" id="L107">        return unpooledDataSource;</span>
-    }
+  @Override
+  public DataSource get() {
+<span class="fc" id="L101">    return unpooledDataSource;</span>
+  }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
