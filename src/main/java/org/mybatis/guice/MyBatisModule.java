@@ -15,20 +15,9 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
-import static org.mybatis.guice.Preconditions.checkArgument;
-
 import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
-
-import java.util.Collection;
-import java.util.Set;
-
-import javax.inject.Provider;
-import javax.sql.DataSource;
-
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -39,42 +28,29 @@ import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.scripting.xmltags.XMLLanguageDriver;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.LocalCacheScope;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
-import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
-import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
-import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
-import org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ConfigurationSetting;
-import org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting;
-import org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting;
-import org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting;
-import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
-import org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider;
-import org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting;
-import org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting;
-import org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting;
-import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
-import org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting;
-import org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting;
-import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
-import org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting;
-import org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting;
+import org.mybatis.guice.configuration.ConfigurationSettingListener;
+import org.mybatis.guice.configuration.settings.*;
 import org.mybatis.guice.environment.EnvironmentProvider;
 import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
 import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
+
+import javax.inject.Provider;
+import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.Set;
+
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
+import static org.mybatis.guice.Preconditions.checkArgument;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate
@@ -237,13 +213,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   protected final void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
   protected final <P extends Provider<? extends ConfigurationSetting>> void bindConfigurationSettingProvider(
       P configurationSettingProvider) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(configurationSettingProvider, binder()));
   }
 
@@ -608,7 +584,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));
     bindMapper(mapperClass);
   }

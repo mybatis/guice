@@ -15,35 +15,15 @@
  */
 package org.mybatis.guice;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.google.inject.CreationException;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Provider;
-import com.google.inject.TypeLiteral;
-
+import com.google.inject.*;
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.LocalCacheScope;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.Alias;
@@ -54,6 +34,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.ErrorMapper;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.generictypehandler.CustomObject;
@@ -67,15 +48,13 @@ import org.mybatis.guice.resolver.mapper.SecondMapper;
 import org.mybatis.guice.resolver.typehandler.AddressTypeHandler;
 import org.mybatis.guice.resolver.typehandler.UserTypeHandler;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-
 import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.*;
+
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class MyBatisModuleTest {
   @Mock
@@ -1417,7 +1396,13 @@ public class MyBatisModuleTest {
     assertNotNull(injector.getInstance(SecondMapper.class));
   }
 
-  public static class TestConfigurationProvider implements Provider<Configuration> {
+  public static class TestConfigurationProvider extends ConfigurationProvider {
+
+    @Inject
+    public TestConfigurationProvider(Environment environment) {
+      super(environment);
+    }
+
     @Override
     public Configuration get() {
       return staticConfiguration;

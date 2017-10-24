@@ -51,10 +51,14 @@ public class CustomConfigurationTest {
         useConfigurationProvider(MyConfigurationProvider.class);
         bindDataSourceProviderType(PooledDataSourceProvider.class);
         bindTransactionFactoryType(JdbcTransactionFactory.class);
+
+        lazyLoadingEnabled(true);
       }
     });
     Configuration configuration = injector.getInstance(Configuration.class);
     assertTrue("Configuration not an instanceof MyConfiguration",
         MyConfiguration.class.isAssignableFrom(configuration.getClass()));
+    assertTrue("Configuration return true of lazy loading",
+            configuration.isLazyLoadingEnabled());
   }
 }

@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice.configuration;
 
-import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import com.google.inject.name.Named;
 
@@ -40,7 +39,7 @@ import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
  * Provides the myBatis Configuration.
  */
 @Singleton
-public class ConfigurationProvider implements Provider<Configuration> {
+public class ConfigurationProvider implements Provider<Configuration>, ConfigurationSettingListener {
 
   /**
    * The myBatis Configuration reference.
@@ -129,10 +128,12 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
+  @Override
   public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
   }
 
+  @Override
   public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
     this.mapperConfigurationSettings.add((MapperConfigurationSetting) mapperConfigurationSetting);
   }
