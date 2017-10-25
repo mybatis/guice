@@ -15,8 +15,12 @@
  */
 package org.mybatis.guice.customconfiguration;
 
+import static com.google.inject.name.Names.bindProperties;
+import static org.junit.Assert.assertTrue;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.Test;
@@ -25,9 +29,6 @@ import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import java.util.Properties;
-
-import static com.google.inject.name.Names.bindProperties;
-import static org.junit.Assert.assertTrue;
 
 public class CustomConfigurationTest {
 
@@ -51,10 +52,12 @@ public class CustomConfigurationTest {
         useConfigurationProvider(MyConfigurationProvider.class);
         bindDataSourceProviderType(PooledDataSourceProvider.class);
         bindTransactionFactoryType(JdbcTransactionFactory.class);
+        lazyLoadingEnabled(true);
       }
     });
     Configuration configuration = injector.getInstance(Configuration.class);
     assertTrue("Configuration not an instanceof MyConfiguration",
         MyConfiguration.class.isAssignableFrom(configuration.getClass()));
+    assertTrue("Configuration returned false of lazy loading", configuration.isLazyLoadingEnabled());
   }
 }

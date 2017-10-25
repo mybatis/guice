@@ -13,25 +13,16 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.guice.provision;
+package org.mybatis.guice.configuration;
 
-import com.google.inject.Binding;
-import com.google.inject.Key;
-import com.google.inject.matcher.AbstractMatcher;
+import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
-public final class KeyMatcher<T> extends AbstractMatcher<Binding<?>> {
-  private final Key<T> key;
+/**
+ * Allows configuration settings to be applied to configuration.
+ */
+public interface ConfigurationSettingListener {
+  void addConfigurationSetting(ConfigurationSetting configurationSetting);
 
-  KeyMatcher(Key<T> key) {
-    this.key = key;
-  }
-
-  @Override
-  public boolean matches(Binding<?> t) {
-    return key.getTypeLiteral().getRawType().isAssignableFrom(t.getKey().getTypeLiteral().getRawType());
-  }
-
-  public static <T> KeyMatcher<T> create(Key<T> key) {
-    return new KeyMatcher<T>(key);
-  }
+  void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting);
 }

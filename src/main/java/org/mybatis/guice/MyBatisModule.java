@@ -23,12 +23,6 @@ import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 
-import java.util.Collection;
-import java.util.Set;
-
-import javax.inject.Provider;
-import javax.sql.DataSource;
-
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
@@ -50,6 +44,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.guice.binder.AliasBinder;
 import org.mybatis.guice.binder.TypeHandlerBinder;
 import org.mybatis.guice.configuration.ConfigurationProvider;
+import org.mybatis.guice.configuration.ConfigurationSettingListener;
 import org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting;
@@ -76,9 +71,15 @@ import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
 
+import java.util.Collection;
+import java.util.Set;
+
+import javax.inject.Provider;
+import javax.sql.DataSource;
+
 /**
- * Easy to use helper Module that alleviates users to write the boilerplate
- * google-guice bindings to create the SqlSessionFactory.
+ * Easy to use helper Module that alleviates users to write the boilerplate google-guice bindings to
+ * create the SqlSessionFactory.
  */
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 
@@ -128,7 +129,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Set the MyBatis configuration environment id.
    *
-   * @param environmentId the MyBatis configuration environment id
+   * @param environmentId
+   *          the MyBatis configuration environment id
    */
   protected final void environmentId(String environmentId) {
     checkArgument(environmentId != null, "Parameter 'environmentId' must be not null");
@@ -138,7 +140,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Lazy loading enabled.
    *
-   * @param lazyLoadingEnabled the lazy loading enabled
+   * @param lazyLoadingEnabled
+   *          the lazy loading enabled
    */
   protected final void lazyLoadingEnabled(boolean lazyLoadingEnabled) {
     bindConfigurationSetting(new LazyLoadingEnabledConfigurationSetting(lazyLoadingEnabled));
@@ -147,7 +150,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Aggressive lazy loading.
    *
-   * @param aggressiveLazyLoading the aggressive lazy loading
+   * @param aggressiveLazyLoading
+   *          the aggressive lazy loading
    */
   protected final void aggressiveLazyLoading(boolean aggressiveLazyLoading) {
     bindConfigurationSetting(new AggressiveLazyLoadingConfigurationSetting(aggressiveLazyLoading));
@@ -156,7 +160,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Multiple result sets enabled.
    *
-   * @param multipleResultSetsEnabled the multiple result sets enabled
+   * @param multipleResultSetsEnabled
+   *          the multiple result sets enabled
    */
   protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
     bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));
@@ -165,7 +170,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Use generated keys.
    *
-   * @param useGeneratedKeys the use generated keys
+   * @param useGeneratedKeys
+   *          the use generated keys
    */
   protected final void useGeneratedKeys(boolean useGeneratedKeys) {
     bindConfigurationSetting(new UseGeneratedKeysConfigurationSetting(useGeneratedKeys));
@@ -174,7 +180,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Use column label.
    *
-   * @param useColumnLabel the use column label
+   * @param useColumnLabel
+   *          the use column label
    */
   protected final void useColumnLabel(boolean useColumnLabel) {
     bindConfigurationSetting(new UseColumnLabelConfigurationSetting(useColumnLabel));
@@ -183,7 +190,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Use cache enabled.
    *
-   * @param useCacheEnabled the use cache enabled
+   * @param useCacheEnabled
+   *          the use cache enabled
    */
   protected final void useCacheEnabled(boolean useCacheEnabled) {
     bindConfigurationSetting(new CacheEnabledConfigurationSetting(useCacheEnabled));
@@ -192,7 +200,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Use configuration provider.
    *
-   * @param configurationProviderType provider for Configuration
+   * @param configurationProviderType
+   *          provider for Configuration
    */
   protected final void useConfigurationProvider(
       Class<? extends Provider<? extends Configuration>> configurationProviderType) {
@@ -202,7 +211,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Use sql session factory provider.
    *
-   * @param sqlSessionFactoryProvider provider for SqlSessionFactory
+   * @param sqlSessionFactoryProvider
+   *          provider for SqlSessionFactory
    */
   protected final void useSqlSessionFactoryProvider(
       Class<? extends Provider<? extends SqlSessionFactory>> sqlSessionFactoryProvider) {
@@ -212,7 +222,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Fail fast.
    *
-   * @param failFast the fail fast
+   * @param failFast
+   *          the fail fast
    */
   protected final void failFast(boolean failFast) {
     bindBoolean("mybatis.configuration.failFast", failFast);
@@ -221,7 +232,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Maps underscores to camel case.
    *
-   * @param mapUnderscoreToCamelCase Toggles this settings value.
+   * @param mapUnderscoreToCamelCase
+   *          Toggles this settings value.
    */
   protected final void mapUnderscoreToCamelCase(boolean mapUnderscoreToCamelCase) {
     bindConfigurationSetting(new MapUnderscoreToCamelCaseConfigurationSetting(mapUnderscoreToCamelCase));
@@ -230,20 +242,21 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * set default statement timeout.
    *
-   * @param defaultStatementTimeout default statement timeout in seconds.
+   * @param defaultStatementTimeout
+   *          default statement timeout in seconds.
    */
   protected final void defaultStatementTimeout(Integer defaultStatementTimeout) {
     bindConfigurationSetting(new DefaultStatementTimeoutConfigurationSetting(defaultStatementTimeout));
   }
 
   protected final void bindConfigurationSetting(final ConfigurationSetting configurationSetting) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(configurationSetting));
   }
 
   protected final <P extends Provider<? extends ConfigurationSetting>> void bindConfigurationSettingProvider(
       P configurationSettingProvider) {
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(configurationSettingProvider, binder()));
   }
 
@@ -254,7 +267,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Executor type.
    *
-   * @param executorType the executor type
+   * @param executorType
+   *          the executor type
    */
   protected final void executorType(ExecutorType executorType) {
     checkArgument(executorType != null, "Parameter 'executorType' must be not null");
@@ -264,7 +278,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Configures the local cache scope setting.
    *
-   * @param localeCacheScope The cache scope to use.
+   * @param localeCacheScope
+   *          The cache scope to use.
    * @since 3.4
    */
   protected final void localCacheScope(LocalCacheScope localeCacheScope) {
@@ -275,7 +290,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Auto mapping behavior.
    *
-   * @param autoMappingBehavior the auto mapping behavior
+   * @param autoMappingBehavior
+   *          the auto mapping behavior
    */
   protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
     checkArgument(autoMappingBehavior != null, "Parameter 'autoMappingBehavior' must be not null");
@@ -285,7 +301,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Set the DataSource Provider type has to be bound.
    *
-   * @param dataSourceProviderType the DataSource Provider type
+   * @param dataSourceProviderType
+   *          the DataSource Provider type
    */
   protected final void bindDataSourceProviderType(Class<? extends Provider<DataSource>> dataSourceProviderType) {
     checkArgument(dataSourceProviderType != null, "Parameter 'dataSourceProviderType' must be not null");
@@ -295,7 +312,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind data source provider.
    *
-   * @param dataSourceProvider the data source provider
+   * @param dataSourceProvider
+   *          the data source provider
    */
   protected final void bindDataSourceProvider(Provider<DataSource> dataSourceProvider) {
     checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -305,7 +323,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind data source provider.
    *
-   * @param dataSourceProvider the data source provider
+   * @param dataSourceProvider
+   *          the data source provider
    */
   protected final void bindDataSourceProvider(com.google.inject.Provider<DataSource> dataSourceProvider) {
     checkArgument(dataSourceProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -315,7 +334,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind database id provider.
    *
-   * @param databaseIdProvider The DatabaseIdProvider class.
+   * @param databaseIdProvider
+   *          The DatabaseIdProvider class.
    */
   protected final void bindDatabaseIdProvider(Class<? extends DatabaseIdProvider> databaseIdProvider) {
     checkArgument(databaseIdProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -325,7 +345,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind database id provider.
    *
-   * @param databaseIdProvider The DatabaseIdProvider instance.
+   * @param databaseIdProvider
+   *          The DatabaseIdProvider instance.
    */
   protected final void bindDatabaseIdProvider(DatabaseIdProvider databaseIdProvider) {
     checkArgument(databaseIdProvider != null, "Parameter 'dataSourceProvider' must be not null");
@@ -335,7 +356,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Set the TransactionFactory type has to be bound.
    *
-   * @param transactionFactoryType the TransactionFactory type
+   * @param transactionFactoryType
+   *          the TransactionFactory type
    */
   protected final void bindTransactionFactoryType(Class<? extends TransactionFactory> transactionFactoryType) {
     checkArgument(transactionFactoryType != null, "Parameter 'transactionFactoryType' must be not null");
@@ -345,7 +367,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind transaction factory.
    *
-   * @param transactionFactoryProvider the transaction factory provider
+   * @param transactionFactoryProvider
+   *          the transaction factory provider
    */
   protected final void bindTransactionFactory(Provider<TransactionFactory> transactionFactoryProvider) {
     checkArgument(transactionFactoryProvider != null, "Parameter 'transactionFactoryProvider' must be not null");
@@ -355,7 +378,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Bind transaction factory.
    *
-   * @param transactionFactoryProvider the transaction factory provider
+   * @param transactionFactoryProvider
+   *          the transaction factory provider
    */
   protected final void bindTransactionFactory(
       com.google.inject.Provider<TransactionFactory> transactionFactoryProvider) {
@@ -366,7 +390,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Sets the ObjectFactory class.
    *
-   * @param objectFactoryType the ObjectFactory type
+   * @param objectFactoryType
+   *          the ObjectFactory type
    */
   protected final void bindObjectFactoryType(Class<? extends ObjectFactory> objectFactoryType) {
     checkArgument(objectFactoryType != null, "Parameter 'objectFactoryType' must be not null");
@@ -376,7 +401,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Sets the ObjectWrapperFactory class.
    *
-   * @param objectWrapperFactoryType the ObjectFactory type
+   * @param objectWrapperFactoryType
+   *          the ObjectFactory type
    */
   protected final void bindObjectWrapperFactoryType(Class<? extends ObjectWrapperFactory> objectWrapperFactoryType) {
     checkArgument(objectFactoryType != null, "Parameter 'objectWrapperFactoryType' must be not null");
@@ -389,7 +415,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    * Due to current limitations in MyBatis, &#64;Inject cannot be used in LanguageDriver class.
    * </p>
    *
-   * @param defaultScriptingLanguageType the default LanguageDriver type
+   * @param defaultScriptingLanguageType
+   *          the default LanguageDriver type
    */
   protected final void bindDefaultScriptingLanguageType(Class<? extends LanguageDriver> defaultScriptingLanguageType) {
     checkArgument(defaultScriptingLanguageType != null, "Parameter 'defaultScriptingLanguageType' must be not null");
@@ -399,7 +426,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Add a user defined binding.
    *
-   * @param alias the string type alias
+   * @param alias
+   *          the string type alias
    */
   protected final AliasBinder addAlias(final String alias) {
     checkArgument(alias != null && alias.length() > 0, "Empty or null 'alias' is not valid");
@@ -416,10 +444,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adding simple aliases means that every specified class will be bound
-   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   * Adding simple aliases means that every specified class will be bound using the simple class
+   * name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
    *
-   * @param type the specified types have to be bind
+   * @param type
+   *          the specified types have to be bind
    */
   protected final void addSimpleAlias(final Class<?> type) {
     checkArgument(type != null, "Parameter 'type' must be not null");
@@ -434,10 +463,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adding simple aliases means that every specified class will be bound
-   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   * Adding simple aliases means that every specified class will be bound using the simple class
+   * name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
    *
-   * @param types the specified types have to be bind
+   * @param types
+   *          the specified types have to be bind
    */
   protected final void addSimpleAliases(final Collection<Class<?>> types) {
     checkArgument(types != null, "Parameter 'types' must be not null");
@@ -448,23 +478,26 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds all Classes in the given package as a simple alias.
-   * Adding simple aliases means that every specified class will be bound
-   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every
+   * specified class will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes
+   * {@code Foo}.
    *
-   * @param packageName the specified package to search for classes to alias.
-   * @param test a test to run against the objects found in the specified package
+   * @param packageName
+   *          the specified package to search for classes to alias.
+   * @param test
+   *          a test to run against the objects found in the specified package
    */
   protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
     addSimpleAliases(getClasses(test, packageName));
   }
 
   /**
-   * Adds all Classes in the given package as a simple alias.
-   * Adding simple aliases means that every specified class will be bound
-   * using the simple class name, i.e.  {@code com.acme.Foo} becomes {@code Foo}.
+   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every
+   * specified class will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes
+   * {@code Foo}.
    *
-   * @param packageName the specified package to search for classes to alias
+   * @param packageName
+   *          the specified package to search for classes to alias
    */
   protected final void addSimpleAliases(final String packageName) {
     addSimpleAliases(getClasses(packageName));
@@ -473,7 +506,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Add a user defined Type Handler letting google-guice creating it.
    *
-   * @param type the specified type has to be handled.
+   * @param type
+   *          the specified type has to be handled.
    */
   protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
     checkArgument(type != null, "Parameter 'type' must be not null");
@@ -525,10 +559,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis type handler, letting
-   * google-guice creating it.
+   * Adds the user defined MyBatis type handler, letting google-guice creating it.
    *
-   * @param handlerClass the handler type.
+   * @param handlerClass
+   *          the handler type.
    */
   protected final void addTypeHandlerClass(final Class<? extends TypeHandler<?>> handlerClass) {
     checkArgument(handlerClass != null, "Parameter 'handlerClass' must not be null");
@@ -538,10 +572,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis type handlers, letting
-   * google-guice creating it.
+   * Adds the user defined MyBatis type handlers, letting google-guice creating it.
    *
-   * @param handlersClasses the handler type.
+   * @param handlersClasses
+   *          the handler type.
    */
   protected final void addTypeHandlersClasses(Collection<Class<? extends TypeHandler<?>>> handlersClasses) {
     checkArgument(handlersClasses != null, "Parameter 'handlersClasses' must not be null");
@@ -552,10 +586,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis type handlers in the given package, letting
-   * google-guice creating it.
+   * Adds the user defined MyBatis type handlers in the given package, letting google-guice creating
+   * it.
    *
-   * @param packageName the package where looking for type handlers.
+   * @param packageName
+   *          the package where looking for type handlers.
    */
   protected final void addTypeHandlerClasses(String packageName) {
     checkArgument(packageName != null, "Parameter 'packageName' must not be null");
@@ -564,10 +599,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined myBatis interceptor plugins type, letting
-   * google-guice creating it.
+   * Adds the user defined myBatis interceptor plugins type, letting google-guice creating it.
    *
-   * @param interceptorClass The user defined MyBatis interceptor plugin type
+   * @param interceptorClass
+   *          The user defined MyBatis interceptor plugin type
    */
   protected final void addInterceptorClass(final Class<? extends Interceptor> interceptorClass) {
     checkArgument(interceptorClass != null, "Parameter 'interceptorClass' must not be null");
@@ -575,10 +610,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis interceptors plugins types, letting
-   * google-guice creating them.
+   * Adds the user defined MyBatis interceptors plugins types, letting google-guice creating them.
    *
-   * @param interceptorsClasses the user defined MyBatis Interceptors plugins types
+   * @param interceptorsClasses
+   *          the user defined MyBatis Interceptors plugins types
    */
   protected final void addInterceptorsClasses(Collection<Class<? extends Interceptor>> interceptorsClasses) {
     checkArgument(interceptorsClasses != null, "Parameter 'interceptorsClasses' must not be null");
@@ -589,10 +624,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis interceptors plugins types in the given package,
-   * letting google-guice creating them.
+   * Adds the user defined MyBatis interceptors plugins types in the given package, letting
+   * google-guice creating them.
    *
-   * @param packageName the package where looking for Interceptors plugins types.
+   * @param packageName
+   *          the package where looking for Interceptors plugins types.
    */
   protected final void addInterceptorsClasses(String packageName) {
     checkArgument(packageName != null, "Parameter 'packageName' must not be null");
@@ -603,12 +639,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Adds the user defined mapper classes.
    *
-   * @param mapperClass the user defined mapper classes.
+   * @param mapperClass
+   *          the user defined mapper classes.
    */
   protected final void addMapperClass(Class<?> mapperClass) {
     checkArgument(mapperClass != null, "Parameter 'mapperClass' must not be null");
 
-    bindListener(KeyMatcher.create(Key.get(ConfigurationProvider.class)),
+    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),
         ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));
     bindMapper(mapperClass);
   }
@@ -616,7 +653,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Adds the user defined mapper classes.
    *
-   * @param mapperClasses the user defined mapper classes
+   * @param mapperClasses
+   *          the user defined mapper classes
    */
   protected final void addMapperClasses(Collection<Class<?>> mapperClasses) {
     checkArgument(mapperClasses != null, "Parameter 'mapperClasses' must not be null");
@@ -629,7 +667,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Adds the user defined mapper classes.
    *
-   * @param packageName the specified package to search for mappers to add.
+   * @param packageName
+   *          the specified package to search for mappers to add.
    */
   protected final void addMapperClasses(final String packageName) {
     addMapperClasses(getClasses(packageName));
@@ -638,8 +677,10 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Adds the user defined mapper classes.
    *
-   * @param packageName the specified package to search for mappers to add.
-   * @param test a test to run against the objects found in the specified package.
+   * @param packageName
+   *          the specified package to search for mappers to add.
+   * @param test
+   *          a test to run against the objects found in the specified package.
    */
   protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
     addMapperClasses(getClasses(test, packageName));
@@ -648,7 +689,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Return a set of all classes contained in the given package.
    *
-   * @param packageName the package has to be analyzed.
+   * @param packageName
+   *          the package has to be analyzed.
    * @return a set of all classes contained in the given package.
    */
   private static Set<Class<?>> getClasses(String packageName) {
@@ -656,11 +698,13 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Return a set of all classes contained in the given package that match with
-   * the given test requirement.
+   * Return a set of all classes contained in the given package that match with the given test
+   * requirement.
    *
-   * @param test the class filter on the given package.
-   * @param packageName the package has to be analyzed.
+   * @param test
+   *          the class filter on the given package.
+   * @param packageName
+   *          the package has to be analyzed.
    * @return a set of all classes contained in the given package.
    */
   private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {

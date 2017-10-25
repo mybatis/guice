@@ -15,17 +15,8 @@
  */
 package org.mybatis.guice.configuration;
 
-import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
 import com.google.inject.name.Named;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-import javax.sql.DataSource;
 
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -36,11 +27,19 @@ import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+import javax.sql.DataSource;
+
 /**
  * Provides the myBatis Configuration.
  */
 @Singleton
-public class ConfigurationProvider implements Provider<Configuration> {
+public class ConfigurationProvider implements Provider<Configuration>, ConfigurationSettingListener {
 
   /**
    * The myBatis Configuration reference.
@@ -129,12 +128,14 @@ public class ConfigurationProvider implements Provider<Configuration> {
     this.failFast = failFast;
   }
 
+  @Override
   public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
     this.configurationSettings.add(configurationSetting);
   }
 
+  @Override
   public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
-    this.mapperConfigurationSettings.add((MapperConfigurationSetting) mapperConfigurationSetting);
+    this.mapperConfigurationSettings.add(mapperConfigurationSetting);
   }
 
   /**

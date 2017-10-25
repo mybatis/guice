@@ -19,11 +19,11 @@ import com.google.inject.Binder;
 import com.google.inject.MembersInjector;
 import com.google.inject.spi.ProvisionListener;
 
-import javax.inject.Provider;
-
-import org.mybatis.guice.configuration.ConfigurationProvider;
+import org.mybatis.guice.configuration.ConfigurationSettingListener;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
+
+import javax.inject.Provider;
 
 public final class ConfigurationProviderProvisionListener implements ProvisionListener {
 
@@ -35,8 +35,8 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
 
   @Override
   public <T> void onProvision(ProvisionInvocation<T> provision) {
-    ConfigurationProvider configurationProvider = (ConfigurationProvider) provision.provision();
-    this.action.perform(configurationProvider);
+    ConfigurationSettingListener configurationSettingListener = (ConfigurationSettingListener) provision.provision();
+    this.action.perform(configurationSettingListener);
   }
 
   public static <P extends Provider<? extends ConfigurationSetting>> ConfigurationProviderProvisionListener create(
@@ -46,9 +46,9 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
         .getMembersInjector(configurationSettingProvider.getClass());
     return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
       @Override
-      public void perform(ConfigurationProvider configurationProvider) {
+      public void perform(ConfigurationSettingListener configurationSettingListener) {
         membersInjector.injectMembers(configurationSettingProvider);
-        configurationProvider.addConfigurationSetting(configurationSettingProvider.get());
+        configurationSettingListener.addConfigurationSetting(configurationSettingProvider.get());
       }
     });
   }
@@ -56,8 +56,8 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
   public static ConfigurationProviderProvisionListener create(final ConfigurationSetting configurationSetting) {
     return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
       @Override
-      public void perform(ConfigurationProvider configurationProvider) {
-        configurationProvider.addConfigurationSetting(configurationSetting);
+      public void perform(ConfigurationSettingListener configurationSettingListener) {
+        configurationSettingListener.addConfigurationSetting(configurationSetting);
       }
     });
   }
@@ -66,13 +66,13 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
       final MapperConfigurationSetting mapperConfigurationSetting) {
     return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
       @Override
-      public void perform(ConfigurationProvider configurationProvider) {
-        configurationProvider.addMapperConfigurationSetting(mapperConfigurationSetting);
+      public void perform(ConfigurationSettingListener configurationSettingListener) {
+        configurationSettingListener.addMapperConfigurationSetting(mapperConfigurationSetting);
       }
     });
   }
 
   private static interface ConfigurationProviderProvisionAction {
-    void perform(ConfigurationProvider configurationProvider);
+    void perform(ConfigurationSettingListener configurationSettingListener);
   }
 }

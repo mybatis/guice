@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,6 +35,7 @@ import com.google.inject.TypeLiteral;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
@@ -54,8 +56,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mybatis.guice.configuration.ConfigurationProvider;
+import org.mybatis.guice.configuration.ConfigurationSettingListener;
 import org.mybatis.guice.configuration.ErrorMapper;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
+import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.generictypehandler.CustomObject;
 import org.mybatis.guice.generictypehandler.GenericCustomObjectTypeHandler;
 import org.mybatis.guice.resolver.alias.Address;
@@ -438,6 +443,44 @@ public class MyBatisModuleTest {
       @Override
       protected void initialize() {
         useConfigurationProvider(TestConfigurationProvider.class);
+        environmentId("test_environment");
+        bindDataSourceProvider(dataSourceProvider);
+        bindTransactionFactory(transactionFactoryProvider);
+        lazyLoadingEnabled(true);
+      }
+    });
+
+    Configuration configuration = injector.getInstance(Configuration.class);
+
+    assertEquals(staticConfiguration, configuration);
+    verify(staticConfiguration, never()).setLazyLoadingEnabled(true);
+  }
+
+  @Test
+  public void useConfigurationProvider_Listener() {
+    Injector injector = Guice.createInjector(new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        useConfigurationProvider(TestConfigurationProviderWithListener.class);
+        environmentId("test_environment");
+        bindDataSourceProvider(dataSourceProvider);
+        bindTransactionFactory(transactionFactoryProvider);
+        lazyLoadingEnabled(true);
+      }
+    });
+
+    Configuration configuration = injector.getInstance(Configuration.class);
+
+    assertEquals(staticConfiguration, configuration);
+    verify(staticConfiguration).setLazyLoadingEnabled(true);
+  }
+
+  @Test
+  public void useCustomConfigurationProvider() {
+    Injector injector = Guice.createInjector(new MyBatisModule() {
+      @Override
+      protected void initialize() {
+        useConfigurationProvider(TestCustomConfigurationProvider.class);
         environmentId("test_environment");
         bindDataSourceProvider(dataSourceProvider);
         bindTransactionFactory(transactionFactoryProvider);
@@ -1418,6 +1461,36 @@ public class MyBatisModuleTest {
   }
 
   public static class TestConfigurationProvider implements Provider<Configuration> {
+    @Override
+    public Configuration get() {
+      return staticConfiguration;
+    }
+  }
+
+  public static class TestConfigurationProviderWithListener
+      implements Provider<Configuration>, ConfigurationSettingListener {
+    @Override
+    public Configuration get() {
+      return staticConfiguration;
+    }
+
+    @Override
+    public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
+      configurationSetting.applyConfigurationSetting(staticConfiguration);
+    }
+
+    @Override
+    public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
+      mapperConfigurationSetting.applyConfigurationSetting(staticConfiguration);
+    }
+  }
+
+  public static class TestCustomConfigurationProvider extends ConfigurationProvider {
+    @com.google.inject.Inject
+    public TestCustomConfigurationProvider(Environment environment) {
+      super(environment);
+    }
+
     @Override
     public Configuration get() {
       return staticConfiguration;
