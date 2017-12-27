@@ -149,7 +149,7 @@ public class BoneCPProviderTest {
     assertEquals(releaseHelperThreads, dataSource.getReleaseHelperThreads());
     assertEquals(serviceOrder, dataSource.getServiceOrder());
     assertEquals(statementReleaseHelperThreads, dataSource.getStatementReleaseHelperThreads());
-    assertEquals(statementsCacheSize, dataSource.getStatementCacheSize());
+    assertEquals(statementsCacheSize, dataSource.getStatementsCacheSize());
     assertEquals(transactionRecoveryEnabled, dataSource.isTransactionRecoveryEnabled());
   }
 
@@ -261,7 +261,7 @@ public class BoneCPProviderTest {
     assertEquals(releaseHelperThreads, dataSource.getReleaseHelperThreads());
     assertEquals(serviceOrder, dataSource.getServiceOrder());
     assertEquals(statementReleaseHelperThreads, dataSource.getStatementReleaseHelperThreads());
-    assertEquals(statementsCacheSize, dataSource.getStatementCacheSize());
+    assertEquals(statementsCacheSize, dataSource.getStatementsCacheSize());
     assertEquals(transactionRecoveryEnabled, dataSource.isTransactionRecoveryEnabled());
   }
 

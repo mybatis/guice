@@ -56,7 +56,7 @@ public class ScriptingLanguageTest {
   @Test
   public void scriptingLanguageAlias() {
     assertEquals(CustomLanguageDriver.class,
-        factory.getConfiguration().getDefaultScriptingLanuageInstance().getClass());
+        factory.getConfiguration().getDefaultScriptingLanguageInstance().getClass());
     assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getLanguageRegistry().getDefaultDriverClass());
     assertEquals(CustomLanguageDriver.class,
         factory.getConfiguration().getLanguageRegistry().getDriver(CustomLanguageDriver.class).getClass());
