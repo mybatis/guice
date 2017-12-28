@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractMyBatisModuleTestCase {
 

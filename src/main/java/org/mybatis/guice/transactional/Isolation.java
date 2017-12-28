@@ -27,10 +27,12 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  */
 public enum Isolation {
 
-  DEFAULT(null), NONE(TransactionIsolationLevel.NONE), READ_COMMITTED(
-      TransactionIsolationLevel.READ_COMMITTED), READ_UNCOMMITTED(
-          TransactionIsolationLevel.READ_UNCOMMITTED), REPEATABLE_READ(
-              TransactionIsolationLevel.REPEATABLE_READ), SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);
+  DEFAULT(null),
+  NONE(TransactionIsolationLevel.NONE),
+  READ_COMMITTED(TransactionIsolationLevel.READ_COMMITTED),
+  READ_UNCOMMITTED(TransactionIsolationLevel.READ_UNCOMMITTED),
+  REPEATABLE_READ(TransactionIsolationLevel.REPEATABLE_READ),
+  SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);
 
   private final TransactionIsolationLevel transactionIsolationLevel;
 
