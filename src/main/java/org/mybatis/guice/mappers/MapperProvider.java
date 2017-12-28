@@ -55,6 +55,9 @@ public final class MapperProvider<T> implements Provider<T> {
     if (obj == null) {
       return false;
     }
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
     MapperProvider other = (MapperProvider) obj;
     return Objects.equal(this.mapperType, other.mapperType);
   }

@@ -92,6 +92,9 @@ public final class TypeHandlerProvider<TH extends TypeHandler<? extends T>, T> i
     if (obj == null) {
       return false;
     }
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
     TypeHandlerProvider other = (TypeHandlerProvider) obj;
     return Objects.equal(this.typeHandlerTypeLiteral, other.typeHandlerTypeLiteral)
         && Objects.equal(this.handledType, other.handledType);
