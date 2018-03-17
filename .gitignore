@@ -11,3 +11,4 @@
 /nb*
 /target
 /derby.log
+.mvn/wrapper/maven-wrapper.jar
