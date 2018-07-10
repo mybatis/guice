@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2017 the original author or authors.
+       Copyright 2009-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -26,7 +26,17 @@
   </properties>
 
   <body>
-    <release version="3.10" date="" description="maintenance release">
+    <release version="3.11" date="" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Fixes use of Configuration provider.
+        <fixes issue="118"/>
+      </action>
+      <action dev="christian.poitras" type="update">
+        Fixes OSGI imports.
+        <fixes issue="126"/>
+      </action>
+    </release>
+    <release version="3.10" date="2017-09-09" description="maintenance release">
       <action dev="christian.poitras" type="add">
         Allow Druid connection properties to be set using an instance of Properties.
         <fixes issue="112"/>
