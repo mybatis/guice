@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,8 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
   /**
    * Instantiates a new jdbc url ant formatter.
    *
-   * @param pattern the pattern
+   * @param pattern
+   *          the pattern
    */
   public JdbcUrlAntFormatter(final String pattern) {
     int prev = 0;
@@ -83,7 +84,8 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
   /**
    * Sets the injector.
    *
-   * @param injector the new injector
+   * @param injector
+   *          the new injector
    */
   @Inject
   public void setInjector(Injector injector) {

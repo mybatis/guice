@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -93,15 +93,11 @@ public class SampleSqlSessionTest {
       }
 
     });
-    /* modules.add(new XMLMyBatisModule() {
-    
-        @Override
-        protected void initialize() {
-            setEnvironmentId("test");
-            setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml");
-        }
-    
-    }); */
+    /*
+     * modules.add(new XMLMyBatisModule() {
+     * @Override protected void initialize() { setEnvironmentId("test");
+     * setClassPathResource("org/mybatis/guice/sample/mybatis-config.xml"); } });
+     */
     modules.add(new Module() {
       @Override
       public void configure(Binder binder) {

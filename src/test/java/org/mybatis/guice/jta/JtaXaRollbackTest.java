@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,8 +32,8 @@ import org.mybatis.guice.transactional.TransactionAttribute;
 import org.mybatis.guice.transactional.TransactionToken;
 
 /**
- * Create Requerd transaction. Create internal RequiresNew transaction. Rollback first transaction.
- * Warning: transaction will roll back. XA error code: 100
+ * Create Requerd transaction. Create internal RequiresNew transaction. Rollback first transaction. Warning: transaction
+ * will roll back. XA error code: 100
  */
 public class JtaXaRollbackTest {
 
@@ -117,7 +117,7 @@ public class JtaXaRollbackTest {
         BaseDB.insertRow(secondCon, 2, "name 2");
         secondCon.close();
 
-        // roll back REQUIRESNEW and commit REQUIRED 
+        // roll back REQUIRESNEW and commit REQUIRED
         throw new Exception("rollback");
       } catch (Exception e) {
         // not throws exception to REQUITED

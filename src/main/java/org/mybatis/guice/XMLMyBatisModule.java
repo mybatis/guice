@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.TypeHandler;
 
 /**
- * Easy to use helper Module that alleviates users to write the boilerplate
- * google-guice bindings to create the SqlSessionFactory, via XML configuration.
+ * Easy to use helper Module that alleviates users to write the boilerplate google-guice bindings to create the
+ * SqlSessionFactory, via XML configuration.
  */
 public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
 
@@ -48,7 +48,8 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
   /**
    * Set the MyBatis configuration class path resource.
    *
-   * @param classPathResource the MyBatis configuration class path resource
+   * @param classPathResource
+   *          the MyBatis configuration class path resource
    */
   protected final void setClassPathResource(String classPathResource) {
     checkArgument(classPathResource != null, "Parameter 'classPathResource' must be not null");
@@ -58,7 +59,8 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
   /**
    * Set the MyBatis configuration environment id.
    *
-   * @param environmentId the MyBatis configuration environment id
+   * @param environmentId
+   *          the MyBatis configuration environment id
    */
   protected final void setEnvironmentId(String environmentId) {
     this.environmentId = environmentId;
@@ -67,7 +69,8 @@ public abstract class XMLMyBatisModule extends AbstractMyBatisModule {
   /**
    * Add the variables will be used to replace placeholders in the MyBatis configuration.
    *
-   * @param properties the variables will be used to replace placeholders in the MyBatis configuration
+   * @param properties
+   *          the variables will be used to replace placeholders in the MyBatis configuration
    */
   protected final void addProperties(Properties properties) {
     if (properties != null) {

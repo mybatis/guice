@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@ public interface AliasBinder {
   /**
    * Binds a {@code Class} to an already defined type alias.
    *
-   * @param type The {@code Class} has to be bound to the alias
+   * @param type
+   *          The {@code Class} has to be bound to the alias
    */
   void to(Class<?> type);
 

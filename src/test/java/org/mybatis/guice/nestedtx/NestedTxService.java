@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -100,7 +100,7 @@ public class NestedTxService {
     try {
       insertTable2(tr);
     } catch (Exception e) {
-      //ignore - the other two inserts should be OK
+      // ignore - the other two inserts should be OK
     }
   }
 

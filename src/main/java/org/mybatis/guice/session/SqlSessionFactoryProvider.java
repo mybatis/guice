@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,7 +44,8 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
   /**
    * Creates a new SqlSessionFactory from the specified configuration.
    *
-   * @param configuration the specified configration.
+   * @param configuration
+   *          the specified configration.
    */
   @Deprecated
   public SqlSessionFactoryProvider(final Configuration configuration) {
@@ -54,7 +55,8 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
   /**
    * Creates a new SqlSessionFactory from the specified configuration.
    *
-   * @param configuration the specified configuration.
+   * @param configuration
+   *          the specified configuration.
    * @since 1.0.1
    */
   @Inject

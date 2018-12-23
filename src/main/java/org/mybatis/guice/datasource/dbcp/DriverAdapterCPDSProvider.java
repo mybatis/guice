@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,8 +32,10 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   /**
    * Instantiates a new driver adapter CPDS provider.
    *
-   * @param driver the driver
-   * @param url the url
+   * @param driver
+   *          the driver
+   * @param url
+   *          the url
    */
   @Inject
   public DriverAdapterCPDSProvider(@Named("JDBC.driver") final String driver, @Named("JDBC.url") final String url) {
@@ -48,7 +50,8 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   /**
    * Sets the user.
    *
-   * @param username the new user
+   * @param username
+   *          the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -59,7 +62,8 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   /**
    * Sets the password.
    *
-   * @param password the new password
+   * @param password
+   *          the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -70,7 +74,8 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   /**
    * Sets the description.
    *
-   * @param description the new description
+   * @param description
+   *          the new description
    */
   @com.google.inject.Inject(optional = true)
   public void setDescription(@Named("DBCP.description") String description) {

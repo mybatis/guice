@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -92,8 +92,10 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   /**
    * Bind mapper.
    *
-   * @param <T> the generic type
-   * @param mapperType the mapper type
+   * @param <T>
+   *          the generic type
+   * @param mapperType
+   *          the mapper type
    */
   final <T> void bindMapper(Class<T> mapperType) {
     bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
@@ -102,7 +104,8 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   /**
    * Use resource class loader.
    *
-   * @param resourceClassLoader the resource class loader
+   * @param resourceClassLoader
+   *          the resource class loader
    * @since 3.3
    */
   public void useResourceClassLoader(ClassLoader resourceClassLoader) {
@@ -122,7 +125,8 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   /**
    * Use jdbc driver class loader.
    *
-   * @param driverClassLoader the driver class loader
+   * @param driverClassLoader
+   *          the driver class loader
    * @since 3.3
    */
   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
