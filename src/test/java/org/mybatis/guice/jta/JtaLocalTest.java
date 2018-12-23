@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -139,9 +139,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   insert(id=1)
-   * commit REQUIRED
+   * begin REQUIRED insert(id=1) commit REQUIRED
    * 
    * have 1 rows
    */
@@ -152,9 +150,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRES_NEW
-   *   insert(id=1)
-   * commit REQUIRES_NEW
+   * begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW
    * 
    * have 1 rows
    */
@@ -165,9 +161,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   insert(id=1)
-   * roll back REQUIRED
+   * begin REQUIRED insert(id=1) roll back REQUIRED
    * 
    * have 0 rows
    */
@@ -181,9 +175,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRES_NEW
-   *   insert(id=1)
-   * roll back REQUIRES_NEW
+   * begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW
    * 
    * have 0 rows
    */
@@ -197,12 +189,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   insert(id=1)
-   *   begin REQUIRES_NEW
-   *      insert(id=2)
-   *   commit REQUIRES_NEW
-   * commit REQUIRED
+   * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW commit REQUIRED
    * 
    * have 2 rows
    */
@@ -213,12 +200,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   begin REQUIRES_NEW
-   *      insert(id=2)
-   *   commit REQUIRES_NEW
-   *   insert(id=1)
-   * commit REQUIRED
+   * begin REQUIRED begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW insert(id=1) commit REQUIRED
    * 
    * have 2 rows
    */
@@ -229,12 +211,7 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   insert(id=1)
-   *   begin REQUIRES_NEW
-   *      insert(id=2)
-   *   roll back REQUIRES_NEW
-   * commit REQUIRED
+   * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) roll back REQUIRES_NEW commit REQUIRED
    * 
    * have 1 rows and id=1 (from commited REQUIRED)
    */
@@ -248,14 +225,9 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   begin REQUIRES_NEW
-   *      insert(id=1)
-   *   roll back REQUIRES_NEW
-   *   insert(id=2)
-   * commit REQUIRED
+   * begin REQUIRED begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW insert(id=2) commit REQUIRED
    * 
-   * have 1 rows and id=2 (from commited REQUIRED) 
+   * have 1 rows and id=2 (from commited REQUIRED)
    */
   @Test
   public void testRollbackInternalRequiresNew2() throws Exception {
@@ -267,14 +239,9 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   begin REQUIRES_NEW
-   *      insert(id=1)
-   *   commit REQUIRES_NEW
-   *   insert(id=2)
-   * roll back REQUIRED
+   * begin REQUIRED begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW insert(id=2) roll back REQUIRED
    * 
-   * have 1 rows and id=1 (from commited REQUIRES_NEW) 
+   * have 1 rows and id=1 (from commited REQUIRES_NEW)
    */
   @Test
   public void testRollbackExternalRequired() throws Exception {
@@ -286,14 +253,9 @@ public class JtaLocalTest {
   }
 
   /**
-   * begin REQUIRED
-   *   insert(id=1)
-   *   begin REQUIRES_NEW
-   *      insert(id=2)
-   *   commit REQUIRES_NEW
-   * roll back REQUIRED
+   * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW roll back REQUIRED
    * 
-   * have 1 rows and id=2 (from commited REQUIRES_NEW) 
+   * have 1 rows and id=2 (from commited REQUIRES_NEW)
    */
   @Test
   public void testRollbackExternalRequired2() throws Exception {

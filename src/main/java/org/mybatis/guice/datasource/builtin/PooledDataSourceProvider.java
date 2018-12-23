@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,9 +38,12 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Creates a new PooledDataSource using the needed parameter.
    *
-   * @param driver The JDBC driver class.
-   * @param url the database URL of the form <code>jdbc:subprotocol:subname</code>.
-   * @param driverClassLoader ClassLoader to use to load JDBC driver class.
+   * @param driver
+   *          The JDBC driver class.
+   * @param url
+   *          the database URL of the form <code>jdbc:subprotocol:subname</code>.
+   * @param driverClassLoader
+   *          ClassLoader to use to load JDBC driver class.
    */
   @Inject
   public PooledDataSourceProvider(@Named("JDBC.driver") final String driver, @Named("JDBC.url") final String url,
@@ -51,7 +54,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the user.
    *
-   * @param username the new user
+   * @param username
+   *          the new user
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -62,7 +66,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the password.
    *
-   * @param password the new password
+   * @param password
+   *          the new password
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -73,7 +78,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the auto commit.
    *
-   * @param autoCommit the new auto commit
+   * @param autoCommit
+   *          the new auto commit
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named("JDBC.autoCommit") final boolean autoCommit) {
@@ -83,7 +89,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the login timeout.
    *
-   * @param loginTimeout the new login timeout
+   * @param loginTimeout
+   *          the new login timeout
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
@@ -102,7 +109,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the maximum active connections.
    *
-   * @param maximumActiveConnections the new maximum active connections
+   * @param maximumActiveConnections
+   *          the new maximum active connections
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumActiveConnections(
@@ -113,7 +121,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the maximum checkout time.
    *
-   * @param maximumCheckoutTime the new maximum checkout time
+   * @param maximumCheckoutTime
+   *          the new maximum checkout time
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumCheckoutTime(@Named("mybatis.pooled.maximumCheckoutTime") final int maximumCheckoutTime) {
@@ -123,7 +132,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the maximum idle connections.
    *
-   * @param maximumIdleConnections the new maximum idle connections
+   * @param maximumIdleConnections
+   *          the new maximum idle connections
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumIdleConnections(
@@ -134,7 +144,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the ping connections not used for.
    *
-   * @param pingConnectionsNotUsedFor the new ping connections not used for
+   * @param pingConnectionsNotUsedFor
+   *          the new ping connections not used for
    */
   @com.google.inject.Inject(optional = true)
   public void setPingConnectionsNotUsedFor(
@@ -145,7 +156,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the ping enabled.
    *
-   * @param pingEnabled the new ping enabled
+   * @param pingEnabled
+   *          the new ping enabled
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named("mybatis.pooled.pingEnabled") final boolean pingEnabled) {
@@ -155,7 +167,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the ping enabled.
    *
-   * @param pingQuery the new ping enabled
+   * @param pingQuery
+   *          the new ping enabled
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named("mybatis.pooled.pingQuery") final String pingQuery) {
@@ -165,7 +178,8 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
   /**
    * Sets the time to wait.
    *
-   * @param timeToWait the new time to wait
+   * @param timeToWait
+   *          the new time to wait
    */
   @com.google.inject.Inject(optional = true)
   public void setTimeToWait(@Named("mybatis.pooled.timeToWait") final int timeToWait) {

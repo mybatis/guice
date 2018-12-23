@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -78,8 +78,8 @@ import javax.inject.Provider;
 import javax.sql.DataSource;
 
 /**
- * Easy to use helper Module that alleviates users to write the boilerplate google-guice bindings to
- * create the SqlSessionFactory.
+ * Easy to use helper Module that alleviates users to write the boilerplate google-guice bindings to create the
+ * SqlSessionFactory.
  */
 public abstract class MyBatisModule extends AbstractMyBatisModule {
 
@@ -444,8 +444,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adding simple aliases means that every specified class will be bound using the simple class
-   * name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
+   * Adding simple aliases means that every specified class will be bound using the simple class name, i.e.
+   * {@code com.acme.Foo} becomes {@code Foo}.
    *
    * @param type
    *          the specified types have to be bind
@@ -463,8 +463,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adding simple aliases means that every specified class will be bound using the simple class
-   * name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
+   * Adding simple aliases means that every specified class will be bound using the simple class name, i.e.
+   * {@code com.acme.Foo} becomes {@code Foo}.
    *
    * @param types
    *          the specified types have to be bind
@@ -478,9 +478,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every
-   * specified class will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes
-   * {@code Foo}.
+   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every specified class
+   * will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
    *
    * @param packageName
    *          the specified package to search for classes to alias.
@@ -492,9 +491,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every
-   * specified class will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes
-   * {@code Foo}.
+   * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every specified class
+   * will be bound using the simple class name, i.e. {@code com.acme.Foo} becomes {@code Foo}.
    *
    * @param packageName
    *          the specified package to search for classes to alias
@@ -586,8 +584,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis type handlers in the given package, letting google-guice creating
-   * it.
+   * Adds the user defined MyBatis type handlers in the given package, letting google-guice creating it.
    *
    * @param packageName
    *          the package where looking for type handlers.
@@ -624,8 +621,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Adds the user defined MyBatis interceptors plugins types in the given package, letting
-   * google-guice creating them.
+   * Adds the user defined MyBatis interceptors plugins types in the given package, letting google-guice creating them.
    *
    * @param packageName
    *          the package where looking for Interceptors plugins types.
@@ -698,8 +694,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   }
 
   /**
-   * Return a set of all classes contained in the given package that match with the given test
-   * requirement.
+   * Return a set of all classes contained in the given package that match with the given test requirement.
    *
    * @param test
    *          the class filter on the given package.

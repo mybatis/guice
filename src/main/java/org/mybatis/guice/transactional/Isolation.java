@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,8 @@ package org.mybatis.guice.transactional;
 import org.apache.ibatis.session.TransactionIsolationLevel;
 
 /**
- * Enum of isolation levels.  This enum exists because Java annotations
- * do not support null default values - so we need to add the DEFAULT
- * level which means - do not specify an isolation level.
+ * Enum of isolation levels. This enum exists because Java annotations do not support null default values - so we need
+ * to add the DEFAULT level which means - do not specify an isolation level.
  *
  * @author Jeff Butler
  * @since 3.1

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,8 +23,10 @@ public class MyBatisXAException extends XAException {
   /**
    * Instantiates a new my batis XA exception.
    *
-   * @param message the message
-   * @param errorCode the error code
+   * @param message
+   *          the message
+   * @param errorCode
+   *          the error code
    */
   public MyBatisXAException(String message, int errorCode) {
     super(message);
@@ -34,9 +36,12 @@ public class MyBatisXAException extends XAException {
   /**
    * Instantiates a new my batis XA exception.
    *
-   * @param message the message
-   * @param errorCode the error code
-   * @param t the t
+   * @param message
+   *          the message
+   * @param errorCode
+   *          the error code
+   * @param t
+   *          the t
    */
   public MyBatisXAException(String message, int errorCode, Throwable t) {
     super(message);

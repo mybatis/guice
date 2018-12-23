@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ public final class Contact implements Serializable {
   }
 
   /**
-   * @param id the id to set
+   * @param id
+   *          the id to set
    */
   public void setId(Integer id) {
     this.id = id;
@@ -53,7 +54,8 @@ public final class Contact implements Serializable {
   }
 
   /**
-   * @param firstName the firstName to set
+   * @param firstName
+   *          the firstName to set
    */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
@@ -67,7 +69,8 @@ public final class Contact implements Serializable {
   }
 
   /**
-   * @param lastName the lastName to set
+   * @param lastName
+   *          the lastName to set
    */
   public void setLastName(String lastName) {
     this.lastName = lastName;
@@ -90,7 +93,8 @@ public final class Contact implements Serializable {
   }
 
   /**
-   * @param created the created to set
+   * @param created
+   *          the created to set
    */
   public void setCreated(CustomType created) {
     this.created = created;

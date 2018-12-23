@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -132,7 +132,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user default auto commit.
    *
-   * @param perUserDefaultAutoCommit the per user default auto commit
+   * @param perUserDefaultAutoCommit
+   *          the per user default auto commit
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultAutoCommit(@PerUserDefaultAutoCommit Map<String, Boolean> perUserDefaultAutoCommit) {
@@ -144,7 +145,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user default read only.
    *
-   * @param perUserDefaultReadOnly the per user default read only
+   * @param perUserDefaultReadOnly
+   *          the per user default read only
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultReadOnly(@PerUserDefaultReadOnly Map<String, Boolean> perUserDefaultReadOnly) {
@@ -156,7 +158,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user default transaction isolation.
    *
-   * @param perUserDefaultTransactionIsolation the per user default transaction isolation
+   * @param perUserDefaultTransactionIsolation
+   *          the per user default transaction isolation
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserDefaultTransactionIsolation(
@@ -169,7 +172,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user max active.
    *
-   * @param perUserMaxActive the per user max active
+   * @param perUserMaxActive
+   *          the per user max active
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxActive(@PerUserMaxActive Map<String, Integer> perUserMaxActive) {
@@ -181,7 +185,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user max idle.
    *
-   * @param perUserMaxIdle the per user max idle
+   * @param perUserMaxIdle
+   *          the per user max idle
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxIdle(@PerUserMaxIdle Map<String, Integer> perUserMaxIdle) {
@@ -193,7 +198,8 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   /**
    * Sets the per user max wait.
    *
-   * @param perUserMaxWait the per user max wait
+   * @param perUserMaxWait
+   *          the per user max wait
    */
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxWait(@PerUserMaxWait Map<String, Integer> perUserMaxWait) {
