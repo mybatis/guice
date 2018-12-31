@@ -15,7 +15,6 @@
  */
 package org.mybatis.guice.datasource.helper;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.util.Providers;
 
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 public final class JdbcUrlAntFormatter implements Provider<String> {

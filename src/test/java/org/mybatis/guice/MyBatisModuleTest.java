@@ -30,7 +30,6 @@ import com.google.inject.CreationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 
 import org.apache.ibatis.io.ResolverUtil;
@@ -82,6 +81,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 @ExtendWith(MockitoExtension.class)

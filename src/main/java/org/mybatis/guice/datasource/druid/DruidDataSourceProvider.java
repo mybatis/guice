@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 package org.mybatis.guice.datasource.druid;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.name.Named;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.inject.Named;
+import javax.inject.Provider;
 import javax.sql.DataSource;
 
 /**

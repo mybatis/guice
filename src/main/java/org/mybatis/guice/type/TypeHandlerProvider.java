@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package org.mybatis.guice.type;
 
 import com.google.common.base.Objects;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 
@@ -25,6 +24,7 @@ import org.apache.ibatis.type.TypeHandler;
 
 import java.lang.reflect.Constructor;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 /**
