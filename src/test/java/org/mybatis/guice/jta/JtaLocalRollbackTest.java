@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.jta;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Connection;
 import java.util.List;
@@ -24,10 +24,10 @@ import javax.sql.DataSource;
 
 import org.apache.aries.transaction.AriesTransactionManager;
 import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mybatis.guice.transactional.TransactionAttribute;
 import org.mybatis.guice.transactional.TransactionToken;
 
@@ -40,7 +40,7 @@ public class JtaLocalRollbackTest {
   private static DataSource dataSource;
   private static AriesTransactionManager manager;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
@@ -52,12 +52,12 @@ public class JtaLocalRollbackTest {
     dataSource = BaseDB.createLocalDataSource(BaseDB.NAME_DB1, BaseDB.URL_DB1, manager);
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
   }

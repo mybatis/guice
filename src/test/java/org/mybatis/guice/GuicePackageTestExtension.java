@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@
  */
 package org.mybatis.guice;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.runners.model.InitializationError;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 import com.google.inject.Module;
 
-public final class GuicePackageTestRunner extends AbstractGuiceTestRunner {
+public final class GuicePackageTestExtension extends AbstractGuiceTestExtension {
 
-  public GuicePackageTestRunner(Class<?> klass) throws InitializationError {
-    super(klass);
+  public GuicePackageTestExtension() throws SQLException {
+    super();
   }
 
   @Override

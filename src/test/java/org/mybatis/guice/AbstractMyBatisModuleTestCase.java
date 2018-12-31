@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@ package org.mybatis.guice;
 import javax.inject.Inject;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public abstract class AbstractMyBatisModuleTestCase {
 
@@ -77,9 +78,11 @@ public abstract class AbstractMyBatisModuleTestCase {
     assert this.contact.equals(contact) : "Expected " + this.contact + " but found " + contact;
   }
 
-  @Test(expected = CustomException.class)
+  @Test
   public void catchSQLException() throws Exception {
-    this.contactMapperClient.brokenInsert(this.contact);
+    Assertions.assertThrows(CustomException.class, () -> {
+      this.contactMapperClient.brokenInsert(this.contact);
+    });
   }
 
   @Test

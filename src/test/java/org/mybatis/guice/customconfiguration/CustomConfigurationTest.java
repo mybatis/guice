@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 package org.mybatis.guice.customconfiguration;
 
 import static com.google.inject.name.Names.bindProperties;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
@@ -56,8 +56,8 @@ public class CustomConfigurationTest {
       }
     });
     Configuration configuration = injector.getInstance(Configuration.class);
-    assertTrue("Configuration not an instanceof MyConfiguration",
-        MyConfiguration.class.isAssignableFrom(configuration.getClass()));
-    assertTrue("Configuration returned false of lazy loading", configuration.isLazyLoadingEnabled());
+    assertTrue(MyConfiguration.class.isAssignableFrom(configuration.getClass()),
+        "Configuration not an instanceof MyConfiguration");
+    assertTrue(configuration.isLazyLoadingEnabled(), "Configuration returned false of lazy loading");
   }
 }

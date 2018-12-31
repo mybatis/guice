@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,15 +23,12 @@ import javax.inject.Named;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
-public class CleanDatabaseRule implements TestRule {
-  private final SqlSession sqlSession;
-  private final Contact contact;
-  private final Contact contactWithAddress;
-  private final AddressConverter addressConverter;
+public class CleanDatabaseRule {
+  private SqlSession sqlSession;
+  private Contact contact;
+  private Contact contactWithAddress;
+  private AddressConverter addressConverter;
 
   @Inject
   private CleanDatabaseRule(SqlSession sqlSession, Contact contact,
@@ -42,30 +39,24 @@ public class CleanDatabaseRule implements TestRule {
     this.addressConverter = addressConverter;
   }
 
-  @Override
-  public Statement apply(final Statement base, Description description) {
-    return new Statement() {
-      @Override
-      public void evaluate() throws Throwable {
-        ScriptRunner runner = new ScriptRunner(
-            sqlSession.getConfiguration().getEnvironment().getDataSource().getConnection());
-        try {
-          runner.setAutoCommit(true);
-          runner.setStopOnError(true);
-          runner.runScript(new StringReader("DELETE FROM contact; "
-              + "INSERT INTO contact (id, first_name, last_name, created) " + "VALUES (1, '" + contact.getFirstName()
-              + "', '" + contact.getLastName() + "', '" + new Timestamp(contactWithAddress.getCreated().getValue())
-              + "'); " + "INSERT INTO contact (id, first_name, last_name, created, address) " + "VALUES (2, '"
-              + contactWithAddress.getFirstName() + "', '" + contactWithAddress.getLastName() + "', '"
-              + new Timestamp(contactWithAddress.getCreated().getValue()) + "', '"
-              + addressConverter.convert(contactWithAddress.getAddress()) + "'); "));
-          contact.setId(1);
-          contactWithAddress.setId(2);
-        } finally {
-          runner.closeConnection();
-        }
-        base.evaluate();
-      }
-    };
+  public void evaluate() throws Exception {
+    ScriptRunner runner = new ScriptRunner(
+        sqlSession.getConfiguration().getEnvironment().getDataSource().getConnection());
+    try {
+      runner.setAutoCommit(true);
+      runner.setStopOnError(true);
+      runner.runScript(new StringReader("DELETE FROM contact; "
+          + "INSERT INTO contact (id, first_name, last_name, created) " + "VALUES (1, '" + contact.getFirstName()
+          + "', '" + contact.getLastName() + "', '" + new Timestamp(contactWithAddress.getCreated().getValue()) + "'); "
+          + "INSERT INTO contact (id, first_name, last_name, created, address) " + "VALUES (2, '"
+          + contactWithAddress.getFirstName() + "', '" + contactWithAddress.getLastName() + "', '"
+          + new Timestamp(contactWithAddress.getCreated().getValue()) + "', '"
+          + addressConverter.convert(contactWithAddress.getAddress()) + "'); "));
+      contact.setId(1);
+      contactWithAddress.setId(2);
+    } finally {
+      runner.closeConnection();
+    }
   }
+
 }

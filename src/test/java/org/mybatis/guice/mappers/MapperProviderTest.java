@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,27 +15,25 @@
  */
 package org.mybatis.guice.mappers;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.apache.ibatis.session.SqlSessionManager;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class MapperProviderTest {
   private MapperProvider<TestMapper> mapperProvider;
   @Mock
   private SqlSessionManager sqlSessionManager;
   private TestMapper mapper;
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     mapperProvider = new MapperProvider<TestMapper>(TestMapper.class);
     mapperProvider.setSqlSessionManager(sqlSessionManager);

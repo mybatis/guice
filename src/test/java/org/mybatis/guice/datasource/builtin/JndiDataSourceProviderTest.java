@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.mybatis.guice.datasource.builtin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -26,11 +26,10 @@ import com.google.inject.Injector;
 import com.google.inject.name.Names;
 
 import org.apache.naming.java.javaURLContextFactory;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.SQLException;
 import java.util.Hashtable;
@@ -41,6 +40,7 @@ import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 import javax.sql.DataSource;
 
+@ExtendWith(MockitoExtension.class)
 public class JndiDataSourceProviderTest {
   private static String dataSourceName;
   private static String contextName;
@@ -48,10 +48,8 @@ public class JndiDataSourceProviderTest {
   private static DataSource contextDataSource;
   private static int factoryLoginTimeout = 1;
   private static int providerLoginTimeout = 2;
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  @BeforeClass
+  @BeforeAll
   public static void beforeClass() throws Throwable {
     System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
     System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
