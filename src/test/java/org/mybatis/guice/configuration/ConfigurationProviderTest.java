@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
  */
 package org.mybatis.guice.configuration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,12 +41,11 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.guice.configuration.settings.AliasConfigurationSetting;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider;
@@ -60,6 +60,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+@ExtendWith(MockitoExtension.class)
 public class ConfigurationProviderTest {
   private ConfigurationProvider configurationProvider;
   @Mock
@@ -72,12 +73,10 @@ public class ConfigurationProviderTest {
   private TypeHandler<Alias> aliasTypeHandler;
   @Mock
   private DatabaseIdProvider databaseIdProvider;
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
   private Injector injector;
   private Environment environment;
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     environment = new Environment("test", transactionFactory, dataSource);
     configurationProvider = new ConfigurationProvider(environment);
@@ -220,7 +219,7 @@ public class ConfigurationProviderTest {
     assertFalse(configuration.isLazyLoadingEnabled());
   }
 
-  @Test(expected = ProvisionException.class)
+  @Test
   public void get_FailFast_True() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
@@ -233,7 +232,9 @@ public class ConfigurationProviderTest {
     });
 
     configurationProvider.addMapperConfigurationSetting(new MapperConfigurationSetting(ErrorMapper.class));
-    injector.getInstance(Configuration.class);
+    assertThrows(ProvisionException.class, () -> {
+      injector.getInstance(Configuration.class);
+    });
   }
 
   @Test

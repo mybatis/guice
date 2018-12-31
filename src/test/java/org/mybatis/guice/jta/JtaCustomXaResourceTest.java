@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.jta;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.sql.DataSource;
 
@@ -23,13 +23,12 @@ import org.apache.aries.transaction.AriesTransactionManager;
 import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,7 @@ public class JtaCustomXaResourceTest {
   static AriesTransactionManager manager;
   static DataSource dataSource2;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
     LogFactory.useSlf4jLogging();
@@ -54,21 +53,19 @@ public class JtaCustomXaResourceTest {
     dataSource2 = BaseDB.createLocalDataSource(BaseDB.NAME_DB2, BaseDB.URL_DB2, manager);
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB2);
   }
 
-  @Rule
-  public TestName testName = new TestName();
   private Injector injector;
 
   JtaProcess process;
 
-  @Before
-  public void setup() throws Exception {
+  @BeforeEach
+  public void setup(TestInfo testInfo) throws Exception {
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing: " + testName.getMethodName() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");
     LogFactory.useSlf4jLogging();
 
@@ -103,12 +100,12 @@ public class JtaCustomXaResourceTest {
     process = injector.getInstance(JtaProcess.class);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  public void tearDown(TestInfo testInfo) throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB2);
 
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing done: " + testName.getMethodName() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing done: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");
   }
 

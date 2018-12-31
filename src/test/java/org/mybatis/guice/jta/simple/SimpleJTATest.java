@@ -15,8 +15,8 @@
  */
 package org.mybatis.guice.jta.simple;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Properties;
 
@@ -25,8 +25,8 @@ import javax.naming.InitialContext;
 import javax.transaction.TransactionManager;
 
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 import org.mybatis.guice.multidstest.MockInitialContextFactory;
@@ -40,7 +40,7 @@ public class SimpleJTATest {
 
   private CombinedService combinedService;
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     // this sets up a mocked JNDI environment. In JEE containers all this would be
     // configured in the container

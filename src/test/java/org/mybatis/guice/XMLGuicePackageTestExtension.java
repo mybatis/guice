@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,17 @@
  */
 package org.mybatis.guice;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.runners.model.InitializationError;
-
 import com.google.inject.Module;
 
-public final class XMLAlternateEnvironmentGuiceTestRunner extends AbstractGuiceTestRunner {
+public final class XMLGuicePackageTestExtension extends AbstractGuiceTestExtension {
 
-  public XMLAlternateEnvironmentGuiceTestRunner(Class<?> klass) throws InitializationError {
-    super(klass);
+  public XMLGuicePackageTestExtension() throws SQLException {
+    super();
   }
 
   @Override
@@ -36,7 +35,7 @@ public final class XMLAlternateEnvironmentGuiceTestRunner extends AbstractGuiceT
 
       @Override
       protected void initialize() {
-        setEnvironmentId("test2");
+        setClassPathResource("mybatis-package-config.xml");
       }
 
     });

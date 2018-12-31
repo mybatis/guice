@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.jta;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -25,13 +25,12 @@ import org.apache.aries.transaction.AriesTransactionManager;
 import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,7 @@ public class JtaLocalTest {
   static DataSource dataSource1;
   static DataSource dataSource2;
 
-  @BeforeClass
+  @BeforeAll
   public static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
     LogFactory.useSlf4jLogging();
@@ -58,22 +57,20 @@ public class JtaLocalTest {
     dataSource2 = BaseDB.createLocalDataSource(BaseDB.NAME_DB2, BaseDB.URL_DB2, manager);
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
     BaseDB.dropTable(BaseDB.URL_DB2);
   }
 
-  @Rule
-  public TestName testName = new TestName();
   private Injector injector;
 
   JtaProcess process;
 
-  @Before
-  public void setup() throws Exception {
+  @BeforeEach
+  public void setup(TestInfo testInfo) throws Exception {
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing: " + testName.getMethodName() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");
     LogFactory.useSlf4jLogging();
 
@@ -128,13 +125,13 @@ public class JtaLocalTest {
     process = injector.getInstance(JtaProcess.class);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  public void tearDown(TestInfo testInfo) throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
     BaseDB.clearTable(BaseDB.URL_DB2);
 
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing done: " + testName.getMethodName() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing done: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");
   }
 
@@ -144,9 +141,9 @@ public class JtaLocalTest {
    * have 1 rows
    */
   @Test
-  public void testRequired() throws Exception {
+  public void testRequired(TestInfo testInfo) throws Exception {
     process.required(1);
-    checkCountRows(1);
+    checkCountRows(testInfo, 1);
   }
 
   /**
@@ -155,9 +152,9 @@ public class JtaLocalTest {
    * have 1 rows
    */
   @Test
-  public void testRequiresNew() throws Exception {
+  public void testRequiresNew(TestInfo testInfo) throws Exception {
     process.requiresNew(1);
-    checkCountRows(1);
+    checkCountRows(testInfo, 1);
   }
 
   /**
@@ -166,12 +163,12 @@ public class JtaLocalTest {
    * have 0 rows
    */
   @Test
-  public void testRequiredAndRollback() throws Exception {
+  public void testRequiredAndRollback(TestInfo testInfo) throws Exception {
     try {
       process.requiredAndRollback(1);
     } catch (JtaRollbackException e) {
     }
-    checkCountRows(0);
+    checkCountRows(testInfo, 0);
   }
 
   /**
@@ -180,12 +177,12 @@ public class JtaLocalTest {
    * have 0 rows
    */
   @Test
-  public void testRequiresNewAndRollback() throws Exception {
+  public void testRequiresNewAndRollback(TestInfo testInfo) throws Exception {
     try {
       process.requiresNewAndRollback(1);
     } catch (JtaRollbackException e) {
     }
-    checkCountRows(0);
+    checkCountRows(testInfo, 0);
   }
 
   /**
@@ -194,9 +191,9 @@ public class JtaLocalTest {
    * have 2 rows
    */
   @Test
-  public void testRequiredAndRequiresNew() throws Exception {
+  public void testRequiredAndRequiresNew(TestInfo testInfo) throws Exception {
     process.requiredAndRequiresNew();
-    checkCountRows(2);
+    checkCountRows(testInfo, 2);
   }
 
   /**
@@ -205,9 +202,9 @@ public class JtaLocalTest {
    * have 2 rows
    */
   @Test
-  public void testRequiresNewAndRequired() throws Exception {
+  public void testRequiresNewAndRequired(TestInfo testInfo) throws Exception {
     process.requiresNewAndRequired();
-    checkCountRows(2);
+    checkCountRows(testInfo, 2);
   }
 
   /**
@@ -216,12 +213,12 @@ public class JtaLocalTest {
    * have 1 rows and id=1 (from commited REQUIRED)
    */
   @Test
-  public void testRollbackInternalRequiresNew() throws Exception {
+  public void testRollbackInternalRequiresNew(TestInfo testInfo) throws Exception {
     try {
       process.rollbackInternalRequiresNew();
     } catch (JtaRollbackException e) {
     }
-    checkCountRowsAndIndex(1, 1);
+    checkCountRowsAndIndex(testInfo, 1, 1);
   }
 
   /**
@@ -230,12 +227,12 @@ public class JtaLocalTest {
    * have 1 rows and id=2 (from commited REQUIRED)
    */
   @Test
-  public void testRollbackInternalRequiresNew2() throws Exception {
+  public void testRollbackInternalRequiresNew2(TestInfo testInfo) throws Exception {
     try {
       process.rollbackInternalRequiresNew2();
     } catch (JtaRollbackException e) {
     }
-    checkCountRowsAndIndex(1, 2);
+    checkCountRowsAndIndex(testInfo, 1, 2);
   }
 
   /**
@@ -244,12 +241,12 @@ public class JtaLocalTest {
    * have 1 rows and id=1 (from commited REQUIRES_NEW)
    */
   @Test
-  public void testRollbackExternalRequired() throws Exception {
+  public void testRollbackExternalRequired(TestInfo testInfo) throws Exception {
     try {
       process.rollbackExternalRequired();
     } catch (JtaRollbackException e) {
     }
-    checkCountRowsAndIndex(1, 1);
+    checkCountRowsAndIndex(testInfo, 1, 1);
   }
 
   /**
@@ -258,44 +255,44 @@ public class JtaLocalTest {
    * have 1 rows and id=2 (from commited REQUIRES_NEW)
    */
   @Test
-  public void testRollbackExternalRequired2() throws Exception {
+  public void testRollbackExternalRequired2(TestInfo testInfo) throws Exception {
     try {
       process.rollbackExternalRequired2();
     } catch (JtaRollbackException e) {
     }
-    checkCountRowsAndIndex(1, 2);
+    checkCountRowsAndIndex(testInfo, 1, 2);
   }
 
-  private void checkCountRows(int count) throws Exception {
-    String name = testName.getMethodName();
+  private void checkCountRows(TestInfo testInfo, int count) throws Exception {
+    String name = testInfo.getDisplayName();
     List<Integer> readRows;
     readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
     LOGGER.info("db1 check count rows {}:{}", count, readRows.size());
 
-    assertEquals(name + " db1 count rows", count, readRows.size());
+    assertEquals(count, readRows.size(), name + " db1 count rows");
 
     readRows = BaseDB.readRows(BaseDB.URL_DB2, BaseDB.NAME_DB2);
     LOGGER.info("db2 check count rows {}:{}", count, readRows.size());
 
-    assertEquals(name + " db2 count rows", count, readRows.size());
+    assertEquals(count, readRows.size(), name + " db2 count rows");
   }
 
-  private void checkCountRowsAndIndex(int count, int index) throws Exception {
-    String name = testName.getMethodName();
+  private void checkCountRowsAndIndex(TestInfo testInfo, int count, int index) throws Exception {
+    String name = testInfo.getDisplayName();
     List<Integer> readRows;
     readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
 
     LOGGER.info("{} db1 check count rows {}:{}", new Object[] { name, count, readRows.size() });
     LOGGER.info("{} db1 check row id {}:{}", new Object[] { name, index, readRows.get(0).intValue() });
 
-    assertEquals(name + " db1 count rows", count, readRows.size());
-    assertEquals(name + " db1 row id", index, readRows.get(0).intValue());
+    assertEquals(count, readRows.size(), name + " db1 count rows");
+    assertEquals(index, readRows.get(0).intValue(), name + " db1 row id");
 
     readRows = BaseDB.readRows(BaseDB.URL_DB2, BaseDB.NAME_DB2);
     LOGGER.info("{} db2 check count rows {}:{}", new Object[] { name, count, readRows.size() });
     LOGGER.info("{} db2 check row id {}:{}", new Object[] { name, index, readRows.get(0).intValue() });
 
-    assertEquals(name + " db2 count rows", count, readRows.size());
-    assertEquals(name + " db2 row id", index, readRows.get(0).intValue());
+    assertEquals(count, readRows.size(), name + " db2 count rows");
+    assertEquals(index, readRows.get(0).intValue(), name + " db2 row id");
   }
 }

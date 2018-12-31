@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.mybatis.guice.transactional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -25,26 +25,24 @@ import static org.mockito.Mockito.when;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionManager;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+@ExtendWith(MockitoExtension.class)
 public class TransactionalMethodInterceptorTest {
   private TransactionalMethodInterceptor transactionalMethodInterceptor;
   @Mock
   private MethodInvocation invocation;
   @Mock
   private SqlSessionManager sqlSessionManager;
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     transactionalMethodInterceptor = new TransactionalMethodInterceptor();
     transactionalMethodInterceptor.setSqlSessionManager(sqlSessionManager);

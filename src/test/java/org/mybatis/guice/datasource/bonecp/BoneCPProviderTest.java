@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.datasource.bonecp;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -24,18 +24,16 @@ import com.google.inject.name.Names;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 import com.jolbox.bonecp.hooks.ConnectionHook;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+@ExtendWith(MockitoExtension.class)
 public class BoneCPProviderTest {
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
   @Mock
   private ClassLoader driverClassLoader;
   @Mock

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 package org.mybatis.guice;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
@@ -50,12 +50,14 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.TypeHandler;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mybatis.guice.configuration.ConfigurationProvider;
 import org.mybatis.guice.configuration.ConfigurationSettingListener;
 import org.mybatis.guice.configuration.ErrorMapper;
@@ -82,6 +84,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+@ExtendWith(MockitoExtension.class)
 public class MyBatisModuleTest {
   @Mock
   private static Configuration staticConfiguration;
@@ -109,11 +112,9 @@ public class MyBatisModuleTest {
   private DatabaseIdProvider databaseIdProvider;
   @Mock
   private ResolverUtil.Test resolverUtilTest;
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
   private String databaseId;
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     databaseId = "test_database";
     when(dataSourceProvider.get()).thenReturn(dataSource);
@@ -437,6 +438,8 @@ public class MyBatisModuleTest {
     assertEquals(false, configuration.isCacheEnabled());
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void useConfigurationProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
@@ -456,6 +459,8 @@ public class MyBatisModuleTest {
     verify(staticConfiguration, never()).setLazyLoadingEnabled(true);
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void useConfigurationProvider_Listener() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
@@ -492,6 +497,8 @@ public class MyBatisModuleTest {
     assertEquals(staticConfiguration, configuration);
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void useSqlSessionFactoryProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
@@ -526,20 +533,20 @@ public class MyBatisModuleTest {
     // Success.
   }
 
-  @Test(expected = CreationException.class)
+  @Test
   public void failFast_True() {
-    Injector injector = Guice.createInjector(new MyBatisModule() {
-      @Override
-      protected void initialize() {
-        failFast(true);
-        addMapperClass(ErrorMapper.class);
-        environmentId("test_environment");
-        bindDataSourceProvider(dataSourceProvider);
-        bindTransactionFactory(transactionFactoryProvider);
-      }
+    Assertions.assertThrows(CreationException.class, () -> {
+      Guice.createInjector(new MyBatisModule() {
+        @Override
+        protected void initialize() {
+          failFast(true);
+          addMapperClass(ErrorMapper.class);
+          environmentId("test_environment");
+          bindDataSourceProvider(dataSourceProvider);
+          bindTransactionFactory(transactionFactoryProvider);
+        }
+      });
     });
-
-    injector.getInstance(Configuration.class);
   }
 
   @Test
@@ -778,6 +785,8 @@ public class MyBatisModuleTest {
     assertEquals(AutoMappingBehavior.FULL, configuration.getAutoMappingBehavior());
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void bindDataSourceProviderType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
@@ -794,6 +803,8 @@ public class MyBatisModuleTest {
     assertEquals(staticDataSource, configuration.getEnvironment().getDataSource());
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void bindDataSourceProvider_JavaInject() {
     when(javaDataSourceProvider.get()).thenReturn(dataSource);
@@ -865,6 +876,8 @@ public class MyBatisModuleTest {
     assertEquals(databaseId, configuration.getDatabaseId());
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void bindTransactionFactoryType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
@@ -881,6 +894,8 @@ public class MyBatisModuleTest {
     assertTrue(configuration.getEnvironment().getTransactionFactory() instanceof TestTransactionFactory);
   }
 
+  // Does not use beforeEach stubbing
+  @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
   public void bindTransactionFactory_JavaInject() {
     when(javaTransactionFactoryProvider.get()).thenReturn(transactionFactory);
@@ -1026,7 +1041,6 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   public void addSimpleAliases() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -1365,7 +1379,6 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   public void addMapperClasses() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override

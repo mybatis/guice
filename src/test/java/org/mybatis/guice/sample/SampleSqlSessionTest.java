@@ -17,8 +17,8 @@ package org.mybatis.guice.sample;
 
 import static com.google.inject.name.Names.bindProperties;
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,9 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mybatis.guice.CustomException;
 import org.mybatis.guice.MyBatisModule;
 // import org.mybatis.guice.XMLMyBatisModule;
@@ -60,7 +61,7 @@ public class SampleSqlSessionTest {
 
   private FooService fooService;
 
-  @Before
+  @BeforeEach
   public void setupMyBatisGuice() throws Exception {
 
     // bindings
@@ -126,17 +127,21 @@ public class SampleSqlSessionTest {
     assertEquals("Pocoyo", user.getName());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTransactionalOnClassAndMethod() {
     User user = new User();
     user.setName("Christian Poitras");
-    this.fooService.brokenInsert(user);
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      this.fooService.brokenInsert(user);
+    });
   }
 
-  @Test(expected = CustomException.class)
+  @Test
   public void testTransactionalOnClass() {
     User user = new User();
     user.setName("Christian Poitras");
-    this.fooService.brokenInsert2(user);
+    Assertions.assertThrows(CustomException.class, () -> {
+      this.fooService.brokenInsert2(user);
+    });
   }
 }

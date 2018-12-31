@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package org.mybatis.guice;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@RunWith(GuicePackageTestRunner.class)
+@ExtendWith(GuicePackageTestExtension.class)
 public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 
   @Inject
