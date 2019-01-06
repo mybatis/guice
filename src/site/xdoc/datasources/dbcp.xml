@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2017 the original author or authors.
+       Copyright 2009-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -420,7 +420,7 @@
             </table>
         <p>
             Since all these settings can't be easily covered using
-            <code>com.google.inject.name.Named</code> annotations,
+            <code>javax.inject.Named</code> annotations,
             and we don't want to put a limit on how users can retrieve these
             informations, the library provides the
             <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule</code>
@@ -436,8 +436,8 @@
             Let's take a look at an example that shows how to set the
             <code>perUserDefaultAutoCommit</code> properties; first of all,
             let's implement the provider that communicates the user bindings:
-            <source><![CDATA[import com.google.inject.Provider;
-import com.google.inject.name.Named;
+            <source><![CDATA[import javax.inject.Provider;
+import javax.inject.Named;
 
 class MyPerUserDefaultAutoCommit implements Provider<Map<String, Boolean>> {
 

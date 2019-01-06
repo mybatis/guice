@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package org.mybatis.guice.configuration;
 
 import com.google.inject.ProvisionException;
-import com.google.inject.name.Named;
 
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -31,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nullable;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.sql.DataSource;

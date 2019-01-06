@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Provider;
 
 import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
 import org.junit.jupiter.api.Test;
@@ -31,6 +30,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 
 @ExtendWith(MockitoExtension.class)

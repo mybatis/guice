@@ -15,11 +15,10 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import com.google.inject.Provider;
-
 import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
 
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
