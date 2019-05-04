@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
+import org.apache.commons.dbcp2.datasources.PerUserPoolDataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
@@ -74,13 +73,15 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
-    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+  public void setDefaultMinEvictableIdleTimeMillis(
+      @Named("DBCP.defaultMinEvictableIdleTimeMillis") int defaultMinEvictableIdleTimeMillis) {
+    dataSource.setDefaultMinEvictableIdleTimeMillis(defaultMinEvictableIdleTimeMillis);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
-    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+  public void setDefaultNumTestsPerEvictionRun(
+      @Named("DBCP.defaultNumTestsPerEvictionRun") int defaultNumTestsPerEvictionRun) {
+    dataSource.setDefaultNumTestsPerEvictionRun(defaultNumTestsPerEvictionRun);
   }
 
   @com.google.inject.Inject(optional = true)
@@ -89,24 +90,24 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnBorrow(@Named("DBCP.testOnBorrow") boolean testOnBorrow) {
-    dataSource.setTestOnBorrow(testOnBorrow);
+  public void setDefaultTestOnBorrow(@Named("DBCP.defaultTestOnBorrow") boolean defaultTestOnBorrow) {
+    dataSource.setDefaultTestOnBorrow(defaultTestOnBorrow);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnReturn(@Named("DBCP.testOnReturn") boolean testOnReturn) {
-    dataSource.setTestOnReturn(testOnReturn);
+  public void setDefaultTestOnReturn(@Named("DBCP.defaultTestOnReturn") boolean defaultTestOnReturn) {
+    dataSource.setDefaultTestOnReturn(defaultTestOnReturn);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestWhileIdle(@Named("DBCP.testWhileIdle") boolean testWhileIdle) {
-    dataSource.setTestWhileIdle(testWhileIdle);
+  public void setDefaultTestWhileIdle(@Named("DBCP.defaultTestWhileIdle") boolean defaultTestWhileIdle) {
+    dataSource.setDefaultTestWhileIdle(defaultTestWhileIdle);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTimeBetweenEvictionRunsMillis(
-      @Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+  public void setDefaultTimeBetweenEvictionRunsMillis(
+      @Named("DBCP.defaultTimeBetweenEvictionRunsMillis") int defaultTimeBetweenEvictionRunsMillis) {
+    dataSource.setDefaultTimeBetweenEvictionRunsMillis(defaultTimeBetweenEvictionRunsMillis);
   }
 
   @com.google.inject.Inject(optional = true)
@@ -115,18 +116,18 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setDefaultMaxActive(@Named("DBCP.maxActive") int maxActive) {
-    dataSource.setDefaultMaxActive(maxActive);
+  public void setDefaultMaxTotal(@Named("DBCP.defaultMaxTotal") int defaultMaxTotal) {
+    dataSource.setDefaultMaxTotal(defaultMaxTotal);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setDefaultMaxIdle(@Named("DBCP.maxIdle") int defaultMaxIdle) {
+  public void setDefaultMaxIdle(@Named("DBCP.defaultMaxIdle") int defaultMaxIdle) {
     dataSource.setDefaultMaxIdle(defaultMaxIdle);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setDefaultMaxWait(@Named("DBCP.maxWait") int defaultMaxWait) {
-    dataSource.setDefaultMaxWait(defaultMaxWait);
+  public void setDefaultMaxWaitMillis(@Named("DBCP.defaultMaxWaitMillis") int defaultMaxWaitMillis) {
+    dataSource.setDefaultMaxWaitMillis(defaultMaxWaitMillis);
   }
 
   /**
@@ -170,15 +171,15 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   }
 
   /**
-   * Sets the per user max active.
+   * Sets the per user max total.
    *
-   * @param perUserMaxActive
-   *          the per user max active
+   * @param perUserMaxTotal
+   *          the per user max total
    */
   @com.google.inject.Inject(optional = true)
-  public void setPerUserMaxActive(@PerUserMaxActive Map<String, Integer> perUserMaxActive) {
-    for (Entry<String, Integer> entry : perUserMaxActive.entrySet()) {
-      dataSource.setPerUserMaxActive(entry.getKey(), entry.getValue());
+  public void setPerUserMaxTotal(@PerUserMaxTotal Map<String, Integer> perUserMaxTotal) {
+    for (Entry<String, Integer> entry : perUserMaxTotal.entrySet()) {
+      dataSource.setPerUserMaxTotal(entry.getKey(), entry.getValue());
     }
   }
 
@@ -196,15 +197,15 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   }
 
   /**
-   * Sets the per user max wait.
+   * Sets the per user max wait in milliseconds.
    *
-   * @param perUserMaxWait
-   *          the per user max wait
+   * @param perUserMaxWaitMillis
+   *          the per user max wait in milliseconds
    */
   @com.google.inject.Inject(optional = true)
-  public void setPerUserMaxWait(@PerUserMaxWait Map<String, Integer> perUserMaxWait) {
-    for (Entry<String, Integer> entry : perUserMaxWait.entrySet()) {
-      dataSource.setPerUserMaxWait(entry.getKey(), entry.getValue());
+  public void setPerUserMaxWaitMillis(@PerUserMaxWaitMillis Map<String, Long> perUserMaxWaitMillis) {
+    for (Entry<String, Long> entry : perUserMaxWaitMillis.entrySet()) {
+      dataSource.setPerUserMaxWaitMillis(entry.getKey(), entry.getValue());
     }
   }
 

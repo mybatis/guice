@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
-import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
+import org.apache.commons.dbcp2.datasources.PerUserPoolDataSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -77,15 +76,15 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserMaxActive() throws Throwable {
+  public void configure_PerUserMaxTotal() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
-        .setPerUserMaxActiveProviderClass(PerUserMaxActiveProvider.class).create());
+        .setPerUserMaxTotalProviderClass(PerUserMaxTotalProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 10, dataSource.getPerUserMaxActive("test_user"));
-    assertEquals((Integer) 20, dataSource.getPerUserMaxActive("test_user2"));
+    assertEquals(10, dataSource.getPerUserMaxTotal("test_user"));
+    assertEquals(20, dataSource.getPerUserMaxTotal("test_user2"));
   }
 
   @Test
@@ -96,20 +95,20 @@ public class PerUserPoolDataSourceModuleTest {
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 30, dataSource.getPerUserMaxIdle("test_user"));
-    assertEquals((Integer) 40, dataSource.getPerUserMaxIdle("test_user2"));
+    assertEquals(30, dataSource.getPerUserMaxIdle("test_user"));
+    assertEquals(40, dataSource.getPerUserMaxIdle("test_user2"));
   }
 
   @Test
-  public void configure_PerUserMaxWait() throws Throwable {
+  public void configure_PerUserMaxWaitMillis() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
-        .setPerUserMaxWaitProviderClass(PerUserMaxWaitProvider.class).create());
+        .setPerUserMaxWaitMillisProviderClass(PerUserMaxWaitMillisProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 50, dataSource.getPerUserMaxWait("test_user"));
-    assertEquals((Integer) 60, dataSource.getPerUserMaxWait("test_user2"));
+    assertEquals(50, dataSource.getPerUserMaxWaitMillis("test_user"));
+    assertEquals(60, dataSource.getPerUserMaxWaitMillis("test_user2"));
   }
 
   public static class PerUserDefaultAutoCommitProvider implements Provider<Map<String, Boolean>> {
@@ -142,7 +141,7 @@ public class PerUserPoolDataSourceModuleTest {
     }
   }
 
-  public static class PerUserMaxActiveProvider implements Provider<Map<String, Integer>> {
+  public static class PerUserMaxTotalProvider implements Provider<Map<String, Integer>> {
     @Override
     public Map<String, Integer> get() {
       Map<String, Integer> maxActive = new HashMap<String, Integer>();
@@ -162,12 +161,12 @@ public class PerUserPoolDataSourceModuleTest {
     }
   }
 
-  public static class PerUserMaxWaitProvider implements Provider<Map<String, Integer>> {
+  public static class PerUserMaxWaitMillisProvider implements Provider<Map<String, Long>> {
     @Override
-    public Map<String, Integer> get() {
-      Map<String, Integer> maxWait = new HashMap<String, Integer>();
-      maxWait.put("test_user", 50);
-      maxWait.put("test_user2", 60);
+    public Map<String, Long> get() {
+      Map<String, Long> maxWait = new HashMap<String, Long>();
+      maxWait.put("test_user", 50l);
+      maxWait.put("test_user2", 60l);
       return maxWait;
     }
   }

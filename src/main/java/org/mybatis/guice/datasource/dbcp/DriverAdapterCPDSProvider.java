@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
-
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
+import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
 
 /**
  * Provides the Apache commons-dbcp {@code DriverAdapterCPDS}.
@@ -85,11 +84,6 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") int seconds) {
     adapter.setLoginTimeout(seconds);
-  }
-
-  @com.google.inject.Inject(optional = true)
-  public void setMaxActive(@Named("DBCP.maxActive") int maxActive) {
-    adapter.setMaxActive(maxActive);
   }
 
   @com.google.inject.Inject(optional = true)

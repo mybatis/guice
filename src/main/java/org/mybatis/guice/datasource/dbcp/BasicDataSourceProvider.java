@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.util.Map.Entry;
 import java.util.Properties;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -161,14 +160,14 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
-   * Sets the max active.
+   * Sets the max total.
    *
-   * @param maxActive
-   *          the new max active
+   * @param maxTotal
+   *          the new max total
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
-    dataSource.setMaxActive(maxActive);
+  public void setMaxTotal(@Named("DBCP.maxTotal") final int maxTotal) {
+    dataSource.setMaxTotal(maxTotal);
   }
 
   /**
@@ -195,14 +194,14 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   }
 
   /**
-   * Sets the max wait.
+   * Sets the max wait in milliseconds.
    *
-   * @param maxWait
-   *          the new max wait
+   * @param maxWaitMillis
+   *          the new max wait in milliseconds
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxWait(@Named("DBCP.maxWait") final long maxWait) {
-    dataSource.setMaxWait(maxWait);
+  public void setMaxWaitMillis(@Named("DBCP.maxWaitMillis") final long maxWaitMillis) {
+    dataSource.setMaxWaitMillis(maxWaitMillis);
   }
 
   /**

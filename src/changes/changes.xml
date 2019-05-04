@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2018 the original author or authors.
+       Copyright 2009-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -27,6 +27,39 @@
 
   <body>
     <release version="3.11" date="" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Replaces Apache Commons DBCP version 1 by Apache Commons DBCP version 2.
+        Some properties are replaced.
+        BasicDataSourceProvider:
+        maxActive -&gt; maxTotal;
+        maxWait -&gt; maxWaitMillis;
+        DriverAdapterCPDSProvider:
+        maxIdle removed;
+        PerUserPoolDataSource:
+        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis; 
+        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun; 
+        testOnBorrow -&gt; defaultTestOnBorrow; 
+        testOnReturn -&gt; defaultTestOnReturn; 
+        testWhileIdle -&gt; defaultTestWhileIdle; 
+        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis; 
+        maxActive -&gt; defaultMaxTotal;
+        maxIdle -&gt; defaultMaxIdle;
+        maxWait -&gt; defaultMaxWaitMillis;
+        @PerUserMaxActive -> @PerUserMaxTotal;
+        @PerUserMaxWait -> @PerUserMaxWaitMillis;
+        SharedPoolDataSourceProvider:
+        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis; 
+        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun; 
+        testOnBorrow -&gt; defaultTestOnBorrow; 
+        testOnReturn -&gt; defaultTestOnReturn; 
+        testWhileIdle -&gt; defaultTestWhileIdle; 
+        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis; 
+        maxActive -&gt; defaultMaxTotal;
+        maxIdle -&gt; defaultMaxIdle;
+        maxWait -&gt; defaultMaxWaitMillis;
+        <fixes issue="137"/>
+        <fixes issue="138"/>
+      </action>
       <action dev="christian.poitras" type="update">
         Fixes use of Configuration provider.
         <fixes issue="118"/>

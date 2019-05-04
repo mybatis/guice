@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
-
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
+import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
 import org.junit.jupiter.api.Test;
 
 public class DriverAdapterCPDSProviderTest {
@@ -34,7 +33,6 @@ public class DriverAdapterCPDSProviderTest {
     final String password = "test_password";
     final int loginTimeout = 10;
     final String description = "test_description";
-    final int maxActive = 20;
     final int maxIdle = 30;
     final int maxOpenPreparedStatements = 40;
     final int minEvictableIdleTimeMillis = 50;
@@ -50,7 +48,6 @@ public class DriverAdapterCPDSProviderTest {
         bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
         bindConstant().annotatedWith(Names.named("JDBC.loginTimeout")).to(loginTimeout);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
         bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
         bindConstant().annotatedWith(Names.named("DBCP.maxOpenPreparedStatements")).to(maxOpenPreparedStatements);
         bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
@@ -70,7 +67,6 @@ public class DriverAdapterCPDSProviderTest {
     assertEquals(password, adapter.getPassword());
     assertEquals(loginTimeout, adapter.getLoginTimeout());
     assertEquals(description, adapter.getDescription());
-    assertEquals(maxActive, adapter.getMaxActive());
     assertEquals(maxIdle, adapter.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
     assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
@@ -87,7 +83,6 @@ public class DriverAdapterCPDSProviderTest {
     final String password = "test_password2";
     final int loginTimeout = 11;
     final String description = "test_description2";
-    final int maxActive = 21;
     final int maxIdle = 31;
     final int maxOpenPreparedStatements = 41;
     final int minEvictableIdleTimeMillis = 51;
@@ -103,7 +98,6 @@ public class DriverAdapterCPDSProviderTest {
         bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
         bindConstant().annotatedWith(Names.named("JDBC.loginTimeout")).to(loginTimeout);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
         bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
         bindConstant().annotatedWith(Names.named("DBCP.maxOpenPreparedStatements")).to(maxOpenPreparedStatements);
         bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
@@ -123,7 +117,6 @@ public class DriverAdapterCPDSProviderTest {
     assertEquals(password, adapter.getPassword());
     assertEquals(loginTimeout, adapter.getLoginTimeout());
     assertEquals(description, adapter.getDescription());
-    assertEquals(maxActive, adapter.getMaxActive());
     assertEquals(maxIdle, adapter.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
     assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
