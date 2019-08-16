@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
+import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
 
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -71,13 +71,15 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setMinEvictableIdleTimeMillis(@Named("DBCP.minEvictableIdleTimeMillis") int minEvictableIdleTimeMillis) {
-    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+  public void setDefaultMinEvictableIdleTimeMillis(
+      @Named("DBCP.defaultMinEvictableIdleTimeMillis") int defaultMinEvictableIdleTimeMillis) {
+    dataSource.setDefaultMinEvictableIdleTimeMillis(defaultMinEvictableIdleTimeMillis);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setNumTestsPerEvictionRun(@Named("DBCP.numTestsPerEvictionRun") int numTestsPerEvictionRun) {
-    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);
+  public void setDefaultNumTestsPerEvictionRun(
+      @Named("DBCP.defaultNumTestsPerEvictionRun") int defaultNumTestsPerEvictionRun) {
+    dataSource.setDefaultNumTestsPerEvictionRun(defaultNumTestsPerEvictionRun);
   }
 
   @com.google.inject.Inject(optional = true)
@@ -86,24 +88,24 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnBorrow(@Named("DBCP.testOnBorrow") boolean testOnBorrow) {
-    dataSource.setTestOnBorrow(testOnBorrow);
+  public void setDefaultTestOnBorrow(@Named("DBCP.defaultTestOnBorrow") boolean defaultTestOnBorrow) {
+    dataSource.setDefaultTestOnBorrow(defaultTestOnBorrow);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnReturn(@Named("DBCP.testOnReturn") boolean testOnReturn) {
-    dataSource.setTestOnReturn(testOnReturn);
+  public void setDefaultTestOnReturn(@Named("DBCP.defaultTestOnReturn") boolean defaultTestOnReturn) {
+    dataSource.setDefaultTestOnReturn(defaultTestOnReturn);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTestWhileIdle(@Named("DBCP.testWhileIdle") boolean testWhileIdle) {
-    dataSource.setTestWhileIdle(testWhileIdle);
+  public void setDefaultTestWhileIdle(@Named("DBCP.defaultTestWhileIdle") boolean defaultTestWhileIdle) {
+    dataSource.setDefaultTestWhileIdle(defaultTestWhileIdle);
   }
 
   @com.google.inject.Inject(optional = true)
-  public void setTimeBetweenEvictionRunsMillis(
-      @Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+  public void setDefaultTimeBetweenEvictionRunsMillis(
+      @Named("DBCP.defaultTimeBetweenEvictionRunsMillis") int defaultTimeBetweenEvictionRunsMillis) {
+    dataSource.setDefaultTimeBetweenEvictionRunsMillis(defaultTimeBetweenEvictionRunsMillis);
   }
 
   @com.google.inject.Inject(optional = true)
@@ -112,36 +114,36 @@ public final class SharedPoolDataSourceProvider implements Provider<DataSource> 
   }
 
   /**
-   * Sets the max active.
+   * Sets the default max total.
    *
-   * @param maxActive
-   *          the new max active
+   * @param defaultMaxTotal
+   *          the new default max total
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxActive(@Named("DBCP.maxActive") final int maxActive) {
-    dataSource.setMaxActive(maxActive);
+  public void setDefaultMaxTotal(@Named("DBCP.defaultMaxTotal") final int defaultMaxTotal) {
+    dataSource.setDefaultMaxTotal(defaultMaxTotal);
   }
 
   /**
-   * Sets the max idle.
+   * Sets the default max idle.
    *
-   * @param maxIdle
-   *          the new max idle
+   * @param defaultMaxIdle
+   *          the new default max idle
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxIdle(@Named("DBCP.maxIdle") final int maxIdle) {
-    dataSource.setMaxIdle(maxIdle);
+  public void setDefaultMaxIdle(@Named("DBCP.defaultMaxIdle") final int defaultMaxIdle) {
+    dataSource.setDefaultMaxIdle(defaultMaxIdle);
   }
 
   /**
-   * Sets the max wait.
+   * Sets the default max wait in milliseconds.
    *
-   * @param maxWait
-   *          the new max wait
+   * @param defaultMaxWaitMillis
+   *          the new default max wait in milliseconds
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxWait(@Named("DBCP.maxWait") final int maxWait) {
-    dataSource.setMaxWait(maxWait);
+  public void setDefaultMaxWaitMillis(@Named("DBCP.defaultMaxWaitMillis") final int defaultMaxWaitMillis) {
+    dataSource.setDefaultMaxWaitMillis(defaultMaxWaitMillis);
   }
 
   @Override

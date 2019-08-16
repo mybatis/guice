@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
-
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -49,10 +48,10 @@ public class BasicDataSourceProviderTest {
     final boolean defaultReadOnly = true;
     final int defaultTransactionIsolation = 20;
     final int initialSize = 30;
-    final int maxActive = 40;
+    final int maxTotal = 40;
     final int maxIdle = 50;
     final int maxOpenPreparedStatements = 60;
-    final long maxWait = 70;
+    final long maxWaitMillis = 70;
     final int minIdle = 80;
     final int numTestsPerEvictionRun = 90;
     final boolean poolPreparedStatements = true;
@@ -77,10 +76,10 @@ public class BasicDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
         bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.initialSize")).to(initialSize);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
+        bindConstant().annotatedWith(Names.named("DBCP.maxTotal")).to(maxTotal);
         bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
         bindConstant().annotatedWith(Names.named("DBCP.maxOpenPreparedStatements")).to(maxOpenPreparedStatements);
-        bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
+        bindConstant().annotatedWith(Names.named("DBCP.maxWaitMillis")).to(maxWaitMillis);
         bindConstant().annotatedWith(Names.named("DBCP.minIdle")).to(minIdle);
         bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
         bindConstant().annotatedWith(Names.named("DBCP.poolPreparedStatements")).to(poolPreparedStatements);
@@ -108,10 +107,10 @@ public class BasicDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.getDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(initialSize, dataSource.getInitialSize());
-    assertEquals(maxActive, dataSource.getMaxActive());
+    assertEquals(maxTotal, dataSource.getMaxTotal());
     assertEquals(maxIdle, dataSource.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-    assertEquals(maxWait, dataSource.getMaxWait());
+    assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
     assertEquals(minIdle, dataSource.getMinIdle());
     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());
@@ -136,10 +135,10 @@ public class BasicDataSourceProviderTest {
     final boolean defaultReadOnly = false;
     final int defaultTransactionIsolation = 21;
     final int initialSize = 31;
-    final int maxActive = 41;
+    final int maxTotal = 41;
     final int maxIdle = 51;
     final int maxOpenPreparedStatements = 61;
-    final long maxWait = 71;
+    final long maxWaitMillis = 71;
     final int minIdle = 81;
     final int numTestsPerEvictionRun = 91;
     final boolean poolPreparedStatements = false;
@@ -164,10 +163,10 @@ public class BasicDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
         bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.initialSize")).to(initialSize);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
+        bindConstant().annotatedWith(Names.named("DBCP.maxTotal")).to(maxTotal);
         bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
         bindConstant().annotatedWith(Names.named("DBCP.maxOpenPreparedStatements")).to(maxOpenPreparedStatements);
-        bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
+        bindConstant().annotatedWith(Names.named("DBCP.maxWaitMillis")).to(maxWaitMillis);
         bindConstant().annotatedWith(Names.named("DBCP.minIdle")).to(minIdle);
         bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
         bindConstant().annotatedWith(Names.named("DBCP.poolPreparedStatements")).to(poolPreparedStatements);
@@ -195,10 +194,10 @@ public class BasicDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.getDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(initialSize, dataSource.getInitialSize());
-    assertEquals(maxActive, dataSource.getMaxActive());
+    assertEquals(maxTotal, dataSource.getMaxTotal());
     assertEquals(maxIdle, dataSource.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-    assertEquals(maxWait, dataSource.getMaxWait());
+    assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
     assertEquals(minIdle, dataSource.getMinIdle());
     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());

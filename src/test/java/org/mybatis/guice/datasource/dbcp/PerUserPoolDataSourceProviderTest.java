@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
-
-import org.apache.commons.dbcp.datasources.PerUserPoolDataSource;
+import org.apache.commons.dbcp2.datasources.PerUserPoolDataSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -47,17 +46,17 @@ public class PerUserPoolDataSourceProviderTest {
     final boolean defaultReadOnly = true;
     final int defaultTransactionIsolation = Connection.TRANSACTION_READ_COMMITTED;
     final String description = "test_description";
-    final int minEvictableIdleTimeMillis = 20;
-    final int numTestsPerEvictionRun = 30;
+    final int defaultMinEvictableIdleTimeMillis = 20;
+    final int defaultNumTestsPerEvictionRun = 30;
     final boolean rollbackAfterValidation = true;
-    final boolean testOnBorrow = true;
-    final boolean testOnReturn = true;
-    final boolean testWhileIdle = true;
-    final int timeBetweenEvictionRunsMillis = 40;
+    final boolean defaultTestOnBorrow = true;
+    final boolean defaultTestOnReturn = true;
+    final boolean defaultTestWhileIdle = true;
+    final int defaultTimeBetweenEvictionRunsMillis = 40;
     final String validationQuery = "SELECT 1";
-    final int maxActive = 50;
-    final int maxIdle = 60;
-    final int maxWait = 70;
+    final int defaultMaxTotal = 50;
+    final int defaultMaxIdle = 60;
+    final int defaultMaxWaitMillis = 70;
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -67,18 +66,20 @@ public class PerUserPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
         bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
-        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMinEvictableIdleTimeMillis"))
+            .to(defaultMinEvictableIdleTimeMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultNumTestsPerEvictionRun"))
+            .to(defaultNumTestsPerEvictionRun);
         bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation")).to(rollbackAfterValidation);
-        bindConstant().annotatedWith(Names.named("DBCP.testOnBorrow")).to(testOnBorrow);
-        bindConstant().annotatedWith(Names.named("DBCP.testOnReturn")).to(testOnReturn);
-        bindConstant().annotatedWith(Names.named("DBCP.testWhileIdle")).to(testWhileIdle);
-        bindConstant().annotatedWith(Names.named("DBCP.timeBetweenEvictionRunsMillis"))
-            .to(timeBetweenEvictionRunsMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestOnBorrow")).to(defaultTestOnBorrow);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestOnReturn")).to(defaultTestOnReturn);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestWhileIdle")).to(defaultTestWhileIdle);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTimeBetweenEvictionRunsMillis"))
+            .to(defaultTimeBetweenEvictionRunsMillis);
         bindConstant().annotatedWith(Names.named("DBCP.validationQuery")).to(validationQuery);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
-        bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
-        bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxTotal")).to(defaultMaxTotal);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxIdle")).to(defaultMaxIdle);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxWaitMillis")).to(defaultMaxWaitMillis);
       }
     });
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -91,17 +92,17 @@ public class PerUserPoolDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(minEvictableIdleTimeMillis, dataSource.getMinEvictableIdleTimeMillis());
-    assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
-    assertEquals(testOnBorrow, dataSource.isTestOnBorrow());
-    assertEquals(testOnReturn, dataSource.isTestOnReturn());
-    assertEquals(testWhileIdle, dataSource.isTestWhileIdle());
-    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
+    assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
+    assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
-    assertEquals(maxActive, dataSource.getDefaultMaxActive());
-    assertEquals(maxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(maxWait, dataSource.getDefaultMaxWait());
+    assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
+    assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
   }
 
   @Test
@@ -111,17 +112,17 @@ public class PerUserPoolDataSourceProviderTest {
     final boolean defaultReadOnly = false;
     final int defaultTransactionIsolation = Connection.TRANSACTION_SERIALIZABLE;
     final String description = "test_description2";
-    final int minEvictableIdleTimeMillis = 21;
-    final int numTestsPerEvictionRun = 31;
+    final int defaultMinEvictableIdleTimeMillis = 21;
+    final int defaultNumTestsPerEvictionRun = 31;
     final boolean rollbackAfterValidation = false;
-    final boolean testOnBorrow = false;
-    final boolean testOnReturn = false;
-    final boolean testWhileIdle = false;
-    final int timeBetweenEvictionRunsMillis = 41;
+    final boolean defaultTestOnBorrow = false;
+    final boolean defaultTestOnReturn = false;
+    final boolean defaultTestWhileIdle = false;
+    final int defaultTimeBetweenEvictionRunsMillis = 41;
     final String validationQuery = "SELECT 2";
-    final int maxActive = 51;
-    final int maxIdle = 61;
-    final int maxWait = 71;
+    final int defaultMaxTotal = 51;
+    final int defaultMaxIdle = 61;
+    final int defaultMaxWaitMillis = 71;
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -131,18 +132,20 @@ public class PerUserPoolDataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("DBCP.defaultReadOnly")).to(defaultReadOnly);
         bindConstant().annotatedWith(Names.named("DBCP.defaultTransactionIsolation")).to(defaultTransactionIsolation);
         bindConstant().annotatedWith(Names.named("DBCP.description")).to(description);
-        bindConstant().annotatedWith(Names.named("DBCP.minEvictableIdleTimeMillis")).to(minEvictableIdleTimeMillis);
-        bindConstant().annotatedWith(Names.named("DBCP.numTestsPerEvictionRun")).to(numTestsPerEvictionRun);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMinEvictableIdleTimeMillis"))
+            .to(defaultMinEvictableIdleTimeMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultNumTestsPerEvictionRun"))
+            .to(defaultNumTestsPerEvictionRun);
         bindConstant().annotatedWith(Names.named("DBCP.rollbackAfterValidation")).to(rollbackAfterValidation);
-        bindConstant().annotatedWith(Names.named("DBCP.testOnBorrow")).to(testOnBorrow);
-        bindConstant().annotatedWith(Names.named("DBCP.testOnReturn")).to(testOnReturn);
-        bindConstant().annotatedWith(Names.named("DBCP.testWhileIdle")).to(testWhileIdle);
-        bindConstant().annotatedWith(Names.named("DBCP.timeBetweenEvictionRunsMillis"))
-            .to(timeBetweenEvictionRunsMillis);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestOnBorrow")).to(defaultTestOnBorrow);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestOnReturn")).to(defaultTestOnReturn);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTestWhileIdle")).to(defaultTestWhileIdle);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultTimeBetweenEvictionRunsMillis"))
+            .to(defaultTimeBetweenEvictionRunsMillis);
         bindConstant().annotatedWith(Names.named("DBCP.validationQuery")).to(validationQuery);
-        bindConstant().annotatedWith(Names.named("DBCP.maxActive")).to(maxActive);
-        bindConstant().annotatedWith(Names.named("DBCP.maxIdle")).to(maxIdle);
-        bindConstant().annotatedWith(Names.named("DBCP.maxWait")).to(maxWait);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxTotal")).to(defaultMaxTotal);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxIdle")).to(defaultMaxIdle);
+        bindConstant().annotatedWith(Names.named("DBCP.defaultMaxWaitMillis")).to(defaultMaxWaitMillis);
       }
     });
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -155,17 +158,17 @@ public class PerUserPoolDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(minEvictableIdleTimeMillis, dataSource.getMinEvictableIdleTimeMillis());
-    assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
-    assertEquals(testOnBorrow, dataSource.isTestOnBorrow());
-    assertEquals(testOnReturn, dataSource.isTestOnReturn());
-    assertEquals(testWhileIdle, dataSource.isTestWhileIdle());
-    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
+    assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
+    assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
-    assertEquals(maxActive, dataSource.getDefaultMaxActive());
-    assertEquals(maxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(maxWait, dataSource.getDefaultMaxWait());
+    assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
+    assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
   }
 
   @Test
@@ -267,23 +270,23 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserMaxActive() throws Throwable {
-    final Map<String, Integer> maxActive = new HashMap<String, Integer>();
-    maxActive.put("test_user", 10);
-    maxActive.put("test_user2", 20);
+  public void get_PerUserMaxTotal() throws Throwable {
+    final Map<String, Integer> maxTotal = new HashMap<String, Integer>();
+    maxTotal.put("test_user", 10);
+    maxTotal.put("test_user2", 20);
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
         bind(new TypeLiteral<Map<String, Integer>>() {
-        }).annotatedWith(PerUserMaxActive.class).toInstance(maxActive);
+        }).annotatedWith(PerUserMaxTotal.class).toInstance(maxTotal);
       }
     });
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 10, dataSource.getPerUserMaxActive("test_user"));
-    assertEquals((Integer) 20, dataSource.getPerUserMaxActive("test_user2"));
+    assertEquals(10, dataSource.getPerUserMaxTotal("test_user"));
+    assertEquals(20, dataSource.getPerUserMaxTotal("test_user2"));
   }
 
   @Test
@@ -302,27 +305,27 @@ public class PerUserPoolDataSourceProviderTest {
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 30, dataSource.getPerUserMaxIdle("test_user"));
-    assertEquals((Integer) 40, dataSource.getPerUserMaxIdle("test_user2"));
+    assertEquals(30, dataSource.getPerUserMaxIdle("test_user"));
+    assertEquals(40, dataSource.getPerUserMaxIdle("test_user2"));
   }
 
   @Test
-  public void get_PerUserMaxWait() throws Throwable {
-    final Map<String, Integer> maxWait = new HashMap<String, Integer>();
-    maxWait.put("test_user", 50);
-    maxWait.put("test_user2", 60);
+  public void get_PerUserMaxWaitMillis() throws Throwable {
+    final Map<String, Long> maxWaitMillis = new HashMap<String, Long>();
+    maxWaitMillis.put("test_user", 50l);
+    maxWaitMillis.put("test_user2", 60l);
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
-        bind(new TypeLiteral<Map<String, Integer>>() {
-        }).annotatedWith(PerUserMaxWait.class).toInstance(maxWait);
+        bind(new TypeLiteral<Map<String, Long>>() {
+        }).annotatedWith(PerUserMaxWaitMillis.class).toInstance(maxWaitMillis);
       }
     });
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals((Integer) 50, dataSource.getPerUserMaxWait("test_user"));
-    assertEquals((Integer) 60, dataSource.getPerUserMaxWait("test_user2"));
+    assertEquals(50, dataSource.getPerUserMaxWaitMillis("test_user"));
+    assertEquals(60, dataSource.getPerUserMaxWaitMillis("test_user2"));
   }
 }
