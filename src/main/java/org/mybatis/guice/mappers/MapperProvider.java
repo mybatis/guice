@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.mybatis.guice.mappers;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -59,6 +59,6 @@ public final class MapperProvider<T> implements Provider<T> {
       return false;
     }
     MapperProvider other = (MapperProvider) obj;
-    return Objects.equal(this.mapperType, other.mapperType);
+    return Objects.equals(this.mapperType, other.mapperType);
   }
 }
