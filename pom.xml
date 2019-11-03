@@ -136,7 +136,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
-      <version>1.1.20</version>
+      <version>1.1.20</version> <!-- Issue with 1.1.21 pom preventing proper usage -->
       <optional>true</optional>
     </dependency>
 
