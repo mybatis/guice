@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -94,11 +94,7 @@ public final class UnpooledDataSourceProvider implements Provider<DataSource> {
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") final int loginTimeout) {
-    try {
-      unpooledDataSource.setLoginTimeout(loginTimeout);
-    } catch (SQLException e) {
-      throw new RuntimeException("Impossible to set login timeout '" + loginTimeout + "' to Unpooled Data Source", e);
-    }
+    unpooledDataSource.setLoginTimeout(loginTimeout);
   }
 
   @com.google.inject.Inject(optional = true)
