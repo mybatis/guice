@@ -90,6 +90,7 @@
     <findbugs.onlyAnalyze>org.mybatis.guice.*</findbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
     <guice.version>4.2.2</guice.version>
+    <ejb-api.version>3.2.2</ejb-api.version>
     <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <findbugs.omitVisitors>UnreadFields</findbugs.omitVisitors>
     <module.name>org.mybatis.guice</module.name>
@@ -113,6 +114,13 @@
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>${guice.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.ejb</groupId>
+      <artifactId>javax.ejb-api</artifactId>
+      <version>${ejb-api.version}</version>
       <scope>provided</scope>
     </dependency>
 

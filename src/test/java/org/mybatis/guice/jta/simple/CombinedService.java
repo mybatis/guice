@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 package org.mybatis.guice.jta.simple;
 
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.mybatis.guice.transactional.Transactional;
 
 public class CombinedService {
@@ -26,6 +24,12 @@ public class CombinedService {
   private Schema1Service schema1Service;
   @Inject
   private Schema2Service schema2Service;
+
+  @Transactional
+  public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(Exception e) throws Exception {
+    insert2RecordsIntoSchema1And1RecordIntoSchema2();
+    throw e;
+  }
 
   @Transactional
   public void insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackAll() {

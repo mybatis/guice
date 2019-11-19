@@ -27,6 +27,10 @@
 
   <body>
     <release version="3.11" date="" description="maintenance release">
+      <action dev="christian.poitras" type="add">
+        Allow TxTransactionalMethodInterceptor to commit the transaction on some exceptions.
+        <fixes issue="129"/>
+      </action>
       <action dev="christian.poitras" type="update">
         Replaces Apache Commons DBCP version 1 by Apache Commons DBCP version 2.
         Some properties are replaced.
