@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,23 +18,21 @@ package org.mybatis.guice.jta.simple;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.PrivateModule;
+import com.google.inject.name.Names;
 import java.util.Properties;
-
+import javax.ejb.ApplicationException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.transaction.TransactionManager;
-
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 import org.mybatis.guice.multidstest.MockInitialContextFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.PrivateModule;
-import com.google.inject.name.Names;
 
 public class SimpleJTATest {
 
@@ -86,6 +84,106 @@ public class SimpleJTATest {
     }
 
     assertEquals(2, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(0, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionRollBack() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new RollbackException());
+      fail("Expected an exception to force rollback");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+
+    assertEquals(0, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(0, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionInheritedRollBack() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new InheritedRollbackException());
+      fail("Expected an exception to force rollback");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+
+    assertEquals(0, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(0, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionNonInheritableRollback() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritableRollbackException());
+      fail("Expected NonInheritableRollbackException");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+    assertEquals(0, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(0, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionNonInheritedRollback() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritedRollbackException());
+      fail("Expected an exception to force rollback");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+
+    assertEquals(0, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(0, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionCommit() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new CommitException());
+      fail("Expected CommitException");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+    assertEquals(2, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(1, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionInheritedCommit() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new InheritedCommitException());
+      fail("Expected CommitException");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+    assertEquals(2, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(1, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionNonInheritableCommit() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritableCommitException());
+      fail("Expected NonInheritableCommitException");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+    assertEquals(2, combinedService.getAllNamesFromSchema1().size());
+    assertEquals(1, combinedService.getAllNamesFromSchema2().size());
+  }
+
+  @Test
+  public void testApplicationExceptionNonInheritedCommit() {
+    try {
+      combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritedCommitException());
+      fail("Expected NonInheritedCommitException");
+    } catch (Exception e) {
+      // ignore - expected
+    }
+
+    assertEquals(0, combinedService.getAllNamesFromSchema1().size());
     assertEquals(0, combinedService.getAllNamesFromSchema2().size());
   }
 
@@ -149,5 +247,33 @@ public class SimpleJTATest {
         expose(CombinedService.class);
       }
     });
+  }
+
+  @ApplicationException(rollback = true)
+  public static class RollbackException extends Exception {
+  }
+
+  public static class InheritedRollbackException extends RollbackException {
+  }
+
+  @ApplicationException(rollback = true, inherited = false)
+  public static class NonInheritableRollbackException extends Exception {
+  }
+
+  public static class NonInheritedRollbackException extends NonInheritableRollbackException {
+  }
+
+  @ApplicationException(rollback = false)
+  public static class CommitException extends Exception {
+  }
+
+  public static class InheritedCommitException extends CommitException {
+  }
+
+  @ApplicationException(rollback = false, inherited = false)
+  public static class NonInheritableCommitException extends Exception {
+  }
+
+  public static class NonInheritedCommitException extends NonInheritableCommitException {
   }
 }

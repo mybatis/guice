@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@ package org.mybatis.guice.transactional;
 
 import static java.lang.String.format;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
+import javax.ejb.ApplicationException;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.ibatis.logging.Log;
@@ -47,6 +47,25 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
   private Provider<XAResource> xaResourceProvider;
 
   public TxTransactionalMethodInterceptor() {
+  }
+
+  private boolean isApplicationExceptionAvailable() {
+    try {
+      Class.forName("javax.ejb.ApplicationException");
+      return true;
+    } catch (ClassNotFoundException e) {
+      return false;
+    }
+  }
+
+  private <A extends Annotation> A findAnnotation(Class<?> clazz, Class<A> annotationClass) {
+    Class<?> current = clazz;
+    A annotation = null;
+    while (annotation == null && current != null) {
+      annotation = current.getAnnotation(annotationClass);
+      current = current.getSuperclass();
+    }
+    return annotation;
   }
 
   /**
@@ -127,7 +146,16 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
           log.debug(format("%s - Tx Transaction %s (CompletionAllowed %s) rolling back", debugPrefix, attribute.name(),
               tranToken.isCompletionAllowed()));
         }
-        manager.setRollbackOnly();
+        if (isApplicationExceptionAvailable()) {
+          ApplicationException ae = t.getClass().getAnnotation(ApplicationException.class);
+          ApplicationException parentAe = findAnnotation(t.getClass().getSuperclass(), ApplicationException.class);
+          if ((ae == null && parentAe == null) || (ae != null && ae.rollback())
+              || (parentAe != null && (!parentAe.inherited() || parentAe.rollback()))) {
+            manager.setRollbackOnly();
+          }
+        } else {
+          manager.setRollbackOnly();
+        }
         throw t;
       } finally {
         if (log.isDebugEnabled()) {
