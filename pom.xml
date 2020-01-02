@@ -94,6 +94,9 @@
     <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <findbugs.omitVisitors>UnreadFields</findbugs.omitVisitors>
     <module.name>org.mybatis.guice</module.name>
+
+    <!-- Override jacoco to latest until on mybatis-parent 32 -->
+    <jacoco.version>0.8.5</jacoco.version>
   </properties>
 
   <dependencies>
