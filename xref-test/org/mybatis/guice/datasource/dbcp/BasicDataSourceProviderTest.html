@@ -7,38 +7,38 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/datasource/dbcp/BasicDataSourceProviderTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Copyright 2009-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2009-2019 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with</em>
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * the License. You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * specific language governing permissions and limitations under the License.</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">package</strong> org.mybatis.guice.datasource.dbcp;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.assertEquals;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> com.google.inject.AbstractModule;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.google.inject.Guice;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.google.inject.Injector;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.google.inject.name.Names;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.dbcp.BasicDataSource;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.junit.Rule;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.mockito.Mock;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.MockitoJUnit;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.MockitoRule;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/mybatis/guice/datasource/dbcp/BasicDataSourceProviderTest.html">BasicDataSourceProviderTest</a> {
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>    @Rule
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>    <strong class="jxr_keyword">public</strong> MockitoRule mockitoRule = MockitoJUnit.rule();
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.guice.datasource.dbcp;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertEquals;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.google.inject.AbstractModule;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.google.inject.Guice;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.google.inject.Injector;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.google.inject.name.Names;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.dbcp2.BasicDataSource;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.extension.ExtendWith;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mockito.Mock;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.jupiter.MockitoExtension;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  @ExtendWith(MockitoExtension.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="BasicDataSourceProviderTest" href="../../../../../org/mybatis/guice/datasource/dbcp/BasicDataSourceProviderTest.html#BasicDataSourceProviderTest">BasicDataSourceProviderTest</a> {
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>    @Mock
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>    <strong class="jxr_keyword">private</strong> ClassLoader driverClassLoader;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
@@ -56,10 +56,10 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> defaultReadOnly = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultTransactionIsolation = 20;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> initialSize = 30;
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxActive = 40;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxTotal = 40;
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxIdle = 50;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxOpenPreparedStatements = 60;
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> maxWait = 70;
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> maxWaitMillis = 70;
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> minIdle = 80;
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> numTestsPerEvictionRun = 90;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> poolPreparedStatements = <strong class="jxr_keyword">true</strong>;
@@ -84,10 +84,10 @@
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.defaultReadOnly"</span>)).to(defaultReadOnly);
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.defaultTransactionIsolation"</span>)).to(defaultTransactionIsolation);
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.initialSize"</span>)).to(initialSize);
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxActive"</span>)).to(maxActive);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxTotal"</span>)).to(maxTotal);
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxIdle"</span>)).to(maxIdle);
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxOpenPreparedStatements"</span>)).to(maxOpenPreparedStatements);
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxWait"</span>)).to(maxWait);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxWaitMillis"</span>)).to(maxWaitMillis);
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.minIdle"</span>)).to(minIdle);
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.numTestsPerEvictionRun"</span>)).to(numTestsPerEvictionRun);
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.poolPreparedStatements"</span>)).to(poolPreparedStatements);
@@ -115,10 +115,10 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     assertEquals(defaultReadOnly, dataSource.getDefaultReadOnly());
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     assertEquals(initialSize, dataSource.getInitialSize());
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     assertEquals(maxActive, dataSource.getMaxActive());
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     assertEquals(maxTotal, dataSource.getMaxTotal());
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>     assertEquals(maxIdle, dataSource.getMaxIdle());
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     assertEquals(maxWait, dataSource.getMaxWait());
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>     assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     assertEquals(minIdle, dataSource.getMinIdle());
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());
@@ -143,10 +143,10 @@
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> defaultReadOnly = false;
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultTransactionIsolation = 21;
 <a class="jxr_linenumber" name="L137" href="#L137">137</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> initialSize = 31;
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxActive = 41;
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxTotal = 41;
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxIdle = 51;
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> maxOpenPreparedStatements = 61;
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> maxWait = 71;
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> maxWaitMillis = 71;
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> minIdle = 81;
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> numTestsPerEvictionRun = 91;
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> poolPreparedStatements = false;
@@ -171,10 +171,10 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.defaultReadOnly"</span>)).to(defaultReadOnly);
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.defaultTransactionIsolation"</span>)).to(defaultTransactionIsolation);
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.initialSize"</span>)).to(initialSize);
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxActive"</span>)).to(maxActive);
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxTotal"</span>)).to(maxTotal);
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxIdle"</span>)).to(maxIdle);
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxOpenPreparedStatements"</span>)).to(maxOpenPreparedStatements);
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxWait"</span>)).to(maxWait);
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.maxWaitMillis"</span>)).to(maxWaitMillis);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.minIdle"</span>)).to(minIdle);
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.numTestsPerEvictionRun"</span>)).to(numTestsPerEvictionRun);
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         bindConstant().annotatedWith(Names.named(<span class="jxr_string">"DBCP.poolPreparedStatements"</span>)).to(poolPreparedStatements);
@@ -202,10 +202,10 @@
 <a class="jxr_linenumber" name="L194" href="#L194">194</a>     assertEquals(defaultReadOnly, dataSource.getDefaultReadOnly());
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>     assertEquals(initialSize, dataSource.getInitialSize());
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>     assertEquals(maxActive, dataSource.getMaxActive());
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>     assertEquals(maxTotal, dataSource.getMaxTotal());
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>     assertEquals(maxIdle, dataSource.getMaxIdle());
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     assertEquals(maxWait, dataSource.getMaxWait());
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>     assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>     assertEquals(minIdle, dataSource.getMinIdle());
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());
@@ -218,6 +218,6 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2009&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2009&#x2013;2020 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

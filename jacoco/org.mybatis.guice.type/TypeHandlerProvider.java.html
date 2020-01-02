@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeHandlerProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.type</a> &gt; <span class="el_source">TypeHandlerProvider.java</span></div><h1>TypeHandlerProvider.java</h1><pre class="source lang-java linenums">/**
- * Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2018 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package org.mybatis.guice.type;
 
-import com.google.common.base.Objects;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 
@@ -21,7 +22,9 @@ import org.apache.ibatis.type.TypeException;
 import org.apache.ibatis.type.TypeHandler;
 
 import java.lang.reflect.Constructor;
+import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 /**
@@ -33,65 +36,68 @@ public final class TypeHandlerProvider&lt;TH extends TypeHandler&lt;? extends T&
   @Inject
   private Injector injector;
 
-<span class="fc" id="L36">  public TypeHandlerProvider(Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {</span>
-<span class="fc" id="L37">    this.typeHandlerTypeLiteral = TypeLiteral.get(typeHandlerType);</span>
-<span class="fc" id="L38">    this.handledType = handledType;</span>
-<span class="fc" id="L39">  }</span>
+<span class="fc" id="L39">  public TypeHandlerProvider(Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {</span>
+<span class="fc" id="L40">    this.typeHandlerTypeLiteral = TypeLiteral.get(typeHandlerType);</span>
+<span class="fc" id="L41">    this.handledType = handledType;</span>
+<span class="fc" id="L42">  }</span>
 
-<span class="fc" id="L41">  public TypeHandlerProvider(TypeLiteral&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {</span>
-<span class="fc" id="L42">    this.typeHandlerTypeLiteral = typeHandlerType;</span>
-<span class="fc" id="L43">    this.handledType = handledType;</span>
-<span class="fc" id="L44">  }</span>
+<span class="fc" id="L44">  public TypeHandlerProvider(TypeLiteral&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {</span>
+<span class="fc" id="L45">    this.typeHandlerTypeLiteral = typeHandlerType;</span>
+<span class="fc" id="L46">    this.handledType = handledType;</span>
+<span class="fc" id="L47">  }</span>
 
   TypeHandlerProvider(Injector injector, Class&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {
-<span class="fc" id="L47">    this(typeHandlerType, handledType);</span>
-<span class="fc" id="L48">    this.injector = injector;</span>
-<span class="fc" id="L49">  }</span>
+<span class="fc" id="L50">    this(typeHandlerType, handledType);</span>
+<span class="fc" id="L51">    this.injector = injector;</span>
+<span class="fc" id="L52">  }</span>
 
   TypeHandlerProvider(Injector injector, TypeLiteral&lt;TH&gt; typeHandlerType, Class&lt;T&gt; handledType) {
-<span class="fc" id="L52">    this(typeHandlerType, handledType);</span>
-<span class="fc" id="L53">    this.injector = injector;</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L55">    this(typeHandlerType, handledType);</span>
+<span class="fc" id="L56">    this.injector = injector;</span>
+<span class="fc" id="L57">  }</span>
 
   @Override
   @SuppressWarnings(&quot;unchecked&quot;)
   public TH get() {
-<span class="fc" id="L59">    TH instance = null;</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">    if (handledType != null) {</span>
+<span class="fc" id="L62">    TH instance = null;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">    if (handledType != null) {</span>
       try {
-<span class="fc" id="L62">        Constructor&lt;?&gt; c = typeHandlerTypeLiteral.getRawType().getConstructor(Class.class);</span>
-<span class="fc" id="L63">        instance = (TH) c.newInstance(handledType);</span>
-<span class="fc" id="L64">        injector.injectMembers(instance);</span>
-<span class="nc" id="L65">      } catch (NoSuchMethodException ignored) {</span>
+<span class="fc" id="L65">        Constructor&lt;?&gt; c = typeHandlerTypeLiteral.getRawType().getConstructor(Class.class);</span>
+<span class="fc" id="L66">        instance = (TH) c.newInstance(handledType);</span>
+<span class="fc" id="L67">        injector.injectMembers(instance);</span>
+<span class="nc" id="L68">      } catch (NoSuchMethodException ignored) {</span>
         // ignored
-<span class="nc" id="L67">      } catch (Exception e) {</span>
-<span class="nc" id="L68">        throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerTypeLiteral.getType(), e);</span>
-<span class="pc" id="L69">      }</span>
+<span class="nc" id="L70">      } catch (Exception e) {</span>
+<span class="nc" id="L71">        throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerTypeLiteral.getType(), e);</span>
+<span class="pc" id="L72">      }</span>
     }
-<span class="fc bfc" id="L71" title="All 2 branches covered.">    if (instance == null) {</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    if (instance == null) {</span>
       try {
-<span class="fc" id="L73">        instance = (TH) typeHandlerTypeLiteral.getRawType().newInstance();</span>
-<span class="fc" id="L74">        injector.injectMembers(instance);</span>
-<span class="nc" id="L75">      } catch (Exception e) {</span>
-<span class="nc" id="L76">        throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerTypeLiteral.getType(), e);</span>
-<span class="fc" id="L77">      }</span>
+<span class="fc" id="L76">        instance = (TH) typeHandlerTypeLiteral.getRawType().newInstance();</span>
+<span class="fc" id="L77">        injector.injectMembers(instance);</span>
+<span class="nc" id="L78">      } catch (Exception e) {</span>
+<span class="nc" id="L79">        throw new TypeException(&quot;Failed invoking constructor for handler &quot; + typeHandlerTypeLiteral.getType(), e);</span>
+<span class="fc" id="L80">      }</span>
     }
-<span class="fc" id="L79">    return instance;</span>
+<span class="fc" id="L82">    return instance;</span>
   }
 
   @Override
   public int hashCode() {
-<span class="nc" id="L84">    return Objects.hashCode(this.typeHandlerTypeLiteral, this.handledType);</span>
+<span class="nc" id="L87">    return Objects.hash(this.typeHandlerTypeLiteral, this.handledType);</span>
   }
 
   @Override
   public boolean equals(Object obj) {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (obj == null) {</span>
-<span class="nc" id="L90">      return false;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">    if (obj == null) {</span>
+<span class="nc" id="L93">      return false;</span>
     }
-<span class="nc" id="L92">    TypeHandlerProvider other = (TypeHandlerProvider) obj;</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">    return Objects.equal(this.typeHandlerTypeLiteral, other.typeHandlerTypeLiteral)</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        &amp;&amp; Objects.equal(this.handledType, other.handledType);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">    if (this.getClass() != obj.getClass()) {</span>
+<span class="nc" id="L96">      return false;</span>
+    }
+<span class="nc" id="L98">    TypeHandlerProvider other = (TypeHandlerProvider) obj;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">    return Objects.equals(this.typeHandlerTypeLiteral, other.typeHandlerTypeLiteral)</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        &amp;&amp; Objects.equals(this.handledType, other.handledType);</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

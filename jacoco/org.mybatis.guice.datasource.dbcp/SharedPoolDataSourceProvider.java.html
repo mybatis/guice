@@ -1,151 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SharedPoolDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">SharedPoolDataSourceProvider.java</span></div><h1>SharedPoolDataSourceProvider.java</h1><pre class="source lang-java linenums">/**
- * Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2019 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package org.mybatis.guice.datasource.dbcp;
 
-import com.google.inject.Provider;
-
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
+import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
 
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 
 /**
  * Provides the Apache commons-dbcp {@code SharedPoolDataSource}.
  */
-<span class="fc" id="L26">public final class SharedPoolDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
+<span class="fc" id="L28">public final class SharedPoolDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
 
-<span class="fc" id="L28">  private final SharedPoolDataSource dataSource = new SharedPoolDataSource();</span>
+<span class="fc" id="L30">  private final SharedPoolDataSource dataSource = new SharedPoolDataSource();</span>
 
   @com.google.inject.Inject(optional = true)
   public void setConnectionPoolDataSource(ConnectionPoolDataSource cpds) {
-<span class="fc" id="L32">    dataSource.setConnectionPoolDataSource(cpds);</span>
-<span class="fc" id="L33">  }</span>
+<span class="fc" id="L34">    dataSource.setConnectionPoolDataSource(cpds);</span>
+<span class="fc" id="L35">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDataSourceName(@Named(&quot;DBCP.name&quot;) String name) {
-<span class="fc" id="L37">    dataSource.setDataSourceName(name);</span>
-<span class="fc" id="L38">  }</span>
+<span class="fc" id="L39">    dataSource.setDataSourceName(name);</span>
+<span class="fc" id="L40">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDefaultAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) boolean autoCommit) {
-<span class="fc" id="L42">    dataSource.setDefaultAutoCommit(autoCommit);</span>
-<span class="fc" id="L43">  }</span>
+<span class="fc" id="L44">    dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L45">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) boolean defaultReadOnly) {
-<span class="fc" id="L47">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
-<span class="fc" id="L48">  }</span>
+<span class="fc" id="L49">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
+<span class="fc" id="L50">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDefaultTransactionIsolation(
       @Named(&quot;DBCP.defaultTransactionIsolation&quot;) int defaultTransactionIsolation) {
-<span class="fc" id="L53">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L55">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="fc" id="L56">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDescription(@Named(&quot;DBCP.description&quot;) String description) {
-<span class="fc" id="L58">    dataSource.setDescription(description);</span>
-<span class="fc" id="L59">  }</span>
+<span class="fc" id="L60">    dataSource.setDescription(description);</span>
+<span class="fc" id="L61">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setJndiEnvironment(@Named(&quot;DBCP.jndi.key&quot;) String key, @Named(&quot;DBCP.jndi.value&quot;) String value) {
-<span class="fc" id="L63">    dataSource.setJndiEnvironment(key, value);</span>
-<span class="fc" id="L64">  }</span>
+<span class="fc" id="L65">    dataSource.setJndiEnvironment(key, value);</span>
+<span class="fc" id="L66">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int loginTimeout) {
-<span class="fc" id="L68">    dataSource.setLoginTimeout(loginTimeout);</span>
-<span class="fc" id="L69">  }</span>
+<span class="fc" id="L70">    dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="fc" id="L71">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setMinEvictableIdleTimeMillis(@Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) int minEvictableIdleTimeMillis) {
-<span class="fc" id="L73">    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
-<span class="fc" id="L74">  }</span>
+  public void setDefaultMinEvictableIdleTimeMillis(
+      @Named(&quot;DBCP.defaultMinEvictableIdleTimeMillis&quot;) int defaultMinEvictableIdleTimeMillis) {
+<span class="fc" id="L76">    dataSource.setDefaultMinEvictableIdleTimeMillis(defaultMinEvictableIdleTimeMillis);</span>
+<span class="fc" id="L77">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) int numTestsPerEvictionRun) {
-<span class="fc" id="L78">    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
-<span class="fc" id="L79">  }</span>
+  public void setDefaultNumTestsPerEvictionRun(
+      @Named(&quot;DBCP.defaultNumTestsPerEvictionRun&quot;) int defaultNumTestsPerEvictionRun) {
+<span class="fc" id="L82">    dataSource.setDefaultNumTestsPerEvictionRun(defaultNumTestsPerEvictionRun);</span>
+<span class="fc" id="L83">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setRollbackAfterValidation(@Named(&quot;DBCP.rollbackAfterValidation&quot;) boolean rollbackAfterValidation) {
-<span class="fc" id="L83">    dataSource.setRollbackAfterValidation(rollbackAfterValidation);</span>
-<span class="fc" id="L84">  }</span>
+<span class="fc" id="L87">    dataSource.setRollbackAfterValidation(rollbackAfterValidation);</span>
+<span class="fc" id="L88">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnBorrow(@Named(&quot;DBCP.testOnBorrow&quot;) boolean testOnBorrow) {
-<span class="fc" id="L88">    dataSource.setTestOnBorrow(testOnBorrow);</span>
-<span class="fc" id="L89">  }</span>
+  public void setDefaultTestOnBorrow(@Named(&quot;DBCP.defaultTestOnBorrow&quot;) boolean defaultTestOnBorrow) {
+<span class="fc" id="L92">    dataSource.setDefaultTestOnBorrow(defaultTestOnBorrow);</span>
+<span class="fc" id="L93">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setTestOnReturn(@Named(&quot;DBCP.testOnReturn&quot;) boolean testOnReturn) {
-<span class="fc" id="L93">    dataSource.setTestOnReturn(testOnReturn);</span>
-<span class="fc" id="L94">  }</span>
+  public void setDefaultTestOnReturn(@Named(&quot;DBCP.defaultTestOnReturn&quot;) boolean defaultTestOnReturn) {
+<span class="fc" id="L97">    dataSource.setDefaultTestOnReturn(defaultTestOnReturn);</span>
+<span class="fc" id="L98">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setTestWhileIdle(@Named(&quot;DBCP.testWhileIdle&quot;) boolean testWhileIdle) {
-<span class="fc" id="L98">    dataSource.setTestWhileIdle(testWhileIdle);</span>
-<span class="fc" id="L99">  }</span>
+  public void setDefaultTestWhileIdle(@Named(&quot;DBCP.defaultTestWhileIdle&quot;) boolean defaultTestWhileIdle) {
+<span class="fc" id="L102">    dataSource.setDefaultTestWhileIdle(defaultTestWhileIdle);</span>
+<span class="fc" id="L103">  }</span>
 
   @com.google.inject.Inject(optional = true)
-  public void setTimeBetweenEvictionRunsMillis(
-      @Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
-<span class="fc" id="L104">    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
-<span class="fc" id="L105">  }</span>
+  public void setDefaultTimeBetweenEvictionRunsMillis(
+      @Named(&quot;DBCP.defaultTimeBetweenEvictionRunsMillis&quot;) int defaultTimeBetweenEvictionRunsMillis) {
+<span class="fc" id="L108">    dataSource.setDefaultTimeBetweenEvictionRunsMillis(defaultTimeBetweenEvictionRunsMillis);</span>
+<span class="fc" id="L109">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) String validationQuery) {
-<span class="fc" id="L109">    dataSource.setValidationQuery(validationQuery);</span>
-<span class="fc" id="L110">  }</span>
+<span class="fc" id="L113">    dataSource.setValidationQuery(validationQuery);</span>
+<span class="fc" id="L114">  }</span>
 
   /**
-   * Sets the max active.
+   * Sets the default max total.
    *
-   * @param maxActive
-   *          the new max active
+   * @param defaultMaxTotal
+   *          the new default max total
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxActive(@Named(&quot;DBCP.maxActive&quot;) final int maxActive) {
-<span class="fc" id="L120">    dataSource.setMaxActive(maxActive);</span>
-<span class="fc" id="L121">  }</span>
+  public void setDefaultMaxTotal(@Named(&quot;DBCP.defaultMaxTotal&quot;) final int defaultMaxTotal) {
+<span class="fc" id="L124">    dataSource.setDefaultMaxTotal(defaultMaxTotal);</span>
+<span class="fc" id="L125">  }</span>
 
   /**
-   * Sets the max idle.
+   * Sets the default max idle.
    *
-   * @param maxIdle
-   *          the new max idle
+   * @param defaultMaxIdle
+   *          the new default max idle
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) final int maxIdle) {
-<span class="fc" id="L131">    dataSource.setMaxIdle(maxIdle);</span>
-<span class="fc" id="L132">  }</span>
+  public void setDefaultMaxIdle(@Named(&quot;DBCP.defaultMaxIdle&quot;) final int defaultMaxIdle) {
+<span class="fc" id="L135">    dataSource.setDefaultMaxIdle(defaultMaxIdle);</span>
+<span class="fc" id="L136">  }</span>
 
   /**
-   * Sets the max wait.
+   * Sets the default max wait in milliseconds.
    *
-   * @param maxWait
-   *          the new max wait
+   * @param defaultMaxWaitMillis
+   *          the new default max wait in milliseconds
    */
   @com.google.inject.Inject(optional = true)
-  public void setMaxWait(@Named(&quot;DBCP.maxWait&quot;) final int maxWait) {
-<span class="fc" id="L142">    dataSource.setMaxWait(maxWait);</span>
-<span class="fc" id="L143">  }</span>
+  public void setDefaultMaxWaitMillis(@Named(&quot;DBCP.defaultMaxWaitMillis&quot;) final int defaultMaxWaitMillis) {
+<span class="fc" id="L146">    dataSource.setDefaultMaxWaitMillis(defaultMaxWaitMillis);</span>
+<span class="fc" id="L147">  }</span>
 
   @Override
   public DataSource get() {
-<span class="fc" id="L147">    return dataSource;</span>
+<span class="fc" id="L151">    return dataSource;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

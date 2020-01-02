@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JdbcHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.helper</a> &gt; <span class="el_source">JdbcHelper.java</span></div><h1>JdbcHelper.java</h1><pre class="source lang-java linenums">/**
- * Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2017 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package org.mybatis.guice.datasource.helper;
 
@@ -22,132 +25,132 @@ import com.google.inject.Module;
 /**
  * Helper to bind &lt;code&gt;JDBC.driver&lt;/code&gt; and &lt;code&gt;JDBC.url&lt;/code&gt; properties.
  */
-<span class="pc" id="L25">public enum JdbcHelper implements Module {</span>
+<span class="fc" id="L28">public enum JdbcHelper implements Module {</span>
 
-<span class="fc" id="L27">  Cache(&quot;jdbc:Cache://${JDBC.host|localhost}:${JDBC.port|1972}/${JDBC.schema}&quot;, &quot;com.intersys.jdbc.CacheDriver&quot;),</span>
+<span class="fc" id="L30">  Cache(&quot;jdbc:Cache://${JDBC.host|localhost}:${JDBC.port|1972}/${JDBC.schema}&quot;, &quot;com.intersys.jdbc.CacheDriver&quot;),</span>
 
-<span class="fc" id="L29">  Daffodil_DB(&quot;jdbc:daffodilDB://${JDBC.host|localhost}:${JDBC.port|3456}/${JDBC.schema}&quot;,</span>
+<span class="fc" id="L32">  Daffodil_DB(&quot;jdbc:daffodilDB://${JDBC.host|localhost}:${JDBC.port|3456}/${JDBC.schema}&quot;,</span>
       &quot;in.co.daffodil.db.rmi.RmiDaffodilDBDriver&quot;),
 
-<span class="fc" id="L32">  DB2(&quot;jdbc:db2://${JDBC.host|localhost}:${JDBC.port|50000}/${JDBC.schema}&quot;, &quot;com.ibm.db2.jcc.DB2Driver&quot;),</span>
+<span class="fc" id="L35">  DB2(&quot;jdbc:db2://${JDBC.host|localhost}:${JDBC.port|50000}/${JDBC.schema}&quot;, &quot;com.ibm.db2.jcc.DB2Driver&quot;),</span>
 
-<span class="fc" id="L34">  DB2_DataDirect(&quot;jdbc:datadirect:db2://${JDBC.host|localhost}:${JDBC.port|50000}/DatabaseName=${JDBC.schema}&quot;,</span>
+<span class="fc" id="L37">  DB2_DataDirect(&quot;jdbc:datadirect:db2://${JDBC.host|localhost}:${JDBC.port|50000}/DatabaseName=${JDBC.schema}&quot;,</span>
       &quot;com.ddtek.jdbc.db2.DB2Driver&quot;),
 
-<span class="fc" id="L37">  DB2_AS400_JTOpen(&quot;jdbc:as400://${JDBC.host|localhost}&quot;, &quot;com.ibm.as400.access.AS400JDBCDriver&quot;),</span>
+<span class="fc" id="L40">  DB2_AS400_JTOpen(&quot;jdbc:as400://${JDBC.host|localhost}&quot;, &quot;com.ibm.as400.access.AS400JDBCDriver&quot;),</span>
 
-<span class="fc" id="L39">  Firebird(&quot;jdbc:firebirdsql:${JDBC.host|localhost}/${JDBC.port|3050}:${JDBC.schema}&quot;, &quot;org.firebirdsql.jdbc.FBDriver&quot;),</span>
+<span class="fc" id="L42">  Firebird(&quot;jdbc:firebirdsql:${JDBC.host|localhost}/${JDBC.port|3050}:${JDBC.schema}&quot;, &quot;org.firebirdsql.jdbc.FBDriver&quot;),</span>
 
-<span class="fc" id="L41">  FrontBase(&quot;jdbc:FrontBase://${JDBC.host|localhost}/${JDBC.schema}&quot;, &quot;jdbc.FrontBase.FBJDriver&quot;),</span>
+<span class="fc" id="L44">  FrontBase(&quot;jdbc:FrontBase://${JDBC.host|localhost}/${JDBC.schema}&quot;, &quot;jdbc.FrontBase.FBJDriver&quot;),</span>
 
-<span class="fc" id="L43">  HP_Neoview(&quot;jdbc:hpt4jdbc://${neoview.system}:${JDBC.port}/:&quot;, &quot;com.hp.t4jdbc.HPT4Driver&quot;),</span>
+<span class="fc" id="L46">  HP_Neoview(&quot;jdbc:hpt4jdbc://${neoview.system}:${JDBC.port}/:&quot;, &quot;com.hp.t4jdbc.HPT4Driver&quot;),</span>
 
-<span class="fc" id="L45">  HSQLDB_Server(&quot;jdbc:hsqldb:hsql://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
+<span class="fc" id="L48">  HSQLDB_Server(&quot;jdbc:hsqldb:hsql://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
 
-<span class="fc" id="L47">  HSQLDB_Embedded(&quot;jdbc:hsqldb:${JDBC.schema}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
+<span class="fc" id="L50">  HSQLDB_Embedded(&quot;jdbc:hsqldb:${JDBC.schema}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
 
-<span class="fc" id="L49">  HSQLDB_IN_MEMORY_NAMED(&quot;jdbc:hsqldb:mem:${JDBC.schema|aname}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
+<span class="fc" id="L52">  HSQLDB_IN_MEMORY_NAMED(&quot;jdbc:hsqldb:mem:${JDBC.schema|aname}&quot;, &quot;org.hsqldb.jdbcDriver&quot;),</span>
 
-<span class="fc" id="L51">  H2_IN_MEMORY_PRIVATE(&quot;jdbc:h2:mem&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L54">  H2_IN_MEMORY_PRIVATE(&quot;jdbc:h2:mem&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L53">  H2_IN_MEMORY_NAMED(&quot;jdbc:h2:mem:${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L56">  H2_IN_MEMORY_NAMED(&quot;jdbc:h2:mem:${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L55">  H2_SERVER_TCP(&quot;jdbc:h2:tcp://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L58">  H2_SERVER_TCP(&quot;jdbc:h2:tcp://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L57">  H2_SERVER_SSL(&quot;jdbc:h2:ssl://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L60">  H2_SERVER_SSL(&quot;jdbc:h2:ssl://${JDBC.host|localhost}:${JDBC.port|9001}/${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L59">  H2_FILE(&quot;jdbc:h2:file://${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L62">  H2_FILE(&quot;jdbc:h2:file://${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L61">  H2_EMBEDDED(&quot;jdbc:h2:${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
+<span class="fc" id="L64">  H2_EMBEDDED(&quot;jdbc:h2:${JDBC.schema}&quot;, &quot;org.h2.Driver&quot;),</span>
 
-<span class="fc" id="L63">  Informix(</span>
+<span class="fc" id="L66">  Informix(</span>
       &quot;jdbc:informix-sqli://${JDBC.host|localhost}:${JDBC.port|1533}/${JDBC.schema}:informixserver=${dbservername}&quot;,
       &quot;com.informix.jdbc.IfxDriver&quot;),
 
-<span class="fc" id="L67">  Informix_DataDirect(</span>
+<span class="fc" id="L70">  Informix_DataDirect(</span>
       &quot;jdbc:datadirect:informix://${JDBC.host|localhost}:${JDBC.port|1533};InformixServer=${informixserver};DatabaseServer=${JDBC.schema}&quot;,
       &quot;com.ddtek.jdbc.informix.InformixDriver&quot;),
 
-<span class="fc" id="L71">  Derby_Server(&quot;jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}&quot;,</span>
+<span class="fc" id="L74">  Derby_Server(&quot;jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}&quot;,</span>
       &quot;org.apache.derby.jdbc.ClientDriver&quot;),
 
-<span class="fc" id="L74">  Derby_Embedded(&quot;jdbc:derby:${JDBC.schema};create=${derby.create|false}&quot;, &quot;org.apache.derby.jdbc.EmbeddedDriver&quot;),</span>
+<span class="fc" id="L77">  Derby_Embedded(&quot;jdbc:derby:${JDBC.schema};create=${derby.create|false}&quot;, &quot;org.apache.derby.jdbc.EmbeddedDriver&quot;),</span>
 
-<span class="fc" id="L76">  JDataStore(&quot;jdbc:borland:dslocal:${JDBC.schema}&quot;, &quot;com.borland.datastore.jdbc.DataStoreDriver&quot;),</span>
+<span class="fc" id="L79">  JDataStore(&quot;jdbc:borland:dslocal:${JDBC.schema}&quot;, &quot;com.borland.datastore.jdbc.DataStoreDriver&quot;),</span>
 
-<span class="fc" id="L78">  JDBC_ODBC_Bridge(&quot;jdbc:odbc:${ODBC.datasource}&quot;, &quot;sun.jdbc.odbc.JdbcOdbcDriver&quot;),</span>
+<span class="fc" id="L81">  JDBC_ODBC_Bridge(&quot;jdbc:odbc:${ODBC.datasource}&quot;, &quot;sun.jdbc.odbc.JdbcOdbcDriver&quot;),</span>
 
-<span class="fc" id="L80">  MariaDB(&quot;jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}&quot;, &quot;org.mariadb.jdbc.Driver&quot;),</span>
+<span class="fc" id="L83">  MariaDB(&quot;jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}&quot;, &quot;org.mariadb.jdbc.Driver&quot;),</span>
 
-<span class="fc" id="L82">  MaxDB(&quot;jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}&quot;, &quot;com.sap.dbtech.jdbc.DriverSapDB&quot;),</span>
+<span class="fc" id="L85">  MaxDB(&quot;jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}&quot;, &quot;com.sap.dbtech.jdbc.DriverSapDB&quot;),</span>
 
-<span class="fc" id="L84">  McKoi(&quot;jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}&quot;, &quot;com.mckoi.JDBCDriver&quot;),</span>
+<span class="fc" id="L87">  McKoi(&quot;jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}&quot;, &quot;com.mckoi.JDBCDriver&quot;),</span>
 
-<span class="fc" id="L86">  Mimer(&quot;jdbc:mimer:${mimer.protocol}://${JDBC.host|localhost}:${JDBC.port|1360}/${JDBC.schema}&quot;,</span>
+<span class="fc" id="L89">  Mimer(&quot;jdbc:mimer:${mimer.protocol}://${JDBC.host|localhost}:${JDBC.port|1360}/${JDBC.schema}&quot;,</span>
       &quot;com.mimer.jdbc.Driver&quot;),
 
-<span class="fc" id="L89">  MySQL(&quot;jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}&quot;, &quot;com.mysql.jdbc.Driver&quot;),</span>
+<span class="fc" id="L92">  MySQL(&quot;jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}&quot;, &quot;com.mysql.jdbc.Driver&quot;),</span>
 
-<span class="fc" id="L91">  Netezza(&quot;jdbc:netezza://${JDBC.host|localhost}:${JDBC.port|5480}/${JDBC.schema}&quot;, &quot;org.netezza.Driver&quot;),</span>
+<span class="fc" id="L94">  Netezza(&quot;jdbc:netezza://${JDBC.host|localhost}:${JDBC.port|5480}/${JDBC.schema}&quot;, &quot;org.netezza.Driver&quot;),</span>
 
-<span class="fc" id="L93">  Oracle_Thin(&quot;jdbc:oracle:thin:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}&quot;,</span>
+<span class="fc" id="L96">  Oracle_Thin(&quot;jdbc:oracle:thin:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}&quot;,</span>
       &quot;oracle.jdbc.OracleDriver&quot;),
 
-<span class="fc" id="L96">  Oracle_Service(&quot;jdbc:oracle:thin:@//${JDBC.host|localhost}:${JDBC.port|1521}/${oracle.servicename|ORCL}&quot;,</span>
+<span class="fc" id="L99">  Oracle_Service(&quot;jdbc:oracle:thin:@//${JDBC.host|localhost}:${JDBC.port|1521}/${oracle.servicename|ORCL}&quot;,</span>
       &quot;oracle.jdbc.OracleDriver&quot;),
 
-<span class="fc" id="L99">  Oracle_OCI(&quot;jdbc:oracle:oci:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}&quot;,</span>
+<span class="fc" id="L102">  Oracle_OCI(&quot;jdbc:oracle:oci:@${JDBC.host|localhost}:${JDBC.port|1521}:${oracle.sid|ORCL}&quot;,</span>
       &quot;oracle.jdbc.OracleDriver&quot;),
 
-<span class="fc" id="L102">  Oracle_DataDirect(</span>
+<span class="fc" id="L105">  Oracle_DataDirect(</span>
       &quot;jdbc:datadirect:oracle://${JDBC.host|localhost}:${JDBC.port|1521};ServiceName=${oracle.servicename|ORCL}&quot;,
       &quot;com.ddtek.jdbc.oracle.OracleDriver&quot;),
 
-<span class="fc" id="L106">  Pervasive(&quot;jdbc:pervasive://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}&quot;, &quot;pervasive.jdbc.PervasiveDriver&quot;),</span>
+<span class="fc" id="L109">  Pervasive(&quot;jdbc:pervasive://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}&quot;, &quot;pervasive.jdbc.PervasiveDriver&quot;),</span>
 
-<span class="fc" id="L108">  Pointbase_Embedded(</span>
+<span class="fc" id="L111">  Pointbase_Embedded(</span>
       &quot;jdbc:pointbase:embedded:${JDBC.schema},database.home=${pointbase.home},create=${pointbase.create|false}&quot;,
       &quot;com.pointbase.jdbc.jdbcUniversalDriver&quot;),
 
-<span class="fc" id="L112">  Pointbase_Server(</span>
+<span class="fc" id="L115">  Pointbase_Server(</span>
       &quot;jdbc:pointbase:server://${JDBC.host|localhost}:${JDBC.port|9092}/${JDBC.schema},database.home=${pointbase.home},create=${pointbase.create|false}&quot;,
       &quot;com.pointbase.jdbc.jdbcUniversalDriver&quot;),
 
-<span class="fc" id="L116">  PostgreSQL(&quot;jdbc:postgresql://${JDBC.host|localhost}:${JDBC.port|5432}/${JDBC.schema}&quot;, &quot;org.postgresql.Driver&quot;),</span>
+<span class="fc" id="L119">  PostgreSQL(&quot;jdbc:postgresql://${JDBC.host|localhost}:${JDBC.port|5432}/${JDBC.schema}&quot;, &quot;org.postgresql.Driver&quot;),</span>
 
-<span class="fc" id="L118">  Progress(&quot;jdbc:jdbcProgress:T:${JDBC.host|localhost}:${JDBC.port|2055}:${JDBC.schema}&quot;,</span>
+<span class="fc" id="L121">  Progress(&quot;jdbc:jdbcProgress:T:${JDBC.host|localhost}:${JDBC.port|2055}:${JDBC.schema}&quot;,</span>
       &quot;com.progress.sql.jdbc.JdbcProgressDriver&quot;),
 
-<span class="fc" id="L121">  SQL_Server_DataDirect(</span>
+<span class="fc" id="L124">  SQL_Server_DataDirect(</span>
       &quot;jdbc:datadirect:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}&quot;,
       &quot;com.ddtek.jdbc.sqlserver.SQLServerDriver&quot;),
 
-<span class="fc" id="L125">  SQL_Server_jTDS(</span>
+<span class="fc" id="L128">  SQL_Server_jTDS(</span>
       &quot;jdbc:jtds:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind};domain=${sqlserver.domain}&quot;,
       &quot;net.sourceforge.jtds.jdbc.Driver&quot;),
 
-<span class="fc" id="L129">  SQL_Server_MS_Driver(</span>
+<span class="fc" id="L132">  SQL_Server_MS_Driver(</span>
       &quot;jdbc:microsoft:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}&quot;,
       &quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;),
 
-<span class="fc" id="L133">  SQL_Server_2005_MS_Driver(</span>
+<span class="fc" id="L136">  SQL_Server_2005_MS_Driver(</span>
       &quot;jdbc:sqlserver://${JDBC.host|localhost}:${JDBC.port|1433};DatabaseName=${JDBC.schema|Northwind}&quot;,
       &quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;),
 
-<span class="fc" id="L137">  SQLITE_FILE(&quot;jdbc:sqlite:${JDBC.schema}&quot;, &quot;org.sqlite.JDBC&quot;),</span>
+<span class="fc" id="L140">  SQLITE_FILE(&quot;jdbc:sqlite:${JDBC.schema}&quot;, &quot;org.sqlite.JDBC&quot;),</span>
 
-<span class="fc" id="L139">  SQLITE_IN_MEMORY(&quot;jdbc:sqlite::memory:&quot;, &quot;org.sqlite.JDBC&quot;),</span>
+<span class="fc" id="L142">  SQLITE_IN_MEMORY(&quot;jdbc:sqlite::memory:&quot;, &quot;org.sqlite.JDBC&quot;),</span>
 
-<span class="fc" id="L141">  Sybase_ASE_jTDS(&quot;jdbc:jtds:sybase://${JDBC.host|localhost}:${JDBC.port|5000};DatabaseName=${JDBC.schema}&quot;,</span>
+<span class="fc" id="L144">  Sybase_ASE_jTDS(&quot;jdbc:jtds:sybase://${JDBC.host|localhost}:${JDBC.port|5000};DatabaseName=${JDBC.schema}&quot;,</span>
       &quot;net.sourceforge.jtds.jdbc.Driver&quot;),
 
-<span class="fc" id="L144">  Sybase_ASE_JConnect(&quot;jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|5000}/${JDBC.schema}&quot;,</span>
+<span class="fc" id="L147">  Sybase_ASE_JConnect(&quot;jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|5000}/${JDBC.schema}&quot;,</span>
       &quot;com.sybase.jdbc3.jdbc.SybDriver&quot;),
 
-<span class="fc" id="L147">  Sybase_SQL_Anywhere_JConnect(&quot;jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|2638}/${JDBC.schema}&quot;,</span>
+<span class="fc" id="L150">  Sybase_SQL_Anywhere_JConnect(&quot;jdbc:sybase:Tds:${JDBC.host|localhost}:${JDBC.port|2638}/${JDBC.schema}&quot;,</span>
       &quot;com.sybase.jdbc3.jdbc.SybDriver&quot;),
 
-<span class="fc" id="L150">  Sybase_DataDirect(&quot;jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}&quot;,</span>
+<span class="fc" id="L153">  Sybase_DataDirect(&quot;jdbc:datadirect:sybase://${JDBC.host|localhost}:${JDBC.port|2048};ServiceName=${JDBC.schema}&quot;,</span>
       &quot;com.ddtek.jdbc.sybase.SybaseDriver&quot;);
 
   private static final String JDBC_DRIVER = &quot;JDBC.driver&quot;;
@@ -158,16 +161,16 @@ import com.google.inject.Module;
 
   private final String driverClass;
 
-<span class="fc" id="L161">  JdbcHelper(String urlTemplate, String driverClass) {</span>
-<span class="fc" id="L162">    this.urlTemplate = urlTemplate;</span>
-<span class="fc" id="L163">    this.driverClass = driverClass;</span>
-<span class="fc" id="L164">  }</span>
+<span class="fc" id="L164">  JdbcHelper(String urlTemplate, String driverClass) {</span>
+<span class="fc" id="L165">    this.urlTemplate = urlTemplate;</span>
+<span class="fc" id="L166">    this.driverClass = driverClass;</span>
+<span class="fc" id="L167">  }</span>
 
   @Override
   public void configure(Binder binder) {
-<span class="fc" id="L168">    binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);</span>
-<span class="fc" id="L169">    binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new JdbcUrlAntFormatter(urlTemplate)));</span>
-<span class="fc" id="L170">  }</span>
+<span class="fc" id="L171">    binder.bindConstant().annotatedWith(named(JDBC_DRIVER)).to(driverClass);</span>
+<span class="fc" id="L172">    binder.bind(Key.get(String.class, named(JDBC_URL))).toProvider(guicify(new JdbcUrlAntFormatter(urlTemplate)));</span>
+<span class="fc" id="L173">  }</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
