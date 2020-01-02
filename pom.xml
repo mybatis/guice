@@ -131,10 +131,10 @@
      | Optional dependencies
     -->
     <dependency>
-        <groupId>com.google.code.findbugs</groupId>
-        <artifactId>jsr305</artifactId>
-        <version>3.0.2</version>
-        <optional>true</optional>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
