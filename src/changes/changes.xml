@@ -27,6 +27,10 @@
 
   <body>
     <release version="3.11" date="" description="maintenance release">
+      <action dev="daniel.degroff" type="add">
+        Adds support for HikariCP.
+        <fixes issue="129"/>
+      </action>
       <action dev="christian.poitras" type="add">
         Allow TxTransactionalMethodInterceptor to commit the transaction on some exceptions.
         <fixes issue="129"/>
