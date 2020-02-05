@@ -15,8 +15,11 @@
  */
 package org.mybatis.guice.datasource.hikaricp;
 
-import java.sql.SQLException;
-import java.util.Properties;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -27,10 +30,13 @@ import com.google.inject.name.Names;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory;
 import com.zaxxer.hikari.metrics.dropwizard.CodahaleMetricsTrackerFactory;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class HikariCPProviderTest {
@@ -79,13 +85,8 @@ public class HikariCPProviderTest {
     final String poolName = "MyBatis Pool";
 
     final boolean readOnly = false;
-    final Object registerMbeans = null;
 
-    final Object scheduledExecutorService = null;
     final String schema = "PUBLIC";
-
-    final Object threadFactory = null;
-    final Object transactionIsolation = null;
 
     final long validationTimeoutMs = 250; // Min is 250ms
 
@@ -132,13 +133,8 @@ public class HikariCPProviderTest {
         bindConstant().annotatedWith(Names.named("hikaricp.minimumIdle")).to(minimumIdle);
         bindConstant().annotatedWith(Names.named("hikaricp.poolName")).to(poolName);
         bindConstant().annotatedWith(Names.named("hikaricp.readOnly")).to(readOnly);
-        // bindConstant().annotatedWith(Names.named("hikaricp.registerMbeans")).to(registerMbeans);
 
-        // bindConstant().annotatedWith(Names.named("hikaricp.scheduledExecutorService")).to(scheduledExecutorService);
         bindConstant().annotatedWith(Names.named("hikaricp.schema")).to(schema);
-
-        // bindConstant().annotatedWith(Names.named("hikaricp.threadFactory")).to(threadFactory);
-        // bindConstant().annotatedWith(Names.named("hikaricp.transactionIsolation")).to(transactionIsolation);
 
         bindConstant().annotatedWith(Names.named("hikaricp.validationTimeoutMs")).to(validationTimeoutMs);
       }
@@ -182,7 +178,125 @@ public class HikariCPProviderTest {
 
     assertEquals(poolName, dataSource.getPoolName());
     assertEquals(readOnly, dataSource.isReadOnly());
+    assertFalse(dataSource.isRegisterMbeans());
     assertEquals(schema, dataSource.getSchema());
+    assertNull(dataSource.getTransactionIsolation());
     assertEquals(validationTimeoutMs, dataSource.getValidationTimeout());
+  }
+
+  @Test
+  public void get_MetricRegistry() throws SQLException {
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final Object metricsRegistry = mock(MetricRegistry.class);
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bind(Object.class).annotatedWith(Names.named("hikaricp.metricRegistry")).toInstance(metricsRegistry);
+      }
+    });
+    HikariCPProvider provider = injector.getInstance(HikariCPProvider.class);
+    HikariDataSource dataSource = (HikariDataSource) provider.get();
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(metricsRegistry, dataSource.getMetricRegistry());
+  }
+
+  @Test
+  public void get_RegisterMbeans() throws SQLException {
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final boolean registerMbeans = true;
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bindConstant().annotatedWith(Names.named("hikaricp.registerMbeans")).to(registerMbeans);
+      }
+    });
+    HikariCPProvider provider = injector.getInstance(HikariCPProvider.class);
+    HikariDataSource dataSource = (HikariDataSource) provider.get();
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertTrue(dataSource.isRegisterMbeans());
+  }
+
+  @Test
+  public void get_ScheduledExecutor() throws SQLException {
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final ScheduledExecutorService scheduledExecutor = mock(ScheduledExecutorService.class);
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bind(ScheduledExecutorService.class).annotatedWith(Names.named("hikaricp.scheduledExecutorService"))
+            .toInstance(scheduledExecutor);
+      }
+    });
+    HikariCPProvider provider = injector.getInstance(HikariCPProvider.class);
+    HikariDataSource dataSource = (HikariDataSource) provider.get();
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(scheduledExecutor, dataSource.getScheduledExecutor());
+  }
+
+  @Test
+  public void get_ThreadFactory() throws SQLException {
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final ThreadFactory threadFactory = mock(ThreadFactory.class);
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bind(ThreadFactory.class).annotatedWith(Names.named("hikaricp.threadFactory")).toInstance(threadFactory);
+      }
+    });
+    HikariCPProvider provider = injector.getInstance(HikariCPProvider.class);
+    HikariDataSource dataSource = (HikariDataSource) provider.get();
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(threadFactory, dataSource.getThreadFactory());
+  }
+
+  @Test
+  public void get_TransactionIsolation() throws SQLException {
+    final String url = "jdbc:h2:mem:testdb";
+    final String username = "test_user";
+    final String password = "test_password";
+    final String transactionIsolation = "TRANSACTION_READ_COMMITTED";
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bindConstant().annotatedWith(Names.named("JDBC.url")).to(url);
+        bindConstant().annotatedWith(Names.named("JDBC.username")).to(username);
+        bindConstant().annotatedWith(Names.named("JDBC.password")).to(password);
+        bindConstant().annotatedWith(Names.named("hikaricp.transactionIsolation")).to(transactionIsolation);
+      }
+    });
+    HikariCPProvider provider = injector.getInstance(HikariCPProvider.class);
+    HikariDataSource dataSource = (HikariDataSource) provider.get();
+    assertEquals(url, dataSource.getJdbcUrl());
+    assertEquals(username, dataSource.getUsername());
+    assertEquals(password, dataSource.getPassword());
+    assertEquals(transactionIsolation, dataSource.getTransactionIsolation());
   }
 }

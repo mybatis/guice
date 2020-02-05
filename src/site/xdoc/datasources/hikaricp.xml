@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2019-2020 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -33,6 +33,172 @@
         and helps users to configure it.
       </p>
 
+      <p>
+        The table below contains all of the available properties for the Provider:; for more
+        details please consult the
+        <a href="https://javadoc.io/doc/com.zaxxer/HikariCP/latest/index.html">Official reference</a>.</p>
+        <table>
+            <caption>org.mybatis.guice.datasource.hikaricp.HikariCPProvider properties</caption>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Required</th>
+                    <th>Bind to Java Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>JDBC.username</td>
+                    <td>true</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>JDBC.password</td>
+                    <td>true</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>JDBC.loginTimeout</td>
+                    <td>false</td>
+                    <td>int</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.allowPoolSuspension</td>
+                    <td>false</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.autoCommit</td>
+                    <td>false</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.catalog</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.connectionInitSql</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.connectionTestQuery</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.connectionTimeoutMs</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.driverClassName</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.healthCheckProperties</td>
+                    <td>false</td>
+                    <td>java.util.Properties</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.healthCheckRegistry</td>
+                    <td>false</td>
+                    <td>com.codahale.metrics.health.HealthCheckRegistry</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.idleTimeoutMs</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.initializationFailTimeout</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.isolateInternalQueries</td>
+                    <td>false</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.leakDetectionThresholdMs</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.loginTimeout</td>
+                    <td>false</td>
+                    <td>int</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.maxLifetimeMs</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.maxPoolSize</td>
+                    <td>false</td>
+                    <td>int</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.metricRegistry</td>
+                    <td>false</td>
+                    <td>com.codahale.metrics.MetricRegistry or io.micrometer.core.instrument.MeterRegistry</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.metricsTrackerFactory</td>
+                    <td>false</td>
+                    <td>com.zaxxer.hikari.metrics.MetricsTrackerFactory</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.minimumIdle</td>
+                    <td>false</td>
+                    <td>int</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.poolName</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.readOnly</td>
+                    <td>false</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.registerMbeans</td>
+                    <td>false</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.scheduledExecutorService</td>
+                    <td>false</td>
+                    <td>java.util.concurrent.ScheduledExecutorService</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.schema</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.threadFactory</td>
+                    <td>false</td>
+                    <td>java.util.concurrent.ThreadFactory</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.transactionIsolation</td>
+                    <td>false</td>
+                    <td>java.lang.String</td>
+                </tr>
+                <tr>
+                    <td>hikaricp.validationTimeoutMs</td>
+                    <td>false</td>
+                    <td>long</td>
+                </tr>
+            </tbody>
+        </table>
     </section>
   </body>
 
