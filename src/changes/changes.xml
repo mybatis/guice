@@ -76,6 +76,9 @@
         Fixes OSGI imports.
         <fixes issue="126"/>
       </action>
+      <action dev="christian.poitras" type="remove">
+        Removed support for BoneCP.
+      </action>
     </release>
     <release version="3.10" date="2017-09-09" description="maintenance release">
       <action dev="christian.poitras" type="add">

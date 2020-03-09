@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2018 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@
           </li>
           <li><a href="datasources/c3p0.html">C3P0</a>;
           </li>
-          <li><a href="datasources/bonecp.html">BoneCP</a>.
+          <li><a href="datasources/hikaricp">HikariCP</a>.
           </li>
           <li><a href="datasources/druid.html">Druid</a>.
           </li>

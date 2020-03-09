@@ -91,7 +91,7 @@
     <gcu.product>Guice</gcu.product>
     <guice.version>4.2.2</guice.version>
     <ejb-api.version>3.2.6</ejb-api.version>
-    <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.jolbox.bonecp.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
+    <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <spotbugs.omitVisitors>UnreadFields</spotbugs.omitVisitors>
     <module.name>org.mybatis.guice</module.name>
 
@@ -170,9 +170,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.jolbox</groupId>
-      <artifactId>bonecp</artifactId>
-      <version>0.8.0.RELEASE</version>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>3.4.2</version>
       <optional>true</optional>
     </dependency>
 
