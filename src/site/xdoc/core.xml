@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -173,7 +173,7 @@ MyMapper mapper = injector.getInstance(MyMapper.class);]]></source>
                 The mybatis-guice framework comes with some providers that
                 support the MyBatis-native Data Sources and other well known
                 Data Sources, <i>C3P0</i>,
-                <i>Apache Commons DBCP</i> and <i>BoneCP</i> but users are free to
+                <i>Apache Commons DBCP</i> and <i>HikariCP</i> but users are free to
                 implement their own <i>javax.sql.DataSource</i>
                 Provider and reference it in the <i>org.mybatis.guice.MyBatisModule</i>.
             </p>
