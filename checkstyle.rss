@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2009 - 2020 MyBatis.org</copyright>
     <item>
-      <title>File: 21,
+      <title>File: 85,
              Errors: 0,
-             Warnings: 61,
+             Warnings: 65,
              Infos: 0
       </title>
             <link>http://mybatis.github.io/guice//checkstyle.html</link>
@@ -46,27 +46,13 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.Transactional.java">org/mybatis/guice/transactional/Transactional.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.AutoMappingBehaviorConfigurationSetting.java">org/mybatis/guice/configuration/settings/AutoMappingBehaviorConfigurationSetting.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.XASqlSessionManager.java">org/mybatis/guice/transactional/XASqlSessionManager.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
                 </td>
                 <td>
                   0
@@ -88,13 +74,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.MyBatisJtaModule.java">org/mybatis/guice/MyBatisJtaModule.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.AbstractMyBatisModule.java">org/mybatis/guice/AbstractMyBatisModule.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -102,13 +88,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.provision.ConfigurationProviderProvisionListener.java">org/mybatis/guice/provision/ConfigurationProviderProvisionListener.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.helper.KeyResolver.java">org/mybatis/guice/datasource/helper/KeyResolver.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  4
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.MyBatisJtaModule.java">org/mybatis/guice/MyBatisJtaModule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
                 <td>
                   0
@@ -130,6 +130,34 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#src.test.resources.org.mybatis.guice.datasource.builtin.JndiDataSourceProviderTest.properties">src/test/resources/org/mybatis/guice/datasource/builtin/JndiDataSourceProviderTest.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.binder.AliasBinder.java">org/mybatis/guice/binder/AliasBinder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.type.TypeHandlerProvider.java">org/mybatis/guice/type/TypeHandlerProvider.java</a>
                 </td>
                 <td>
@@ -144,7 +172,455 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#target.formatter-maven-cache.properties">target/formatter-maven-cache.properties</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.DefaultExecutorTypeConfigurationSetting.java">org/mybatis/guice/configuration/settings/DefaultExecutorTypeConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserMaxWaitMillis.java">org/mybatis/guice/datasource/dbcp/PerUserMaxWaitMillis.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.binder.TypeHandlerBinder.java">org/mybatis/guice/binder/TypeHandlerBinder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#release.properties">release.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.session.package-info.java">org/mybatis/guice/session/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider.java">org/mybatis/guice/datasource/dbcp/SharedPoolDataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.UseColumnLabelConfigurationSetting.java">org/mybatis/guice/configuration/settings/UseColumnLabelConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.MapUnderscoreToCamelCaseConfigurationSetting.java">org/mybatis/guice/configuration/settings/MapUnderscoreToCamelCaseConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.builtin.UnpooledDataSourceProvider.java">org/mybatis/guice/datasource/builtin/UnpooledDataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.TransactionToken.java">org/mybatis/guice/transactional/TransactionToken.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.MultipleResultSetsEnabledConfigurationSetting.java">org/mybatis/guice/configuration/settings/MultipleResultSetsEnabledConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.hikaricp.package-info.java">org/mybatis/guice/datasource/hikaricp/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserDefaultTransactionIsolation.java">org/mybatis/guice/datasource/dbcp/PerUserDefaultTransactionIsolation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.ObjectFactoryConfigurationSetting.java">org/mybatis/guice/configuration/settings/ObjectFactoryConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.TransactionalMethodInterceptor.java">org/mybatis/guice/transactional/TransactionalMethodInterceptor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider.java">org/mybatis/guice/configuration/settings/TypeHandlerConfigurationSettingProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.LazyLoadingEnabledConfigurationSetting.java">org/mybatis/guice/configuration/settings/LazyLoadingEnabledConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.XASqlSessionManagerProvider.java">org/mybatis/guice/transactional/XASqlSessionManagerProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.AliasConfigurationSetting.java">org/mybatis/guice/configuration/settings/AliasConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider.java">org/mybatis/guice/datasource/dbcp/BasicDataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.environment.package-info.java">org/mybatis/guice/environment/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.package-info.java">org/mybatis/guice/datasource/dbcp/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.package-info.java">org/mybatis/guice/configuration/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.session.SqlSessionFactoryProvider.java">org/mybatis/guice/session/SqlSessionFactoryProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.helper.JdbcUrlAntFormatter.java">org/mybatis/guice/datasource/helper/JdbcUrlAntFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.ConfigurationSettingListener.java">org/mybatis/guice/configuration/ConfigurationSettingListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserMaxIdle.java">org/mybatis/guice/datasource/dbcp/PerUserMaxIdle.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.DefaultStatementTimeoutConfigurationSetting.java">org/mybatis/guice/configuration/settings/DefaultStatementTimeoutConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.hikaricp.HikariCPProvider.java">org/mybatis/guice/datasource/hikaricp/HikariCPProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.provision.ConfigurationProviderProvisionListener.java">org/mybatis/guice/provision/ConfigurationProviderProvisionListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.c3p0.C3p0DataSourceProvider.java">org/mybatis/guice/datasource/c3p0/C3p0DataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.package-info.java">org/mybatis/guice/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.LocalCacheScopeConfigurationSetting.java">org/mybatis/guice/configuration/settings/LocalCacheScopeConfigurationSetting.java</a>
                 </td>
                 <td>
                   0
@@ -172,13 +648,41 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.MapperConfigurationSetting.java">org/mybatis/guice/configuration/settings/MapperConfigurationSetting.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserMaxTotal.java">org/mybatis/guice/datasource/dbcp/PerUserMaxTotal.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceModule.java">org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceModule.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.builtin.package-info.java">org/mybatis/guice/datasource/builtin/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -200,27 +704,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider.java">org/mybatis/guice/datasource/dbcp/SharedPoolDataSourceProvider.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#.mvn.wrapper.maven-wrapper.properties">.mvn/wrapper/maven-wrapper.properties</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  4
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.builtin.JndiDataSourceProvider.java">org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -228,13 +718,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.bonecp.BoneCPProvider.java">org/mybatis/guice/datasource/bonecp/BoneCPProvider.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.CacheEnabledConfigurationSetting.java">org/mybatis/guice/configuration/settings/CacheEnabledConfigurationSetting.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
                 <td>
                   0
@@ -242,13 +732,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.XASqlSessionManagerProvider.java">org/mybatis/guice/transactional/XASqlSessionManagerProvider.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider.java">org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProvider.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.JavaTypeAndHandlerConfigurationSettingProvider.java">org/mybatis/guice/configuration/settings/JavaTypeAndHandlerConfigurationSettingProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -270,27 +774,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider.java">org/mybatis/guice/datasource/dbcp/BasicDataSourceProvider.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.environment.EnvironmentProvider.java">org/mybatis/guice/environment/EnvironmentProvider.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  6
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.ConfigurationProvider.java">org/mybatis/guice/configuration/ConfigurationProvider.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  8
                 </td>
                 <td>
                   0
@@ -298,13 +788,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.session.SqlSessionFactoryProvider.java">org/mybatis/guice/session/SqlSessionFactoryProvider.java</a>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserDefaultReadOnly.java">org/mybatis/guice/datasource/dbcp/PerUserDefaultReadOnly.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -326,6 +816,146 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.ConfigurationSetting.java">org/mybatis/guice/configuration/settings/ConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.mappers.package-info.java">org/mybatis/guice/mappers/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.TxTransactionalMethodInterceptor.java">org/mybatis/guice/transactional/TxTransactionalMethodInterceptor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.helper.package-info.java">org/mybatis/guice/datasource/helper/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.MapperConfigurationSetting.java">org/mybatis/guice/configuration/settings/MapperConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.AggressiveLazyLoadingConfigurationSetting.java">org/mybatis/guice/configuration/settings/AggressiveLazyLoadingConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.builtin.JndiDataSourceProvider.java">org/mybatis/guice/datasource/builtin/JndiDataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.c3p0.package-info.java">org/mybatis/guice/datasource/c3p0/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.binder.package-info.java">org/mybatis/guice/binder/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.Isolation.java">org/mybatis/guice/transactional/Isolation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.MyBatisModule.java">org/mybatis/guice/MyBatisModule.java</a>
                 </td>
                 <td>
@@ -333,6 +963,272 @@ under the License.
                 </td>
                 <td>
                   8
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.XASqlSessionManager.java">org/mybatis/guice/transactional/XASqlSessionManager.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.Transactional.java">org/mybatis/guice/transactional/Transactional.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.provision.KeyMatcher.java">org/mybatis/guice/provision/KeyMatcher.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.CallSettersOnNullsConfigurationSetting.java">org/mybatis/guice/configuration/settings/CallSettersOnNullsConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.package-info.java">org/mybatis/guice/transactional/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.ObjectWrapperFactoryConfigurationSetting.java">org/mybatis/guice/configuration/settings/ObjectWrapperFactoryConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#src.test.resources.log4j.properties">src/test/resources/log4j.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#target.formatter-maven-cache.properties">target/formatter-maven-cache.properties</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.dbcp.PerUserDefaultAutoCommit.java">org/mybatis/guice/datasource/dbcp/PerUserDefaultAutoCommit.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.ConfigurationSettings.java">org/mybatis/guice/configuration/settings/ConfigurationSettings.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.mappers.MapperProvider.java">org/mybatis/guice/mappers/MapperProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.DefaultScriptingLanguageTypeConfigurationSetting.java">org/mybatis/guice/configuration/settings/DefaultScriptingLanguageTypeConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.transactional.TransactionAttribute.java">org/mybatis/guice/transactional/TransactionAttribute.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.UseGeneratedKeysConfigurationSetting.java">org/mybatis/guice/configuration/settings/UseGeneratedKeysConfigurationSetting.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.druid.package-info.java">org/mybatis/guice/datasource/druid/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.datasource.builtin.PooledDataSourceProvider.java">org/mybatis/guice/datasource/builtin/PooledDataSourceProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.settings.InterceptorConfigurationSettingProvider.java">org/mybatis/guice/configuration/settings/InterceptorConfigurationSettingProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.configuration.ConfigurationProvider.java">org/mybatis/guice/configuration/ConfigurationProvider.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://mybatis.github.io/guice//checkstyle.html#org.mybatis.guice.Preconditions.java">org/mybatis/guice/Preconditions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
