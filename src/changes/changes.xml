@@ -26,13 +26,9 @@
   </properties>
 
   <body>
-    <release version="3.11" date="" description="maintenance release">
+    <release version="3.12" date="2020-03-09" description="maintenance release">
       <action dev="daniel.degroff" type="add">
         Adds support for HikariCP.
-        <fixes issue="129"/>
-      </action>
-      <action dev="christian.poitras" type="add">
-        Allow TxTransactionalMethodInterceptor to commit the transaction on some exceptions.
         <fixes issue="129"/>
       </action>
       <action dev="christian.poitras" type="update">
@@ -68,6 +64,16 @@
         <fixes issue="137"/>
         <fixes issue="138"/>
       </action>
+      <action dev="christian.poitras" type="remove">
+        Removed support for BoneCP.
+        <fixes issue="139"/>
+      </action>
+    </release>
+    <release version="3.11" date="2020-01-01" description="maintenance release">
+      <action dev="christian.poitras" type="add">
+        Allow TxTransactionalMethodInterceptor to commit the transaction on some exceptions.
+        <fixes issue="129"/>
+      </action>
       <action dev="christian.poitras" type="update">
         Fixes use of Configuration provider.
         <fixes issue="118"/>
@@ -75,9 +81,6 @@
       <action dev="christian.poitras" type="update">
         Fixes OSGI imports.
         <fixes issue="126"/>
-      </action>
-      <action dev="christian.poitras" type="remove">
-        Removed support for BoneCP.
       </action>
     </release>
     <release version="3.10" date="2017-09-09" description="maintenance release">
