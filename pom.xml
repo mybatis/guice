@@ -292,7 +292,7 @@
     <dependency>
       <groupId>io.dropwizard.metrics</groupId>
       <artifactId>metrics-healthchecks</artifactId>
-      <version>4.1.5</version>
+      <version>4.1.6</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
