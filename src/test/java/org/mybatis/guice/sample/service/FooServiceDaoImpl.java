@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  */
 package org.mybatis.guice.sample.service;
 
+import javax.inject.Inject;
+
 import org.mybatis.guice.CustomException;
 import org.mybatis.guice.sample.dao.UserDao;
 import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.transactional.Isolation;
 import org.mybatis.guice.transactional.Transactional;
-
-import javax.inject.Inject;
 
 /**
  * Impl of the FooService.

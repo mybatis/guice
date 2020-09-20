@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,25 +17,25 @@ package org.mybatis.guice.jta;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.PrivateModule;
+
 import javax.sql.DataSource;
 
 import org.apache.aries.transaction.AriesTransactionManager;
 import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.PrivateModule;
 
 public class JtaCustomXaResourceTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaCustomXaResourceTest.class);
@@ -111,7 +111,7 @@ public class JtaCustomXaResourceTest {
 
   /**
    * begin REQUIRED insert(id=1) commit REQUIRED
-   * 
+   *
    * have 1 rows
    */
   @Test

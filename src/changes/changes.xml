@@ -40,24 +40,24 @@
         DriverAdapterCPDSProvider:
         maxIdle removed;
         PerUserPoolDataSource:
-        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis; 
-        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun; 
-        testOnBorrow -&gt; defaultTestOnBorrow; 
-        testOnReturn -&gt; defaultTestOnReturn; 
-        testWhileIdle -&gt; defaultTestWhileIdle; 
-        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis; 
+        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis;
+        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun;
+        testOnBorrow -&gt; defaultTestOnBorrow;
+        testOnReturn -&gt; defaultTestOnReturn;
+        testWhileIdle -&gt; defaultTestWhileIdle;
+        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis;
         maxActive -&gt; defaultMaxTotal;
         maxIdle -&gt; defaultMaxIdle;
         maxWait -&gt; defaultMaxWaitMillis;
         @PerUserMaxActive -> @PerUserMaxTotal;
         @PerUserMaxWait -> @PerUserMaxWaitMillis;
         SharedPoolDataSourceProvider:
-        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis; 
-        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun; 
-        testOnBorrow -&gt; defaultTestOnBorrow; 
-        testOnReturn -&gt; defaultTestOnReturn; 
-        testWhileIdle -&gt; defaultTestWhileIdle; 
-        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis; 
+        minEvictableIdleTimeMillis -&gt; defaultMinEvictableIdleTimeMillis;
+        numTestsPerEvictionRun -&gt; defaultNumTestsPerEvictionRun;
+        testOnBorrow -&gt; defaultTestOnBorrow;
+        testOnReturn -&gt; defaultTestOnReturn;
+        testWhileIdle -&gt; defaultTestWhileIdle;
+        timeBetweenEvictionRunsMillis -&gt; defaultTimeBetweenEvictionRunsMillis;
         maxActive -&gt; defaultMaxTotal;
         maxIdle -&gt; defaultMaxIdle;
         maxWait -&gt; defaultMaxWaitMillis;

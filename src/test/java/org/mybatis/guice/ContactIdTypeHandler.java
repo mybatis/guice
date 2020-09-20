@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2017 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,11 +24,10 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.mybatis.guice.Counter;
 
 /**
  * TypeHandler for user name.
- * 
+ *
  * @author poitrac
  */
 public class ContactIdTypeHandler implements TypeHandler<Integer> {

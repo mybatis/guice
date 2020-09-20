@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,10 @@ package org.mybatis.guice.jta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.PrivateModule;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -25,19 +29,15 @@ import org.apache.aries.transaction.AriesTransactionManager;
 import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.PrivateModule;
 
 public class JtaLocalTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaLocalTest.class);
@@ -137,7 +137,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED insert(id=1) commit REQUIRED
-   * 
+   *
    * have 1 rows
    */
   @Test
@@ -148,7 +148,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW
-   * 
+   *
    * have 1 rows
    */
   @Test
@@ -159,7 +159,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED insert(id=1) roll back REQUIRED
-   * 
+   *
    * have 0 rows
    */
   @Test
@@ -173,7 +173,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW
-   * 
+   *
    * have 0 rows
    */
   @Test
@@ -187,7 +187,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW commit REQUIRED
-   * 
+   *
    * have 2 rows
    */
   @Test
@@ -198,7 +198,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW insert(id=1) commit REQUIRED
-   * 
+   *
    * have 2 rows
    */
   @Test
@@ -209,7 +209,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) roll back REQUIRES_NEW commit REQUIRED
-   * 
+   *
    * have 1 rows and id=1 (from commited REQUIRED)
    */
   @Test
@@ -223,7 +223,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW insert(id=2) commit REQUIRED
-   * 
+   *
    * have 1 rows and id=2 (from commited REQUIRED)
    */
   @Test
@@ -237,7 +237,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW insert(id=2) roll back REQUIRED
-   * 
+   *
    * have 1 rows and id=1 (from commited REQUIRES_NEW)
    */
   @Test
@@ -251,7 +251,7 @@ public class JtaLocalTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW roll back REQUIRED
-   * 
+   *
    * have 1 rows and id=2 (from commited REQUIRES_NEW)
    */
   @Test

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,10 @@ package org.mybatis.guice.nestedtx;
 import static org.apache.ibatis.io.Resources.getResourceAsReader;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.name.Names;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -32,10 +36,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.name.Names;
 
 public class NestedTxTest {
 
