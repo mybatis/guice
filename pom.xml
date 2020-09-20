@@ -122,13 +122,6 @@
      | Java 8 thru 11 maven artifact:
     -->
     <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>3.4.5</version>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
       <groupId>jakarta.ejb</groupId>
       <artifactId>jakarta.ejb-api</artifactId>
       <version>${ejb-api.version}</version>
