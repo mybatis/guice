@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,12 @@ import static org.mybatis.guice.Preconditions.checkArgument;
 import com.google.inject.Key;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
+
+import java.util.Collection;
+import java.util.Set;
+
+import javax.inject.Provider;
+import javax.sql.DataSource;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -70,12 +76,6 @@ import org.mybatis.guice.provision.ConfigurationProviderProvisionListener;
 import org.mybatis.guice.provision.KeyMatcher;
 import org.mybatis.guice.session.SqlSessionFactoryProvider;
 import org.mybatis.guice.type.TypeHandlerProvider;
-
-import java.util.Collection;
-import java.util.Set;
-
-import javax.inject.Provider;
-import javax.sql.DataSource;
 
 /**
  * Easy to use helper Module that alleviates users to write the boilerplate google-guice bindings to create the

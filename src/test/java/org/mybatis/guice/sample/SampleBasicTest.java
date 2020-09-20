@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import static org.apache.ibatis.io.Resources.getResourceAsReader;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.google.inject.Injector;
+
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -40,8 +42,6 @@ import org.mybatis.guice.sample.domain.User;
 import org.mybatis.guice.sample.mapper.UserMapper;
 import org.mybatis.guice.sample.service.FooService;
 import org.mybatis.guice.sample.service.FooServiceMapperImpl;
-
-import com.google.inject.Injector;
 
 /**
  * Example of MyBatis-Guice basic integration usage.

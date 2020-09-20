@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -262,7 +262,7 @@ class ServiceB {
             In this case, <code>ServiceA#method()</code> and
             <code>ServiceB#method</code> can be invoked as atomic transactions,
             the advantage is when <code>serviceA#method()</code> and
-            <code>serviceB#method()</code> will be invoked inside the 
+            <code>serviceB#method()</code> will be invoked inside the
             <code>CompositeService#method</code>, that the interceptor will
             take care to manage them in the same session, even if annotated to
             start a new transaction.

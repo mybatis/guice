@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -194,7 +194,7 @@ public @interface Transactional {
    * interceptor to mark the transaction for rollback. When a class is specified for either of these elements, the
    * designated behavior applies to subclasses of that class as well. If both elements are specified, dontRollbackOn
    * takes precedence.
-   * 
+   *
    * @return Class[] of Exceptions
    */
   // @Nonbinding
@@ -206,7 +206,7 @@ public @interface Transactional {
    * interceptor to mark the transaction for rollback. When a class is specified for either of these elements, the
    * designated behavior applies to subclasses of that class as well. If both elements are specified, dontRollbackOn
    * takes precedence.
-   * 
+   *
    * @return Class[] of Exceptions
    */
   // @Nonbinding

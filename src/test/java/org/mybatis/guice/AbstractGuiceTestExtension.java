@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  */
 package org.mybatis.guice;
 
+import static java.lang.System.currentTimeMillis;
+
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.name.Names.bindProperties;
 import static com.google.inject.name.Names.named;
-import static java.lang.System.currentTimeMillis;
+
+import com.google.inject.Binder;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 
 import java.io.StringReader;
 import java.sql.SQLException;
@@ -36,10 +41,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstanceFactory;
 import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
 import org.junit.jupiter.api.extension.TestInstantiationException;
-
-import com.google.inject.Binder;
-import com.google.inject.Injector;
-import com.google.inject.Module;
 
 abstract class AbstractGuiceTestExtension implements AfterEachCallback, BeforeEachCallback, TestInstanceFactory {
 

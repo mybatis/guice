@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -47,8 +47,8 @@
   </p>
   <p>
         The service is composed by an interface <code>FooService.java</code>
-        and an implementation <code>FooServiceImpl.java</code>. 
-        This service is transactional so a transaction is started when its method 
+        and an implementation <code>FooServiceImpl.java</code>.
+        This service is transactional so a transaction is started when its method
         is called and commited when the method ends without throwing a unchecked exception.
         <source><![CDATA[public class FooServiceMapperImpl implements FooService {
 
@@ -62,7 +62,7 @@
 
 }]]></source>
         Notice that transactional behaviour is configured with the
-        <code>@Transactional</code> annotation. 
+        <code>@Transactional</code> annotation.
     </p>
 
     <p>
@@ -73,7 +73,7 @@
     </p>
 
     <p>
-        The database access layer has been implemented using a mapper and a Dao that 
+        The database access layer has been implemented using a mapper and a Dao that
         internally uses a <code>SqlSession</code>.</p>
         <table>
             <caption>Sample test classes</caption>

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,6 +31,17 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+
+import javax.inject.Provider;
+import javax.sql.DataSource;
 
 import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
@@ -72,17 +83,6 @@ import org.mybatis.guice.resolver.mapper.FirstMapper;
 import org.mybatis.guice.resolver.mapper.SecondMapper;
 import org.mybatis.guice.resolver.typehandler.AddressTypeHandler;
 import org.mybatis.guice.resolver.typehandler.UserTypeHandler;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-
-import javax.inject.Provider;
-import javax.sql.DataSource;
 
 @ExtendWith(MockitoExtension.class)
 public class MyBatisModuleTest {

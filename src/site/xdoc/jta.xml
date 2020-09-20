@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2016 the original author or authors.
+       Copyright 2009-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@
             will all be executed in the same transaction.
         </p>
     </section>
-    
+
     <section name="Configuring TransactionManager">
         <p>
             <i>org.mybatis.guice.MyBatisJtaModule</i> requires an instance of <i>javax.transaction.TransactionManager</i>.
@@ -62,7 +62,7 @@
         </subsection>
         <subsection name="OSGi service from ServiceReference">
             <source><![CDATA[BundleContext bundleContext;
-ServiceReference<TransactionManager> reference = 
+ServiceReference<TransactionManager> reference =
   bundleContext.getServiceReference(TransactionManager.class);
 TransactionManager tm = bundleContext.getService(reference);]]></source>
         </subsection>
@@ -95,13 +95,13 @@ public MyComponent {
 }]]></source>
         </subsection>
     </section>
-    
+
     <section name="Configuring DataSource">
         <p>
             MyBatis-Guice will automatically find the DataSource used by JTA.
         </p>
     </section>
-    
+
     <section name="Configuring XAResource">
         <p>
             <i>org.mybatis.guice.MyBatisJtaModule</i> will automatically create an instance of XAResource

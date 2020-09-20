@@ -1,5 +1,5 @@
 /**
- *    Copyright 2009-2018 the original author or authors.
+ *    Copyright 2009-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 /**
  * Simple static methods to be called at the start of your own methods to verify correct arguments and state. This
  * allows constructs such as
- * 
+ *
  * <pre>
  * if (count <= 0) {
  *   throw new IllegalArgumentException("must be positive: " + count);
@@ -57,7 +57,7 @@ import java.util.NoSuchElementException;
  * be even marked as {@link com.google.inject.internal.util.Nullable} -- yet the method will still throw an exception
  * anyway, because that's what its contract says to do.
  * </p>
- * 
+ *
  * <p>
  * This class may be used with the Google Web Toolkit (GWT).
  * </p>
