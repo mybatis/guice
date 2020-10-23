@@ -275,7 +275,7 @@
     <dependency>
       <groupId>io.dropwizard.metrics</groupId>
       <artifactId>metrics-core</artifactId>
-      <version>4.1.13</version>
+      <version>4.1.14</version>
       <scope>test</scope>
     </dependency>
 
