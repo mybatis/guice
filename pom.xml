@@ -261,7 +261,7 @@
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
-      <version>9.0.41</version>
+      <version>10.0.2</version>
       <scope>test</scope>
     </dependency>
 
