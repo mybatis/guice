@@ -89,7 +89,7 @@
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
     <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
-    <guice.version>4.2.3</guice.version>
+    <guice.version>5.0.0</guice.version>
     <ejb-api.version>3.2.6</ejb-api.version>
     <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <spotbugs.omitVisitors>UnreadFields</spotbugs.omitVisitors>
