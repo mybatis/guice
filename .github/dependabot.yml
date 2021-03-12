@@ -25,3 +25,6 @@ updates:
   - dependency-name: org.apache.derby:derby
     versions:
     - "> 10.14.2.0"
+  - dependency-name: org.apache.tomcat:tomcat-catalina
+    versions:
+    - "> 9.1.0"
