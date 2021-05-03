@@ -24,7 +24,13 @@ updates:
   ignore:
   - dependency-name: org.apache.derby:derby
     versions:
-    - "> 10.14.2.0"
+    - "> 10.15.0.0"
   - dependency-name: org.apache.tomcat:tomcat-catalina
     versions:
     - "> 9.1.0"
+  - dependency-name: jakarta.ejb:jakarta.ejb-api
+    versions:
+    - "> 3.3.0"
+  - dependency-name: jakarta.transaction:jakarta.transaction-api
+    versions:
+    - "> 1.4.0"
