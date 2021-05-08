@@ -34,3 +34,6 @@ updates:
   - dependency-name: jakarta.transaction:jakarta.transaction-api
     versions:
     - "> 1.4.0"
+  - dependency-name: org.hsqldb:hsqldb
+    versions:
+    - ">= 2.6.0"
