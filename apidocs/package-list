@@ -2,12 +2,12 @@ org.mybatis.guice
 org.mybatis.guice.binder
 org.mybatis.guice.configuration
 org.mybatis.guice.configuration.settings
-org.mybatis.guice.datasource.bonecp
 org.mybatis.guice.datasource.builtin
 org.mybatis.guice.datasource.c3p0
 org.mybatis.guice.datasource.dbcp
 org.mybatis.guice.datasource.druid
 org.mybatis.guice.datasource.helper
+org.mybatis.guice.datasource.hikaricp
 org.mybatis.guice.environment
 org.mybatis.guice.mappers
 org.mybatis.guice.provision

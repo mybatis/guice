@@ -57,10 +57,11 @@ mybatis-guice,org.mybatis.guice,MyBatisModule.new AliasBinder() {...},1,32,1,1,0
 mybatis-guice,org.mybatis.guice,MyBatisModule.new TypeHandlerBinder() {...},4,140,4,4,0,22,4,7,0,7
 mybatis-guice,org.mybatis.guice,AbstractMyBatisModule,8,119,0,0,4,23,2,7,2,7
 mybatis-guice,org.mybatis.guice,Preconditions,389,6,52,2,85,4,44,2,17,2
-mybatis-guice,org.mybatis.guice,MyBatisJtaModule,25,110,3,3,6,26,5,5,2,5
+mybatis-guice,org.mybatis.guice,MyBatisJtaModule,25,110,3,3,6,25,5,5,2,5
 mybatis-guice,org.mybatis.guice,MyBatisJtaModule.ProviderImpl,0,9,0,0,0,4,0,2,0,2
 mybatis-guice,org.mybatis.guice,MyBatisModule,29,654,30,40,0,154,30,54,0,49
 mybatis-guice,org.mybatis.guice,XMLMyBatisModule,25,126,4,8,7,34,4,8,1,5
+mybatis-guice,org.mybatis.guice.datasource.hikaricp,HikariCPProvider,27,165,0,2,6,63,2,31,2,30
 mybatis-guice,org.mybatis.guice.datasource.helper,JdbcHelper,0,614,0,0,0,56,0,3,0,3
 mybatis-guice,org.mybatis.guice.datasource.helper,JdbcUrlAntFormatter,69,141,8,12,10,32,8,6,1,3
 mybatis-guice,org.mybatis.guice.datasource.helper,KeyResolver,6,42,1,1,2,11,2,3,1,3
@@ -81,4 +82,3 @@ mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule.new 
 mybatis-guice,org.mybatis.guice.datasource.dbcp,DriverAdapterCPDSProvider,16,71,0,0,2,27,0,12,0,12
 mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceProvider,0,244,0,12,0,65,0,33,0,27
 mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule,0,83,0,2,0,21,0,5,0,4
-mybatis-guice,org.mybatis.guice.datasource.bonecp,BoneCPProvider,185,0,0,0,71,0,36,0,36,0
