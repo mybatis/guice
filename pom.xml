@@ -175,7 +175,6 @@
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <version>${annotation-api.version}</version>
-      <optional>true</optional>
     </dependency>
 
     <dependency>
