@@ -256,6 +256,12 @@
       <artifactId>geronimo-connector</artifactId>
       <version>3.1.4</version>
       <scope>test</scope>
+      <exclusions>
+          <exclusion>
+              <groupId>org.apache.geronimo.components</groupId>
+              <artifactId>geronimo-transaction</artifactId>
+          </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -263,6 +269,12 @@
       <artifactId>tomcat-catalina</artifactId>
       <version>9.0.54</version>
       <scope>test</scope>
+      <exclusions>
+          <exclusion>
+              <groupId>org.apache.tomcat</groupId>
+              <artifactId>tomcat-annotations-api</artifactId>
+          </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
