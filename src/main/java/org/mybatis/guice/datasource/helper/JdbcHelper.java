@@ -82,6 +82,14 @@ public enum JdbcHelper implements Module {
 
   MariaDB("jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
 
+  MariaDB_Aurora("jdbc:mysql:aurora//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+
+  MariaDB_Sequential("jdbc:mysql:sequential//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+
+  MariaDB_Loadbalance("jdbc:mysql:loadbalance//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+
+  MariaDB_Replication("jdbc:mysql:replication//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+
   MaxDB("jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}", "com.sap.dbtech.jdbc.DriverSapDB"),
 
   McKoi("jdbc:mckoi://${JDBC.host|localhost}:${JDBC.port|9157}/${JDBC.schema}", "com.mckoi.JDBCDriver"),
