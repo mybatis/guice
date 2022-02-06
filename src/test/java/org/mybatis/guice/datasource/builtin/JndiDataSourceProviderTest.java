@@ -64,7 +64,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_NoContext() {
+  void get_NoContext() {
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -80,7 +80,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_Context() {
+  void get_Context() {
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -97,7 +97,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_Environment() throws Throwable {
+  void get_Environment() throws Throwable {
     final String initialContextFactory = TestInitialContextFactory.class.getName();
     final String environmentProviderUrl = getClass()
         .getResource("/" + getClass().getName().replace(".", "/") + ".properties").toString();

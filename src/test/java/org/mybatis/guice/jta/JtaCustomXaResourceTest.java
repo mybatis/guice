@@ -115,7 +115,7 @@ public class JtaCustomXaResourceTest {
    * have 1 rows
    */
   @Test
-  public void testRequired() throws Exception {
+  void testRequired() throws Exception {
     try {
       process.required(1);
     } catch (Throwable t) {

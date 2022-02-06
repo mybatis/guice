@@ -29,14 +29,14 @@ public class UseColumnLabelConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     UseColumnLabelConfigurationSetting setting = new UseColumnLabelConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setUseColumnLabel(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     UseColumnLabelConfigurationSetting setting = new UseColumnLabelConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setUseColumnLabel(false);

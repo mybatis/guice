@@ -44,7 +44,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class HikariCPProviderTest {
 
   @Test
-  public void get() throws SQLException {
+  void get() throws SQLException {
 
     // JDBC connection
     // ============================================================================================================
@@ -187,7 +187,7 @@ public class HikariCPProviderTest {
   }
 
   @Test
-  public void get_MetricRegistry() throws SQLException {
+  void get_MetricRegistry() throws SQLException {
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
     final String password = "test_password";
@@ -210,7 +210,7 @@ public class HikariCPProviderTest {
   }
 
   @Test
-  public void get_RegisterMbeans() throws SQLException {
+  void get_RegisterMbeans() throws SQLException {
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
     final String password = "test_password";
@@ -233,7 +233,7 @@ public class HikariCPProviderTest {
   }
 
   @Test
-  public void get_ScheduledExecutor() throws SQLException {
+  void get_ScheduledExecutor() throws SQLException {
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
     final String password = "test_password";
@@ -257,7 +257,7 @@ public class HikariCPProviderTest {
   }
 
   @Test
-  public void get_ThreadFactory() throws SQLException {
+  void get_ThreadFactory() throws SQLException {
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
     final String password = "test_password";
@@ -280,7 +280,7 @@ public class HikariCPProviderTest {
   }
 
   @Test
-  public void get_TransactionIsolation() throws SQLException {
+  void get_TransactionIsolation() throws SQLException {
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
     final String password = "test_password";

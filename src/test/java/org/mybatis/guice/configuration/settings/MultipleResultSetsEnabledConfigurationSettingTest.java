@@ -29,14 +29,14 @@ public class MultipleResultSetsEnabledConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     MultipleResultSetsEnabledConfigurationSetting setting = new MultipleResultSetsEnabledConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setMultipleResultSetsEnabled(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     MultipleResultSetsEnabledConfigurationSetting setting = new MultipleResultSetsEnabledConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setMultipleResultSetsEnabled(false);

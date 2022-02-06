@@ -63,7 +63,7 @@ public class JtaLocalRollbackTest {
   }
 
   @Test
-  public void testFirstRollback() throws Exception {
+  void testFirstRollback() throws Exception {
     TransactionAttribute firstAttribute = TransactionAttribute.REQUIRED;
     TransactionAttribute secondAttribute = TransactionAttribute.REQUIRESNEW;
 
@@ -99,7 +99,7 @@ public class JtaLocalRollbackTest {
   }
 
   @Test
-  public void testSecondRollback() throws Exception {
+  void testSecondRollback() throws Exception {
     TransactionAttribute firstAttribute = TransactionAttribute.REQUIRED;
     TransactionAttribute secondAttribute = TransactionAttribute.REQUIRESNEW;
 

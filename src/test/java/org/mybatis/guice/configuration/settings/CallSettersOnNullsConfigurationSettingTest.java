@@ -29,14 +29,14 @@ public class CallSettersOnNullsConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     CallSettersOnNullsConfigurationSetting setting = new CallSettersOnNullsConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setCallSettersOnNulls(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     CallSettersOnNullsConfigurationSetting setting = new CallSettersOnNullsConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setCallSettersOnNulls(false);

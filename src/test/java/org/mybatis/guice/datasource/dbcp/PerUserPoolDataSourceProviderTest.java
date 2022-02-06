@@ -41,7 +41,7 @@ public class PerUserPoolDataSourceProviderTest {
   private ConnectionPoolDataSource connectionPoolDataSource;
 
   @Test
-  public void get() throws Throwable {
+  void get() throws Throwable {
     final boolean autoCommit = true;
     final int loginTimeout = 10;
     final boolean defaultReadOnly = true;
@@ -107,7 +107,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_OtherValues() throws Throwable {
+  void get_OtherValues() throws Throwable {
     final boolean autoCommit = false;
     final int loginTimeout = 11;
     final boolean defaultReadOnly = false;
@@ -173,7 +173,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_Jndi() throws Throwable {
+  void get_Jndi() throws Throwable {
     final String jndiKey = "test_key";
     final String jndiValue = "test_value";
     Injector injector = Guice.createInjector(new AbstractModule() {
@@ -193,7 +193,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_DataSourceName() throws Throwable {
+  void get_DataSourceName() throws Throwable {
     final String name = "test_name";
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
@@ -209,7 +209,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserDefaultAutoCommit() throws Throwable {
+  void get_PerUserDefaultAutoCommit() throws Throwable {
     final Map<String, Boolean> defaultAutoCommit = new HashMap<String, Boolean>();
     defaultAutoCommit.put("test_user", true);
     defaultAutoCommit.put("test_user2", false);
@@ -229,7 +229,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserDefaultReadOnly() throws Throwable {
+  void get_PerUserDefaultReadOnly() throws Throwable {
     final Map<String, Boolean> defaultReadOnly = new HashMap<String, Boolean>();
     defaultReadOnly.put("test_user", false);
     defaultReadOnly.put("test_user2", true);
@@ -249,7 +249,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserDefaultTransactionIsolation() throws Throwable {
+  void get_PerUserDefaultTransactionIsolation() throws Throwable {
     final Map<String, Integer> defaultTransactionIsolation = new HashMap<String, Integer>();
     defaultTransactionIsolation.put("test_user", Connection.TRANSACTION_READ_COMMITTED);
     defaultTransactionIsolation.put("test_user2", Connection.TRANSACTION_SERIALIZABLE);
@@ -271,7 +271,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserMaxTotal() throws Throwable {
+  void get_PerUserMaxTotal() throws Throwable {
     final Map<String, Integer> maxTotal = new HashMap<String, Integer>();
     maxTotal.put("test_user", 10);
     maxTotal.put("test_user2", 20);
@@ -291,7 +291,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserMaxIdle() throws Throwable {
+  void get_PerUserMaxIdle() throws Throwable {
     final Map<String, Integer> maxIdle = new HashMap<String, Integer>();
     maxIdle.put("test_user", 30);
     maxIdle.put("test_user2", 40);
@@ -311,7 +311,7 @@ public class PerUserPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_PerUserMaxWaitMillis() throws Throwable {
+  void get_PerUserMaxWaitMillis() throws Throwable {
     final Map<String, Long> maxWaitMillis = new HashMap<String, Long>();
     maxWaitMillis.put("test_user", 50l);
     maxWaitMillis.put("test_user2", 60l);

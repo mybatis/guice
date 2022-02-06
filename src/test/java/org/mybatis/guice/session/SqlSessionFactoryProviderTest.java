@@ -39,7 +39,7 @@ public class SqlSessionFactoryProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     SqlSessionFactory sqlSessionFactory = sqlSessionFactoryProvider.get();
 
     assertNotNull(sqlSessionFactory);

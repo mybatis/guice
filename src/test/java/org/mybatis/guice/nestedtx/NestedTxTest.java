@@ -78,7 +78,7 @@ public class NestedTxTest {
   }
 
   @Test
-  public void testGoodInserts() {
+  void testGoodInserts() {
     service.goodInserts();
 
     List<TableRow> tableRows = service.selectAllTable1();
@@ -89,7 +89,7 @@ public class NestedTxTest {
   }
 
   @Test
-  public void testBadInsertRollbackAllRows() {
+  void testBadInsertRollbackAllRows() {
     try {
       service.badInsertRollbackAllRows();
     } catch (Exception e) {
@@ -104,7 +104,7 @@ public class NestedTxTest {
   }
 
   @Test
-  public void testIgnoreBadInsert() {
+  void testIgnoreBadInsert() {
     service.ignoreBadInsert();
 
     List<TableRow> tableRows = service.selectAllTable1();
@@ -115,7 +115,7 @@ public class NestedTxTest {
   }
 
   @Test
-  public void testCorrectBadInsert() {
+  void testCorrectBadInsert() {
     service.correctBadInsert();
 
     List<TableRow> tableRows = service.selectAllTable1();

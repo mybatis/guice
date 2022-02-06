@@ -122,7 +122,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void environmentId() {
+  void environmentId() {
     final String environmentId = "test_environment";
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -139,7 +139,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void lazyLoadingEnabled_Default() {
+  void lazyLoadingEnabled_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -155,7 +155,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void lazyLoadingEnabled_True() {
+  void lazyLoadingEnabled_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -172,7 +172,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void lazyLoadingEnabled_False() {
+  void lazyLoadingEnabled_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -189,7 +189,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void aggressiveLazyLoading_Default() {
+  void aggressiveLazyLoading_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -205,7 +205,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void aggressiveLazyLoading_True() {
+  void aggressiveLazyLoading_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -222,7 +222,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void aggressiveLazyLoading_False() {
+  void aggressiveLazyLoading_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -239,7 +239,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void multipleResultSetsEnabled_Default() {
+  void multipleResultSetsEnabled_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -255,7 +255,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void multipleResultSetsEnabled_True() {
+  void multipleResultSetsEnabled_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -272,7 +272,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void multipleResultSetsEnabled_False() {
+  void multipleResultSetsEnabled_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -289,7 +289,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useGeneratedKeys_Default() {
+  void useGeneratedKeys_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -305,7 +305,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useGeneratedKeys_True() {
+  void useGeneratedKeys_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -322,7 +322,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useGeneratedKeys_False() {
+  void useGeneratedKeys_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -339,7 +339,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useColumnLabel_Default() {
+  void useColumnLabel_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -355,7 +355,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useColumnLabel_True() {
+  void useColumnLabel_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -372,7 +372,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useColumnLabel_False() {
+  void useColumnLabel_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -389,7 +389,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useCacheEnabled_Default() {
+  void useCacheEnabled_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -405,7 +405,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useCacheEnabled_True() {
+  void useCacheEnabled_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -422,7 +422,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useCacheEnabled_False() {
+  void useCacheEnabled_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -441,7 +441,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void useConfigurationProvider() {
+  void useConfigurationProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -462,7 +462,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void useConfigurationProvider_Listener() {
+  void useConfigurationProvider_Listener() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -481,7 +481,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void useCustomConfigurationProvider() {
+  void useCustomConfigurationProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -500,7 +500,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void useSqlSessionFactoryProvider() {
+  void useSqlSessionFactoryProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -517,7 +517,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void failFast_Default() {
+  void failFast_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -534,7 +534,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void failFast_True() {
+  void failFast_True() {
     Assertions.assertThrows(CreationException.class, () -> {
       Guice.createInjector(new MyBatisModule() {
         @Override
@@ -550,7 +550,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void failFast_False() {
+  void failFast_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -568,7 +568,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void mapUnderscoreToCamelCase_Default() {
+  void mapUnderscoreToCamelCase_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -584,7 +584,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void mapUnderscoreToCamelCase_True() {
+  void mapUnderscoreToCamelCase_True() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -601,7 +601,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void mapUnderscoreToCamelCase_False() {
+  void mapUnderscoreToCamelCase_False() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -618,7 +618,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void defaultStatementTimeout_Default() {
+  void defaultStatementTimeout_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -634,7 +634,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void defaultStatementTimeout() {
+  void defaultStatementTimeout() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -651,7 +651,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindConfigurationSetting() {
+  void bindConfigurationSetting() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -668,7 +668,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindConfigurationSettingProvider() {
+  void bindConfigurationSettingProvider() {
     when(configurationSettingProvider.get()).thenReturn(configurationSetting);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -687,7 +687,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void executorType_Default() {
+  void executorType_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -703,7 +703,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void executorType() {
+  void executorType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -720,7 +720,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void localCacheScope_Default() {
+  void localCacheScope_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -736,7 +736,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void localCacheScope() {
+  void localCacheScope() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -753,7 +753,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void autoMappingBehavior_Default() {
+  void autoMappingBehavior_Default() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -769,7 +769,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void autoMappingBehavior() {
+  void autoMappingBehavior() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -788,7 +788,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void bindDataSourceProviderType() {
+  void bindDataSourceProviderType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -806,7 +806,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void bindDataSourceProvider_JavaInject() {
+  void bindDataSourceProvider_JavaInject() {
     when(javaDataSourceProvider.get()).thenReturn(dataSource);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -824,7 +824,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindDataSourceProvider() {
+  void bindDataSourceProvider() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -841,7 +841,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindDatabaseIdProvider_Class() {
+  void bindDatabaseIdProvider_Class() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -858,7 +858,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindDatabaseIdProvider() throws Throwable {
+  void bindDatabaseIdProvider() throws Throwable {
     when(databaseIdProvider.getDatabaseId(any(DataSource.class))).thenReturn(databaseId);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -879,7 +879,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void bindTransactionFactoryType() {
+  void bindTransactionFactoryType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -897,7 +897,7 @@ public class MyBatisModuleTest {
   // Does not use beforeEach stubbing
   @MockitoSettings(strictness = Strictness.LENIENT)
   @Test
-  public void bindTransactionFactory_JavaInject() {
+  void bindTransactionFactory_JavaInject() {
     when(javaTransactionFactoryProvider.get()).thenReturn(transactionFactory);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -915,7 +915,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindTransactionFactory() {
+  void bindTransactionFactory() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -932,7 +932,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindObjectFactoryType() {
+  void bindObjectFactoryType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -949,7 +949,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindObjectWrapperFactoryType() {
+  void bindObjectWrapperFactoryType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -966,7 +966,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void bindDefaultScriptingLanguageType() {
+  void bindDefaultScriptingLanguageType() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -983,7 +983,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addAlias() {
+  void addAlias() {
     final String alias = "test_alias";
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -1002,7 +1002,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAlias() {
+  void addSimpleAlias() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1022,7 +1022,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAlias_Annotation() {
+  void addSimpleAlias_Annotation() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1041,7 +1041,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAliases() {
+  void addSimpleAliases() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1064,7 +1064,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAliases_Package_ResolverUtilTest_None() {
+  void addSimpleAliases_Package_ResolverUtilTest_None() {
     when(resolverUtilTest.matches(any(Class.class))).thenReturn(false);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -1087,7 +1087,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAliases_Package_ResolverUtilTest_All() {
+  void addSimpleAliases_Package_ResolverUtilTest_All() {
     when(resolverUtilTest.matches(any(Class.class))).thenReturn(true);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -1114,7 +1114,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addSimpleAliases_Package() {
+  void addSimpleAliases_Package() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1138,7 +1138,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void handleType_Class() {
+  void handleType_Class() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1156,7 +1156,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void handleType_TypeLiteral() {
+  void handleType_TypeLiteral() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1175,7 +1175,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void handleType_ProvidedClass() {
+  void handleType_ProvidedClass() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1195,7 +1195,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void handleType_ProvidedTypeLiteral() {
+  void handleType_ProvidedTypeLiteral() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1216,7 +1216,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void handleType_ProvidedTypeLiteral_Generic() {
+  void handleType_ProvidedTypeLiteral_Generic() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1242,7 +1242,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addTypeHandlerClass() {
+  void addTypeHandlerClass() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1259,7 +1259,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addTypeHandlersClasses() {
+  void addTypeHandlersClasses() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1280,7 +1280,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addTypeHandlerClasses() {
+  void addTypeHandlerClasses() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1298,7 +1298,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addInterceptorClass() {
+  void addInterceptorClass() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1316,7 +1316,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addInterceptorsClasses() {
+  void addInterceptorsClasses() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1339,7 +1339,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addInterceptorsClasses_Package() {
+  void addInterceptorsClasses_Package() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1359,7 +1359,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addMapperClass() {
+  void addMapperClass() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1379,7 +1379,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addMapperClasses() {
+  void addMapperClasses() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1402,7 +1402,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addMapperClasses_Package() {
+  void addMapperClasses_Package() {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -1425,7 +1425,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addMapperClasses_Package_ResolverUtilTest_None() {
+  void addMapperClasses_Package_ResolverUtilTest_None() {
     when(resolverUtilTest.matches(any(Class.class))).thenReturn(false);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
@@ -1448,7 +1448,7 @@ public class MyBatisModuleTest {
   }
 
   @Test
-  public void addMapperClasses_Package_ResolverUtilTest_All() {
+  void addMapperClasses_Package_ResolverUtilTest_All() {
     when(resolverUtilTest.matches(any(Class.class))).thenReturn(true);
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override

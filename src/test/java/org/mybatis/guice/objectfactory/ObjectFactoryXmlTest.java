@@ -32,7 +32,7 @@ import org.mybatis.guice.datasource.helper.JdbcHelper;
 
 public class ObjectFactoryXmlTest {
   @Test
-  public void objectFactoryInjection() {
+  void objectFactoryInjection() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
       @Override
       protected void initialize() {
@@ -53,7 +53,7 @@ public class ObjectFactoryXmlTest {
   }
 
   @Test
-  public void objectWrapperFactoryInjection() {
+  void objectWrapperFactoryInjection() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {
       @Override
       protected void initialize() {

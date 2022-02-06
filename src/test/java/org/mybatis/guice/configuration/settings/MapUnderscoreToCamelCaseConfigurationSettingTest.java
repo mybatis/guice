@@ -29,14 +29,14 @@ public class MapUnderscoreToCamelCaseConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     MapUnderscoreToCamelCaseConfigurationSetting setting = new MapUnderscoreToCamelCaseConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setMapUnderscoreToCamelCase(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     MapUnderscoreToCamelCaseConfigurationSetting setting = new MapUnderscoreToCamelCaseConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setMapUnderscoreToCamelCase(false);

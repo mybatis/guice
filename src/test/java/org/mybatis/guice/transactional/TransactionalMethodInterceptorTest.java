@@ -49,7 +49,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke() throws Throwable {
+  void invoke() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -67,7 +67,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_CustomAnnotation() throws Throwable {
+  void invoke_CustomAnnotation() throws Throwable {
     Method method = MethodAnnotationCustom.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -85,7 +85,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_RollbackOnly() throws Throwable {
+  void invoke_RollbackOnly() throws Throwable {
     Method method = MethodAnnotationRollbackOnly.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -103,7 +103,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_RuntimeException() throws Throwable {
+  void invoke_RuntimeException() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -125,7 +125,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_IllegalStateException() throws Throwable {
+  void invoke_IllegalStateException() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -147,7 +147,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_IOException_Declared() throws Throwable {
+  void invoke_IOException_Declared() throws Throwable {
     Method method = MethodAnnotationIOException.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -169,7 +169,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_IOException_Undeclared() throws Throwable {
+  void invoke_IOException_Undeclared() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -190,7 +190,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_RuntimeException_Rethrow() throws Throwable {
+  void invoke_RuntimeException_Rethrow() throws Throwable {
     Method method = MethodAnnotationRethrow.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -214,7 +214,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_IllegalStateException_Rethrow() throws Throwable {
+  void invoke_IllegalStateException_Rethrow() throws Throwable {
     Method method = MethodAnnotationRethrow.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -238,7 +238,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_UnsupportedOperationException_Rethrow() throws Throwable {
+  void invoke_UnsupportedOperationException_Rethrow() throws Throwable {
     Method method = MethodAnnotationRethrow.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -262,7 +262,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_SessionInherited() throws Throwable {
+  void invoke_SessionInherited() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -282,7 +282,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_SessionInherited_Exception() throws Throwable {
+  void invoke_SessionInherited_Exception() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = method.getAnnotation(Transactional.class);
@@ -306,7 +306,7 @@ public class TransactionalMethodInterceptorTest {
   }
 
   @Test
-  public void invoke_ClassAnnotation() throws Throwable {
+  void invoke_ClassAnnotation() throws Throwable {
     Method method = ClassAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
     Transactional transactional = ClassAnnotation.class.getAnnotation(Transactional.class);

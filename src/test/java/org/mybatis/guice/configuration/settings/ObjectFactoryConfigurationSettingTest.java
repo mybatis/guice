@@ -40,7 +40,7 @@ public class ObjectFactoryConfigurationSettingTest {
   private TestObjectFactory objectFactory;
 
   @Test
-  public void applyConfigurationSetting() {
+  void applyConfigurationSetting() {
     when(injector.getInstance(TestObjectFactory.class)).thenReturn(objectFactory);
     ObjectFactoryConfigurationSetting setting = new ObjectFactoryConfigurationSetting(TestObjectFactory.class);
     setting.setInjector(injector);

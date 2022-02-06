@@ -30,14 +30,14 @@ public class LocalCacheScopeConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_Session() {
+  void applyConfigurationSetting_Session() {
     LocalCacheScopeConfigurationSetting setting = new LocalCacheScopeConfigurationSetting(LocalCacheScope.SESSION);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setLocalCacheScope(LocalCacheScope.SESSION);
   }
 
   @Test
-  public void applyConfigurationSetting_Statement() {
+  void applyConfigurationSetting_Statement() {
     LocalCacheScopeConfigurationSetting setting = new LocalCacheScopeConfigurationSetting(LocalCacheScope.STATEMENT);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setLocalCacheScope(LocalCacheScope.STATEMENT);

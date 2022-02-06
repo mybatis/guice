@@ -58,7 +58,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testRollBack() {
+  void testRollBack() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackAll();
       fail("Expected an exception to force rollback");
@@ -71,14 +71,14 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testInserts() {
+  void testInserts() {
     combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2();
     assertEquals(2, combinedService.getAllNamesFromSchema1().size());
     assertEquals(1, combinedService.getAllNamesFromSchema2().size());
   }
 
   @Test
-  public void testPartialRollBack() {
+  void testPartialRollBack() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndRollbackSchema2();
       fail("Expected an exception to force rollback");
@@ -91,7 +91,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionRollBack() {
+  void testApplicationExceptionRollBack() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new RollbackException());
       fail("Expected an exception to force rollback");
@@ -104,7 +104,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionInheritedRollBack() {
+  void testApplicationExceptionInheritedRollBack() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new InheritedRollbackException());
       fail("Expected an exception to force rollback");
@@ -117,7 +117,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionNonInheritableRollback() {
+  void testApplicationExceptionNonInheritableRollback() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritableRollbackException());
       fail("Expected NonInheritableRollbackException");
@@ -129,7 +129,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionNonInheritedRollback() {
+  void testApplicationExceptionNonInheritedRollback() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritedRollbackException());
       fail("Expected an exception to force rollback");
@@ -142,7 +142,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionCommit() {
+  void testApplicationExceptionCommit() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new CommitException());
       fail("Expected CommitException");
@@ -154,7 +154,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionInheritedCommit() {
+  void testApplicationExceptionInheritedCommit() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new InheritedCommitException());
       fail("Expected CommitException");
@@ -166,7 +166,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionNonInheritableCommit() {
+  void testApplicationExceptionNonInheritableCommit() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritableCommitException());
       fail("Expected NonInheritableCommitException");
@@ -178,7 +178,7 @@ public class SimpleJTATest {
   }
 
   @Test
-  public void testApplicationExceptionNonInheritedCommit() {
+  void testApplicationExceptionNonInheritedCommit() {
     try {
       combinedService.insert2RecordsIntoSchema1And1RecordIntoSchema2AndThrow(new NonInheritedCommitException());
       fail("Expected NonInheritedCommitException");

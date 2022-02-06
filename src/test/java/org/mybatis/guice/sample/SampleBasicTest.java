@@ -97,14 +97,14 @@ public class SampleBasicTest {
   }
 
   @Test
-  public void testFooService() {
+  void testFooService() {
     User user = this.fooService.doSomeBusinessStuff("u1");
     assertNotNull(user);
     assertEquals("Pocoyo", user.getName());
   }
 
   @Test
-  public void testTransactionalOnClassAndMethod() {
+  void testTransactionalOnClassAndMethod() {
     User user = new User();
     user.setName("Christian Poitras");
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -113,7 +113,7 @@ public class SampleBasicTest {
   }
 
   @Test
-  public void testTransactionalOnClass() {
+  void testTransactionalOnClass() {
     User user = new User();
     user.setName("Christian Poitras");
     Assertions.assertThrows(CustomException.class, () -> {
@@ -122,7 +122,7 @@ public class SampleBasicTest {
   }
 
   @Test
-  public void shouldNotFailOnObjectsMethodsCall() {
+  void shouldNotFailOnObjectsMethodsCall() {
     this.fooService.toString();
   }
 

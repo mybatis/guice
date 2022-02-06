@@ -42,7 +42,7 @@ public class MapperProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     TestMapper mapper = mapperProvider.get();
     assertNotNull(mapper);
     verify(sqlSessionManager).getMapper(TestMapper.class);

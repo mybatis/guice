@@ -46,7 +46,7 @@ public class EnvironmentProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     Environment environment = environmentProvider.get();
     assertEquals(id, environment.getId());
     assertEquals(dataSource, environment.getDataSource());

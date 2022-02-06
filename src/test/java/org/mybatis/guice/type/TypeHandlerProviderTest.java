@@ -49,7 +49,7 @@ public class TypeHandlerProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     CustomLongTypeHandler typeHandler = typeHandlerProvider.get();
     assertNotNull(typeHandler);
     verify(injector).injectMembers(typeHandler);

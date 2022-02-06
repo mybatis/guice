@@ -37,7 +37,7 @@ import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 public class MultiJNDITest {
 
   @Test
-  public void testMultiDSWithJNDIWithProviderType() throws Exception {
+  void testMultiDSWithJNDIWithProviderType() throws Exception {
     setupJNDI();
     Injector injector = setupInjectorWithProviderType();
     Schema1Service schema1Service = injector.getInstance(Schema1Service.class);
@@ -52,7 +52,7 @@ public class MultiJNDITest {
   }
 
   @Test
-  public void testMultiDSWithJNDIWithProvider() throws Exception {
+  void testMultiDSWithJNDIWithProvider() throws Exception {
     setupJNDI();
     Injector injector = setupInjectorWithProvider();
     Schema1Service schema1Service = injector.getInstance(Schema1Service.class);

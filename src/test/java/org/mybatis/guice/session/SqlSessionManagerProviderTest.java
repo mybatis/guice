@@ -39,7 +39,7 @@ public class SqlSessionManagerProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     SqlSessionManager sqlSessionManager = sqlSessionManagerProvider.get();
 
     assertNotNull(sqlSessionManager);

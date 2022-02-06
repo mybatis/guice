@@ -83,7 +83,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -116,7 +116,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test
-  public void get_Optionals() throws Throwable {
+  void get_Optionals() throws Throwable {
     String databaseId = "test_database_id";
     final Integer defaultFetchSize = 200;
     final Integer defaultStatementTimeout = 2000;
@@ -196,7 +196,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test
-  public void get_ConfigurationSettingOverwritesNamed() throws Throwable {
+  void get_ConfigurationSettingOverwritesNamed() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -220,7 +220,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test
-  public void get_FailFast_True() throws Throwable {
+  void get_FailFast_True() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -238,7 +238,7 @@ public class ConfigurationProviderTest {
   }
 
   @Test
-  public void get_FailFast_False() throws Throwable {
+  void get_FailFast_False() throws Throwable {
     injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {

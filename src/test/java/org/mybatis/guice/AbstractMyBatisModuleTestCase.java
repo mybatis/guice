@@ -44,50 +44,50 @@ public abstract class AbstractMyBatisModuleTestCase {
   }
 
   @Test
-  public void verifyNotNullMapper() {
+  void verifyNotNullMapper() {
     assertNotNull(this.contactMapperClient);
   }
 
   @Test
-  public void insertContact() throws Exception {
+  void insertContact() throws Exception {
     this.contactMapperClient.insert(this.contact);
   }
 
   @Test
-  public void selectAllContacts() throws Exception {
+  void selectAllContacts() throws Exception {
     List<Contact> contacts = this.contactMapperClient.getAll();
     assert contacts.size() > 0 : "Expected not empty contact table";
   }
 
   @Test
-  public void reSelectAllContacts() throws Exception {
+  void reSelectAllContacts() throws Exception {
     List<Contact> contacts = this.contactMapperClient.getAll();
     assert contacts.size() > 0 : "Expected not empty contact table";
   }
 
   @Test
-  public void selectContact() throws Exception {
+  void selectContact() throws Exception {
     Contact contact = this.contactMapperClient.selectById(this.contact.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contact.getId() + "'";
     assert this.contact.equals(contact) : "Expected " + this.contact + " but found " + contact;
   }
 
   @Test
-  public void selectContactWithTypeHandler() throws Exception {
+  void selectContactWithTypeHandler() throws Exception {
     Contact contact = this.contactMapperClient.selectByIdWithTypeHandler(this.contact.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contact.getId() + "'";
     assert this.contact.equals(contact) : "Expected " + this.contact + " but found " + contact;
   }
 
   @Test
-  public void catchSQLException() throws Exception {
+  void catchSQLException() throws Exception {
     Assertions.assertThrows(CustomException.class, () -> {
       this.contactMapperClient.brokenInsert(this.contact);
     });
   }
 
   @Test
-  public void testCountInterceptor() throws Exception {
+  void testCountInterceptor() throws Exception {
     counter.reset();
     assert 0 == counter.getCount() : "Expected 0 update in counter, but was " + counter.getCount();
     this.contactMapperClient.update(contact);

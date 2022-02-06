@@ -39,7 +39,7 @@ public class ObjectWrapperFactoryConfigurationSettingTest {
   private TestObjectWrapperFactory objectWrapperFactory;
 
   @Test
-  public void applyConfigurationSetting() {
+  void applyConfigurationSetting() {
     when(injector.getInstance(TestObjectWrapperFactory.class)).thenReturn(objectWrapperFactory);
     ObjectWrapperFactoryConfigurationSetting setting = new ObjectWrapperFactoryConfigurationSetting(
         TestObjectWrapperFactory.class);

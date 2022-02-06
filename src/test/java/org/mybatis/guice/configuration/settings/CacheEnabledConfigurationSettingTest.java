@@ -29,14 +29,14 @@ public class CacheEnabledConfigurationSettingTest {
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     CacheEnabledConfigurationSetting setting = new CacheEnabledConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setCacheEnabled(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     CacheEnabledConfigurationSetting setting = new CacheEnabledConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setCacheEnabled(false);

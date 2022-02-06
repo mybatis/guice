@@ -42,7 +42,7 @@ public class CustomConfigurationTest {
   }
 
   @Test
-  public void customConfigurationProviderWithMyBatisModule() throws Exception {
+  void customConfigurationProviderWithMyBatisModule() throws Exception {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {
