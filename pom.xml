@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2021 the original author or authors.
+       Copyright 2009-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -74,8 +74,8 @@
     <url>https://github.com/mybatis/guice/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/mybatis/guice</url>
+    <system>GitHub Actions</system>
+    <url>https://github.com/mybatis/guice/actions</url>
   </ciManagement>
   <distributionManagement>
     <site>
