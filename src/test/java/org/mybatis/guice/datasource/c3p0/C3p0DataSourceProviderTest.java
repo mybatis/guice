@@ -33,7 +33,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class C3p0DataSourceProviderTest {
+class C3p0DataSourceProviderTest {
 
   @Test
   void get() {

@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DruidDataSourceProviderTest {
+class DruidDataSourceProviderTest {
 
   @Mock
   private ClassLoader driverClassLoader;

@@ -30,7 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ObjectWrapperFactoryConfigurationSettingTest {
+class ObjectWrapperFactoryConfigurationSettingTest {
   @Mock
   private Configuration configuration;
   @Mock

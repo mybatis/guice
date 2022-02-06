@@ -27,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SqlSessionFactoryProviderTest {
+class SqlSessionFactoryProviderTest {
   private SqlSessionFactoryProvider sqlSessionFactoryProvider;
   @Mock
   private Configuration configuration;

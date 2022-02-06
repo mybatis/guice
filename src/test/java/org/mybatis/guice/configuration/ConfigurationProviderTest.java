@@ -61,7 +61,7 @@ import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
 import org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 
 @ExtendWith(MockitoExtension.class)
-public class ConfigurationProviderTest {
+class ConfigurationProviderTest {
   private ConfigurationProvider configurationProvider;
   @Mock
   private TransactionFactory transactionFactory;

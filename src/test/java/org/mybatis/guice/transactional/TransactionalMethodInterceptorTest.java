@@ -35,7 +35,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class TransactionalMethodInterceptorTest {
+class TransactionalMethodInterceptorTest {
   private TransactionalMethodInterceptor transactionalMethodInterceptor;
   @Mock
   private MethodInvocation invocation;

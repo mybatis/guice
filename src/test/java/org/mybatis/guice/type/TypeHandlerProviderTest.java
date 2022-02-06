@@ -33,7 +33,7 @@ import org.mybatis.guice.generictypehandler.CustomObject;
 import org.mybatis.guice.generictypehandler.GenericCustomObjectTypeHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class TypeHandlerProviderTest {
+class TypeHandlerProviderTest {
   private TypeHandlerProvider<CustomLongTypeHandler, CustomType> typeHandlerProvider;
   private TypeHandlerProvider<GenericCustomObjectTypeHandler<CustomObject>, CustomObject> genericTypeHandlerProvider;
   @Mock

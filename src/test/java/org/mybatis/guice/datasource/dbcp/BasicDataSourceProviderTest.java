@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class BasicDataSourceProviderTest {
+class BasicDataSourceProviderTest {
   @Mock
   private ClassLoader driverClassLoader;
 

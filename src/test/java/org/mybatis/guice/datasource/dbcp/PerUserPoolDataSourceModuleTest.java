@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PerUserPoolDataSourceModuleTest {
+class PerUserPoolDataSourceModuleTest {
   @Mock
   private ConnectionPoolDataSource connectionPoolDataSource;
 

@@ -25,7 +25,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultExecutorTypeConfigurationSettingTest {
+class DefaultExecutorTypeConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 

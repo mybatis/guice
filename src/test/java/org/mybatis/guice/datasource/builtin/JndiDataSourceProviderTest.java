@@ -41,7 +41,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class JndiDataSourceProviderTest {
+class JndiDataSourceProviderTest {
   private static String dataSourceName;
   private static String contextName;
   private static DataSource globalDataSource;

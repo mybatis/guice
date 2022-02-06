@@ -27,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class MapperProviderTest {
+class MapperProviderTest {
   private MapperProvider<TestMapper> mapperProvider;
   @Mock
   private SqlSessionManager sqlSessionManager;

@@ -28,7 +28,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class EnvironmentProviderTest {
+class EnvironmentProviderTest {
   private EnvironmentProvider environmentProvider;
   private String id;
   @Mock

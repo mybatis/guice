@@ -85,7 +85,7 @@ import org.mybatis.guice.resolver.typehandler.AddressTypeHandler;
 import org.mybatis.guice.resolver.typehandler.UserTypeHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class MyBatisModuleTest {
+class MyBatisModuleTest {
   @Mock
   private static Configuration staticConfiguration;
   @Mock
