@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2021 the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -82,13 +82,17 @@ public enum JdbcHelper implements Module {
 
   MariaDB("jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
 
-  MariaDB_Aurora("jdbc:mysql:aurora//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+  MariaDB_Aurora("jdbc:mysql:aurora//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}",
+      "org.mariadb.jdbc.Driver"),
 
-  MariaDB_Sequential("jdbc:mysql:sequential//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+  MariaDB_Sequential("jdbc:mysql:sequential//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}",
+      "org.mariadb.jdbc.Driver"),
 
-  MariaDB_Loadbalance("jdbc:mysql:loadbalance//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+  MariaDB_Loadbalance("jdbc:mysql:loadbalance//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}",
+      "org.mariadb.jdbc.Driver"),
 
-  MariaDB_Replication("jdbc:mysql:replication//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+  MariaDB_Replication("jdbc:mysql:replication//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}",
+      "org.mariadb.jdbc.Driver"),
 
   MaxDB("jdbc:sapdb://${JDBC.host|localhost}:${JDBC.port|7210}/${JDBC.schema}", "com.sap.dbtech.jdbc.DriverSapDB"),
 
