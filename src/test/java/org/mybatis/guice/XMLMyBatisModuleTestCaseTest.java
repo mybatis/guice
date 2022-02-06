@@ -15,16 +15,15 @@
  */
 package org.mybatis.guice;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(GuiceTestExtension.class)
-public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
+@ExtendWith(XMLGuiceTestExtension.class)
+final class XMLMyBatisModuleTestCaseTest extends AbstractMyBatisModuleTestCase {
 
   @Inject
   @Named("contactWithAddress")
@@ -35,6 +34,14 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
 
   @Inject
   private AddressConverter addressConverter;
+
+  @Inject
+  private SqlSessionFactory sqlSessionFactory;
+
+  @Test
+  void testEnvironmentId() throws Exception {
+    assert "test".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
+  }
 
   @Test
   void testAddressConverter() throws Exception {
@@ -59,12 +66,6 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
     Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contactWithAdress.getId() + "'";
     assert this.contactWithAdress.equals(contact) : "Expected " + this.contactWithAdress + " but found " + contact;
-  }
-
-  @Test
-  void selectAllContactsWithDatabaseId() throws Exception {
-    List<Contact> contacts = this.contactMapperClient.getAllWithDatabaseId();
-    assert contacts.size() > 0 : "Expected not empty contact table";
   }
 
 }
