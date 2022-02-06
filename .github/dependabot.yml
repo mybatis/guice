@@ -22,9 +22,18 @@ updates:
     interval: daily
   open-pull-requests-limit: 10
   ignore:
+  - dependency-name: com.zaxxer:HikariCP
+    versions:
+    - "> 4.9.9"
+  - dependency-name: jakarta.annotation:jakarta.annotation-api
+    versions:
+    - "> 1.9.9"
   - dependency-name: jakarta.ejb:jakarta.ejb-api
     versions:
     - "> 3.3.0"
+  - dependency-name: jakarta.inject:jakarta.inject-api
+    versions:
+    - "> 1.9.9"
   - dependency-name: jakarta.transaction:jakarta.transaction-api
     versions:
     - "> 1.4.0"
