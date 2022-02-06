@@ -37,7 +37,7 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class NestedTxTest {
+class NestedTxTest {
 
   private Injector injector;
   private NestedTxService service;

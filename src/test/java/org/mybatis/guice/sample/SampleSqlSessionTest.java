@@ -55,7 +55,7 @@ import org.mybatis.guice.sample.service.FooServiceDaoImpl;
  *
  * This is the recommended scenario.
  */
-public class SampleSqlSessionTest {
+class SampleSqlSessionTest {
 
   private Injector injector;
 

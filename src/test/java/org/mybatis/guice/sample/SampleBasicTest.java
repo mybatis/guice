@@ -48,7 +48,7 @@ import org.mybatis.guice.sample.service.FooServiceMapperImpl;
  *
  * This is the recommended scenario.
  */
-public class SampleBasicTest {
+class SampleBasicTest {
 
   private Injector injector;
 

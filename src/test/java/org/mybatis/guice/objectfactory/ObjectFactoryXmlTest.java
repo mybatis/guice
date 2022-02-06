@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.guice.XMLMyBatisModule;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class ObjectFactoryXmlTest {
+class ObjectFactoryXmlTest {
   @Test
   void objectFactoryInjection() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new XMLMyBatisModule() {

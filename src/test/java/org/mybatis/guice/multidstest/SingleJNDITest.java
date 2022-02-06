@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 
-public class SingleJNDITest {
+class SingleJNDITest {
 
   @Test
   void testSingleDSWithJNDI() throws Exception {

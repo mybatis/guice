@@ -30,7 +30,7 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class CustomConfigurationTest {
+class CustomConfigurationTest {
 
   protected Properties createTestProperties() {
     final Properties myBatisProperties = new Properties();

@@ -35,13 +35,13 @@ import org.mybatis.guice.transactional.TransactionToken;
  * Create Requerd transaction. Create internal RequiresNew transaction. Rollback first transaction. Warning: transaction
  * will roll back. XA error code: 100
  */
-public class JtaXaRollbackTest {
+class JtaXaRollbackTest {
 
   private static DataSource dataSource;
   private static AriesTransactionManager manager;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws Exception {
+  static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
     manager = new AriesTransactionManagerImpl();
@@ -53,12 +53,12 @@ public class JtaXaRollbackTest {
   }
 
   @AfterAll
-  public static void tearDownAfterClass() throws Exception {
+  static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
+  void tearDown() throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
   }
 

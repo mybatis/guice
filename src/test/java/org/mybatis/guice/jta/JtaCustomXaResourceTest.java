@@ -44,7 +44,7 @@ public class JtaCustomXaResourceTest {
   static DataSource dataSource2;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws Exception {
+  static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
     LogFactory.useSlf4jLogging();
 
@@ -54,7 +54,7 @@ public class JtaCustomXaResourceTest {
   }
 
   @AfterAll
-  public static void tearDownAfterClass() throws Exception {
+  static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB2);
   }
 
@@ -101,7 +101,7 @@ public class JtaCustomXaResourceTest {
   }
 
   @AfterEach
-  public void tearDown(TestInfo testInfo) throws Exception {
+  void tearDown(TestInfo testInfo) throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB2);
 
     LOGGER.info("********************************************************************************");

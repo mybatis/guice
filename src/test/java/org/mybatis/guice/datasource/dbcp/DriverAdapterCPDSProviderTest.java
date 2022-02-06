@@ -25,7 +25,7 @@ import com.google.inject.name.Names;
 import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
 import org.junit.jupiter.api.Test;
 
-public class DriverAdapterCPDSProviderTest {
+class DriverAdapterCPDSProviderTest {
   @Test
   void get() throws Throwable {
     final String driver = TestDriver.class.getName();

@@ -41,7 +41,7 @@ public class JtaLocalRollbackTest {
   private static AriesTransactionManager manager;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws Exception {
+  static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
     manager = new AriesTransactionManagerImpl();
@@ -53,12 +53,12 @@ public class JtaLocalRollbackTest {
   }
 
   @AfterAll
-  public static void tearDownAfterClass() throws Exception {
+  static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
+  void tearDown() throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
   }
 

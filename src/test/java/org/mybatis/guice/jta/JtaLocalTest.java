@@ -39,7 +39,7 @@ import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JtaLocalTest {
+class JtaLocalTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaLocalTest.class);
 
   static AriesTransactionManager manager;
@@ -47,7 +47,7 @@ public class JtaLocalTest {
   static DataSource dataSource2;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws Exception {
+  static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
     LogFactory.useSlf4jLogging();
 
@@ -58,7 +58,7 @@ public class JtaLocalTest {
   }
 
   @AfterAll
-  public static void tearDownAfterClass() throws Exception {
+  static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
     BaseDB.dropTable(BaseDB.URL_DB2);
   }
@@ -126,7 +126,7 @@ public class JtaLocalTest {
   }
 
   @AfterEach
-  public void tearDown(TestInfo testInfo) throws Exception {
+  void tearDown(TestInfo testInfo) throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
     BaseDB.clearTable(BaseDB.URL_DB2);
 

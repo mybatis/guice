@@ -30,7 +30,7 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class MultiJDBCTest {
+class MultiJDBCTest {
 
   @Test
   void testMultiDSWithJDBC() {

@@ -37,7 +37,7 @@ import org.mybatis.guice.MyBatisJtaModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 import org.mybatis.guice.multidstest.MockInitialContextFactory;
 
-public class SimpleJTATest {
+class SimpleJTATest {
 
   private CombinedService combinedService;
 

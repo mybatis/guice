@@ -50,7 +50,7 @@ class JndiDataSourceProviderTest {
   private static int providerLoginTimeout = 2;
 
   @BeforeAll
-  public static void beforeClass() throws Throwable {
+  static void beforeClass() throws Throwable {
     System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
     System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
     dataSourceName = "dataSource";

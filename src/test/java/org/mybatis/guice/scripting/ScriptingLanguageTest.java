@@ -31,7 +31,7 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class ScriptingLanguageTest {
+class ScriptingLanguageTest {
   private SqlSessionFactory factory;
 
   @BeforeEach

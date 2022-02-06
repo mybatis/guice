@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 
-public class MultiJNDITest {
+class MultiJNDITest {
 
   @Test
   void testMultiDSWithJNDIWithProviderType() throws Exception {
