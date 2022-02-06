@@ -33,7 +33,7 @@ class SqlSessionManagerProviderTest {
   private SqlSessionFactory sqlSessionFactory;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     sqlSessionManagerProvider = new SqlSessionManagerProvider();
     sqlSessionManagerProvider.createNewSqlSessionManager(sqlSessionFactory);
   }

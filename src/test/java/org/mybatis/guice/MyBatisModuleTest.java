@@ -115,7 +115,7 @@ class MyBatisModuleTest {
   private String databaseId;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     databaseId = "test_database";
     when(dataSourceProvider.get()).thenReturn(dataSource);
     when(transactionFactoryProvider.get()).thenReturn(transactionFactory);

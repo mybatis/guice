@@ -55,7 +55,7 @@ public class SampleBasicTest {
   private FooService fooService;
 
   @BeforeEach
-  public void setupMyBatisGuice() throws Exception {
+  void setupMyBatisGuice() throws Exception {
 
     // bindings
     this.injector = createInjector(new MyBatisModule() {

@@ -35,7 +35,7 @@ public class ScriptingLanguageTest {
   private SqlSessionFactory factory;
 
   @BeforeEach
-  public void beforeClass() {
+  void beforeClass() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
       @Override
       protected void initialize() {

@@ -43,7 +43,7 @@ public class NestedTxTest {
   private NestedTxService service;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {

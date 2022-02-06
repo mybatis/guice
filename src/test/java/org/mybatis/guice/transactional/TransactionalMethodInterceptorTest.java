@@ -43,7 +43,7 @@ class TransactionalMethodInterceptorTest {
   private SqlSessionManager sqlSessionManager;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     transactionalMethodInterceptor = new TransactionalMethodInterceptor();
     transactionalMethodInterceptor.setSqlSessionManager(sqlSessionManager);
   }

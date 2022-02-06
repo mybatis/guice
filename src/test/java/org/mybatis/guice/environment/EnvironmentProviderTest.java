@@ -37,7 +37,7 @@ class EnvironmentProviderTest {
   private TransactionFactory transactionFactory;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     environmentProvider = new EnvironmentProvider();
     id = "test environment";
     environmentProvider.setId(id);

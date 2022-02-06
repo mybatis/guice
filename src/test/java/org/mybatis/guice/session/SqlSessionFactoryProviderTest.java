@@ -33,7 +33,7 @@ class SqlSessionFactoryProviderTest {
   private Configuration configuration;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     sqlSessionFactoryProvider = new SqlSessionFactoryProvider();
     sqlSessionFactoryProvider.createNewSqlSessionFactory(configuration);
   }

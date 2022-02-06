@@ -40,7 +40,7 @@ class TypeHandlerProviderTest {
   private Injector injector;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     typeHandlerProvider = new TypeHandlerProvider<CustomLongTypeHandler, CustomType>(injector,
         CustomLongTypeHandler.class, null);
     genericTypeHandlerProvider = new TypeHandlerProvider<GenericCustomObjectTypeHandler<CustomObject>, CustomObject>(

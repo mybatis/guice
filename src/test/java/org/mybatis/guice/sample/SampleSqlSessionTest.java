@@ -62,7 +62,7 @@ public class SampleSqlSessionTest {
   private FooService fooService;
 
   @BeforeEach
-  public void setupMyBatisGuice() throws Exception {
+  void setupMyBatisGuice() throws Exception {
 
     // bindings
     List<Module> modules = this.createMyBatisModule();

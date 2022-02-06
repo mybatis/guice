@@ -77,7 +77,7 @@ class ConfigurationProviderTest {
   private Environment environment;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     environment = new Environment("test", transactionFactory, dataSource);
     configurationProvider = new ConfigurationProvider(environment);
   }

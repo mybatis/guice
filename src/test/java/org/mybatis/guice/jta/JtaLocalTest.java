@@ -68,7 +68,7 @@ public class JtaLocalTest {
   JtaProcess process;
 
   @BeforeEach
-  public void setup(TestInfo testInfo) throws Exception {
+  void setup(TestInfo testInfo) throws Exception {
     LOGGER.info("********************************************************************************");
     LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");

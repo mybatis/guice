@@ -34,7 +34,7 @@ class MapperProviderTest {
   private TestMapper mapper;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     mapperProvider = new MapperProvider<TestMapper>(TestMapper.class);
     mapperProvider.setSqlSessionManager(sqlSessionManager);
     mapper = new TestMapper();

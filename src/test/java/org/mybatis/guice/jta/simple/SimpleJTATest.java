@@ -42,7 +42,7 @@ public class SimpleJTATest {
   private CombinedService combinedService;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     // this sets up a mocked JNDI environment. In JEE containers all this would be
     // configured in the container
     Utils.setupMockJNDI();
