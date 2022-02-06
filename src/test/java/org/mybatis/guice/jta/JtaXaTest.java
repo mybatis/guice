@@ -39,7 +39,7 @@ import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JtaXaTest {
+class JtaXaTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaXaTest.class);
 
   static AriesTransactionManager manager;
@@ -47,7 +47,7 @@ public class JtaXaTest {
   static DataSource dataSource2;
 
   @BeforeAll
-  public static void setUpBeforeClass() throws Exception {
+  static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
     manager = new AriesTransactionManagerImpl();
@@ -57,7 +57,7 @@ public class JtaXaTest {
   }
 
   @AfterAll
-  public static void tearDownAfterClass() throws Exception {
+  static void tearDownAfterClass() throws Exception {
     BaseDB.dropTable(BaseDB.URL_DB1);
     BaseDB.dropTable(BaseDB.URL_DB2);
   }
@@ -67,7 +67,7 @@ public class JtaXaTest {
   JtaProcess process;
 
   @BeforeEach
-  public void setup(TestInfo testInfo) throws Exception {
+  void setup(TestInfo testInfo) throws Exception {
     LOGGER.info("********************************************************************************");
     LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
     LOGGER.info("********************************************************************************");
@@ -125,7 +125,7 @@ public class JtaXaTest {
   }
 
   @AfterEach
-  public void tearDown(TestInfo testInfo) throws Exception {
+  void tearDown(TestInfo testInfo) throws Exception {
     BaseDB.clearTable(BaseDB.URL_DB1);
     BaseDB.clearTable(BaseDB.URL_DB2);
 
@@ -140,7 +140,7 @@ public class JtaXaTest {
    * have 1 rows
    */
   @Test
-  public void testRequired(TestInfo testInfo) throws Exception {
+  void testRequired(TestInfo testInfo) throws Exception {
     process.required(1);
     checkCountRows(testInfo, 1);
   }
@@ -151,7 +151,7 @@ public class JtaXaTest {
    * have 1 rows
    */
   @Test
-  public void testRequiresNew(TestInfo testInfo) throws Exception {
+  void testRequiresNew(TestInfo testInfo) throws Exception {
     process.requiresNew(1);
     checkCountRows(testInfo, 1);
   }
@@ -162,7 +162,7 @@ public class JtaXaTest {
    * have 0 rows
    */
   @Test
-  public void testRequiredAndRollback(TestInfo testInfo) throws Exception {
+  void testRequiredAndRollback(TestInfo testInfo) throws Exception {
     try {
       process.requiredAndRollback(1);
     } catch (JtaRollbackException e) {
@@ -176,7 +176,7 @@ public class JtaXaTest {
    * have 0 rows
    */
   @Test
-  public void testRequiresNewAndRollback(TestInfo testInfo) throws Exception {
+  void testRequiresNewAndRollback(TestInfo testInfo) throws Exception {
     try {
       process.requiresNewAndRollback(1);
     } catch (JtaRollbackException e) {
@@ -190,7 +190,7 @@ public class JtaXaTest {
    * have 2 rows
    */
   @Test
-  public void testRequiredAndRequiresNew(TestInfo testInfo) throws Exception {
+  void testRequiredAndRequiresNew(TestInfo testInfo) throws Exception {
     process.requiredAndRequiresNew();
     checkCountRows(testInfo, 2);
   }
@@ -201,7 +201,7 @@ public class JtaXaTest {
    * have 2 rows
    */
   @Test
-  public void testRequiresNewAndRequired(TestInfo testInfo) throws Exception {
+  void testRequiresNewAndRequired(TestInfo testInfo) throws Exception {
     process.requiresNewAndRequired();
     checkCountRows(testInfo, 2);
   }
@@ -212,7 +212,7 @@ public class JtaXaTest {
    * have 1 rows and id=1 (from commited REQUIRED)
    */
   @Test
-  public void testRollbackInternalRequiresNew(TestInfo testInfo) throws Exception {
+  void testRollbackInternalRequiresNew(TestInfo testInfo) throws Exception {
     try {
       process.rollbackInternalRequiresNew();
     } catch (JtaRollbackException e) {
@@ -226,7 +226,7 @@ public class JtaXaTest {
    * have 1 rows and id=2 (from commited REQUIRED)
    */
   @Test
-  public void testRollbackInternalRequiresNew2(TestInfo testInfo) throws Exception {
+  void testRollbackInternalRequiresNew2(TestInfo testInfo) throws Exception {
     try {
       process.rollbackInternalRequiresNew2();
     } catch (JtaRollbackException e) {
@@ -240,7 +240,7 @@ public class JtaXaTest {
    * have 1 rows and id=1 (from commited REQUIRES_NEW)
    */
   @Test
-  public void testRollbackExternalRequired(TestInfo testInfo) throws Exception {
+  void testRollbackExternalRequired(TestInfo testInfo) throws Exception {
     try {
       process.rollbackExternalRequired();
     } catch (JtaRollbackException e) {
@@ -254,7 +254,7 @@ public class JtaXaTest {
    * have 1 rows and id=2 (from commited REQUIRES_NEW)
    */
   @Test
-  public void testRollbackExternalRequired2(TestInfo testInfo) throws Exception {
+  void testRollbackExternalRequired2(TestInfo testInfo) throws Exception {
     try {
       process.rollbackExternalRequired2();
     } catch (JtaRollbackException e) {

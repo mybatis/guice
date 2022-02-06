@@ -28,7 +28,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class EnvironmentProviderTest {
+class EnvironmentProviderTest {
   private EnvironmentProvider environmentProvider;
   private String id;
   @Mock
@@ -37,7 +37,7 @@ public class EnvironmentProviderTest {
   private TransactionFactory transactionFactory;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     environmentProvider = new EnvironmentProvider();
     id = "test environment";
     environmentProvider.setId(id);
@@ -46,7 +46,7 @@ public class EnvironmentProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     Environment environment = environmentProvider.get();
     assertEquals(id, environment.getId());
     assertEquals(dataSource, environment.getDataSource());

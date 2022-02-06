@@ -31,12 +31,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class UnpooledDataSourceProviderTest {
+class UnpooledDataSourceProviderTest {
   @Mock
   private ClassLoader driverClassLoader;
 
   @Test
-  public void get() throws Throwable {
+  void get() throws Throwable {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -72,7 +72,7 @@ public class UnpooledDataSourceProviderTest {
   }
 
   @Test
-  public void get_OtherValues() throws Throwable {
+  void get_OtherValues() throws Throwable {
     final String driver = "org.mybatis.guice.TestDriver2";
     final String url = "jdbc:h2:mem:testdb2";
     final String username = "test_user2";

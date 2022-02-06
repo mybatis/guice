@@ -30,7 +30,7 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class CustomConfigurationTest {
+class CustomConfigurationTest {
 
   protected Properties createTestProperties() {
     final Properties myBatisProperties = new Properties();
@@ -42,7 +42,7 @@ public class CustomConfigurationTest {
   }
 
   @Test
-  public void customConfigurationProviderWithMyBatisModule() throws Exception {
+  void customConfigurationProviderWithMyBatisModule() throws Exception {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {

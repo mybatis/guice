@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ObjectFactoryConfigurationSettingTest {
+class ObjectFactoryConfigurationSettingTest {
   @Mock
   private Configuration configuration;
   @Mock
@@ -40,7 +40,7 @@ public class ObjectFactoryConfigurationSettingTest {
   private TestObjectFactory objectFactory;
 
   @Test
-  public void applyConfigurationSetting() {
+  void applyConfigurationSetting() {
     when(injector.getInstance(TestObjectFactory.class)).thenReturn(objectFactory);
     ObjectFactoryConfigurationSetting setting = new ObjectFactoryConfigurationSetting(TestObjectFactory.class);
     setting.setInjector(injector);

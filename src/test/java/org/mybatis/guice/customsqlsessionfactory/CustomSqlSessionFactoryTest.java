@@ -41,7 +41,7 @@ public class CustomSqlSessionFactoryTest {
   }
 
   @Test
-  public void customSqlSessionFactoryProvider() throws Exception {
+  void customSqlSessionFactoryProvider() throws Exception {
     Injector injector = Guice.createInjector(new MyBatisModule() {
       @Override
       protected void initialize() {

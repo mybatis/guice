@@ -37,7 +37,7 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
   private AddressConverter addressConverter;
 
   @Test
-  public void testAddressConverter() throws Exception {
+  void testAddressConverter() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -46,7 +46,7 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
   }
 
   @Test
-  public void insertContactWithAddress() throws Exception {
+  void insertContactWithAddress() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -55,14 +55,14 @@ public final class MyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
   }
 
   @Test
-  public void selectContactWithAddress() throws Exception {
+  void selectContactWithAddress() throws Exception {
     Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contactWithAdress.getId() + "'";
     assert this.contactWithAdress.equals(contact) : "Expected " + this.contactWithAdress + " but found " + contact;
   }
 
   @Test
-  public void selectAllContactsWithDatabaseId() throws Exception {
+  void selectAllContactsWithDatabaseId() throws Exception {
     List<Contact> contacts = this.contactMapperClient.getAllWithDatabaseId();
     assert contacts.size() > 0 : "Expected not empty contact table";
   }

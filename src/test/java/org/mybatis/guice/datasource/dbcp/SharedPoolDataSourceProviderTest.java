@@ -33,14 +33,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SharedPoolDataSourceProviderTest {
+class SharedPoolDataSourceProviderTest {
   @Mock
   private ClassLoader driverClassLoader;
   @Mock
   private ConnectionPoolDataSource connectionPoolDataSource;
 
   @Test
-  public void get() throws Throwable {
+  void get() throws Throwable {
     final boolean autoCommit = true;
     final int loginTimeout = 10;
     final boolean defaultReadOnly = true;
@@ -106,7 +106,7 @@ public class SharedPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_OtherValues() throws Throwable {
+  void get_OtherValues() throws Throwable {
     final boolean autoCommit = false;
     final int loginTimeout = 11;
     final boolean defaultReadOnly = false;
@@ -172,7 +172,7 @@ public class SharedPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_Jndi() throws Throwable {
+  void get_Jndi() throws Throwable {
     final String jndiKey = "test_key";
     final String jndiValue = "test_value";
     Injector injector = Guice.createInjector(new AbstractModule() {
@@ -192,7 +192,7 @@ public class SharedPoolDataSourceProviderTest {
   }
 
   @Test
-  public void get_DataSourceName() throws Throwable {
+  void get_DataSourceName() throws Throwable {
     final String name = "test_name";
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override

@@ -33,14 +33,14 @@ import org.mybatis.guice.generictypehandler.CustomObject;
 import org.mybatis.guice.generictypehandler.GenericCustomObjectTypeHandler;
 
 @ExtendWith(MockitoExtension.class)
-public class TypeHandlerProviderTest {
+class TypeHandlerProviderTest {
   private TypeHandlerProvider<CustomLongTypeHandler, CustomType> typeHandlerProvider;
   private TypeHandlerProvider<GenericCustomObjectTypeHandler<CustomObject>, CustomObject> genericTypeHandlerProvider;
   @Mock
   private Injector injector;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     typeHandlerProvider = new TypeHandlerProvider<CustomLongTypeHandler, CustomType>(injector,
         CustomLongTypeHandler.class, null);
     genericTypeHandlerProvider = new TypeHandlerProvider<GenericCustomObjectTypeHandler<CustomObject>, CustomObject>(
@@ -49,7 +49,7 @@ public class TypeHandlerProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     CustomLongTypeHandler typeHandler = typeHandlerProvider.get();
     assertNotNull(typeHandler);
     verify(injector).injectMembers(typeHandler);

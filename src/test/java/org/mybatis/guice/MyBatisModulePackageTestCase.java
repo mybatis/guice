@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GuicePackageTestExtension.class)
-public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
+class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 
   @Inject
   @Named("contactWithAddress")
@@ -35,7 +35,7 @@ public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTes
   private AddressConverter addressConverter;
 
   @Test
-  public void testAddressConverter() throws Exception {
+  void testAddressConverter() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -44,7 +44,7 @@ public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTes
   }
 
   @Test
-  public void insertContactWithAddress() throws Exception {
+  void insertContactWithAddress() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -53,7 +53,7 @@ public final class MyBatisModulePackageTestCase extends AbstractMyBatisModuleTes
   }
 
   @Test
-  public void selectContactWithAddress() throws Exception {
+  void selectContactWithAddress() throws Exception {
     Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contactWithAdress.getId() + "'";
     assert this.contactWithAdress.equals(contact) : "Expected " + this.contactWithAdress + " but found " + contact;

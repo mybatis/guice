@@ -32,10 +32,10 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class GenericCustomObjectTypeHandlerTest {
+class GenericCustomObjectTypeHandlerTest {
   @Test
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public void genericTypeHandler() {
+  void genericTypeHandler() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
       @Override
       protected void initialize() {

@@ -24,19 +24,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class UseGeneratedKeysConfigurationSettingTest {
+class UseGeneratedKeysConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     UseGeneratedKeysConfigurationSetting setting = new UseGeneratedKeysConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setUseGeneratedKeys(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     UseGeneratedKeysConfigurationSetting setting = new UseGeneratedKeysConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setUseGeneratedKeys(false);

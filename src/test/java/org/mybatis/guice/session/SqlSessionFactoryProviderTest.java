@@ -27,19 +27,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class SqlSessionFactoryProviderTest {
+class SqlSessionFactoryProviderTest {
   private SqlSessionFactoryProvider sqlSessionFactoryProvider;
   @Mock
   private Configuration configuration;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     sqlSessionFactoryProvider = new SqlSessionFactoryProvider();
     sqlSessionFactoryProvider.createNewSqlSessionFactory(configuration);
   }
 
   @Test
-  public void get() {
+  void get() {
     SqlSessionFactory sqlSessionFactory = sqlSessionFactoryProvider.get();
 
     assertNotNull(sqlSessionFactory);

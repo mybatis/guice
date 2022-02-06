@@ -34,12 +34,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PerUserPoolDataSourceModuleTest {
+class PerUserPoolDataSourceModuleTest {
   @Mock
   private ConnectionPoolDataSource connectionPoolDataSource;
 
   @Test
-  public void configure_PerUserDefaultAutoCommit() throws Throwable {
+  void configure_PerUserDefaultAutoCommit() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserDefaultAutoCommitProviderClass(PerUserDefaultAutoCommitProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -51,7 +51,7 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserDefaultReadOnly() throws Throwable {
+  void configure_PerUserDefaultReadOnly() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserDefaultReadOnlyProviderClass(PerUserDefaultReadOnlyProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -63,7 +63,7 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserDefaultTransactionIsolation() throws Throwable {
+  void configure_PerUserDefaultTransactionIsolation() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserDefaultTransactionIsolationProviderClass(PerUserDefaultTransactionIsolationProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -77,7 +77,7 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserMaxTotal() throws Throwable {
+  void configure_PerUserMaxTotal() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserMaxTotalProviderClass(PerUserMaxTotalProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -89,7 +89,7 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserMaxIdle() throws Throwable {
+  void configure_PerUserMaxIdle() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserMaxIdleProviderClass(PerUserMaxIdleProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);
@@ -101,7 +101,7 @@ public class PerUserPoolDataSourceModuleTest {
   }
 
   @Test
-  public void configure_PerUserMaxWaitMillis() throws Throwable {
+  void configure_PerUserMaxWaitMillis() throws Throwable {
     Injector injector = Guice.createInjector(new PerUserPoolDataSourceModule.Builder()
         .setPerUserMaxWaitMillisProviderClass(PerUserMaxWaitMillisProvider.class).create());
     PerUserPoolDataSourceProvider provider = injector.getInstance(PerUserPoolDataSourceProvider.class);

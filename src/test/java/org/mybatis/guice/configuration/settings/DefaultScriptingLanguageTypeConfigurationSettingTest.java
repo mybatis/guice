@@ -26,12 +26,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultScriptingLanguageTypeConfigurationSettingTest {
+class DefaultScriptingLanguageTypeConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_Raw() {
+  void applyConfigurationSetting_Raw() {
     DefaultScriptingLanguageTypeConfigurationSetting setting = new DefaultScriptingLanguageTypeConfigurationSetting(
         RawLanguageDriver.class);
     setting.applyConfigurationSetting(configuration);
@@ -39,7 +39,7 @@ public class DefaultScriptingLanguageTypeConfigurationSettingTest {
   }
 
   @Test
-  public void applyConfigurationSetting_Xml() {
+  void applyConfigurationSetting_Xml() {
     DefaultScriptingLanguageTypeConfigurationSetting setting = new DefaultScriptingLanguageTypeConfigurationSetting(
         XMLLanguageDriver.class);
     setting.applyConfigurationSetting(configuration);

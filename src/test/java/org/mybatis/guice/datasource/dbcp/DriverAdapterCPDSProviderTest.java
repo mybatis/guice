@@ -25,9 +25,9 @@ import com.google.inject.name.Names;
 import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
 import org.junit.jupiter.api.Test;
 
-public class DriverAdapterCPDSProviderTest {
+class DriverAdapterCPDSProviderTest {
   @Test
-  public void get() throws Throwable {
+  void get() throws Throwable {
     final String driver = TestDriver.class.getName();
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -77,7 +77,7 @@ public class DriverAdapterCPDSProviderTest {
   }
 
   @Test
-  public void getOtherValues() throws Throwable {
+  void getOtherValues() throws Throwable {
     final String driver = TestDriver2.class.getName();
     final String url = "jdbc:h2:mem:testdb2";
     final String username = "test_user2";

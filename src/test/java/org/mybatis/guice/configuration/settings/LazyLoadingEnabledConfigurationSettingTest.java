@@ -24,19 +24,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class LazyLoadingEnabledConfigurationSettingTest {
+class LazyLoadingEnabledConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     LazyLoadingEnabledConfigurationSetting setting = new LazyLoadingEnabledConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setLazyLoadingEnabled(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     LazyLoadingEnabledConfigurationSetting setting = new LazyLoadingEnabledConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setLazyLoadingEnabled(false);

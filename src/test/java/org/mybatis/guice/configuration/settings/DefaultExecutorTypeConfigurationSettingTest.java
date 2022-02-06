@@ -25,26 +25,26 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultExecutorTypeConfigurationSettingTest {
+class DefaultExecutorTypeConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_Batch() {
+  void applyConfigurationSetting_Batch() {
     DefaultExecutorTypeConfigurationSetting setting = new DefaultExecutorTypeConfigurationSetting(ExecutorType.BATCH);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setDefaultExecutorType(ExecutorType.BATCH);
   }
 
   @Test
-  public void applyConfigurationSetting_Reuse() {
+  void applyConfigurationSetting_Reuse() {
     DefaultExecutorTypeConfigurationSetting setting = new DefaultExecutorTypeConfigurationSetting(ExecutorType.REUSE);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setDefaultExecutorType(ExecutorType.REUSE);
   }
 
   @Test
-  public void applyConfigurationSetting_Simple() {
+  void applyConfigurationSetting_Simple() {
     DefaultExecutorTypeConfigurationSetting setting = new DefaultExecutorTypeConfigurationSetting(ExecutorType.SIMPLE);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setDefaultExecutorType(ExecutorType.SIMPLE);

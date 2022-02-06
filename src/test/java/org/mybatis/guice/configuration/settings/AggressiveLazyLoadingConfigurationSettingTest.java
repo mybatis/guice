@@ -24,19 +24,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class AggressiveLazyLoadingConfigurationSettingTest {
+class AggressiveLazyLoadingConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_True() {
+  void applyConfigurationSetting_True() {
     AggressiveLazyLoadingConfigurationSetting setting = new AggressiveLazyLoadingConfigurationSetting(true);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setAggressiveLazyLoading(true);
   }
 
   @Test
-  public void applyConfigurationSetting_False() {
+  void applyConfigurationSetting_False() {
     AggressiveLazyLoadingConfigurationSetting setting = new AggressiveLazyLoadingConfigurationSetting(false);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setAggressiveLazyLoading(false);

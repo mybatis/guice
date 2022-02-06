@@ -27,14 +27,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class MapperProviderTest {
+class MapperProviderTest {
   private MapperProvider<TestMapper> mapperProvider;
   @Mock
   private SqlSessionManager sqlSessionManager;
   private TestMapper mapper;
 
   @BeforeEach
-  public void beforeTest() {
+  void beforeTest() {
     mapperProvider = new MapperProvider<TestMapper>(TestMapper.class);
     mapperProvider.setSqlSessionManager(sqlSessionManager);
     mapper = new TestMapper();
@@ -42,7 +42,7 @@ public class MapperProviderTest {
   }
 
   @Test
-  public void get() {
+  void get() {
     TestMapper mapper = mapperProvider.get();
     assertNotNull(mapper);
     verify(sqlSessionManager).getMapper(TestMapper.class);

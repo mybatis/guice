@@ -33,10 +33,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class C3p0DataSourceProviderTest {
+class C3p0DataSourceProviderTest {
 
   @Test
-  public void get() {
+  void get() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -138,7 +138,7 @@ public class C3p0DataSourceProviderTest {
   }
 
   @Test
-  public void get_OtherValues() {
+  void get_OtherValues() {
     final String driver = "org.mybatis.guice.TestDriver2";
     final String url = "jdbc:h2:mem:testdb2";
     final String username = "test_user2";
@@ -240,7 +240,7 @@ public class C3p0DataSourceProviderTest {
   }
 
   @Test
-  public void get_Properties() {
+  void get_Properties() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -272,7 +272,7 @@ public class C3p0DataSourceProviderTest {
   }
 
   @Test
-  public void get_UserPasswordAndProperties() {
+  void get_UserPasswordAndProperties() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";

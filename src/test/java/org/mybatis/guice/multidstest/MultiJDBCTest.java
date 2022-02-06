@@ -30,10 +30,10 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class MultiJDBCTest {
+class MultiJDBCTest {
 
   @Test
-  public void testMultiDSWithJDBC() {
+  void testMultiDSWithJDBC() {
     Injector injector = setupInjector();
     Schema1Service schema1Service = injector.getInstance(Schema1Service.class);
     schema1Service.createSchema1();

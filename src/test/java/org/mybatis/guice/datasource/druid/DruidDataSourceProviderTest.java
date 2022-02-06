@@ -34,13 +34,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DruidDataSourceProviderTest {
+class DruidDataSourceProviderTest {
 
   @Mock
   private ClassLoader driverClassLoader;
 
   @Test
-  public void get() {
+  void get() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -142,7 +142,7 @@ public class DruidDataSourceProviderTest {
   }
 
   @Test
-  public void get_ConnectionPropertiesAsString() {
+  void get_ConnectionPropertiesAsString() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -172,7 +172,7 @@ public class DruidDataSourceProviderTest {
   }
 
   @Test
-  public void get_ExceptionSorterAsString() {
+  void get_ExceptionSorterAsString() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";
@@ -201,7 +201,7 @@ public class DruidDataSourceProviderTest {
   }
 
   @Test
-  public void get_ReadOnly() {
+  void get_ReadOnly() {
     final String driver = "org.mybatis.guice.TestDriver";
     final String url = "jdbc:h2:mem:testdb";
     final String username = "test_user";

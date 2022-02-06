@@ -28,7 +28,7 @@ public final class XMLAlternateEnvironmentMyBatisModuleTestCase extends Abstract
   private SqlSessionFactory sqlSessionFactory;
 
   @Test
-  public void testEnvironmentId() throws Exception {
+  void testEnvironmentId() throws Exception {
     assert "test2".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
   }
 }

@@ -31,11 +31,11 @@ import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
 
-public class ScriptingLanguageTest {
+class ScriptingLanguageTest {
   private SqlSessionFactory factory;
 
   @BeforeEach
-  public void beforeClass() {
+  void beforeClass() {
     Injector injector = Guice.createInjector(JdbcHelper.HSQLDB_IN_MEMORY_NAMED, new MyBatisModule() {
       @Override
       protected void initialize() {
@@ -54,7 +54,7 @@ public class ScriptingLanguageTest {
   }
 
   @Test
-  public void scriptingLanguageAlias() {
+  void scriptingLanguageAlias() {
     assertEquals(CustomLanguageDriver.class,
         factory.getConfiguration().getDefaultScriptingLanguageInstance().getClass());
     assertEquals(CustomLanguageDriver.class, factory.getConfiguration().getLanguageRegistry().getDefaultDriverClass());

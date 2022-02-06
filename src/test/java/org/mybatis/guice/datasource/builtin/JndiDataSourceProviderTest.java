@@ -41,7 +41,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class JndiDataSourceProviderTest {
+class JndiDataSourceProviderTest {
   private static String dataSourceName;
   private static String contextName;
   private static DataSource globalDataSource;
@@ -50,7 +50,7 @@ public class JndiDataSourceProviderTest {
   private static int providerLoginTimeout = 2;
 
   @BeforeAll
-  public static void beforeClass() throws Throwable {
+  static void beforeClass() throws Throwable {
     System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
     System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
     dataSourceName = "dataSource";
@@ -64,7 +64,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_NoContext() {
+  void get_NoContext() {
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -80,7 +80,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_Context() {
+  void get_Context() {
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -97,7 +97,7 @@ public class JndiDataSourceProviderTest {
   }
 
   @Test
-  public void get_Environment() throws Throwable {
+  void get_Environment() throws Throwable {
     final String initialContextFactory = TestInitialContextFactory.class.getName();
     final String environmentProviderUrl = getClass()
         .getResource("/" + getClass().getName().replace(".", "/") + ".properties").toString();

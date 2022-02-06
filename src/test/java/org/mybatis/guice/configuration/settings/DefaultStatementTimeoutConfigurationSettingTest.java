@@ -24,19 +24,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultStatementTimeoutConfigurationSettingTest {
+class DefaultStatementTimeoutConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_20() {
+  void applyConfigurationSetting_20() {
     DefaultStatementTimeoutConfigurationSetting setting = new DefaultStatementTimeoutConfigurationSetting(20);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setDefaultStatementTimeout(20);
   }
 
   @Test
-  public void applyConfigurationSetting_100() {
+  void applyConfigurationSetting_100() {
     DefaultStatementTimeoutConfigurationSetting setting = new DefaultStatementTimeoutConfigurationSetting(100);
     setting.applyConfigurationSetting(configuration);
     verify(configuration).setDefaultStatementTimeout(100);

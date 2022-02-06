@@ -55,14 +55,14 @@ import org.mybatis.guice.sample.service.FooServiceDaoImpl;
  *
  * This is the recommended scenario.
  */
-public class SampleSqlSessionTest {
+class SampleSqlSessionTest {
 
   private Injector injector;
 
   private FooService fooService;
 
   @BeforeEach
-  public void setupMyBatisGuice() throws Exception {
+  void setupMyBatisGuice() throws Exception {
 
     // bindings
     List<Module> modules = this.createMyBatisModule();
@@ -121,14 +121,14 @@ public class SampleSqlSessionTest {
   }
 
   @Test
-  public void testFooService() {
+  void testFooService() {
     User user = this.fooService.doSomeBusinessStuff("u1");
     assertNotNull(user);
     assertEquals("Pocoyo", user.getName());
   }
 
   @Test
-  public void testTransactionalOnClassAndMethod() {
+  void testTransactionalOnClassAndMethod() {
     User user = new User();
     user.setName("Christian Poitras");
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -137,7 +137,7 @@ public class SampleSqlSessionTest {
   }
 
   @Test
-  public void testTransactionalOnClass() {
+  void testTransactionalOnClass() {
     User user = new User();
     user.setName("Christian Poitras");
     Assertions.assertThrows(CustomException.class, () -> {

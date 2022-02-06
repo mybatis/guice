@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(XMLGuicePackageTestExtension.class)
-public final class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
+class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 
   @Inject
   @Named("contactWithAddress")
@@ -39,12 +39,12 @@ public final class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModule
   private SqlSessionFactory sqlSessionFactory;
 
   @Test
-  public void testEnvironmentId() throws Exception {
+  void testEnvironmentId() throws Exception {
     assert "test".equals(sqlSessionFactory.getConfiguration().getEnvironment().getId());
   }
 
   @Test
-  public void testAddressConverter() throws Exception {
+  void testAddressConverter() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -53,7 +53,7 @@ public final class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModule
   }
 
   @Test
-  public void insertContactWithAddress() throws Exception {
+  void insertContactWithAddress() throws Exception {
     Address address = new Address();
     address.setNumber(1234);
     address.setStreet("Elm street");
@@ -62,7 +62,7 @@ public final class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModule
   }
 
   @Test
-  public void selectContactWithAddress() throws Exception {
+  void selectContactWithAddress() throws Exception {
     Contact contact = this.contactMapperClient.selectById(this.contactWithAdress.getId());
     assert contact != null : "impossible to retrieve Contact with id '" + this.contactWithAdress.getId() + "'";
     assert this.contactWithAdress.equals(contact) : "Expected " + this.contactWithAdress + " but found " + contact;

@@ -33,10 +33,10 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.guice.MyBatisModule;
 import org.mybatis.guice.datasource.builtin.JndiDataSourceProvider;
 
-public class SingleJNDITest {
+class SingleJNDITest {
 
   @Test
-  public void testSingleDSWithJNDI() throws Exception {
+  void testSingleDSWithJNDI() throws Exception {
     setupJNDI();
     Injector injector = setupInjector();
     Schema1Service schema1Service = injector.getInstance(Schema1Service.class);

@@ -30,7 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ObjectWrapperFactoryConfigurationSettingTest {
+class ObjectWrapperFactoryConfigurationSettingTest {
   @Mock
   private Configuration configuration;
   @Mock
@@ -39,7 +39,7 @@ public class ObjectWrapperFactoryConfigurationSettingTest {
   private TestObjectWrapperFactory objectWrapperFactory;
 
   @Test
-  public void applyConfigurationSetting() {
+  void applyConfigurationSetting() {
     when(injector.getInstance(TestObjectWrapperFactory.class)).thenReturn(objectWrapperFactory);
     ObjectWrapperFactoryConfigurationSetting setting = new ObjectWrapperFactoryConfigurationSetting(
         TestObjectWrapperFactory.class);

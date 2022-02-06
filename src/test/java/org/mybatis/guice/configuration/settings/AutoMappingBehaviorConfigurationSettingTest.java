@@ -25,12 +25,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class AutoMappingBehaviorConfigurationSettingTest {
+class AutoMappingBehaviorConfigurationSettingTest {
   @Mock
   private Configuration configuration;
 
   @Test
-  public void applyConfigurationSetting_Full() {
+  void applyConfigurationSetting_Full() {
     AutoMappingBehaviorConfigurationSetting setting = new AutoMappingBehaviorConfigurationSetting(
         AutoMappingBehavior.FULL);
     setting.applyConfigurationSetting(configuration);
@@ -38,7 +38,7 @@ public class AutoMappingBehaviorConfigurationSettingTest {
   }
 
   @Test
-  public void applyConfigurationSetting_None() {
+  void applyConfigurationSetting_None() {
     AutoMappingBehaviorConfigurationSetting setting = new AutoMappingBehaviorConfigurationSetting(
         AutoMappingBehavior.NONE);
     setting.applyConfigurationSetting(configuration);
@@ -46,7 +46,7 @@ public class AutoMappingBehaviorConfigurationSettingTest {
   }
 
   @Test
-  public void applyConfigurationSetting_Partial() {
+  void applyConfigurationSetting_Partial() {
     AutoMappingBehaviorConfigurationSetting setting = new AutoMappingBehaviorConfigurationSetting(
         AutoMappingBehavior.PARTIAL);
     setting.applyConfigurationSetting(configuration);
