@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>33</version>
+    <version>34-SNAPSHOT</version>
     <relativePath />
   </parent>
 
@@ -129,10 +129,22 @@
       </exclusions>
     </dependency>
     <dependency>
-        <groupId>jakarta.inject</groupId>
-        <artifactId>jakarta.inject-api</artifactId>
-        <version>${inject-api.version}</version>
-        <scope>provided</scope>
+      <groupId>jakarta.inject</groupId>
+      <artifactId>jakarta.inject-api</artifactId>
+      <version>${inject-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.resource</groupId>
+      <artifactId>jakarta.resource-api</artifactId>
+      <version>1.7.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <version>2.0.2</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -187,10 +199,10 @@
       <version>2.9.0</version>
       <optional>true</optional>
       <exclusions>
-          <exclusion>
-              <groupId>commons-logging</groupId>
-              <artifactId>commons-logging</artifactId>
-          </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -298,10 +310,18 @@
       <version>3.1.4</version>
       <scope>test</scope>
       <exclusions>
-          <exclusion>
-              <groupId>org.apache.geronimo.components</groupId>
-              <artifactId>geronimo-transaction</artifactId>
-          </exclusion>
+        <exclusion>
+          <groupId>org.apache.geronimo.components</groupId>
+          <artifactId>geronimo-transaction</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-j2ee-connector_1.6_spec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-validation_1.0_spec</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -339,6 +359,20 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <!-- TODO: Allow pull from snapshots while on mybatis parent snapshot, remove once finalized -->
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>oss.sonatype.org-snapshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>

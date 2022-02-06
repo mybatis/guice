@@ -22,18 +22,33 @@ updates:
     interval: daily
   open-pull-requests-limit: 10
   ignore:
+  - dependency-name: com.zaxxer:HikariCP
+    versions:
+    - "> 4.9.9"
+  - dependency-name: jakarta.annotation:jakarta.annotation-api
+    versions:
+    - "> 1.9.9"
+  - dependency-name: jakarta.ejb:jakarta.ejb-api
+    versions:
+    - "> 3.3.0"
+  - dependency-name: jakarta.inject:jakarta.inject-api
+    versions:
+    - "> 1.9.9"
+  - dependency-name: jakarta.resource:jakarta.resource-api
+    versions:
+    - "> 1.9.9"
+  - dependency-name: jakarta.transaction:jakarta.transaction-api
+    versions:
+    - "> 1.4.0"
+  - dependency-name: jakarta.validation:jakarta.validation-api
+    versions:
+    - "> 2.9.9"
   - dependency-name: org.apache.derby:derby
     versions:
     - "> 10.15.0.0"
   - dependency-name: org.apache.tomcat:tomcat-catalina
     versions:
     - "> 9.1.0"
-  - dependency-name: jakarta.ejb:jakarta.ejb-api
-    versions:
-    - "> 3.3.0"
-  - dependency-name: jakarta.transaction:jakarta.transaction-api
-    versions:
-    - "> 1.4.0"
   - dependency-name: org.hsqldb:hsqldb
     versions:
     - ">= 2.6.0"
