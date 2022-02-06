@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(XMLGuicePackageTestExtension.class)
-public final class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
+class XMLMyBatisModulePackageTestCase extends AbstractMyBatisModuleTestCase {
 
   @Inject
   @Named("contactWithAddress")
