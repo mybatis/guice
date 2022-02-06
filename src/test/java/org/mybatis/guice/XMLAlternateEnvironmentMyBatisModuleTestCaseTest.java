@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(XMLAlternateEnvironmentGuiceTestExtension.class)
-public final class XMLAlternateEnvironmentMyBatisModuleTestCase extends AbstractMyBatisModuleTestCase {
+final class XMLAlternateEnvironmentMyBatisModuleTestCaseTest extends AbstractMyBatisModuleTestCase {
 
   @Inject
   private SqlSessionFactory sqlSessionFactory;
