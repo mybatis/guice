@@ -101,10 +101,7 @@ public enum TransactionAttribute {
 
       try {
         man.begin();
-      } catch (SystemException e) {
-        man.resume(tranToken.getSuspendedTransaction());
-        throw e;
-      } catch (NotSupportedException e) {
+      } catch (NotSupportedException | SystemException e) {
         man.resume(tranToken.getSuspendedTransaction());
         throw e;
       }
