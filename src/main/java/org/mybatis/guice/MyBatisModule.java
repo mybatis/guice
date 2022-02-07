@@ -428,6 +428,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param alias
    *          the string type alias
+   * @return the alias binder
    */
   protected final AliasBinder addAlias(final String alias) {
     checkArgument(alias != null && alias.length() > 0, "Empty or null 'alias' is not valid");
@@ -504,8 +505,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Add a user defined Type Handler letting google-guice creating it.
    *
+   * @param <T>
+   *          the generic type
    * @param type
    *          the specified type has to be handled.
+   * @return the type handler binder
    */
   protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
     checkArgument(type != null, "Parameter 'type' must be not null");

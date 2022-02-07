@@ -106,6 +106,10 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
   private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<>();
 
   /**
+   * Instantiates a new configuration provider.
+   *
+   * @param environment
+   *          the environment
    * @since 1.0.1
    */
   @com.google.inject.Inject
