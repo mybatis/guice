@@ -102,8 +102,8 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
   @com.google.inject.Inject
   private DataSource dataSource;
 
-  private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
-  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<MapperConfigurationSetting>();
+  private Set<ConfigurationSetting> configurationSettings = new HashSet<>();
+  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<>();
 
   /**
    * @since 1.0.1
