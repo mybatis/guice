@@ -20,7 +20,6 @@ import com.google.inject.ProvisionException;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -34,6 +33,8 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * Provides the myBatis Configuration.
@@ -101,8 +102,8 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
   @com.google.inject.Inject
   private DataSource dataSource;
 
-  private Set<ConfigurationSetting> configurationSettings = new HashSet<ConfigurationSetting>();
-  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<MapperConfigurationSetting>();
+  private Set<ConfigurationSetting> configurationSettings = new HashSet<>();
+  private Set<MapperConfigurationSetting> mapperConfigurationSettings = new HashSet<>();
 
   /**
    * @since 1.0.1
