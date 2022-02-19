@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transactional.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">Transactional.java</span></div><h1>Transactional.java</h1><pre class="source lang-java linenums">/*
- *    Copyright 2009-2021 the original author or authors.
+ *    Copyright 2009-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *       https://www.apache.org/licenses/LICENSE-2.0
  *
  *    Unless required by applicable law or agreed to in writing, software
  *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
@@ -104,6 +104,8 @@ public @interface Transactional {
   /**
    * The TxType element of the Transactional annotation indicates whether a bean method is to be executed within a
    * transaction context.
+   *
+   * @return the tx type
    */
   TxType value() default TxType.REQUIRED;
 
@@ -111,7 +113,7 @@ public @interface Transactional {
    * The TxType element of the annotation indicates whether a bean method is to be executed within a transaction context
    * where the values provide the following corresponding behavior.
    */
-<span class="fc" id="L114">  public enum TxType {</span>
+<span class="fc" id="L116">  public enum TxType {</span>
     /**
      * &lt;p&gt;
      * If called outside a transaction context, the interceptor must begin a new JTA transaction, the managed bean
@@ -123,7 +125,7 @@ public @interface Transactional {
      * transaction context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L126">    REQUIRED,</span>
+<span class="fc" id="L128">    REQUIRED,</span>
 
     /**
      * &lt;p&gt;
@@ -137,7 +139,7 @@ public @interface Transactional {
      * must be completed, and the previously suspended transaction must be resumed.
      * &lt;/p&gt;
      */
-<span class="fc" id="L140">    REQUIRES_NEW,</span>
+<span class="fc" id="L142">    REQUIRES_NEW,</span>
 
     /**
      * &lt;p&gt;
@@ -148,7 +150,7 @@ public @interface Transactional {
      * If called inside a transaction context, managed bean method execution will then continue under that context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L151">    MANDATORY,</span>
+<span class="fc" id="L153">    MANDATORY,</span>
 
     /**
      * &lt;p&gt;
@@ -160,7 +162,7 @@ public @interface Transactional {
      * transaction context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L163">    SUPPORTS,</span>
+<span class="fc" id="L165">    SUPPORTS,</span>
 
     /**
      * &lt;p&gt;
@@ -173,7 +175,7 @@ public @interface Transactional {
      * be resumed by the interceptor that suspended it after the method execution has completed.
      * &lt;/p&gt;
      */
-<span class="fc" id="L176">    NOT_SUPPORTED,</span>
+<span class="fc" id="L178">    NOT_SUPPORTED,</span>
 
     /**
      * &lt;p&gt;
@@ -185,7 +187,7 @@ public @interface Transactional {
      * be thrown.
      * &lt;/p&gt;
      */
-<span class="fc" id="L188">    NEVER</span>
+<span class="fc" id="L190">    NEVER</span>
   }
 
   /**

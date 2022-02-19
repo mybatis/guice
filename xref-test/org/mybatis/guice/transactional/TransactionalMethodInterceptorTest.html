@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../testapidocs/org/mybatis/guice/transactional/TransactionalMethodInterceptorTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2021 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2022 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -43,7 +43,7 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.jupiter.MockitoExtension;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  @ExtendWith(MockitoExtension.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="TransactionalMethodInterceptorTest" href="../../../../org/mybatis/guice/transactional/TransactionalMethodInterceptorTest.html#TransactionalMethodInterceptorTest">TransactionalMethodInterceptorTest</a> {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">class</strong> <a name="TransactionalMethodInterceptorTest" href="../../../../org/mybatis/guice/transactional/TransactionalMethodInterceptorTest.html#TransactionalMethodInterceptorTest">TransactionalMethodInterceptorTest</a> {
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>    <strong class="jxr_keyword">private</strong> TransactionalMethodInterceptor transactionalMethodInterceptor;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>    @Mock
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>    <strong class="jxr_keyword">private</strong> MethodInvocation invocation;
@@ -51,13 +51,13 @@
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>    <strong class="jxr_keyword">private</strong> SqlSessionManager sqlSessionManager;
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>    @BeforeEach
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> beforeTest() {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>    <strong class="jxr_keyword">void</strong> beforeTest() {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      transactionalMethodInterceptor = <strong class="jxr_keyword">new</strong> TransactionalMethodInterceptor();
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      transactionalMethodInterceptor.setSqlSessionManager(sqlSessionManager);
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>    }
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>    @Test
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>    <strong class="jxr_keyword">void</strong> invoke() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -75,7 +75,7 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>    }
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>    @Test
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_CustomAnnotation() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>    <strong class="jxr_keyword">void</strong> invoke_CustomAnnotation() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      Method method = MethodAnnotationCustom.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -93,7 +93,7 @@
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>    }
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>    @Test
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_RollbackOnly() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>    <strong class="jxr_keyword">void</strong> invoke_RollbackOnly() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      Method method = MethodAnnotationRollbackOnly.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -111,7 +111,7 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>   }
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> 
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>   @Test
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_RuntimeException() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>   <strong class="jxr_keyword">void</strong> invoke_RuntimeException() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>   }
 <a class="jxr_linenumber" name="L126" href="#L126">126</a> 
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>   @Test
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_IllegalStateException() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>   <strong class="jxr_keyword">void</strong> invoke_IllegalStateException() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>     Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -155,7 +155,7 @@
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>   }
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> 
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>   @Test
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_IOException_Declared() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>   <strong class="jxr_keyword">void</strong> invoke_IOException_Declared() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>     Method method = MethodAnnotationIOException.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -177,7 +177,7 @@
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>   }
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> 
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>   @Test
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_IOException_Undeclared() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>   <strong class="jxr_keyword">void</strong> invoke_IOException_Undeclared() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>     Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -198,7 +198,7 @@
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>   }
 <a class="jxr_linenumber" name="L191" href="#L191">191</a> 
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>   @Test
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_RuntimeException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>   <strong class="jxr_keyword">void</strong> invoke_RuntimeException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L194" href="#L194">194</a>     Method method = MethodAnnotationRethrow.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -222,7 +222,7 @@
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>   }
 <a class="jxr_linenumber" name="L215" href="#L215">215</a> 
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>   @Test
-<a class="jxr_linenumber" name="L217" href="#L217">217</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_IllegalStateException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>   <strong class="jxr_keyword">void</strong> invoke_IllegalStateException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>     Method method = MethodAnnotationRethrow.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L219" href="#L219">219</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -246,7 +246,7 @@
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>   }
 <a class="jxr_linenumber" name="L239" href="#L239">239</a> 
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>   @Test
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_UnsupportedOperationException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>   <strong class="jxr_keyword">void</strong> invoke_UnsupportedOperationException_Rethrow() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L242" href="#L242">242</a>     Method method = MethodAnnotationRethrow.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L243" href="#L243">243</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -270,7 +270,7 @@
 <a class="jxr_linenumber" name="L262" href="#L262">262</a>   }
 <a class="jxr_linenumber" name="L263" href="#L263">263</a> 
 <a class="jxr_linenumber" name="L264" href="#L264">264</a>   @Test
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_SessionInherited() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>   <strong class="jxr_keyword">void</strong> invoke_SessionInherited() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L266" href="#L266">266</a>     Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L267" href="#L267">267</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -290,7 +290,7 @@
 <a class="jxr_linenumber" name="L282" href="#L282">282</a>   }
 <a class="jxr_linenumber" name="L283" href="#L283">283</a> 
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>   @Test
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_SessionInherited_Exception() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>   <strong class="jxr_keyword">void</strong> invoke_SessionInherited_Exception() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L286" href="#L286">286</a>     Method method = MethodAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L287" href="#L287">287</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L288" href="#L288">288</a>     Transactional transactional = method.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -314,7 +314,7 @@
 <a class="jxr_linenumber" name="L306" href="#L306">306</a>   }
 <a class="jxr_linenumber" name="L307" href="#L307">307</a> 
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>   @Test
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> invoke_ClassAnnotation() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>   <strong class="jxr_keyword">void</strong> invoke_ClassAnnotation() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L310" href="#L310">310</a>     Method method = ClassAnnotation.<strong class="jxr_keyword">class</strong>.getMethod(<span class="jxr_string">"transaction"</span>);
 <a class="jxr_linenumber" name="L311" href="#L311">311</a>     when(invocation.getMethod()).thenReturn(method);
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>     Transactional transactional = ClassAnnotation.<strong class="jxr_keyword">class</strong>.getAnnotation(Transactional.<strong class="jxr_keyword">class</strong>);
@@ -370,6 +370,6 @@
 <a class="jxr_linenumber" name="L362" href="#L362">362</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2009&#x2013;2021 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2009&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

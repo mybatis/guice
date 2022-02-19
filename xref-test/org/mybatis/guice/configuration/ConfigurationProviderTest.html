@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../testapidocs/org/mybatis/guice/configuration/ConfigurationProviderTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2021 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2022 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -69,7 +69,7 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <strong class="jxr_keyword">import</strong> org.mybatis.guice.configuration.settings.TypeHandlerConfigurationSettingProvider;
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  @ExtendWith(MockitoExtension.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ConfigurationProviderTest" href="../../../../org/mybatis/guice/configuration/ConfigurationProviderTest.html#ConfigurationProviderTest">ConfigurationProviderTest</a> {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <strong class="jxr_keyword">class</strong> <a name="ConfigurationProviderTest" href="../../../../org/mybatis/guice/configuration/ConfigurationProviderTest.html#ConfigurationProviderTest">ConfigurationProviderTest</a> {
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>    <strong class="jxr_keyword">private</strong> ConfigurationProvider configurationProvider;
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>    @Mock
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>    <strong class="jxr_keyword">private</strong> TransactionFactory transactionFactory;
@@ -85,13 +85,13 @@
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>    <strong class="jxr_keyword">private</strong> Environment environment;
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>    @BeforeEach
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> beforeTest() {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>    <strong class="jxr_keyword">void</strong> beforeTest() {
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      environment = <strong class="jxr_keyword">new</strong> Environment(<span class="jxr_string">"test"</span>, transactionFactory, dataSource);
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      configurationProvider = <strong class="jxr_keyword">new</strong> ConfigurationProvider(environment);
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>    }
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>    @Test
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get() {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>    <strong class="jxr_keyword">void</strong> get() {
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>      injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>        @Override
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>        <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> configure() {
@@ -124,7 +124,7 @@
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>   }
 <a class="jxr_linenumber" name="L117" href="#L117">117</a> 
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>   @Test
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_Optionals() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>   <strong class="jxr_keyword">void</strong> get_Optionals() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>     String databaseId = <span class="jxr_string">"test_database_id"</span>;
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>     <strong class="jxr_keyword">final</strong> Integer defaultFetchSize = 200;
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">final</strong> Integer defaultStatementTimeout = 2000;
@@ -204,7 +204,7 @@
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>   }
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> 
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>   @Test
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_ConfigurationSettingOverwritesNamed() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>   <strong class="jxr_keyword">void</strong> get_ConfigurationSettingOverwritesNamed() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>     injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>       @Override
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>       <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> configure() {
@@ -228,7 +228,7 @@
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>   }
 <a class="jxr_linenumber" name="L221" href="#L221">221</a> 
 <a class="jxr_linenumber" name="L222" href="#L222">222</a>   @Test
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_FailFast_True() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>   <strong class="jxr_keyword">void</strong> get_FailFast_True() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L224" href="#L224">224</a>     injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
 <a class="jxr_linenumber" name="L225" href="#L225">225</a>       @Override
 <a class="jxr_linenumber" name="L226" href="#L226">226</a>       <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> configure() {
@@ -246,7 +246,7 @@
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>   }
 <a class="jxr_linenumber" name="L239" href="#L239">239</a> 
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>   @Test
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_FailFast_False() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>   <strong class="jxr_keyword">void</strong> get_FailFast_False() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L242" href="#L242">242</a>     injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
 <a class="jxr_linenumber" name="L243" href="#L243">243</a>       @Override
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>       <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> configure() {
@@ -296,6 +296,6 @@
 <a class="jxr_linenumber" name="L288" href="#L288">288</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2009&#x2013;2021 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2009&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

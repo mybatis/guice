@@ -23,11 +23,11 @@ under the License.
     <link>http://mybatis.github.io/guice/</link>
     <description>mybatis-guice - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2009 - 2021 MyBatis.org</copyright>
+    <copyright>&#169;2009 - 2022 MyBatis.org</copyright>
     <item>
       <title>File: 90,
              Errors: 0,
-             Warnings: 141,
+             Warnings: 142,
              Infos: 0
       </title>
             <link>http://mybatis.github.io/guice//checkstyle.html</link>
@@ -1284,7 +1284,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  5
                 </td>
                 <td>
                   0

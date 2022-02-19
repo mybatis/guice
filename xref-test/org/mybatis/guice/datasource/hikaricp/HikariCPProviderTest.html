@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/datasource/hikaricp/HikariCPProviderTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2021 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2022 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -49,10 +49,10 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.jupiter.MockitoExtension;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  @ExtendWith(MockitoExtension.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="HikariCPProviderTest" href="../../../../../org/mybatis/guice/datasource/hikaricp/HikariCPProviderTest.html#HikariCPProviderTest">HikariCPProviderTest</a> {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">class</strong> <a name="HikariCPProviderTest" href="../../../../../org/mybatis/guice/datasource/hikaricp/HikariCPProviderTest.html#HikariCPProviderTest">HikariCPProviderTest</a> {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>    @Test
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>    <strong class="jxr_keyword">void</strong> get() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <em class="jxr_comment">// JDBC connection</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <em class="jxr_comment">// ============================================================================================================</em>
@@ -195,7 +195,7 @@
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>   }
 <a class="jxr_linenumber" name="L188" href="#L188">188</a> 
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>   @Test
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_MetricRegistry() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>   <strong class="jxr_keyword">void</strong> get_MetricRegistry() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L191" href="#L191">191</a>     <strong class="jxr_keyword">final</strong> String url = <span class="jxr_string">"jdbc:h2:mem:testdb"</span>;
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>     <strong class="jxr_keyword">final</strong> String username = <span class="jxr_string">"test_user"</span>;
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>     <strong class="jxr_keyword">final</strong> String password = <span class="jxr_string">"test_password"</span>;
@@ -218,7 +218,7 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>   }
 <a class="jxr_linenumber" name="L211" href="#L211">211</a> 
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>   @Test
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_RegisterMbeans() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>   <strong class="jxr_keyword">void</strong> get_RegisterMbeans() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>     <strong class="jxr_keyword">final</strong> String url = <span class="jxr_string">"jdbc:h2:mem:testdb"</span>;
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>     <strong class="jxr_keyword">final</strong> String username = <span class="jxr_string">"test_user"</span>;
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">final</strong> String password = <span class="jxr_string">"test_password"</span>;
@@ -241,7 +241,7 @@
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>   }
 <a class="jxr_linenumber" name="L234" href="#L234">234</a> 
 <a class="jxr_linenumber" name="L235" href="#L235">235</a>   @Test
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_ScheduledExecutor() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>   <strong class="jxr_keyword">void</strong> get_ScheduledExecutor() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>     <strong class="jxr_keyword">final</strong> String url = <span class="jxr_string">"jdbc:h2:mem:testdb"</span>;
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>     <strong class="jxr_keyword">final</strong> String username = <span class="jxr_string">"test_user"</span>;
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>     <strong class="jxr_keyword">final</strong> String password = <span class="jxr_string">"test_password"</span>;
@@ -265,7 +265,7 @@
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>   }
 <a class="jxr_linenumber" name="L258" href="#L258">258</a> 
 <a class="jxr_linenumber" name="L259" href="#L259">259</a>   @Test
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_ThreadFactory() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>   <strong class="jxr_keyword">void</strong> get_ThreadFactory() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L261" href="#L261">261</a>     <strong class="jxr_keyword">final</strong> String url = <span class="jxr_string">"jdbc:h2:mem:testdb"</span>;
 <a class="jxr_linenumber" name="L262" href="#L262">262</a>     <strong class="jxr_keyword">final</strong> String username = <span class="jxr_string">"test_user"</span>;
 <a class="jxr_linenumber" name="L263" href="#L263">263</a>     <strong class="jxr_keyword">final</strong> String password = <span class="jxr_string">"test_password"</span>;
@@ -288,7 +288,7 @@
 <a class="jxr_linenumber" name="L280" href="#L280">280</a>   }
 <a class="jxr_linenumber" name="L281" href="#L281">281</a> 
 <a class="jxr_linenumber" name="L282" href="#L282">282</a>   @Test
-<a class="jxr_linenumber" name="L283" href="#L283">283</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_TransactionIsolation() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>   <strong class="jxr_keyword">void</strong> get_TransactionIsolation() <strong class="jxr_keyword">throws</strong> SQLException {
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>     <strong class="jxr_keyword">final</strong> String url = <span class="jxr_string">"jdbc:h2:mem:testdb"</span>;
 <a class="jxr_linenumber" name="L285" href="#L285">285</a>     <strong class="jxr_keyword">final</strong> String username = <span class="jxr_string">"test_user"</span>;
 <a class="jxr_linenumber" name="L286" href="#L286">286</a>     <strong class="jxr_keyword">final</strong> String password = <span class="jxr_string">"test_password"</span>;
@@ -312,6 +312,6 @@
 <a class="jxr_linenumber" name="L304" href="#L304">304</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2009&#x2013;2021 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2009&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

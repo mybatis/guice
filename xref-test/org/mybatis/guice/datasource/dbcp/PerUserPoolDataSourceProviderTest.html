@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProviderTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2021 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2022 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -44,12 +44,12 @@
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.mockito.junit.jupiter.MockitoExtension;
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  @ExtendWith(MockitoExtension.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="PerUserPoolDataSourceProviderTest" href="../../../../../org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProviderTest.html#PerUserPoolDataSourceProviderTest">PerUserPoolDataSourceProviderTest</a> {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">class</strong> <a name="PerUserPoolDataSourceProviderTest" href="../../../../../org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceProviderTest.html#PerUserPoolDataSourceProviderTest">PerUserPoolDataSourceProviderTest</a> {
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>    @Mock
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>    <strong class="jxr_keyword">private</strong> ConnectionPoolDataSource connectionPoolDataSource;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>    @Test
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>    <strong class="jxr_keyword">void</strong> get() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> autoCommit = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> loginTimeout = 10;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> defaultReadOnly = <strong class="jxr_keyword">true</strong>;
@@ -115,7 +115,7 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>   }
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> 
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>   @Test
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_OtherValues() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>   <strong class="jxr_keyword">void</strong> get_OtherValues() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> autoCommit = false;
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> loginTimeout = 11;
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> defaultReadOnly = false;
@@ -181,7 +181,7 @@
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>   }
 <a class="jxr_linenumber" name="L174" href="#L174">174</a> 
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>   @Test
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_Jndi() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>   <strong class="jxr_keyword">void</strong> get_Jndi() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">final</strong> String jndiKey = <span class="jxr_string">"test_key"</span>;
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>     <strong class="jxr_keyword">final</strong> String jndiValue = <span class="jxr_string">"test_value"</span>;
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>     Injector injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
@@ -201,7 +201,7 @@
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>   }
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> 
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>   @Test
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_DataSourceName() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>   <strong class="jxr_keyword">void</strong> get_DataSourceName() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L197" href="#L197">197</a>     <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"test_name"</span>;
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>     Injector injector = Guice.createInjector(<strong class="jxr_keyword">new</strong> AbstractModule() {
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>       @Override
@@ -217,7 +217,7 @@
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>   }
 <a class="jxr_linenumber" name="L210" href="#L210">210</a> 
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>   @Test
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserDefaultAutoCommit() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>   <strong class="jxr_keyword">void</strong> get_PerUserDefaultAutoCommit() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Boolean&gt; defaultAutoCommit = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Boolean&gt;();
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>     defaultAutoCommit.put(<span class="jxr_string">"test_user"</span>, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>     defaultAutoCommit.put(<span class="jxr_string">"test_user2"</span>, false);
@@ -237,7 +237,7 @@
 <a class="jxr_linenumber" name="L229" href="#L229">229</a>   }
 <a class="jxr_linenumber" name="L230" href="#L230">230</a> 
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>   @Test
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserDefaultReadOnly() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>   <strong class="jxr_keyword">void</strong> get_PerUserDefaultReadOnly() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Boolean&gt; defaultReadOnly = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Boolean&gt;();
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>     defaultReadOnly.put(<span class="jxr_string">"test_user"</span>, false);
 <a class="jxr_linenumber" name="L235" href="#L235">235</a>     defaultReadOnly.put(<span class="jxr_string">"test_user2"</span>, <strong class="jxr_keyword">true</strong>);
@@ -257,7 +257,7 @@
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>   }
 <a class="jxr_linenumber" name="L250" href="#L250">250</a> 
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>   @Test
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserDefaultTransactionIsolation() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>   <strong class="jxr_keyword">void</strong> get_PerUserDefaultTransactionIsolation() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L253" href="#L253">253</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Integer&gt; defaultTransactionIsolation = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Integer&gt;();
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>     defaultTransactionIsolation.put(<span class="jxr_string">"test_user"</span>, Connection.TRANSACTION_READ_COMMITTED);
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>     defaultTransactionIsolation.put(<span class="jxr_string">"test_user2"</span>, Connection.TRANSACTION_SERIALIZABLE);
@@ -279,7 +279,7 @@
 <a class="jxr_linenumber" name="L271" href="#L271">271</a>   }
 <a class="jxr_linenumber" name="L272" href="#L272">272</a> 
 <a class="jxr_linenumber" name="L273" href="#L273">273</a>   @Test
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserMaxTotal() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>   <strong class="jxr_keyword">void</strong> get_PerUserMaxTotal() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L275" href="#L275">275</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Integer&gt; maxTotal = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Integer&gt;();
 <a class="jxr_linenumber" name="L276" href="#L276">276</a>     maxTotal.put(<span class="jxr_string">"test_user"</span>, 10);
 <a class="jxr_linenumber" name="L277" href="#L277">277</a>     maxTotal.put(<span class="jxr_string">"test_user2"</span>, 20);
@@ -299,7 +299,7 @@
 <a class="jxr_linenumber" name="L291" href="#L291">291</a>   }
 <a class="jxr_linenumber" name="L292" href="#L292">292</a> 
 <a class="jxr_linenumber" name="L293" href="#L293">293</a>   @Test
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserMaxIdle() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>   <strong class="jxr_keyword">void</strong> get_PerUserMaxIdle() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L295" href="#L295">295</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Integer&gt; maxIdle = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Integer&gt;();
 <a class="jxr_linenumber" name="L296" href="#L296">296</a>     maxIdle.put(<span class="jxr_string">"test_user"</span>, 30);
 <a class="jxr_linenumber" name="L297" href="#L297">297</a>     maxIdle.put(<span class="jxr_string">"test_user2"</span>, 40);
@@ -319,7 +319,7 @@
 <a class="jxr_linenumber" name="L311" href="#L311">311</a>   }
 <a class="jxr_linenumber" name="L312" href="#L312">312</a> 
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>   @Test
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> get_PerUserMaxWaitMillis() <strong class="jxr_keyword">throws</strong> Throwable {
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>   <strong class="jxr_keyword">void</strong> get_PerUserMaxWaitMillis() <strong class="jxr_keyword">throws</strong> Throwable {
 <a class="jxr_linenumber" name="L315" href="#L315">315</a>     <strong class="jxr_keyword">final</strong> Map&lt;String, Long&gt; maxWaitMillis = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Long&gt;();
 <a class="jxr_linenumber" name="L316" href="#L316">316</a>     maxWaitMillis.put(<span class="jxr_string">"test_user"</span>, 50l);
 <a class="jxr_linenumber" name="L317" href="#L317">317</a>     maxWaitMillis.put(<span class="jxr_string">"test_user2"</span>, 60l);
@@ -340,6 +340,6 @@
 <a class="jxr_linenumber" name="L332" href="#L332">332</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2009&#x2013;2021 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2009&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>
