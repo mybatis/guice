@@ -48,6 +48,7 @@ public @interface Transactional {
    * Returns the constant indicating the transaction isolation level.
    *
    * @return the constant indicating the transaction isolation level.
+   *
    * @deprecated use {@link #isolation()} instead, setting this property has no effect.
    */
   @Deprecated
@@ -79,18 +80,19 @@ public @interface Transactional {
 
   /**
    * A custom error message when throwing the custom exception.
-   *
+   * <p>
    * It supports java.util.Formatter place holders, intercepted method arguments will be used as message format
    * arguments.
    *
    * @return a custom error message when throwing the custom exception.
+   *
    * @see java.util.Formatter#format(String, Object...)
    */
   String exceptionMessage() default "";
 
   /**
    * If true, the transaction will never committed but rather rolled back, useful for testing purposes.
-   *
+   * <p>
    * This parameter is false by default.
    *
    * @return if true, the transaction will never committed but rather rolled back, useful for testing purposes.

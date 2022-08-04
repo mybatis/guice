@@ -27,7 +27,6 @@ import java.util.NoSuchElementException;
  *   throw new IllegalArgumentException("must be positive: " + count);
  * }
  * </pre>
- *
  * <p>
  * to be replaced with the more compact
  * </p>
@@ -35,13 +34,11 @@ import java.util.NoSuchElementException;
  * <pre>
  * checkArgument(count > 0, "must be positive: %s", count);
  * </pre>
- *
  * <p>
  * Note that the sense of the expression is inverted; with {@code Preconditions} you declare what you expect to be
  * <i>true</i>, just as you do with an <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html">
  * {@code assert}</a> or a JUnit {@code assertTrue()} call.
  * </p>
- *
  * <p>
  * Take care not to confuse precondition checking with other similar types of checks! Precondition exceptions --
  * including those provided here, but also {@link IndexOutOfBoundsException}, {@link NoSuchElementException},
@@ -49,7 +46,6 @@ import java.util.NoSuchElementException;
  * error. This tells the caller that it should not have invoked the method when it did, with the arguments it did, or
  * perhaps <i>ever</i>. Postcondition or other invariant failures should not throw these types of exceptions.
  * </p>
- *
  * <p>
  * <b>Note:</b> The methods of the {@code Preconditions} class are highly unusual in one way: they are <i>supposed
  * to</i> throw exceptions, and promise in their specifications to do so even when given perfectly valid input. That is,
@@ -57,7 +53,6 @@ import java.util.NoSuchElementException;
  * be even marked as {@link com.google.inject.internal.util.Nullable} -- yet the method will still throw an exception
  * anyway, because that's what its contract says to do.
  * </p>
- *
  * <p>
  * This class may be used with the Google Web Toolkit (GWT).
  * </p>
@@ -73,6 +68,7 @@ final class Preconditions {
    *
    * @param expression
    *          a boolean expression
+   *
    * @throws IllegalArgumentException
    *           if {@code expression} is false
    */
@@ -90,6 +86,7 @@ final class Preconditions {
    * @param errorMessage
    *          the exception message to use if the check fails; will be converted to a string using
    *          {@link String#valueOf(Object)}
+   *
    * @throws IllegalArgumentException
    *           if {@code expression} is false
    */
@@ -112,6 +109,7 @@ final class Preconditions {
    * @param errorMessageArgs
    *          the arguments to be substituted into the message template. Arguments are converted to strings using
    *          {@link String#valueOf(Object)}.
+   *
    * @throws IllegalArgumentException
    *           if {@code expression} is false
    * @throws NullPointerException
@@ -130,6 +128,7 @@ final class Preconditions {
    *
    * @param expression
    *          a boolean expression
+   *
    * @throws IllegalStateException
    *           if {@code expression} is false
    */
@@ -148,6 +147,7 @@ final class Preconditions {
    * @param errorMessage
    *          the exception message to use if the check fails; will be converted to a string using
    *          {@link String#valueOf(Object)}
+   *
    * @throws IllegalStateException
    *           if {@code expression} is false
    */
@@ -171,6 +171,7 @@ final class Preconditions {
    * @param errorMessageArgs
    *          the arguments to be substituted into the message template. Arguments are converted to strings using
    *          {@link String#valueOf(Object)}.
+   *
    * @throws IllegalStateException
    *           if {@code expression} is false
    * @throws NullPointerException
@@ -188,7 +189,9 @@ final class Preconditions {
    *
    * @param reference
    *          an object reference
+   *
    * @return the non-null reference that was validated
+   *
    * @throws NullPointerException
    *           if {@code reference} is null
    */
@@ -207,7 +210,9 @@ final class Preconditions {
    * @param errorMessage
    *          the exception message to use if the check fails; will be converted to a string using
    *          {@link String#valueOf(Object)}
+   *
    * @return the non-null reference that was validated
+   *
    * @throws NullPointerException
    *           if {@code reference} is null
    */
@@ -231,7 +236,9 @@ final class Preconditions {
    * @param errorMessageArgs
    *          the arguments to be substituted into the message template. Arguments are converted to strings using
    *          {@link String#valueOf(Object)}.
+   *
    * @return the non-null reference that was validated
+   *
    * @throws NullPointerException
    *           if {@code reference} is null
    */
@@ -249,7 +256,9 @@ final class Preconditions {
    *
    * @param iterable
    *          the iterable to check the contents of
+   *
    * @return the non-null {@code iterable} reference just validated
+   *
    * @throws NullPointerException
    *           if {@code iterable} is null or contains at least one null element
    */
@@ -269,7 +278,9 @@ final class Preconditions {
    * @param errorMessage
    *          the exception message to use if the check fails; will be converted to a string using
    *          {@link String#valueOf(Object)}
+   *
    * @return the non-null {@code iterable} reference just validated
+   *
    * @throws NullPointerException
    *           if {@code iterable} is null or contains at least one null element
    */
@@ -294,7 +305,9 @@ final class Preconditions {
    * @param errorMessageArgs
    *          the arguments to be substituted into the message template. Arguments are converted to strings using
    *          {@link String#valueOf(Object)}.
+   *
    * @return the non-null {@code iterable} reference just validated
+   *
    * @throws NullPointerException
    *           if {@code iterable} is null or contains at least one null element
    */
@@ -337,6 +350,7 @@ final class Preconditions {
    *          a user-supplied index identifying an element of an array, list or string
    * @param size
    *          the size of that array, list or string
+   *
    * @throws IndexOutOfBoundsException
    *           if {@code index} is negative or is not less than {@code size}
    * @throws IllegalArgumentException
@@ -356,6 +370,7 @@ final class Preconditions {
    *          the size of that array, list or string
    * @param desc
    *          the text to use to describe this index in an error message
+   *
    * @throws IndexOutOfBoundsException
    *           if {@code index} is negative or is not less than {@code size}
    * @throws IllegalArgumentException
@@ -379,6 +394,7 @@ final class Preconditions {
    *          a user-supplied index identifying a position in an array, list or string
    * @param size
    *          the size of that array, list or string
+   *
    * @throws IndexOutOfBoundsException
    *           if {@code index} is negative or is greater than {@code size}
    * @throws IllegalArgumentException
@@ -398,6 +414,7 @@ final class Preconditions {
    *          the size of that array, list or string
    * @param desc
    *          the text to use to describe this index in an error message
+   *
    * @throws IndexOutOfBoundsException
    *           if {@code index} is negative or is greater than {@code size}
    * @throws IllegalArgumentException
@@ -423,6 +440,7 @@ final class Preconditions {
    *          a user-supplied index identifying a ending position in an array, list or string
    * @param size
    *          the size of that array, list or string
+   *
    * @throws IndexOutOfBoundsException
    *           if either index is negative or is greater than {@code size}, or if {@code end} is less than {@code start}
    * @throws IllegalArgumentException

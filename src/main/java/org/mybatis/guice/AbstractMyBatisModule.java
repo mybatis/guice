@@ -106,6 +106,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
    *
    * @param resourceClassLoader
    *          the resource class loader
+   *
    * @since 3.3
    */
   public void useResourceClassLoader(ClassLoader resourceClassLoader) {
@@ -116,6 +117,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
    * Gets the resource class loader.
    *
    * @return the resource class loader
+   *
    * @since 3.3
    */
   protected final ClassLoader getResourceClassLoader() {
@@ -127,6 +129,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
    *
    * @param driverClassLoader
    *          the driver class loader
+   *
    * @since 3.3
    */
   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
@@ -137,6 +140,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
    * Gets the default class loader.
    *
    * @return the default class loader
+   *
    * @since 3.3
    */
   private ClassLoader getDefaultClassLoader() {

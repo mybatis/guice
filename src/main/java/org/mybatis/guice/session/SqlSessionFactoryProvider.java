@@ -57,6 +57,7 @@ public final class SqlSessionFactoryProvider implements Provider<SqlSessionFacto
    *
    * @param configuration
    *          the specified configuration.
+   *
    * @since 1.0.1
    */
   @Inject

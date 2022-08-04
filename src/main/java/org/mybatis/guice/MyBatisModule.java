@@ -280,6 +280,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param localeCacheScope
    *          The cache scope to use.
+   *
    * @since 3.4
    */
   protected final void localCacheScope(LocalCacheScope localeCacheScope) {
@@ -428,6 +429,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param alias
    *          the string type alias
+   *
    * @return the alias binder
    */
   protected final AliasBinder addAlias(final String alias) {
@@ -509,6 +511,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *          the generic type
    * @param type
    *          the specified type has to be handled.
+   *
    * @return the type handler binder
    */
   protected final <T> TypeHandlerBinder<T> handleType(final Class<T> type) {
@@ -691,6 +694,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *
    * @param packageName
    *          the package has to be analyzed.
+   *
    * @return a set of all classes contained in the given package.
    */
   private static Set<Class<?>> getClasses(String packageName) {
@@ -704,6 +708,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    *          the class filter on the given package.
    * @param packageName
    *          the package has to be analyzed.
+   *
    * @return a set of all classes contained in the given package.
    */
   private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {

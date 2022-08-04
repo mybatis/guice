@@ -110,6 +110,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
    *
    * @param environment
    *          the environment
+   *
    * @since 1.0.1
    */
   @com.google.inject.Inject
@@ -127,6 +128,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
    *
    * @param failFast
    *          flag to check all statements are completed
+   *
    * @since 1.0.1
    */
   public void setFailFast(boolean failFast) {
@@ -148,6 +150,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
    *
    * @param environment
    *          the environment
+   *
    * @return new configuration
    */
   protected Configuration newConfiguration(Environment environment) {
