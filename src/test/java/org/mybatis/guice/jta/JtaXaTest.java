@@ -136,7 +136,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED insert(id=1) commit REQUIRED
-   *
+   * <p>
    * have 1 rows
    */
   @Test
@@ -147,7 +147,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW
-   *
+   * <p>
    * have 1 rows
    */
   @Test
@@ -158,7 +158,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED insert(id=1) roll back REQUIRED
-   *
+   * <p>
    * have 0 rows
    */
   @Test
@@ -172,7 +172,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW
-   *
+   * <p>
    * have 0 rows
    */
   @Test
@@ -186,7 +186,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW commit REQUIRED
-   *
+   * <p>
    * have 2 rows
    */
   @Test
@@ -197,7 +197,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW insert(id=1) commit REQUIRED
-   *
+   * <p>
    * have 2 rows
    */
   @Test
@@ -208,7 +208,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) roll back REQUIRES_NEW commit REQUIRED
-   *
+   * <p>
    * have 1 rows and id=1 (from commited REQUIRED)
    */
   @Test
@@ -222,7 +222,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=1) roll back REQUIRES_NEW insert(id=2) commit REQUIRED
-   *
+   * <p>
    * have 1 rows and id=2 (from commited REQUIRED)
    */
   @Test
@@ -236,7 +236,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW insert(id=2) roll back REQUIRED
-   *
+   * <p>
    * have 1 rows and id=1 (from commited REQUIRES_NEW)
    */
   @Test
@@ -250,7 +250,7 @@ class JtaXaTest {
 
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW roll back REQUIRED
-   *
+   * <p>
    * have 1 rows and id=2 (from commited REQUIRES_NEW)
    */
   @Test

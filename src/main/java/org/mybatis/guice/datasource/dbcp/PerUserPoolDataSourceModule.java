@@ -99,6 +99,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultAutoCommitProviderClass
      *          the perUserDefaultAutoCommitProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultAutoCommitProviderClass(
@@ -112,6 +113,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultReadOnlyProviderClass
      *          the perUserDefaultReadOnlyProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultReadOnlyProviderClass(
@@ -125,6 +127,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultTransactionIsolationProviderClass
      *          the perUserDefaultTransactionIsolationProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultTransactionIsolationProviderClass(
@@ -138,6 +141,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxActiveProviderClass
      *          the perUserMaxActiveProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxTotalProviderClass(
@@ -151,6 +155,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxIdleProviderClass
      *          the perUserMaxIdleProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxIdleProviderClass(
@@ -164,6 +169,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxWaitProviderClass
      *          the perUserMaxWaitProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxWaitMillisProviderClass(

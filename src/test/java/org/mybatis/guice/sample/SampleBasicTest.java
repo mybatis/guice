@@ -45,7 +45,7 @@ import org.mybatis.guice.sample.service.FooServiceMapperImpl;
 
 /**
  * Example of MyBatis-Guice basic integration usage.
- *
+ * <p>
  * This is the recommended scenario.
  */
 class SampleBasicTest {

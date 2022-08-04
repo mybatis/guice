@@ -46,6 +46,7 @@ public final class SqlSessionManagerProvider implements Provider<SqlSessionManag
    *
    * @param sqlSessionFactory
    *          the sql session factory
+   *
    * @since 1.0.1
    */
   @Inject

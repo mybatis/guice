@@ -25,7 +25,7 @@ import org.mybatis.guice.transactional.Transactional;
 
 /**
  * Impl of the FooService.
- *
+ * <p>
  * FooService simply receives a userId and uses a mapper/dao to get a record from the database.
  */
 @Transactional(rethrowExceptionsAs = CustomException.class)

@@ -25,6 +25,7 @@ public class MyConfigurationProvider extends ConfigurationProvider {
 
   /**
    * @param environment
+   *
    * @since 1.0.1
    */
   @Inject

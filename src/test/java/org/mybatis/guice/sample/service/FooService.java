@@ -19,7 +19,7 @@ import org.mybatis.guice.sample.domain.User;
 
 /**
  * FooService acts as a business service.
- *
+ * <p>
  * All calls to any method of FooService are transactional.
  */
 public interface FooService {

@@ -52,7 +52,7 @@ import org.mybatis.guice.sample.service.FooServiceDaoImpl;
 
 /**
  * Example of MyBatis-Guice basic integration usage.
- *
+ * <p>
  * This is the recommended scenario.
  */
 class SampleSqlSessionTest {

@@ -55,6 +55,7 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
    *
    * @param username
    *          the new user
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -67,6 +68,7 @@ public final class PooledDataSourceProvider implements Provider<DataSource> {
    *
    * @param password
    *          the new password
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)

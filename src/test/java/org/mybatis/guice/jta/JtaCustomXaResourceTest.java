@@ -111,7 +111,7 @@ public class JtaCustomXaResourceTest {
 
   /**
    * begin REQUIRED insert(id=1) commit REQUIRED
-   *
+   * <p>
    * have 1 rows
    */
   @Test

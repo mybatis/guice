@@ -52,6 +52,7 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
    *
    * @param username
    *          the new user
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
@@ -64,6 +65,7 @@ public final class DriverAdapterCPDSProvider implements Provider<ConnectionPoolD
    *
    * @param password
    *          the new password
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)

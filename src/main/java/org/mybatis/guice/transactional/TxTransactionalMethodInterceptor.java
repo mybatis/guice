@@ -34,7 +34,6 @@ import org.mybatis.guice.transactional.Transactional.TxType;
 
 /**
  * Method interceptor for {@link Transactional} annotation.
- *
  */
 public class TxTransactionalMethodInterceptor implements MethodInterceptor {
   /**
