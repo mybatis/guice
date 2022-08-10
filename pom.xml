@@ -343,7 +343,7 @@
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
-      <version>9.0.65</version>
+      <version>10.0.23</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
