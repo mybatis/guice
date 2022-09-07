@@ -7,12 +7,12 @@ MyBatis Guice Module
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/org.mybatis/mybatis-guice.svg)](https://oss.sonatype.org/content/repositories/snapshots/org/mybatis/mybatis-guice/)
 [![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-![mybatis-guice](http://mybatis.github.io/images/mybatis-logo.png)
+![mybatis-guice](https://mybatis.org/images/mybatis-logo.png)
 
 The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.
 
 Essentials
 ----------
 
-* [See the docs](http://mybatis.github.io/guice/)
+* [See the docs](https://mybatis.org/guice/)
 
