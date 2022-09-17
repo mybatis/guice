@@ -97,7 +97,9 @@
     <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <spotbugs.omitVisitors>UnreadFields</spotbugs.omitVisitors>
     <module.name>org.mybatis.guice</module.name>
-    <project.build.outputTimestamp>1645112687</project.build.outputTimestamp>
+
+    <!-- Reproducible Builds -->
+    <project.build.outputTimestamp>1757561022</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
