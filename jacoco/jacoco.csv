@@ -42,14 +42,14 @@ mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new Transacti
 mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},27,6,4,0,7,1,4,1,2,1
 mybatis-guice,org.mybatis.guice.transactional,TransactionalMethodInterceptor,176,242,10,28,22,58,10,15,0,6
 mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},0,42,0,6,0,10,0,6,0,3
-mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute,7,64,0,0,3,7,3,1,3,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute,7,39,0,0,3,7,3,1,3,1
 mybatis-guice,org.mybatis.guice.transactional,TransactionToken,11,39,0,0,5,15,3,7,3,7
-mybatis-guice,org.mybatis.guice.transactional,Isolation,0,81,0,0,0,11,0,3,0,3
+mybatis-guice,org.mybatis.guice.transactional,Isolation,0,56,0,0,0,11,0,3,0,3
 mybatis-guice,org.mybatis.guice.transactional,TxTransactionalMethodInterceptor,156,164,21,31,27,47,16,14,0,4
 mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager.GlobalKey,44,34,6,4,10,11,6,3,1,3
 mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager.GlobalToken,56,74,6,8,5,20,5,6,0,4
 mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManagerProvider,0,9,0,0,0,2,0,2,0,2
-mybatis-guice,org.mybatis.guice.transactional,Transactional.TxType,0,64,0,0,0,7,0,1,0,1
+mybatis-guice,org.mybatis.guice.transactional,Transactional.TxType,0,39,0,0,0,7,0,1,0,1
 mybatis-guice,org.mybatis.guice.configuration,ConfigurationProvider,8,170,0,8,4,46,2,9,2,5
 mybatis-guice,org.mybatis.guice,AbstractMyBatisModule.new AbstractMatcher() {...},0,6,0,0,0,2,0,2,0,2
 mybatis-guice,org.mybatis.guice,AbstractMyBatisModule.new AbstractMatcher() {...},0,11,0,2,0,2,0,3,0,2
@@ -62,7 +62,7 @@ mybatis-guice,org.mybatis.guice,MyBatisJtaModule.ProviderImpl,0,9,0,0,0,4,0,2,0,
 mybatis-guice,org.mybatis.guice,MyBatisModule,29,654,30,40,0,154,30,54,0,49
 mybatis-guice,org.mybatis.guice,XMLMyBatisModule,25,126,4,8,7,34,4,8,1,5
 mybatis-guice,org.mybatis.guice.datasource.hikaricp,HikariCPProvider,27,165,0,2,6,63,2,31,2,30
-mybatis-guice,org.mybatis.guice.datasource.helper,JdbcHelper,0,662,0,0,0,60,0,3,0,3
+mybatis-guice,org.mybatis.guice.datasource.helper,JdbcHelper,0,453,0,0,0,60,0,3,0,3
 mybatis-guice,org.mybatis.guice.datasource.helper,JdbcUrlAntFormatter,69,141,8,12,10,32,8,6,1,3
 mybatis-guice,org.mybatis.guice.datasource.helper,KeyResolver,6,42,1,1,2,11,2,3,1,3
 mybatis-guice,org.mybatis.guice.provision,ConfigurationProviderProvisionListener.new ConfigurationProviderProvisionListener.ConfigurationProviderProvisionAction() {...},0,21,0,0,0,4,0,2,0,2

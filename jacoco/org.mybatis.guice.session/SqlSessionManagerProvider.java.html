@@ -46,17 +46,18 @@ public final class SqlSessionManagerProvider implements Provider&lt;SqlSessionMa
    *
    * @param sqlSessionFactory
    *          the sql session factory
+   *
    * @since 1.0.1
    */
   @Inject
   public void createNewSqlSessionManager(SqlSessionFactory sqlSessionFactory) {
-<span class="fc" id="L53">    this.sqlSessionManager = newInstance(sqlSessionFactory);</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L54">    this.sqlSessionManager = newInstance(sqlSessionFactory);</span>
+<span class="fc" id="L55">  }</span>
 
   @Override
   public SqlSessionManager get() {
-<span class="fc" id="L58">    return sqlSessionManager;</span>
+<span class="fc" id="L59">    return sqlSessionManager;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

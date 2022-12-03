@@ -58,24 +58,26 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    *
    * @param username
    *          the new user
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="fc" id="L65">    dataSource.setUsername(username);</span>
-<span class="fc" id="L66">  }</span>
+<span class="fc" id="L66">    dataSource.setUsername(username);</span>
+<span class="fc" id="L67">  }</span>
 
   /**
    * Sets the password.
    *
    * @param password
    *          the new password
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="fc" id="L77">    dataSource.setPassword(password);</span>
-<span class="fc" id="L78">  }</span>
+<span class="fc" id="L79">    dataSource.setPassword(password);</span>
+<span class="fc" id="L80">  }</span>
 
   /**
    * Sets the auto commit.
@@ -85,8 +87,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="fc" id="L88">    dataSource.setDefaultAutoCommit(autoCommit);</span>
-<span class="fc" id="L89">  }</span>
+<span class="fc" id="L90">    dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L91">  }</span>
 
   /**
    * Sets the driver properties.
@@ -96,12 +98,12 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="fc bfc" id="L99" title="All 2 branches covered.">    for (Entry&lt;Object, Object&gt; property : driverProperties.entrySet()) {</span>
-<span class="fc" id="L100">      String name = property.getKey().toString();</span>
-<span class="fc" id="L101">      String value = property.getValue().toString();</span>
-<span class="fc" id="L102">      dataSource.addConnectionProperty(name, value);</span>
-<span class="fc" id="L103">    }</span>
-<span class="fc" id="L104">  }</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    for (Entry&lt;Object, Object&gt; property : driverProperties.entrySet()) {</span>
+<span class="fc" id="L102">      String name = property.getKey().toString();</span>
+<span class="fc" id="L103">      String value = property.getValue().toString();</span>
+<span class="fc" id="L104">      dataSource.addConnectionProperty(name, value);</span>
+<span class="fc" id="L105">    }</span>
+<span class="fc" id="L106">  }</span>
 
   /**
    * Sets the access to underlying connection allowed.
@@ -112,8 +114,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
   @com.google.inject.Inject(optional = true)
   public void setAccessToUnderlyingConnectionAllowed(
       @Named(&quot;DBCP.accessToUnderlyingConnectionAllowed&quot;) final boolean allow) {
-<span class="fc" id="L115">    dataSource.setAccessToUnderlyingConnectionAllowed(allow);</span>
-<span class="fc" id="L116">  }</span>
+<span class="fc" id="L117">    dataSource.setAccessToUnderlyingConnectionAllowed(allow);</span>
+<span class="fc" id="L118">  }</span>
 
   /**
    * Sets the default catalog.
@@ -123,8 +125,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setDefaultCatalog(@Named(&quot;DBCP.defaultCatalog&quot;) final String defaultCatalog) {
-<span class="fc" id="L126">    dataSource.setDefaultCatalog(defaultCatalog);</span>
-<span class="fc" id="L127">  }</span>
+<span class="fc" id="L128">    dataSource.setDefaultCatalog(defaultCatalog);</span>
+<span class="fc" id="L129">  }</span>
 
   /**
    * Sets the default read only.
@@ -134,8 +136,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) final boolean defaultReadOnly) {
-<span class="fc" id="L137">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
-<span class="fc" id="L138">  }</span>
+<span class="fc" id="L139">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
+<span class="fc" id="L140">  }</span>
 
   /**
    * Sets the default transaction isolation.
@@ -146,8 +148,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
   @com.google.inject.Inject(optional = true)
   public void setDefaultTransactionIsolation(
       @Named(&quot;DBCP.defaultTransactionIsolation&quot;) final int defaultTransactionIsolation) {
-<span class="fc" id="L149">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
-<span class="fc" id="L150">  }</span>
+<span class="fc" id="L151">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="fc" id="L152">  }</span>
 
   /**
    * Sets the initial size.
@@ -157,8 +159,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setInitialSize(@Named(&quot;DBCP.initialSize&quot;) final int initialSize) {
-<span class="fc" id="L160">    dataSource.setInitialSize(initialSize);</span>
-<span class="fc" id="L161">  }</span>
+<span class="fc" id="L162">    dataSource.setInitialSize(initialSize);</span>
+<span class="fc" id="L163">  }</span>
 
   /**
    * Sets the max total.
@@ -168,8 +170,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxTotal(@Named(&quot;DBCP.maxTotal&quot;) final int maxTotal) {
-<span class="fc" id="L171">    dataSource.setMaxTotal(maxTotal);</span>
-<span class="fc" id="L172">  }</span>
+<span class="fc" id="L173">    dataSource.setMaxTotal(maxTotal);</span>
+<span class="fc" id="L174">  }</span>
 
   /**
    * Sets the max idle.
@@ -179,8 +181,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) final int maxIdle) {
-<span class="fc" id="L182">    dataSource.setMaxIdle(maxIdle);</span>
-<span class="fc" id="L183">  }</span>
+<span class="fc" id="L184">    dataSource.setMaxIdle(maxIdle);</span>
+<span class="fc" id="L185">  }</span>
 
   /**
    * Sets the max open prepared statements.
@@ -191,8 +193,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
   @com.google.inject.Inject(optional = true)
   public void setMaxOpenPreparedStatements(
       @Named(&quot;DBCP.maxOpenPreparedStatements&quot;) final int maxOpenPreparedStatements) {
-<span class="fc" id="L194">    dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);</span>
-<span class="fc" id="L195">  }</span>
+<span class="fc" id="L196">    dataSource.setMaxOpenPreparedStatements(maxOpenPreparedStatements);</span>
+<span class="fc" id="L197">  }</span>
 
   /**
    * Sets the max wait in milliseconds.
@@ -202,8 +204,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxWaitMillis(@Named(&quot;DBCP.maxWaitMillis&quot;) final long maxWaitMillis) {
-<span class="fc" id="L205">    dataSource.setMaxWaitMillis(maxWaitMillis);</span>
-<span class="fc" id="L206">  }</span>
+<span class="fc" id="L207">    dataSource.setMaxWaitMillis(maxWaitMillis);</span>
+<span class="fc" id="L208">  }</span>
 
   /**
    * Sets the min evictable idle time millis.
@@ -214,8 +216,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
   @com.google.inject.Inject(optional = true)
   public void setMinEvictableIdleTimeMillis(
       @Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) final long minEvictableIdleTimeMillis) {
-<span class="nc" id="L217">    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
-<span class="nc" id="L218">  }</span>
+<span class="nc" id="L219">    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span>
+<span class="nc" id="L220">  }</span>
 
   /**
    * Sets the min idle.
@@ -225,8 +227,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setMinIdle(@Named(&quot;DBCP.minIdle&quot;) final int minIdle) {
-<span class="fc" id="L228">    dataSource.setMinIdle(minIdle);</span>
-<span class="fc" id="L229">  }</span>
+<span class="fc" id="L230">    dataSource.setMinIdle(minIdle);</span>
+<span class="fc" id="L231">  }</span>
 
   /**
    * Sets the num tests per eviction run.
@@ -236,8 +238,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) final int numTestsPerEvictionRun) {
-<span class="fc" id="L239">    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
-<span class="fc" id="L240">  }</span>
+<span class="fc" id="L241">    dataSource.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
+<span class="fc" id="L242">  }</span>
 
   /**
    * Sets the pool prepared statements.
@@ -247,8 +249,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setPoolPreparedStatements(@Named(&quot;DBCP.poolPreparedStatements&quot;) final boolean poolPreparedStatements) {
-<span class="fc" id="L250">    dataSource.setPoolPreparedStatements(poolPreparedStatements);</span>
-<span class="fc" id="L251">  }</span>
+<span class="fc" id="L252">    dataSource.setPoolPreparedStatements(poolPreparedStatements);</span>
+<span class="fc" id="L253">  }</span>
 
   /**
    * Sets the test on borrow.
@@ -258,8 +260,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setTestOnBorrow(@Named(&quot;DBCP.testOnBorrow&quot;) final boolean testOnBorrow) {
-<span class="fc" id="L261">    dataSource.setTestOnBorrow(testOnBorrow);</span>
-<span class="fc" id="L262">  }</span>
+<span class="fc" id="L263">    dataSource.setTestOnBorrow(testOnBorrow);</span>
+<span class="fc" id="L264">  }</span>
 
   /**
    * Sets the test on return.
@@ -269,8 +271,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setTestOnReturn(@Named(&quot;DBCP.testOnReturn&quot;) final boolean testOnReturn) {
-<span class="fc" id="L272">    dataSource.setTestOnReturn(testOnReturn);</span>
-<span class="fc" id="L273">  }</span>
+<span class="fc" id="L274">    dataSource.setTestOnReturn(testOnReturn);</span>
+<span class="fc" id="L275">  }</span>
 
   /**
    * Sets the test while idle.
@@ -280,8 +282,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setTestWhileIdle(@Named(&quot;DBCP.testWhileIdle&quot;) final boolean testWhileIdle) {
-<span class="fc" id="L283">    dataSource.setTestWhileIdle(testWhileIdle);</span>
-<span class="fc" id="L284">  }</span>
+<span class="fc" id="L285">    dataSource.setTestWhileIdle(testWhileIdle);</span>
+<span class="fc" id="L286">  }</span>
 
   /**
    * Sets the time between eviction runs millis.
@@ -292,8 +294,8 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
   @com.google.inject.Inject(optional = true)
   public void setTimeBetweenEvictionRunsMillis(
       @Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
-<span class="fc" id="L295">    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
-<span class="fc" id="L296">  }</span>
+<span class="fc" id="L297">    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span>
+<span class="fc" id="L298">  }</span>
 
   /**
    * Sets the validation query.
@@ -303,13 +305,13 @@ public final class BasicDataSourceProvider implements Provider&lt;DataSource&gt;
    */
   @com.google.inject.Inject(optional = true)
   public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) final String validationQuery) {
-<span class="fc" id="L306">    dataSource.setValidationQuery(validationQuery);</span>
-<span class="fc" id="L307">  }</span>
+<span class="fc" id="L308">    dataSource.setValidationQuery(validationQuery);</span>
+<span class="fc" id="L309">  }</span>
 
   @Override
   public DataSource get() {
-<span class="fc" id="L311">    return dataSource;</span>
+<span class="fc" id="L313">    return dataSource;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

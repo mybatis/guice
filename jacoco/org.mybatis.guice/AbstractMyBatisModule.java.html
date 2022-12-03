@@ -106,20 +106,22 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
    *
    * @param resourceClassLoader
    *          the resource class loader
+   *
    * @since 3.3
    */
   public void useResourceClassLoader(ClassLoader resourceClassLoader) {
-<span class="nc" id="L112">    this.resourcesClassLoader = resourceClassLoader;</span>
-<span class="nc" id="L113">  }</span>
+<span class="nc" id="L113">    this.resourcesClassLoader = resourceClassLoader;</span>
+<span class="nc" id="L114">  }</span>
 
   /**
    * Gets the resource class loader.
    *
    * @return the resource class loader
+   *
    * @since 3.3
    */
   protected final ClassLoader getResourceClassLoader() {
-<span class="fc" id="L122">    return resourcesClassLoader;</span>
+<span class="fc" id="L124">    return resourcesClassLoader;</span>
   }
 
   /**
@@ -127,20 +129,22 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
    *
    * @param driverClassLoader
    *          the driver class loader
+   *
    * @since 3.3
    */
   public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
-<span class="nc" id="L133">    this.driverClassLoader = driverClassLoader;</span>
-<span class="nc" id="L134">  }</span>
+<span class="nc" id="L136">    this.driverClassLoader = driverClassLoader;</span>
+<span class="nc" id="L137">  }</span>
 
   /**
    * Gets the default class loader.
    *
    * @return the default class loader
+   *
    * @since 3.3
    */
   private ClassLoader getDefaultClassLoader() {
-<span class="fc" id="L143">    return getClass().getClassLoader();</span>
+<span class="fc" id="L147">    return getClass().getClassLoader();</span>
   }
 
   /**
@@ -154,4 +158,4 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
   protected abstract void initialize();
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -99,12 +99,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultAutoCommitProviderClass
      *          the perUserDefaultAutoCommitProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultAutoCommitProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultAutoCommitProviderClass) {
-<span class="fc" id="L106">      this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;</span>
-<span class="fc" id="L107">      return this;</span>
+<span class="fc" id="L107">      this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;</span>
+<span class="fc" id="L108">      return this;</span>
     }
 
     /**
@@ -112,12 +113,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultReadOnlyProviderClass
      *          the perUserDefaultReadOnlyProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultReadOnlyProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultReadOnlyProviderClass) {
-<span class="fc" id="L119">      this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;</span>
-<span class="fc" id="L120">      return this;</span>
+<span class="fc" id="L121">      this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;</span>
+<span class="fc" id="L122">      return this;</span>
     }
 
     /**
@@ -125,12 +127,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserDefaultTransactionIsolationProviderClass
      *          the perUserDefaultTransactionIsolationProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserDefaultTransactionIsolationProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserDefaultTransactionIsolationProviderClass) {
-<span class="fc" id="L132">      this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;</span>
-<span class="fc" id="L133">      return this;</span>
+<span class="fc" id="L135">      this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;</span>
+<span class="fc" id="L136">      return this;</span>
     }
 
     /**
@@ -138,12 +141,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxActiveProviderClass
      *          the perUserMaxActiveProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxTotalProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxActiveProviderClass) {
-<span class="fc" id="L145">      this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;</span>
-<span class="fc" id="L146">      return this;</span>
+<span class="fc" id="L149">      this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;</span>
+<span class="fc" id="L150">      return this;</span>
     }
 
     /**
@@ -151,12 +155,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxIdleProviderClass
      *          the perUserMaxIdleProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxIdleProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxIdleProviderClass) {
-<span class="fc" id="L158">      this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;</span>
-<span class="fc" id="L159">      return this;</span>
+<span class="fc" id="L163">      this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;</span>
+<span class="fc" id="L164">      return this;</span>
     }
 
     /**
@@ -164,12 +169,13 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      *
      * @param perUserMaxWaitProviderClass
      *          the perUserMaxWaitProviderClass to set
+     *
      * @return the builder
      */
     public Builder setPerUserMaxWaitMillisProviderClass(
         Class&lt;? extends Provider&lt;Map&lt;String, Long&gt;&gt;&gt; perUserMaxWaitProviderClass) {
-<span class="fc" id="L171">      this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;</span>
-<span class="fc" id="L172">      return this;</span>
+<span class="fc" id="L177">      this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;</span>
+<span class="fc" id="L178">      return this;</span>
     }
 
     /**
@@ -178,7 +184,7 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
      * @return the per user pool data source module
      */
     public PerUserPoolDataSourceModule create() {
-<span class="fc" id="L181">      return new PerUserPoolDataSourceModule(perUserDefaultAutoCommitProviderClass, perUserDefaultReadOnlyProviderClass,</span>
+<span class="fc" id="L187">      return new PerUserPoolDataSourceModule(perUserDefaultAutoCommitProviderClass, perUserDefaultReadOnlyProviderClass,</span>
           perUserDefaultTransactionIsolationProviderClass, perUserMaxActiveProviderClass, perUserMaxIdleProviderClass,
           perUserMaxWaitProviderClass);
     }
@@ -186,4 +192,4 @@ public final class PerUserPoolDataSourceModule extends AbstractModule {
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

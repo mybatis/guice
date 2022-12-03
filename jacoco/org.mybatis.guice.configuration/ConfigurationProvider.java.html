@@ -110,89 +110,92 @@ public class ConfigurationProvider implements Provider&lt;Configuration&gt;, Con
    *
    * @param environment
    *          the environment
+   *
    * @since 1.0.1
    */
   @com.google.inject.Inject
-<span class="fc" id="L116">  public ConfigurationProvider(final Environment environment) {</span>
-<span class="fc" id="L117">    this.environment = environment;</span>
-<span class="fc" id="L118">  }</span>
+<span class="fc" id="L117">  public ConfigurationProvider(final Environment environment) {</span>
+<span class="fc" id="L118">    this.environment = environment;</span>
+<span class="fc" id="L119">  }</span>
 
   @Deprecated
   public void setEnvironment(Environment environment) {
     // do nothing
-<span class="nc" id="L123">  }</span>
+<span class="nc" id="L124">  }</span>
 
   /**
    * Flag to check all statements are completed.
    *
    * @param failFast
    *          flag to check all statements are completed
+   *
    * @since 1.0.1
    */
   public void setFailFast(boolean failFast) {
-<span class="nc" id="L133">    this.failFast = failFast;</span>
-<span class="nc" id="L134">  }</span>
+<span class="nc" id="L135">    this.failFast = failFast;</span>
+<span class="nc" id="L136">  }</span>
 
   @Override
   public void addConfigurationSetting(ConfigurationSetting configurationSetting) {
-<span class="fc" id="L138">    this.configurationSettings.add(configurationSetting);</span>
-<span class="fc" id="L139">  }</span>
+<span class="fc" id="L140">    this.configurationSettings.add(configurationSetting);</span>
+<span class="fc" id="L141">  }</span>
 
   @Override
   public void addMapperConfigurationSetting(MapperConfigurationSetting mapperConfigurationSetting) {
-<span class="fc" id="L143">    this.mapperConfigurationSettings.add(mapperConfigurationSetting);</span>
-<span class="fc" id="L144">  }</span>
+<span class="fc" id="L145">    this.mapperConfigurationSettings.add(mapperConfigurationSetting);</span>
+<span class="fc" id="L146">  }</span>
 
   /**
    * New configuration.
    *
    * @param environment
    *          the environment
+   *
    * @return new configuration
    */
   protected Configuration newConfiguration(Environment environment) {
-<span class="fc" id="L154">    return new Configuration(environment);</span>
+<span class="fc" id="L157">    return new Configuration(environment);</span>
   }
 
   @Override
   public Configuration get() {
-<span class="fc" id="L159">    final Configuration configuration = newConfiguration(environment);</span>
-<span class="fc" id="L160">    configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
-<span class="fc" id="L161">    configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
-<span class="fc" id="L162">    configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
-<span class="fc" id="L163">    configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
-<span class="fc" id="L164">    configuration.setUseColumnLabel(useColumnLabel);</span>
-<span class="fc" id="L165">    configuration.setCacheEnabled(cacheEnabled);</span>
-<span class="fc" id="L166">    configuration.setDefaultExecutorType(defaultExecutorType);</span>
-<span class="fc" id="L167">    configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
-<span class="fc" id="L168">    configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
-<span class="fc" id="L169">    configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
-<span class="fc" id="L170">    configuration.setMapUnderscoreToCamelCase(mapUnderscoreToCamelCase);</span>
+<span class="fc" id="L162">    final Configuration configuration = newConfiguration(environment);</span>
+<span class="fc" id="L163">    configuration.setLazyLoadingEnabled(lazyLoadingEnabled);</span>
+<span class="fc" id="L164">    configuration.setAggressiveLazyLoading(aggressiveLazyLoading);</span>
+<span class="fc" id="L165">    configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);</span>
+<span class="fc" id="L166">    configuration.setUseGeneratedKeys(useGeneratedKeys);</span>
+<span class="fc" id="L167">    configuration.setUseColumnLabel(useColumnLabel);</span>
+<span class="fc" id="L168">    configuration.setCacheEnabled(cacheEnabled);</span>
+<span class="fc" id="L169">    configuration.setDefaultExecutorType(defaultExecutorType);</span>
+<span class="fc" id="L170">    configuration.setAutoMappingBehavior(autoMappingBehavior);</span>
+<span class="fc" id="L171">    configuration.setCallSettersOnNulls(callSettersOnNulls);</span>
+<span class="fc" id="L172">    configuration.setDefaultStatementTimeout(defaultStatementTimeout);</span>
+<span class="fc" id="L173">    configuration.setMapUnderscoreToCamelCase(mapUnderscoreToCamelCase);</span>
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">    for (ConfigurationSetting setting : configurationSettings) {</span>
-<span class="fc" id="L173">      setting.applyConfigurationSetting(configuration);</span>
-<span class="fc" id="L174">    }</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">    for (ConfigurationSetting setting : configurationSettings) {</span>
+<span class="fc" id="L176">      setting.applyConfigurationSetting(configuration);</span>
+<span class="fc" id="L177">    }</span>
 
     try {
-<span class="fc bfc" id="L177" title="All 2 branches covered.">      if (databaseIdProvider != null) {</span>
-<span class="fc" id="L178">        configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">      if (databaseIdProvider != null) {</span>
+<span class="fc" id="L181">        configuration.setDatabaseId(databaseIdProvider.getDatabaseId(dataSource));</span>
       }
 
-<span class="fc bfc" id="L181" title="All 2 branches covered.">      for (MapperConfigurationSetting setting : mapperConfigurationSettings) {</span>
-<span class="fc" id="L182">        setting.applyConfigurationSetting(configuration);</span>
-<span class="fc" id="L183">      }</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">      for (MapperConfigurationSetting setting : mapperConfigurationSettings) {</span>
+<span class="fc" id="L185">        setting.applyConfigurationSetting(configuration);</span>
+<span class="fc" id="L186">      }</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">      if (failFast) {</span>
-<span class="nc" id="L186">        configuration.getMappedStatementNames();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">      if (failFast) {</span>
+<span class="nc" id="L189">        configuration.getMappedStatementNames();</span>
       }
-<span class="fc" id="L188">    } catch (Throwable cause) {</span>
-<span class="fc" id="L189">      throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;,</span>
+<span class="fc" id="L191">    } catch (Throwable cause) {</span>
+<span class="fc" id="L192">      throw new ProvisionException(&quot;An error occurred while building the org.apache.ibatis.session.Configuration&quot;,</span>
           cause);
     } finally {
-<span class="fc" id="L192">      ErrorContext.instance().reset();</span>
+<span class="fc" id="L195">      ErrorContext.instance().reset();</span>
     }
 
-<span class="fc" id="L195">    return configuration;</span>
+<span class="fc" id="L198">    return configuration;</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

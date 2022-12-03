@@ -48,6 +48,7 @@ public @interface Transactional {
    * Returns the constant indicating the transaction isolation level.
    *
    * @return the constant indicating the transaction isolation level.
+   *
    * @deprecated use {@link #isolation()} instead, setting this property has no effect.
    */
   @Deprecated
@@ -79,18 +80,19 @@ public @interface Transactional {
 
   /**
    * A custom error message when throwing the custom exception.
-   *
+   * &lt;p&gt;
    * It supports java.util.Formatter place holders, intercepted method arguments will be used as message format
    * arguments.
    *
    * @return a custom error message when throwing the custom exception.
+   *
    * @see java.util.Formatter#format(String, Object...)
    */
   String exceptionMessage() default &quot;&quot;;
 
   /**
    * If true, the transaction will never committed but rather rolled back, useful for testing purposes.
-   *
+   * &lt;p&gt;
    * This parameter is false by default.
    *
    * @return if true, the transaction will never committed but rather rolled back, useful for testing purposes.
@@ -113,7 +115,7 @@ public @interface Transactional {
    * The TxType element of the annotation indicates whether a bean method is to be executed within a transaction context
    * where the values provide the following corresponding behavior.
    */
-<span class="fc" id="L116">  public enum TxType {</span>
+<span class="fc" id="L118">  public enum TxType {</span>
     /**
      * &lt;p&gt;
      * If called outside a transaction context, the interceptor must begin a new JTA transaction, the managed bean
@@ -125,7 +127,7 @@ public @interface Transactional {
      * transaction context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L128">    REQUIRED,</span>
+<span class="fc" id="L130">    REQUIRED,</span>
 
     /**
      * &lt;p&gt;
@@ -139,7 +141,7 @@ public @interface Transactional {
      * must be completed, and the previously suspended transaction must be resumed.
      * &lt;/p&gt;
      */
-<span class="fc" id="L142">    REQUIRES_NEW,</span>
+<span class="fc" id="L144">    REQUIRES_NEW,</span>
 
     /**
      * &lt;p&gt;
@@ -150,7 +152,7 @@ public @interface Transactional {
      * If called inside a transaction context, managed bean method execution will then continue under that context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L153">    MANDATORY,</span>
+<span class="fc" id="L155">    MANDATORY,</span>
 
     /**
      * &lt;p&gt;
@@ -162,7 +164,7 @@ public @interface Transactional {
      * transaction context.
      * &lt;/p&gt;
      */
-<span class="fc" id="L165">    SUPPORTS,</span>
+<span class="fc" id="L167">    SUPPORTS,</span>
 
     /**
      * &lt;p&gt;
@@ -175,7 +177,7 @@ public @interface Transactional {
      * be resumed by the interceptor that suspended it after the method execution has completed.
      * &lt;/p&gt;
      */
-<span class="fc" id="L178">    NOT_SUPPORTED,</span>
+<span class="fc" id="L180">    NOT_SUPPORTED,</span>
 
     /**
      * &lt;p&gt;
@@ -187,7 +189,7 @@ public @interface Transactional {
      * be thrown.
      * &lt;/p&gt;
      */
-<span class="fc" id="L190">    NEVER</span>
+<span class="fc" id="L192">    NEVER</span>
   }
 
   /**
@@ -215,4 +217,4 @@ public @interface Transactional {
   // public Class[] dontRollbackOn() default {};
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

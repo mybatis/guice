@@ -57,20 +57,21 @@ public final class SqlSessionFactoryProvider implements Provider&lt;SqlSessionFa
    *
    * @param configuration
    *          the specified configuration.
+   *
    * @since 1.0.1
    */
   @Inject
   public void createNewSqlSessionFactory(final Configuration configuration) {
-<span class="fc" id="L64">    this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);</span>
-<span class="fc" id="L65">  }</span>
+<span class="fc" id="L65">    this.sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);</span>
+<span class="fc" id="L66">  }</span>
 
   /**
    * {@inheritDoc}
    */
   @Override
   public SqlSessionFactory get() {
-<span class="fc" id="L72">    return sqlSessionFactory;</span>
+<span class="fc" id="L73">    return sqlSessionFactory;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

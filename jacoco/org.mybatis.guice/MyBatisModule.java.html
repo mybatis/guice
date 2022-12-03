@@ -280,12 +280,13 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *
    * @param localeCacheScope
    *          The cache scope to use.
+   *
    * @since 3.4
    */
   protected final void localCacheScope(LocalCacheScope localeCacheScope) {
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">    checkArgument(localeCacheScope != null, &quot;Parameter 'localCacheScope' must be not null&quot;);</span>
-<span class="fc" id="L287">    bindConfigurationSetting(new LocalCacheScopeConfigurationSetting(localeCacheScope));</span>
-<span class="fc" id="L288">  }</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">    checkArgument(localeCacheScope != null, &quot;Parameter 'localCacheScope' must be not null&quot;);</span>
+<span class="fc" id="L288">    bindConfigurationSetting(new LocalCacheScopeConfigurationSetting(localeCacheScope));</span>
+<span class="fc" id="L289">  }</span>
 
   /**
    * Auto mapping behavior.
@@ -294,9 +295,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the auto mapping behavior
    */
   protected final void autoMappingBehavior(AutoMappingBehavior autoMappingBehavior) {
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">    checkArgument(autoMappingBehavior != null, &quot;Parameter 'autoMappingBehavior' must be not null&quot;);</span>
-<span class="fc" id="L298">    bindConfigurationSetting(new AutoMappingBehaviorConfigurationSetting(autoMappingBehavior));</span>
-<span class="fc" id="L299">  }</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">    checkArgument(autoMappingBehavior != null, &quot;Parameter 'autoMappingBehavior' must be not null&quot;);</span>
+<span class="fc" id="L299">    bindConfigurationSetting(new AutoMappingBehaviorConfigurationSetting(autoMappingBehavior));</span>
+<span class="fc" id="L300">  }</span>
 
   /**
    * Set the DataSource Provider type has to be bound.
@@ -305,9 +306,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the DataSource Provider type
    */
   protected final void bindDataSourceProviderType(Class&lt;? extends Provider&lt;DataSource&gt;&gt; dataSourceProviderType) {
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">    checkArgument(dataSourceProviderType != null, &quot;Parameter 'dataSourceProviderType' must be not null&quot;);</span>
-<span class="fc" id="L309">    bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L310">  }</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">    checkArgument(dataSourceProviderType != null, &quot;Parameter 'dataSourceProviderType' must be not null&quot;);</span>
+<span class="fc" id="L310">    bind(DataSource.class).toProvider(dataSourceProviderType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L311">  }</span>
 
   /**
    * Bind data source provider.
@@ -316,9 +317,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the data source provider
    */
   protected final void bindDataSourceProvider(Provider&lt;DataSource&gt; dataSourceProvider) {
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L320">    bindDataSourceProvider(guicify(dataSourceProvider));</span>
-<span class="fc" id="L321">  }</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L321">    bindDataSourceProvider(guicify(dataSourceProvider));</span>
+<span class="fc" id="L322">  }</span>
 
   /**
    * Bind data source provider.
@@ -327,9 +328,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the data source provider
    */
   protected final void bindDataSourceProvider(com.google.inject.Provider&lt;DataSource&gt; dataSourceProvider) {
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L331">    bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L332">  }</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">    checkArgument(dataSourceProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L332">    bind(DataSource.class).toProvider(dataSourceProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L333">  }</span>
 
   /**
    * Bind database id provider.
@@ -338,9 +339,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          The DatabaseIdProvider class.
    */
   protected final void bindDatabaseIdProvider(Class&lt;? extends DatabaseIdProvider&gt; databaseIdProvider) {
-<span class="pc bpc" id="L341" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L342">    bind(DatabaseIdProvider.class).to(databaseIdProvider).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L343">  }</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L343">    bind(DatabaseIdProvider.class).to(databaseIdProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L344">  }</span>
 
   /**
    * Bind database id provider.
@@ -349,9 +350,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          The DatabaseIdProvider instance.
    */
   protected final void bindDatabaseIdProvider(DatabaseIdProvider databaseIdProvider) {
-<span class="pc bpc" id="L352" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
-<span class="fc" id="L353">    bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);</span>
-<span class="fc" id="L354">  }</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">    checkArgument(databaseIdProvider != null, &quot;Parameter 'dataSourceProvider' must be not null&quot;);</span>
+<span class="fc" id="L354">    bind(DatabaseIdProvider.class).toInstance(databaseIdProvider);</span>
+<span class="fc" id="L355">  }</span>
 
   /**
    * Set the TransactionFactory type has to be bound.
@@ -360,9 +361,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the TransactionFactory type
    */
   protected final void bindTransactionFactoryType(Class&lt;? extends TransactionFactory&gt; transactionFactoryType) {
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">    checkArgument(transactionFactoryType != null, &quot;Parameter 'transactionFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L364">    bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L365">  }</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">    checkArgument(transactionFactoryType != null, &quot;Parameter 'transactionFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L365">    bind(TransactionFactory.class).to(transactionFactoryType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L366">  }</span>
 
   /**
    * Bind transaction factory.
@@ -371,9 +372,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the transaction factory provider
    */
   protected final void bindTransactionFactory(Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
-<span class="fc" id="L375">    bindTransactionFactory(guicify(transactionFactoryProvider));</span>
-<span class="fc" id="L376">  }</span>
+<span class="pc bpc" id="L375" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
+<span class="fc" id="L376">    bindTransactionFactory(guicify(transactionFactoryProvider));</span>
+<span class="fc" id="L377">  }</span>
 
   /**
    * Bind transaction factory.
@@ -383,9 +384,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    */
   protected final void bindTransactionFactory(
       com.google.inject.Provider&lt;TransactionFactory&gt; transactionFactoryProvider) {
-<span class="pc bpc" id="L386" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
-<span class="fc" id="L387">    bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L388">  }</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">    checkArgument(transactionFactoryProvider != null, &quot;Parameter 'transactionFactoryProvider' must be not null&quot;);</span>
+<span class="fc" id="L388">    bind(TransactionFactory.class).toProvider(transactionFactoryProvider).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L389">  }</span>
 
   /**
    * Sets the ObjectFactory class.
@@ -394,9 +395,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the ObjectFactory type
    */
   protected final void bindObjectFactoryType(Class&lt;? extends ObjectFactory&gt; objectFactoryType) {
-<span class="pc bpc" id="L397" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L398">    this.objectFactoryType = objectFactoryType;</span>
-<span class="fc" id="L399">  }</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L399">    this.objectFactoryType = objectFactoryType;</span>
+<span class="fc" id="L400">  }</span>
 
   /**
    * Sets the ObjectWrapperFactory class.
@@ -405,9 +406,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the ObjectFactory type
    */
   protected final void bindObjectWrapperFactoryType(Class&lt;? extends ObjectWrapperFactory&gt; objectWrapperFactoryType) {
-<span class="pc bpc" id="L408" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectWrapperFactoryType' must be not null&quot;);</span>
-<span class="fc" id="L409">    this.objectWrapperFactoryType = objectWrapperFactoryType;</span>
-<span class="fc" id="L410">  }</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">    checkArgument(objectFactoryType != null, &quot;Parameter 'objectWrapperFactoryType' must be not null&quot;);</span>
+<span class="fc" id="L410">    this.objectWrapperFactoryType = objectWrapperFactoryType;</span>
+<span class="fc" id="L411">  }</span>
 
   /**
    * Sets the default LanguageDriver class.
@@ -419,27 +420,28 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the default LanguageDriver type
    */
   protected final void bindDefaultScriptingLanguageType(Class&lt;? extends LanguageDriver&gt; defaultScriptingLanguageType) {
-<span class="pc bpc" id="L422" title="1 of 2 branches missed.">    checkArgument(defaultScriptingLanguageType != null, &quot;Parameter 'defaultScriptingLanguageType' must be not null&quot;);</span>
-<span class="fc" id="L423">    this.defaultScriptingLanguageType = defaultScriptingLanguageType;</span>
-<span class="fc" id="L424">  }</span>
+<span class="pc bpc" id="L423" title="1 of 2 branches missed.">    checkArgument(defaultScriptingLanguageType != null, &quot;Parameter 'defaultScriptingLanguageType' must be not null&quot;);</span>
+<span class="fc" id="L424">    this.defaultScriptingLanguageType = defaultScriptingLanguageType;</span>
+<span class="fc" id="L425">  }</span>
 
   /**
    * Add a user defined binding.
    *
    * @param alias
    *          the string type alias
+   *
    * @return the alias binder
    */
   protected final AliasBinder addAlias(final String alias) {
-<span class="pc bpc" id="L434" title="2 of 4 branches missed.">    checkArgument(alias != null &amp;&amp; alias.length() &gt; 0, &quot;Empty or null 'alias' is not valid&quot;);</span>
+<span class="pc bpc" id="L436" title="2 of 4 branches missed.">    checkArgument(alias != null &amp;&amp; alias.length() &gt; 0, &quot;Empty or null 'alias' is not valid&quot;);</span>
 
-<span class="fc" id="L436">    return new AliasBinder() {</span>
+<span class="fc" id="L438">    return new AliasBinder() {</span>
 
       @Override
       public void to(final Class&lt;?&gt; clazz) {
-<span class="pc bpc" id="L440" title="1 of 2 branches missed.">        checkArgument(clazz != null, &quot;Null type not valid for alias '%s'&quot;, alias);</span>
-<span class="fc" id="L441">        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));</span>
-<span class="fc" id="L442">      }</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">        checkArgument(clazz != null, &quot;Null type not valid for alias '%s'&quot;, alias);</span>
+<span class="fc" id="L443">        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));</span>
+<span class="fc" id="L444">      }</span>
 
     };
   }
@@ -452,16 +454,16 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the specified types have to be bind
    */
   protected final void addSimpleAlias(final Class&lt;?&gt; type) {
-<span class="pc bpc" id="L455" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
 
-<span class="fc" id="L457">    String alias = type.getSimpleName();</span>
+<span class="fc" id="L459">    String alias = type.getSimpleName();</span>
     // check if the class uses the Alias annotation.
-<span class="fc" id="L459">    final Alias annotation = type.getAnnotation(Alias.class);</span>
-<span class="fc bfc" id="L460" title="All 2 branches covered.">    if (annotation != null) {</span>
-<span class="fc" id="L461">      alias = annotation.value();</span>
+<span class="fc" id="L461">    final Alias annotation = type.getAnnotation(Alias.class);</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">    if (annotation != null) {</span>
+<span class="fc" id="L463">      alias = annotation.value();</span>
     }
-<span class="fc" id="L463">    addAlias(alias).to(type);</span>
-<span class="fc" id="L464">  }</span>
+<span class="fc" id="L465">    addAlias(alias).to(type);</span>
+<span class="fc" id="L466">  }</span>
 
   /**
    * Adding simple aliases means that every specified class will be bound using the simple class name, i.e.
@@ -471,12 +473,12 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the specified types have to be bind
    */
   protected final void addSimpleAliases(final Collection&lt;Class&lt;?&gt;&gt; types) {
-<span class="pc bpc" id="L474" title="1 of 2 branches missed.">    checkArgument(types != null, &quot;Parameter 'types' must be not null&quot;);</span>
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">    checkArgument(types != null, &quot;Parameter 'types' must be not null&quot;);</span>
 
-<span class="fc bfc" id="L476" title="All 2 branches covered.">    for (Class&lt;?&gt; type : types) {</span>
-<span class="fc" id="L477">      addSimpleAlias(type);</span>
-<span class="fc" id="L478">    }</span>
-<span class="fc" id="L479">  }</span>
+<span class="fc bfc" id="L478" title="All 2 branches covered.">    for (Class&lt;?&gt; type : types) {</span>
+<span class="fc" id="L479">      addSimpleAlias(type);</span>
+<span class="fc" id="L480">    }</span>
+<span class="fc" id="L481">  }</span>
 
   /**
    * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every specified class
@@ -488,8 +490,8 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          a test to run against the objects found in the specified package
    */
   protected final void addSimpleAliases(final String packageName, final ResolverUtil.Test test) {
-<span class="fc" id="L491">    addSimpleAliases(getClasses(test, packageName));</span>
-<span class="fc" id="L492">  }</span>
+<span class="fc" id="L493">    addSimpleAliases(getClasses(test, packageName));</span>
+<span class="fc" id="L494">  }</span>
 
   /**
    * Adds all Classes in the given package as a simple alias. Adding simple aliases means that every specified class
@@ -499,8 +501,8 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the specified package to search for classes to alias
    */
   protected final void addSimpleAliases(final String packageName) {
-<span class="fc" id="L502">    addSimpleAliases(getClasses(packageName));</span>
-<span class="fc" id="L503">  }</span>
+<span class="fc" id="L504">    addSimpleAliases(getClasses(packageName));</span>
+<span class="fc" id="L505">  }</span>
 
   /**
    * Add a user defined Type Handler letting google-guice creating it.
@@ -509,54 +511,55 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the generic type
    * @param type
    *          the specified type has to be handled.
+   *
    * @return the type handler binder
    */
   protected final &lt;T&gt; TypeHandlerBinder&lt;T&gt; handleType(final Class&lt;T&gt; type) {
-<span class="pc bpc" id="L515" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">    checkArgument(type != null, &quot;Parameter 'type' must be not null&quot;);</span>
 
-<span class="fc" id="L517">    return new TypeHandlerBinder&lt;T&gt;() {</span>
+<span class="fc" id="L520">    return new TypeHandlerBinder&lt;T&gt;() {</span>
 
       @Override
       public void with(final Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
+<span class="pc bpc" id="L524" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="fc" id="L523">        bindTypeHandler(TypeLiteral.get(handler));</span>
-<span class="fc" id="L524">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
-<span class="fc" id="L525">      }</span>
+<span class="fc" id="L526">        bindTypeHandler(TypeLiteral.get(handler));</span>
+<span class="fc" id="L527">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L528">      }</span>
 
       @Override
       public void with(final TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L529" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="fc" id="L531">        bindTypeHandler(handler);</span>
-<span class="fc" id="L532">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
-<span class="fc" id="L533">      }</span>
+<span class="fc" id="L534">        bindTypeHandler(handler);</span>
+<span class="fc" id="L535">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L536">      }</span>
 
       @Override
       public void withProvidedTypeHandler(final Class&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L537" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
+<span class="pc bpc" id="L540" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="fc" id="L539">        bindProvidedTypeHandler(TypeLiteral.get(handler), type);</span>
-<span class="fc" id="L540">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
-<span class="fc" id="L541">      }</span>
+<span class="fc" id="L542">        bindProvidedTypeHandler(TypeLiteral.get(handler), type);</span>
+<span class="fc" id="L543">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L544">      }</span>
 
       @Override
       public void withProvidedTypeHandler(final TypeLiteral&lt;? extends TypeHandler&lt;? extends T&gt;&gt; handler) {
-<span class="pc bpc" id="L545" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
+<span class="pc bpc" id="L548" title="1 of 2 branches missed.">        checkArgument(handler != null, &quot;TypeHandler must not be null for '%s'&quot;, type.getName());</span>
 
-<span class="fc" id="L547">        bindProvidedTypeHandler(handler, type);</span>
-<span class="fc" id="L548">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
-<span class="fc" id="L549">      }</span>
+<span class="fc" id="L550">        bindProvidedTypeHandler(handler, type);</span>
+<span class="fc" id="L551">        bindConfigurationSettingProvider(JavaTypeAndHandlerConfigurationSettingProvider.create(type, Key.get(handler)));</span>
+<span class="fc" id="L552">      }</span>
 
       final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType) {
-<span class="fc" id="L552">        bind(typeHandlerType).in(Scopes.SINGLETON);</span>
-<span class="fc" id="L553">      }</span>
+<span class="fc" id="L555">        bind(typeHandlerType).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L556">      }</span>
 
       final &lt;TH extends TypeHandler&lt;? extends T&gt;&gt; void bindProvidedTypeHandler(TypeLiteral&lt;TH&gt; typeHandlerType,
           Class&lt;T&gt; type) {
-<span class="fc" id="L557">        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type)))</span>
-<span class="fc" id="L558">            .in(Scopes.SINGLETON);</span>
-<span class="fc" id="L559">      }</span>
+<span class="fc" id="L560">        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider&lt;TH, T&gt;(typeHandlerType, type)))</span>
+<span class="fc" id="L561">            .in(Scopes.SINGLETON);</span>
+<span class="fc" id="L562">      }</span>
     };
   }
 
@@ -567,11 +570,11 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the handler type.
    */
   protected final void addTypeHandlerClass(final Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass) {
-<span class="pc bpc" id="L570" title="1 of 2 branches missed.">    checkArgument(handlerClass != null, &quot;Parameter 'handlerClass' must not be null&quot;);</span>
-<span class="fc" id="L571">    bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);</span>
+<span class="pc bpc" id="L573" title="1 of 2 branches missed.">    checkArgument(handlerClass != null, &quot;Parameter 'handlerClass' must not be null&quot;);</span>
+<span class="fc" id="L574">    bind(TypeLiteral.get(handlerClass)).in(Scopes.SINGLETON);</span>
 
-<span class="fc" id="L573">    bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));</span>
-<span class="fc" id="L574">  }</span>
+<span class="fc" id="L576">    bindConfigurationSettingProvider(new TypeHandlerConfigurationSettingProvider(Key.get(handlerClass)));</span>
+<span class="fc" id="L577">  }</span>
 
   /**
    * Adds the user defined MyBatis type handlers, letting google-guice creating it.
@@ -580,12 +583,12 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the handler type.
    */
   protected final void addTypeHandlersClasses(Collection&lt;Class&lt;? extends TypeHandler&lt;?&gt;&gt;&gt; handlersClasses) {
-<span class="pc bpc" id="L583" title="1 of 2 branches missed.">    checkArgument(handlersClasses != null, &quot;Parameter 'handlersClasses' must not be null&quot;);</span>
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">    checkArgument(handlersClasses != null, &quot;Parameter 'handlersClasses' must not be null&quot;);</span>
 
-<span class="fc bfc" id="L585" title="All 2 branches covered.">    for (Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {</span>
-<span class="fc" id="L586">      addTypeHandlerClass(handlerClass);</span>
-<span class="fc" id="L587">    }</span>
-<span class="fc" id="L588">  }</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">    for (Class&lt;? extends TypeHandler&lt;?&gt;&gt; handlerClass : handlersClasses) {</span>
+<span class="fc" id="L589">      addTypeHandlerClass(handlerClass);</span>
+<span class="fc" id="L590">    }</span>
+<span class="fc" id="L591">  }</span>
 
   /**
    * Adds the user defined MyBatis type handlers in the given package, letting google-guice creating it.
@@ -594,10 +597,10 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the package where looking for type handlers.
    */
   protected final void addTypeHandlerClasses(String packageName) {
-<span class="pc bpc" id="L597" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="fc" id="L598">    addTypeHandlersClasses(</span>
-<span class="fc" id="L599">        new ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;().find(new ResolverUtil.IsA(TypeHandler.class), packageName).getClasses());</span>
-<span class="fc" id="L600">  }</span>
+<span class="pc bpc" id="L600" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L601">    addTypeHandlersClasses(</span>
+<span class="fc" id="L602">        new ResolverUtil&lt;TypeHandler&lt;?&gt;&gt;().find(new ResolverUtil.IsA(TypeHandler.class), packageName).getClasses());</span>
+<span class="fc" id="L603">  }</span>
 
   /**
    * Adds the user defined myBatis interceptor plugins type, letting google-guice creating it.
@@ -606,9 +609,9 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          The user defined MyBatis interceptor plugin type
    */
   protected final void addInterceptorClass(final Class&lt;? extends Interceptor&gt; interceptorClass) {
-<span class="pc bpc" id="L609" title="1 of 2 branches missed.">    checkArgument(interceptorClass != null, &quot;Parameter 'interceptorClass' must not be null&quot;);</span>
-<span class="fc" id="L610">    bindConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(interceptorClass));</span>
-<span class="fc" id="L611">  }</span>
+<span class="pc bpc" id="L612" title="1 of 2 branches missed.">    checkArgument(interceptorClass != null, &quot;Parameter 'interceptorClass' must not be null&quot;);</span>
+<span class="fc" id="L613">    bindConfigurationSettingProvider(new InterceptorConfigurationSettingProvider(interceptorClass));</span>
+<span class="fc" id="L614">  }</span>
 
   /**
    * Adds the user defined MyBatis interceptors plugins types, letting google-guice creating them.
@@ -617,12 +620,12 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the user defined MyBatis Interceptors plugins types
    */
   protected final void addInterceptorsClasses(Collection&lt;Class&lt;? extends Interceptor&gt;&gt; interceptorsClasses) {
-<span class="pc bpc" id="L620" title="1 of 2 branches missed.">    checkArgument(interceptorsClasses != null, &quot;Parameter 'interceptorsClasses' must not be null&quot;);</span>
+<span class="pc bpc" id="L623" title="1 of 2 branches missed.">    checkArgument(interceptorsClasses != null, &quot;Parameter 'interceptorsClasses' must not be null&quot;);</span>
 
-<span class="fc bfc" id="L622" title="All 2 branches covered.">    for (Class&lt;? extends Interceptor&gt; interceptorClass : interceptorsClasses) {</span>
-<span class="fc" id="L623">      addInterceptorClass(interceptorClass);</span>
-<span class="fc" id="L624">    }</span>
-<span class="fc" id="L625">  }</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">    for (Class&lt;? extends Interceptor&gt; interceptorClass : interceptorsClasses) {</span>
+<span class="fc" id="L626">      addInterceptorClass(interceptorClass);</span>
+<span class="fc" id="L627">    }</span>
+<span class="fc" id="L628">  }</span>
 
   /**
    * Adds the user defined MyBatis interceptors plugins types in the given package, letting google-guice creating them.
@@ -631,10 +634,10 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the package where looking for Interceptors plugins types.
    */
   protected final void addInterceptorsClasses(String packageName) {
-<span class="pc bpc" id="L634" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="fc" id="L635">    addInterceptorsClasses(</span>
-<span class="fc" id="L636">        new ResolverUtil&lt;Interceptor&gt;().find(new ResolverUtil.IsA(Interceptor.class), packageName).getClasses());</span>
-<span class="fc" id="L637">  }</span>
+<span class="pc bpc" id="L637" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L638">    addInterceptorsClasses(</span>
+<span class="fc" id="L639">        new ResolverUtil&lt;Interceptor&gt;().find(new ResolverUtil.IsA(Interceptor.class), packageName).getClasses());</span>
+<span class="fc" id="L640">  }</span>
 
   /**
    * Adds the user defined mapper classes.
@@ -643,12 +646,12 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the user defined mapper classes.
    */
   protected final void addMapperClass(Class&lt;?&gt; mapperClass) {
-<span class="pc bpc" id="L646" title="1 of 2 branches missed.">    checkArgument(mapperClass != null, &quot;Parameter 'mapperClass' must not be null&quot;);</span>
+<span class="pc bpc" id="L649" title="1 of 2 branches missed.">    checkArgument(mapperClass != null, &quot;Parameter 'mapperClass' must not be null&quot;);</span>
 
-<span class="fc" id="L648">    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),</span>
-<span class="fc" id="L649">        ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));</span>
-<span class="fc" id="L650">    bindMapper(mapperClass);</span>
-<span class="fc" id="L651">  }</span>
+<span class="fc" id="L651">    bindListener(KeyMatcher.create(Key.get(ConfigurationSettingListener.class)),</span>
+<span class="fc" id="L652">        ConfigurationProviderProvisionListener.create(new MapperConfigurationSetting(mapperClass)));</span>
+<span class="fc" id="L653">    bindMapper(mapperClass);</span>
+<span class="fc" id="L654">  }</span>
 
   /**
    * Adds the user defined mapper classes.
@@ -657,12 +660,12 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the user defined mapper classes
    */
   protected final void addMapperClasses(Collection&lt;Class&lt;?&gt;&gt; mapperClasses) {
-<span class="pc bpc" id="L660" title="1 of 2 branches missed.">    checkArgument(mapperClasses != null, &quot;Parameter 'mapperClasses' must not be null&quot;);</span>
+<span class="pc bpc" id="L663" title="1 of 2 branches missed.">    checkArgument(mapperClasses != null, &quot;Parameter 'mapperClasses' must not be null&quot;);</span>
 
-<span class="fc bfc" id="L662" title="All 2 branches covered.">    for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
-<span class="fc" id="L663">      addMapperClass(mapperClass);</span>
-<span class="fc" id="L664">    }</span>
-<span class="fc" id="L665">  }</span>
+<span class="fc bfc" id="L665" title="All 2 branches covered.">    for (Class&lt;?&gt; mapperClass : mapperClasses) {</span>
+<span class="fc" id="L666">      addMapperClass(mapperClass);</span>
+<span class="fc" id="L667">    }</span>
+<span class="fc" id="L668">  }</span>
 
   /**
    * Adds the user defined mapper classes.
@@ -671,8 +674,8 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the specified package to search for mappers to add.
    */
   protected final void addMapperClasses(final String packageName) {
-<span class="fc" id="L674">    addMapperClasses(getClasses(packageName));</span>
-<span class="fc" id="L675">  }</span>
+<span class="fc" id="L677">    addMapperClasses(getClasses(packageName));</span>
+<span class="fc" id="L678">  }</span>
 
   /**
    * Adds the user defined mapper classes.
@@ -683,18 +686,19 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          a test to run against the objects found in the specified package.
    */
   protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
-<span class="fc" id="L686">    addMapperClasses(getClasses(test, packageName));</span>
-<span class="fc" id="L687">  }</span>
+<span class="fc" id="L689">    addMapperClasses(getClasses(test, packageName));</span>
+<span class="fc" id="L690">  }</span>
 
   /**
    * Return a set of all classes contained in the given package.
    *
    * @param packageName
    *          the package has to be analyzed.
+   *
    * @return a set of all classes contained in the given package.
    */
   private static Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
-<span class="fc" id="L697">    return getClasses(new ResolverUtil.IsA(Object.class), packageName);</span>
+<span class="fc" id="L701">    return getClasses(new ResolverUtil.IsA(Object.class), packageName);</span>
   }
 
   /**
@@ -704,12 +708,13 @@ import org.mybatis.guice.type.TypeHandlerProvider;
    *          the class filter on the given package.
    * @param packageName
    *          the package has to be analyzed.
+   *
    * @return a set of all classes contained in the given package.
    */
   private static Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
-<span class="pc bpc" id="L710" title="1 of 2 branches missed.">    checkArgument(test != null, &quot;Parameter 'test' must not be null&quot;);</span>
-<span class="pc bpc" id="L711" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
-<span class="fc" id="L712">    return new ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();</span>
+<span class="pc bpc" id="L715" title="1 of 2 branches missed.">    checkArgument(test != null, &quot;Parameter 'test' must not be null&quot;);</span>
+<span class="pc bpc" id="L716" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L717">    return new ResolverUtil&lt;Object&gt;().find(test, packageName).getClasses();</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

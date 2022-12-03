@@ -22,26 +22,32 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  * to add the DEFAULT level which means - do not specify an isolation level.
  *
  * @author Jeff Butler
+ *
  * @since 3.1
  */
-<span class="fc" id="L27">public enum Isolation {</span>
+<span class="fc" id="L28">public enum Isolation {</span>
 
-<span class="fc" id="L29">  DEFAULT(null),</span>
-<span class="fc" id="L30">  NONE(TransactionIsolationLevel.NONE),</span>
-<span class="fc" id="L31">  READ_COMMITTED(TransactionIsolationLevel.READ_COMMITTED),</span>
-<span class="fc" id="L32">  READ_UNCOMMITTED(TransactionIsolationLevel.READ_UNCOMMITTED),</span>
-<span class="fc" id="L33">  REPEATABLE_READ(TransactionIsolationLevel.REPEATABLE_READ),</span>
-<span class="fc" id="L34">  SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);</span>
+<span class="fc" id="L30">  DEFAULT(null),</span>
+
+<span class="fc" id="L32">  NONE(TransactionIsolationLevel.NONE),</span>
+
+<span class="fc" id="L34">  READ_COMMITTED(TransactionIsolationLevel.READ_COMMITTED),</span>
+
+<span class="fc" id="L36">  READ_UNCOMMITTED(TransactionIsolationLevel.READ_UNCOMMITTED),</span>
+
+<span class="fc" id="L38">  REPEATABLE_READ(TransactionIsolationLevel.REPEATABLE_READ),</span>
+
+<span class="fc" id="L40">  SERIALIZABLE(TransactionIsolationLevel.SERIALIZABLE);</span>
 
   private final TransactionIsolationLevel transactionIsolationLevel;
 
-<span class="fc" id="L38">  private Isolation(TransactionIsolationLevel transactionIsolationLevel) {</span>
-<span class="fc" id="L39">    this.transactionIsolationLevel = transactionIsolationLevel;</span>
-<span class="fc" id="L40">  }</span>
+<span class="fc" id="L44">  private Isolation(TransactionIsolationLevel transactionIsolationLevel) {</span>
+<span class="fc" id="L45">    this.transactionIsolationLevel = transactionIsolationLevel;</span>
+<span class="fc" id="L46">  }</span>
 
   public TransactionIsolationLevel getTransactionIsolationLevel() {
-<span class="fc" id="L43">    return transactionIsolationLevel;</span>
+<span class="fc" id="L49">    return transactionIsolationLevel;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

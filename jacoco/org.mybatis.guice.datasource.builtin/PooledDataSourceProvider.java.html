@@ -55,24 +55,26 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    *
    * @param username
    *          the new user
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
-<span class="fc" id="L62">    dataSource.setUsername(username);</span>
-<span class="fc" id="L63">  }</span>
+<span class="fc" id="L63">    dataSource.setUsername(username);</span>
+<span class="fc" id="L64">  }</span>
 
   /**
    * Sets the password.
    *
    * @param password
    *          the new password
+   *
    * @since 3.3
    */
   @com.google.inject.Inject(optional = true)
   public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
-<span class="fc" id="L74">    dataSource.setPassword(password);</span>
-<span class="fc" id="L75">  }</span>
+<span class="fc" id="L76">    dataSource.setPassword(password);</span>
+<span class="fc" id="L77">  }</span>
 
   /**
    * Sets the auto commit.
@@ -82,8 +84,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) final boolean autoCommit) {
-<span class="fc" id="L85">    dataSource.setDefaultAutoCommit(autoCommit);</span>
-<span class="fc" id="L86">  }</span>
+<span class="fc" id="L87">    dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L88">  }</span>
 
   /**
    * Sets the login timeout.
@@ -93,13 +95,13 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) final int loginTimeout) {
-<span class="fc" id="L96">    dataSource.setLoginTimeout(loginTimeout);</span>
-<span class="fc" id="L97">  }</span>
+<span class="fc" id="L98">    dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="fc" id="L99">  }</span>
 
   @com.google.inject.Inject(optional = true)
   public void setDriverProperties(@Named(&quot;JDBC.driverProperties&quot;) final Properties driverProperties) {
-<span class="fc" id="L101">    dataSource.setDriverProperties(driverProperties);</span>
-<span class="fc" id="L102">  }</span>
+<span class="fc" id="L103">    dataSource.setDriverProperties(driverProperties);</span>
+<span class="fc" id="L104">  }</span>
 
   /**
    * Sets the maximum active connections.
@@ -110,8 +112,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
   @com.google.inject.Inject(optional = true)
   public void setMaximumActiveConnections(
       @Named(&quot;mybatis.pooled.maximumActiveConnections&quot;) final int maximumActiveConnections) {
-<span class="fc" id="L113">    dataSource.setPoolMaximumActiveConnections(maximumActiveConnections);</span>
-<span class="fc" id="L114">  }</span>
+<span class="fc" id="L115">    dataSource.setPoolMaximumActiveConnections(maximumActiveConnections);</span>
+<span class="fc" id="L116">  }</span>
 
   /**
    * Sets the maximum checkout time.
@@ -121,8 +123,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setMaximumCheckoutTime(@Named(&quot;mybatis.pooled.maximumCheckoutTime&quot;) final int maximumCheckoutTime) {
-<span class="fc" id="L124">    dataSource.setPoolMaximumCheckoutTime(maximumCheckoutTime);</span>
-<span class="fc" id="L125">  }</span>
+<span class="fc" id="L126">    dataSource.setPoolMaximumCheckoutTime(maximumCheckoutTime);</span>
+<span class="fc" id="L127">  }</span>
 
   /**
    * Sets the maximum idle connections.
@@ -133,8 +135,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
   @com.google.inject.Inject(optional = true)
   public void setMaximumIdleConnections(
       @Named(&quot;mybatis.pooled.maximumIdleConnections&quot;) final int maximumIdleConnections) {
-<span class="fc" id="L136">    dataSource.setPoolMaximumIdleConnections(maximumIdleConnections);</span>
-<span class="fc" id="L137">  }</span>
+<span class="fc" id="L138">    dataSource.setPoolMaximumIdleConnections(maximumIdleConnections);</span>
+<span class="fc" id="L139">  }</span>
 
   /**
    * Sets the ping connections not used for.
@@ -145,8 +147,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
   @com.google.inject.Inject(optional = true)
   public void setPingConnectionsNotUsedFor(
       @Named(&quot;mybatis.pooled.pingConnectionsNotUsedFor&quot;) final int pingConnectionsNotUsedFor) {
-<span class="fc" id="L148">    dataSource.setPoolPingConnectionsNotUsedFor(pingConnectionsNotUsedFor);</span>
-<span class="fc" id="L149">  }</span>
+<span class="fc" id="L150">    dataSource.setPoolPingConnectionsNotUsedFor(pingConnectionsNotUsedFor);</span>
+<span class="fc" id="L151">  }</span>
 
   /**
    * Sets the ping enabled.
@@ -156,8 +158,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named(&quot;mybatis.pooled.pingEnabled&quot;) final boolean pingEnabled) {
-<span class="fc" id="L159">    dataSource.setPoolPingEnabled(pingEnabled);</span>
-<span class="fc" id="L160">  }</span>
+<span class="fc" id="L161">    dataSource.setPoolPingEnabled(pingEnabled);</span>
+<span class="fc" id="L162">  }</span>
 
   /**
    * Sets the ping enabled.
@@ -167,8 +169,8 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setPingEnabled(@Named(&quot;mybatis.pooled.pingQuery&quot;) final String pingQuery) {
-<span class="fc" id="L170">    dataSource.setPoolPingQuery(pingQuery);</span>
-<span class="fc" id="L171">  }</span>
+<span class="fc" id="L172">    dataSource.setPoolPingQuery(pingQuery);</span>
+<span class="fc" id="L173">  }</span>
 
   /**
    * Sets the time to wait.
@@ -178,13 +180,13 @@ public final class PooledDataSourceProvider implements Provider&lt;DataSource&gt
    */
   @com.google.inject.Inject(optional = true)
   public void setTimeToWait(@Named(&quot;mybatis.pooled.timeToWait&quot;) final int timeToWait) {
-<span class="fc" id="L181">    dataSource.setPoolTimeToWait(timeToWait);</span>
-<span class="fc" id="L182">  }</span>
+<span class="fc" id="L183">    dataSource.setPoolTimeToWait(timeToWait);</span>
+<span class="fc" id="L184">  }</span>
 
   @Override
   public DataSource get() {
-<span class="fc" id="L186">    return dataSource;</span>
+<span class="fc" id="L188">    return dataSource;</span>
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
