@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,13 +17,14 @@ package org.mybatis.guice.transactional;
 
 import static java.lang.String.format;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.transaction.TransactionManager;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import javax.ejb.ApplicationException;
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
 
 import org.aopalliance.intercept.MethodInterceptor;

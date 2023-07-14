@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,12 +23,13 @@ import com.google.inject.Injector;
 import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
 
+import jakarta.transaction.TransactionManager;
+
 import java.util.Properties;
 
 import javax.ejb.ApplicationException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.transaction.TransactionManager;
 
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.junit.jupiter.api.BeforeEach;

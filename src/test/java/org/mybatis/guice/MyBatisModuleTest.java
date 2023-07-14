@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,32 +15,17 @@
  */
 package org.mybatis.guice;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import com.google.inject.CreationException;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.TypeLiteral;
+import com.google.inject.*;
+
+import jakarta.inject.Provider;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 
-import javax.inject.Provider;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.io.ResolverUtil;
@@ -50,12 +35,7 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.scripting.defaults.RawLanguageDriver;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.LocalCacheScope;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.Alias;
@@ -95,13 +75,13 @@ class MyBatisModuleTest {
   @Mock
   private Provider<DataSource> dataSourceProvider;
   @Mock
-  private javax.inject.Provider<DataSource> javaDataSourceProvider;
+  private jakarta.inject.Provider<DataSource> javaDataSourceProvider;
   @Mock
   private DataSource dataSource;
   @Mock
   private Provider<TransactionFactory> transactionFactoryProvider;
   @Mock
-  private javax.inject.Provider<TransactionFactory> javaTransactionFactoryProvider;
+  private jakarta.inject.Provider<TransactionFactory> javaTransactionFactoryProvider;
   @Mock
   private TransactionFactory transactionFactory;
   @Mock
