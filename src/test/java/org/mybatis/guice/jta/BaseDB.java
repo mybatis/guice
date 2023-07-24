@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,22 +15,20 @@
  */
 package org.mybatis.guice.jta;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.apache.aries.transaction.AriesTransactionManager;
-import org.apache.aries.transaction.jdbc.RecoverableDataSource;
-import org.apache.derby.jdbc.EmbeddedDataSource;
-import org.apache.derby.jdbc.EmbeddedXADataSource;
+import com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple;
+import io.agroal.api.AgroalDataSource;
+import io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
+import io.agroal.api.security.NamePrincipal;
+import io.agroal.api.security.SimplePassword;
+import io.agroal.narayana.NarayanaTransactionIntegration;
+import jakarta.transaction.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseDB {
   private static final Logger LOGGER = LoggerFactory.getLogger(BaseDB.class);
@@ -49,47 +47,40 @@ public class BaseDB {
   static final String QUERY_SELECT = "select id from table1";
   static final String QUERY_DELETE = "delete from table1";
 
-  public static DataSource createLocalDataSource(String dataSourceName, String dataSourceURL,
-      AriesTransactionManager manager) throws Exception {
+  public static DataSource createLocalDataSource(String dataSourceURL,
+                                                 TransactionManager manager) throws Exception {
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    EmbeddedDataSource localDataSource = new EmbeddedDataSource();
-    localDataSource.setDatabaseName(dataSourceName);
-    localDataSource.setUser(USER);
-    localDataSource.setPassword(PASSWORD);
+    DataSource recoverableDataSource = AgroalDataSource
+            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
+                    cp -> cp.maxSize( 10 )
+                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( dataSourceURL )
+                                                                     .principal( new NamePrincipal( USER ) ).credential(
+                                            new SimplePassword( PASSWORD ) ) )
+                            .transactionIntegration(
+                                    new NarayanaTransactionIntegration(
+                                            manager, new TransactionSynchronizationRegistryImple() ) ) ) );
 
-    RecoverableDataSource recoverableDataSource = new RecoverableDataSource();
-
-    recoverableDataSource.setDataSource(localDataSource);
-    recoverableDataSource.setUsername(USER);
-    recoverableDataSource.setPassword(PASSWORD);
-    recoverableDataSource.setTransactionManager(manager);
-    recoverableDataSource.setTransaction("local");
-    recoverableDataSource.start();
 
     return recoverableDataSource;
   }
 
-  public static DataSource createXADataSource(String dataSourceName, String dataSourceURL,
-      AriesTransactionManager manager) throws Exception {
+  public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager)
+      throws Exception {
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
     Class.forName(className).newInstance();
 
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    EmbeddedXADataSource xaDataSource = new EmbeddedXADataSource();
-    xaDataSource.setDatabaseName(dataSourceName);
-    xaDataSource.setUser(USER);
-    xaDataSource.setPassword(PASSWORD);
-
-    RecoverableDataSource recoverableDataSource = new RecoverableDataSource();
-
-    recoverableDataSource.setDataSource(xaDataSource);
-    recoverableDataSource.setUsername(USER);
-    recoverableDataSource.setPassword(PASSWORD);
-    recoverableDataSource.setTransactionManager(manager);
-    recoverableDataSource.setTransaction("xa");
-    recoverableDataSource.start();
+    DataSource recoverableDataSource = AgroalDataSource
+            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
+                    cp -> cp.maxSize( 10 )
+                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( dataSourceURL )
+                                                                     .principal( new NamePrincipal( USER ) ).credential(
+                                            new SimplePassword( PASSWORD ) ) )
+                            .transactionIntegration(
+                                    new NarayanaTransactionIntegration(
+                                            manager, new TransactionSynchronizationRegistryImple() ) ) ) );
 
     return recoverableDataSource;
   }

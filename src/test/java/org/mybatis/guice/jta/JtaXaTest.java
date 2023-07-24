@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,20 +21,15 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.PrivateModule;
 
+import jakarta.transaction.TransactionManager;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.aries.transaction.AriesTransactionManager;
-import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.*;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +37,7 @@ import org.slf4j.LoggerFactory;
 class JtaXaTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaXaTest.class);
 
-  static AriesTransactionManager manager;
+  static TransactionManager manager;
   static DataSource dataSource1;
   static DataSource dataSource2;
 
@@ -50,10 +45,10 @@ class JtaXaTest {
   static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
-    manager = new AriesTransactionManagerImpl();
+    manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
-    dataSource1 = BaseDB.createXADataSource(BaseDB.NAME_DB1, BaseDB.URL_DB1, manager);
-    dataSource2 = BaseDB.createXADataSource(BaseDB.NAME_DB2, BaseDB.URL_DB2, manager);
+    dataSource1 = BaseDB.createXADataSource( BaseDB.URL_DB1, manager );
+    dataSource2 = BaseDB.createXADataSource( BaseDB.URL_DB2, manager );
   }
 
   @AfterAll
