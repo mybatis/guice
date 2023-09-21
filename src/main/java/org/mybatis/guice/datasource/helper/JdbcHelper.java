@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ public enum JdbcHelper implements Module {
 
   JDBC_ODBC_Bridge("jdbc:odbc:${ODBC.datasource}", "sun.jdbc.odbc.JdbcOdbcDriver"),
 
-  MariaDB("jdbc:mysql://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
+  MariaDB("jdbc:mariadb://${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}", "org.mariadb.jdbc.Driver"),
 
   MariaDB_Aurora("jdbc:mysql:aurora//${JDBC.host|localhost}:${JDBC.port|3306}/${JDBC.schema}",
       "org.mariadb.jdbc.Driver"),

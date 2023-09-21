@@ -32,6 +32,10 @@
         <fixes issue="576"/>
         <fixes issue="574"/>
       </action>
+      <action dev="christian.poitras" type="update">
+        Replaces "jdbc:mysql" URL with "jdbc:mariadb" for MariaDB in JdbcHelper
+        <fixes issue="589"/>
+      </action>
     </release>
     <release version="3.17" date="2022-02-18" description="maintenance release">
       <action dev="christian.poitras" type="update">
