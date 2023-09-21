@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,21 +15,19 @@
  */
 package org.mybatis.guice.jta;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.sql.Connection;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.apache.aries.transaction.AriesTransactionManager;
-import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
+import jakarta.transaction.TransactionManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mybatis.guice.transactional.TransactionAttribute;
 import org.mybatis.guice.transactional.TransactionToken;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Create Requerd transaction. Create internal RequiresNew transaction. Rollback first transaction. Warning: transaction
@@ -38,18 +36,18 @@ import org.mybatis.guice.transactional.TransactionToken;
 class JtaXaRollbackTest {
 
   private static DataSource dataSource;
-  private static AriesTransactionManager manager;
+  private static TransactionManager manager;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
-    manager = new AriesTransactionManagerImpl();
+    manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
     Class.forName(className).newInstance();
 
-    dataSource = BaseDB.createXADataSource(BaseDB.NAME_DB1, BaseDB.URL_DB1, manager);
+    dataSource = BaseDB.createXADataSource( BaseDB.URL_DB1, manager );
   }
 
   @AfterAll

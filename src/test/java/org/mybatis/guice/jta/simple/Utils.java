@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,20 @@
  */
 package org.mybatis.guice.jta.simple;
 
-import java.util.Properties;
+import com.arjuna.ats.arjuna.recovery.RecoveryManager;
+import io.agroal.api.AgroalDataSource;
+import io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
+import io.agroal.api.security.NamePrincipal;
+import io.agroal.api.security.SimplePassword;
+import io.agroal.narayana.NarayanaTransactionIntegration;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
+import org.mybatis.guice.multidstest.MockInitialContextFactory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
-import org.apache.aries.transaction.AriesTransactionManager;
-import org.apache.aries.transaction.internal.AriesTransactionManagerImpl;
-import org.apache.aries.transaction.jdbc.RecoverableDataSource;
-import org.hsqldb.jdbc.pool.JDBCXADataSource;
-import org.mybatis.guice.multidstest.MockInitialContextFactory;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 public class Utils {
 
@@ -38,41 +42,41 @@ public class Utils {
     properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.class.getName());
     InitialContext ic = new InitialContext(properties);
 
-    AriesTransactionManager tm = new AriesTransactionManagerImpl();
+    TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+    TransactionSynchronizationRegistry transactionSynchronizationRegistry
+            = new com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
+    // intitialization of recovery manager
+    RecoveryManager recoveryManager
+            = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
+    recoveryManager.initialize();
+
     ic.bind("javax.transaction.TransactionManager", tm);
 
-    JDBCXADataSource ds1 = new JDBCXADataSource();
-    ds1.setDatabaseName("schema1");
-    ds1.setUser("sa");
-    ds1.setPassword("");
-    ds1.setUrl("jdbc:hsqldb:mem:schema1");
+    DataSource ads1 = AgroalDataSource
+            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
+                    cp -> cp.maxSize( 10 )
+                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( "jdbc:hsqldb:mem:schema1" )
+                                                                     .principal( new NamePrincipal( "sa" ) ).credential(
+                                            new SimplePassword( "" ) ) )
+                            .transactionIntegration(
+                                    new NarayanaTransactionIntegration(
+                                            tm, transactionSynchronizationRegistry,
+                                            "java:/agroalds1", false ) ) ) );
 
-    RecoverableDataSource rds1 = new RecoverableDataSource();
-    rds1.setDataSource(ds1);
-    rds1.setUsername("sa");
-    rds1.setPassword("");
-    rds1.setTransactionManager(tm);
-    rds1.setTransaction("xa");
-    rds1.setName("DS1");
-    rds1.start();
+    ic.bind("java:comp/env/jdbc/DS1", ads1);
 
-    ic.bind("java:comp/env/jdbc/DS1", rds1);
 
-    JDBCXADataSource ds2 = new JDBCXADataSource();
-    ds2.setDatabaseName("schema2");
-    ds2.setUser("sa");
-    ds2.setPassword("");
-    ds2.setUrl("jdbc:hsqldb:mem:schema2");
+    DataSource ads2 = AgroalDataSource
+            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
+                    cp -> cp.maxSize( 10 )
+                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( "jdbc:hsqldb:mem:schema2" )
+                                                                     .principal( new NamePrincipal( "sa" ) ).credential(
+                                            new SimplePassword( "" ) ) )
+                            .transactionIntegration(
+                                    new NarayanaTransactionIntegration(
+                                            tm, transactionSynchronizationRegistry,
+                                            "java:/agroalds2", false ) ) ) );
 
-    RecoverableDataSource rds2 = new RecoverableDataSource();
-    rds2.setDataSource(ds2);
-    rds2.setUsername("sa");
-    rds2.setPassword("");
-    rds2.setTransactionManager(tm);
-    rds2.setTransaction("xa");
-    rds2.setName("DS2");
-    rds2.start();
-
-    ic.bind("java:comp/env/jdbc/DS2", rds2);
+    ic.bind("java:comp/env/jdbc/DS2", ads2);
   }
 }

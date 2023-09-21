@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@ package org.mybatis.guice.datasource.helper;
 import com.google.inject.Injector;
 import com.google.inject.util.Providers;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 public final class JdbcUrlAntFormatter implements Provider<String> {
 

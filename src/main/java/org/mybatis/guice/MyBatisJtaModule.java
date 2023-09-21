@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,15 +15,8 @@
  */
 package org.mybatis.guice;
 
-import static com.google.inject.matcher.Matchers.annotatedWith;
-import static com.google.inject.matcher.Matchers.any;
-import static com.google.inject.matcher.Matchers.not;
-import static org.mybatis.guice.Preconditions.checkArgument;
-
-import javax.inject.Provider;
-import javax.transaction.TransactionManager;
-import javax.transaction.xa.XAResource;
-
+import jakarta.inject.Provider;
+import jakarta.transaction.TransactionManager;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
@@ -33,6 +26,13 @@ import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
+
+import javax.transaction.xa.XAResource;
+
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.not;
+import static org.mybatis.guice.Preconditions.checkArgument;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
   private final Log log = LogFactory.getLog(getClass());

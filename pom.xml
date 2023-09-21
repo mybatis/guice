@@ -90,10 +90,10 @@
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
     <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
-    <guice.version>5.1.0</guice.version>
+    <guice.version>7.0.0</guice.version>
     <annotation-api.version>1.3.5</annotation-api.version>
     <ejb-api.version>3.2.6</ejb-api.version>
-    <inject-api.version>1.0.5</inject-api.version>
+    <inject-api.version>2.0.1</inject-api.version>
     <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,javax.transaction.*;resolution:=optional</osgi.import>
     <spotbugs.omitVisitors>UnreadFields</spotbugs.omitVisitors>
     <module.name>org.mybatis.guice</module.name>
@@ -221,7 +221,7 @@
     <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
-      <version>1.3.3</version>
+      <version>2.0.1</version>
       <optional>true</optional>
     </dependency>
 
@@ -289,16 +289,33 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.aries.transaction</groupId>
-      <artifactId>org.apache.aries.transaction.jdbc</artifactId>
-      <version>2.1.3</version>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>narayana-jta</artifactId>
+      <version>7.0.0.Final</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
-      <groupId>org.apache.aries.transaction</groupId>
-      <artifactId>org.apache.aries.transaction.blueprint</artifactId>
-      <version>2.3.1</version>
+      <groupId>org.wildfly.core</groupId>
+      <artifactId>wildfly-logging</artifactId>
+      <version>21.1.0.Final</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.agroal</groupId>
+      <artifactId>agroal-api</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.agroal</groupId>
+      <artifactId>agroal-pool</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.agroal</groupId>
+      <artifactId>agroal-narayana</artifactId>
+      <version>2.2</version>
       <scope>test</scope>
     </dependency>
 
