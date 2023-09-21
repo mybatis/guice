@@ -26,6 +26,19 @@
   </properties>
 
   <body>
+    <release version="3.19" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Updates Guice to version 7 and use Jakarta namespace.
+        <fixes issue="576"/>
+        <fixes issue="574"/>
+      </action>
+    </release>
+    <release version="3.17" date="2022-02-18" description="maintenance release">
+      <action dev="christian.poitras" type="update">
+        Add use failover mode and load balancing mode of MariaDB connector/j.
+        <fixes issue="374"/>
+      </action>
+    </release>
     <release version="3.12" date="2020-03-09" description="maintenance release">
       <action dev="daniel.degroff" type="add">
         Adds support for HikariCP.
