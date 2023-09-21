@@ -15,10 +15,18 @@
  */
 package org.mybatis.guice.jta;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.PrivateModule;
+
 import jakarta.transaction.TransactionManager;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.junit.jupiter.api.AfterAll;
@@ -30,11 +38,6 @@ import org.junit.jupiter.api.TestInfo;
 import org.mybatis.guice.MyBatisJtaModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.sql.DataSource;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JtaXaTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(JtaXaTest.class);
@@ -49,8 +52,8 @@ class JtaXaTest {
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
-    dataSource1 = BaseDB.createXADataSource( BaseDB.URL_DB1, manager );
-    dataSource2 = BaseDB.createXADataSource( BaseDB.URL_DB2, manager );
+    dataSource1 = BaseDB.createXADataSource(BaseDB.URL_DB1, manager);
+    dataSource2 = BaseDB.createXADataSource(BaseDB.URL_DB2, manager);
   }
 
   @AfterAll

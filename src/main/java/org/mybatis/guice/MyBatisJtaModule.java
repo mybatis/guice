@@ -15,8 +15,16 @@
  */
 package org.mybatis.guice;
 
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.not;
+import static org.mybatis.guice.Preconditions.checkArgument;
+
 import jakarta.inject.Provider;
 import jakarta.transaction.TransactionManager;
+
+import javax.transaction.xa.XAResource;
+
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
@@ -26,13 +34,6 @@ import org.mybatis.guice.transactional.Transactional;
 import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.TxTransactionalMethodInterceptor;
 import org.mybatis.guice.transactional.XASqlSessionManagerProvider;
-
-import javax.transaction.xa.XAResource;
-
-import static com.google.inject.matcher.Matchers.annotatedWith;
-import static com.google.inject.matcher.Matchers.any;
-import static com.google.inject.matcher.Matchers.not;
-import static org.mybatis.guice.Preconditions.checkArgument;
 
 public abstract class MyBatisJtaModule extends MyBatisModule {
   private final Log log = LogFactory.getLog(getClass());

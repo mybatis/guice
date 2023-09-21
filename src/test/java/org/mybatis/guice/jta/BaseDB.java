@@ -16,16 +16,15 @@
 package org.mybatis.guice.jta;
 
 import com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple;
+
 import io.agroal.api.AgroalDataSource;
 import io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
 import io.agroal.api.security.NamePrincipal;
 import io.agroal.api.security.SimplePassword;
 import io.agroal.narayana.NarayanaTransactionIntegration;
-import jakarta.transaction.TransactionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
+import jakarta.transaction.TransactionManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,6 +32,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseDB {
   private static final Logger LOGGER = LoggerFactory.getLogger(BaseDB.class);
@@ -51,40 +55,31 @@ public class BaseDB {
   static final String QUERY_SELECT = "select id from table1";
   static final String QUERY_DELETE = "delete from table1";
 
-  public static DataSource createLocalDataSource(String dataSourceURL,
-                                                 TransactionManager manager) throws Exception {
+  public static DataSource createLocalDataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
     DataSource recoverableDataSource = AgroalDataSource
-            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
-                    cp -> cp.maxSize( 10 )
-                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( dataSourceURL )
-                                                                     .principal( new NamePrincipal( USER ) ).credential(
-                                            new SimplePassword( PASSWORD ) ) )
-                            .transactionIntegration(
-                                    new NarayanaTransactionIntegration(
-                                            manager, new TransactionSynchronizationRegistryImple() ) ) ) );
-
+        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+            .connectionFactoryConfiguration(cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER))
+                .credential(new SimplePassword(PASSWORD)))
+            .transactionIntegration(
+                new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
 
     return recoverableDataSource;
   }
 
-  public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager)
-      throws Exception {
+  public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
     Class.forName(className).newInstance();
 
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
     DataSource recoverableDataSource = AgroalDataSource
-            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
-                    cp -> cp.maxSize( 10 )
-                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( dataSourceURL )
-                                                                     .principal( new NamePrincipal( USER ) ).credential(
-                                            new SimplePassword( PASSWORD ) ) )
-                            .transactionIntegration(
-                                    new NarayanaTransactionIntegration(
-                                            manager, new TransactionSynchronizationRegistryImple() ) ) ) );
+        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+            .connectionFactoryConfiguration(cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER))
+                .credential(new SimplePassword(PASSWORD)))
+            .transactionIntegration(
+                new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
 
     return recoverableDataSource;
   }

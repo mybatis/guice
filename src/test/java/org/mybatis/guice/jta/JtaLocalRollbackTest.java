@@ -15,19 +15,21 @@
  */
 package org.mybatis.guice.jta;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jakarta.transaction.TransactionManager;
+
+import java.sql.Connection;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mybatis.guice.transactional.TransactionAttribute;
 import org.mybatis.guice.transactional.TransactionToken;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Create Requerd transaction. Create internal RequiresNew transaction. Rollback first transaction. Warning: transaction
@@ -47,8 +49,7 @@ public class JtaLocalRollbackTest {
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
     Class.forName(className).newInstance();
 
-    dataSource = BaseDB.createLocalDataSource( BaseDB.URL_DB1, manager
-    );
+    dataSource = BaseDB.createLocalDataSource(BaseDB.URL_DB1, manager);
   }
 
   @AfterAll

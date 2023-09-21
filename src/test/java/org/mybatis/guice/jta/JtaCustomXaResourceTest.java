@@ -50,8 +50,7 @@ public class JtaCustomXaResourceTest {
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
-    dataSource2 = BaseDB.createLocalDataSource( BaseDB.URL_DB2, manager
-    );
+    dataSource2 = BaseDB.createLocalDataSource(BaseDB.URL_DB2, manager);
   }
 
   @AfterAll

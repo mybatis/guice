@@ -16,19 +16,23 @@
 package org.mybatis.guice.jta.simple;
 
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
+
 import io.agroal.api.AgroalDataSource;
 import io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
 import io.agroal.api.security.NamePrincipal;
 import io.agroal.api.security.SimplePassword;
 import io.agroal.narayana.NarayanaTransactionIntegration;
+
 import jakarta.transaction.TransactionManager;
 import jakarta.transaction.TransactionSynchronizationRegistry;
-import org.mybatis.guice.multidstest.MockInitialContextFactory;
+
+import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.util.Properties;
+
+import org.mybatis.guice.multidstest.MockInitialContextFactory;
 
 public class Utils {
 
@@ -43,39 +47,28 @@ public class Utils {
     InitialContext ic = new InitialContext(properties);
 
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    TransactionSynchronizationRegistry transactionSynchronizationRegistry
-            = new com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
+    TransactionSynchronizationRegistry transactionSynchronizationRegistry = new com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
     // intitialization of recovery manager
-    RecoveryManager recoveryManager
-            = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
+    RecoveryManager recoveryManager = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
     recoveryManager.initialize();
 
     ic.bind("javax.transaction.TransactionManager", tm);
 
     DataSource ads1 = AgroalDataSource
-            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
-                    cp -> cp.maxSize( 10 )
-                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( "jdbc:hsqldb:mem:schema1" )
-                                                                     .principal( new NamePrincipal( "sa" ) ).credential(
-                                            new SimplePassword( "" ) ) )
-                            .transactionIntegration(
-                                    new NarayanaTransactionIntegration(
-                                            tm, transactionSynchronizationRegistry,
-                                            "java:/agroalds1", false ) ) ) );
+        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+            .connectionFactoryConfiguration(cf -> cf.jdbcUrl("jdbc:hsqldb:mem:schema1")
+                .principal(new NamePrincipal("sa")).credential(new SimplePassword("")))
+            .transactionIntegration(
+                new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds1", false))));
 
     ic.bind("java:comp/env/jdbc/DS1", ads1);
 
-
     DataSource ads2 = AgroalDataSource
-            .from( new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(
-                    cp -> cp.maxSize( 10 )
-                            .connectionFactoryConfiguration( cf -> cf.jdbcUrl( "jdbc:hsqldb:mem:schema2" )
-                                                                     .principal( new NamePrincipal( "sa" ) ).credential(
-                                            new SimplePassword( "" ) ) )
-                            .transactionIntegration(
-                                    new NarayanaTransactionIntegration(
-                                            tm, transactionSynchronizationRegistry,
-                                            "java:/agroalds2", false ) ) ) );
+        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+            .connectionFactoryConfiguration(cf -> cf.jdbcUrl("jdbc:hsqldb:mem:schema2")
+                .principal(new NamePrincipal("sa")).credential(new SimplePassword("")))
+            .transactionIntegration(
+                new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds2", false))));
 
     ic.bind("java:comp/env/jdbc/DS2", ads2);
   }
