@@ -297,7 +297,7 @@
     <dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-logging</artifactId>
-      <version>21.1.1.Final</version>
+      <version>22.0.1.Final</version>
       <scope>test</scope>
     </dependency>
     <dependency>
