@@ -87,6 +87,9 @@
   </distributionManagement>
 
   <properties>
+    <java.version>11</java.version>
+    <java.release.version>11</java.release.version>
+
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
     <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
@@ -131,7 +134,7 @@
     <dependency>
       <groupId>jakarta.resource</groupId>
       <artifactId>jakarta.resource-api</artifactId>
-      <version>2.0.0</version>
+      <version>2.1.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -312,19 +315,19 @@
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-      <version>10.15.2.0</version>
+      <version>10.16.1.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derbyshared</artifactId>
-      <version>10.15.2.0</version>
+      <version>10.16.1.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derbyoptionaltools</artifactId>
-      <version>10.15.2.0</version>
+      <version>10.16.1.1</version>
       <scope>test</scope>
     </dependency>
 
