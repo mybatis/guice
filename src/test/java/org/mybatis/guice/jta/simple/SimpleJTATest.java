@@ -23,11 +23,11 @@ import com.google.inject.Injector;
 import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
 
+import jakarta.ejb.ApplicationException;
 import jakarta.transaction.TransactionManager;
 
 import java.util.Properties;
 
-import javax.ejb.ApplicationException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
