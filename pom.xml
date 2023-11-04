@@ -275,13 +275,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.tranql</groupId>
-      <artifactId>tranql-connector</artifactId>
-      <version>1.8</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.jboss.narayana.jta</groupId>
       <artifactId>narayana-jta</artifactId>
       <version>7.0.0.Final</version>
