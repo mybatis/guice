@@ -17,6 +17,7 @@ package org.mybatis.guice.transactional;
 
 import static java.lang.String.format;
 
+import jakarta.ejb.ApplicationException;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import jakarta.transaction.TransactionManager;
@@ -24,7 +25,6 @@ import jakarta.transaction.TransactionManager;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import javax.ejb.ApplicationException;
 import javax.transaction.xa.XAResource;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -53,7 +53,7 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 
   private boolean isApplicationExceptionAvailable() {
     try {
-      Class.forName("javax.ejb.ApplicationException");
+      Class.forName("jakarta.ejb.ApplicationException");
       return true;
     } catch (ClassNotFoundException e) {
       return false;
