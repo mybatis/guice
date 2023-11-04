@@ -27,9 +27,9 @@
     <relativePath />
   </parent>
 
+  <groupId>org.mybatis</groupId>
   <artifactId>mybatis-guice</artifactId>
   <version>3.19-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
   <name>mybatis-guice</name>
   <description>The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.</description>
@@ -66,7 +66,7 @@
 
   <scm>
     <url>http://github.com/mybatis/guice</url>
-    <connection>scm:git:ssh://github.com/mybatis/guice.git</connection>
+    <connection>scm:git:ssh://git@github.com/mybatis/guice.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/guice.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -80,9 +80,9 @@
   </ciManagement>
   <distributionManagement>
     <site>
-      <id>gh-pages</id>
+      <id>gh-pages-scm</id>
       <name>Mybatis GitHub Pages</name>
-      <url>git:ssh://git@github.com/mybatis/guice.git?gh-pages#</url>
+      <url>scm:git:ssh://git@github.com/mybatis/guice.git</url>
     </site>
   </distributionManagement>
 
@@ -121,16 +121,6 @@
       <artifactId>guice</artifactId>
       <version>${guice.version}</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.inject</groupId>
-          <artifactId>javax.inject</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.code.findbugs</groupId>
-          <artifactId>jsr305</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>jakarta.inject</groupId>
@@ -343,20 +333,6 @@
       <artifactId>geronimo-connector</artifactId>
       <version>4.0.0</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.geronimo.components</groupId>
-          <artifactId>geronimo-transaction</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.geronimo.specs</groupId>
-          <artifactId>geronimo-j2ee-connector_1.6_spec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.geronimo.specs</groupId>
-          <artifactId>geronimo-validation_1.0_spec</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -393,20 +369,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <!-- TODO: Allow pull from snapshots while on mybatis parent snapshot, remove once finalized -->
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>oss.sonatype.org-snapshot</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
 
   <build>
     <plugins>
