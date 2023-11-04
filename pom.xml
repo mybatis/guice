@@ -126,6 +126,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>jakarta.ejb</groupId>
+      <artifactId>jakarta.ejb-api</artifactId>
+      <version>${ejb-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>jakarta.inject</groupId>
       <artifactId>jakarta.inject-api</artifactId>
       <version>${inject-api.version}</version>
@@ -141,17 +147,6 @@
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
       <version>3.0.2</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!--
-     | https://github.com/brettwooldridge/HikariCP
-     | Java 8 thru 11 maven artifact:
-    -->
-    <dependency>
-      <groupId>jakarta.ejb</groupId>
-      <artifactId>jakarta.ejb-api</artifactId>
-      <version>${ejb-api.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -321,13 +316,6 @@
       <groupId>org.apache.derby</groupId>
       <artifactId>derbyoptionaltools</artifactId>
       <version>10.16.1.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.geronimo.components</groupId>
-      <artifactId>geronimo-connector</artifactId>
-      <version>4.0.0</version>
       <scope>test</scope>
     </dependency>
 
