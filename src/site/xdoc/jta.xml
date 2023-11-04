@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2022 the original author or authors.
+       Copyright 2009-2023 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@
 
     <section name="Configuring TransactionManager">
         <p>
-            <i>org.mybatis.guice.MyBatisJtaModule</i> requires an instance of <i>javax.transaction.TransactionManager</i>.
+            <i>org.mybatis.guice.MyBatisJtaModule</i> requires an instance of <i>jakarta.transaction.TransactionManager</i>.
             Here is some examples on how to obtain such an instance.
         </p>
         <subsection name="JavaEE 7 or CDI">
@@ -68,7 +68,7 @@ TransactionManager tm = bundleContext.getService(reference);]]></source>
         </subsection>
         <subsection name="OSGi service from OSGi Enterprise Editon using lookup">
             <source><![CDATA[InitialContext initCtx = new InitialContext();
-String txName = "osgi:service/javax.transaction.TransactionManager"
+String txName = "osgi:service/jakarta.transaction.TransactionManager"
 TransactionManager tm = (TransactionManager) initCtx.lookup(txName);]]></source>
         </subsection>
         <subsection name="OSGi Dynamic Service SCR annotation">
