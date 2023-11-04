@@ -26,7 +26,7 @@ public class AddressConverter {
     Matcher matcher = pattern.matcher(input);
     if (matcher.matches()) {
       Address address = new Address();
-      address.setNumber(new Integer(matcher.group(1)));
+      address.setNumber(Integer.valueOf(matcher.group(1)));
       address.setStreet(matcher.group(2));
       return address;
     } else {
