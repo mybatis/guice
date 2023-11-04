@@ -325,13 +325,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.geronimo.components</groupId>
-      <artifactId>geronimo-connector</artifactId>
-      <version>4.0.0</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
       <version>10.1.15</version>
