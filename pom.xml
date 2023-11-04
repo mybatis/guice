@@ -24,7 +24,7 @@
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
     <version>39</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <groupId>org.mybatis</groupId>
@@ -65,10 +65,10 @@
   </contributors>
 
   <scm>
-    <url>http://github.com/mybatis/guice</url>
     <connection>scm:git:ssh://git@github.com/mybatis/guice.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/guice.git</developerConnection>
     <tag>HEAD</tag>
+    <url>http://github.com/mybatis/guice</url>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
