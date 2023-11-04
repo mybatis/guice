@@ -87,6 +87,9 @@
   </distributionManagement>
 
   <properties>
+    <java.version>11</java.version>
+    <java.release.version>11</java.release.version>
+
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
     <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
     <gcu.product>Guice</gcu.product>
