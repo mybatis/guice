@@ -52,7 +52,7 @@ public class Utils {
     RecoveryManager recoveryManager = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
     recoveryManager.initialize();
 
-    ic.bind("javax.transaction.TransactionManager", tm);
+    ic.bind("jakarta.transaction.TransactionManager", tm);
 
     DataSource ads1 = AgroalDataSource
         .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)

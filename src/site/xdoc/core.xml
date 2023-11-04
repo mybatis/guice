@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2022 the original author or authors.
+       Copyright 2009-2023 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
         <p>
             Core components are contained in the <i>org.mybatis.guice.*</i>
             package, providing a set of reusable Google Guice
-            <i>javax.inject.Provider</i>s and
+            <i>jakarta.inject.Provider</i>s and
             <i>com.google.inject.Module</i>s that
             alleviate users the task to create MyBatis objects.
         </p>

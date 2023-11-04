@@ -198,7 +198,7 @@ class SimpleJTATest {
     properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.class.getName());
 
     InitialContext ic = new InitialContext(properties);
-    final TransactionManager tm = (TransactionManager) ic.lookup("javax.transaction.TransactionManager");
+    final TransactionManager tm = (TransactionManager) ic.lookup("jakarta.transaction.TransactionManager");
 
     return Guice.createInjector(new PrivateModule() {
       @Override
