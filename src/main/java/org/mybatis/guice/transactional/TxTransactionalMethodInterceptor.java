@@ -151,8 +151,15 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
         if (isApplicationExceptionAvailable()) {
           ApplicationException ae = t.getClass().getAnnotation(ApplicationException.class);
           ApplicationException parentAe = findAnnotation(t.getClass().getSuperclass(), ApplicationException.class);
-          if ((ae == null && parentAe == null) || (ae != null && ae.rollback())
-              || (parentAe != null && (!parentAe.inherited() || parentAe.rollback()))) {
+          boolean bothAEsNull = (ae == null && parentAe == null);
+          boolean aeNotNullAndRollback = (ae != null && ae.rollback());
+          boolean parentAeRollbackConditions = false;
+          if (parentAe != null) {
+            parentAeRollbackConditions = (!parentAe.inherited() || parentAe.rollback());
+          }
+          boolean shouldTriggerRollback = (bothAEsNull || aeNotNullAndRollback || parentAeRollbackConditions);
+          // Combine the simplified conditions
+          if (shouldTriggerRollback) {
             manager.setRollbackOnly();
           }
         } else {
