@@ -689,32 +689,4 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   protected final void addMapperClasses(final String packageName, final ResolverUtil.Test test) {
     addMapperClasses(getClasses(test, packageName));
   }
-
-  /**
-   * Return a set of all classes contained in the given package.
-   *
-   * @param packageName
-   *          the package has to be analyzed.
-   *
-   * @return a set of all classes contained in the given package.
-   */
-  private static Set<Class<?>> getClasses(String packageName) {
-    return getClasses(new ResolverUtil.IsA(Object.class), packageName);
-  }
-
-  /**
-   * Return a set of all classes contained in the given package that match with the given test requirement.
-   *
-   * @param test
-   *          the class filter on the given package.
-   * @param packageName
-   *          the package has to be analyzed.
-   *
-   * @return a set of all classes contained in the given package.
-   */
-  private static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
-    checkArgument(test != null, "Parameter 'test' must not be null");
-    checkArgument(packageName != null, "Parameter 'packageName' must not be null");
-    return new ResolverUtil<Object>().find(test, packageName).getClasses();
-  }
 }

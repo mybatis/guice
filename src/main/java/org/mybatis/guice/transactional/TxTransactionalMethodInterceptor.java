@@ -24,6 +24,8 @@ import jakarta.transaction.TransactionManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.transaction.xa.XAResource;
 
@@ -48,7 +50,14 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
   @Inject
   private Provider<XAResource> xaResourceProvider;
 
+  private Map<TxType, TransactionAttributeStrategy> strategies = new HashMap<>();
+
   public TxTransactionalMethodInterceptor() {
+    strategies.put(TxType.REQUIRED, new RequiredTransactionAttributeStrategy());
+    strategies.put(TxType.REQUIRES_NEW, new RequiresNewTransactionAttributeStrategy());
+    strategies.put(TxType.MANDATORY, new MandatoryTransactionAttributeStrategy());
+    strategies.put(TxType.SUPPORTS, new SupportsTransactionAttributeStrategy());
+    strategies.put(TxType.NEVER, new NeverTransactionAttributeStrategy());
   }
 
   private boolean isApplicationExceptionAvailable() {
@@ -94,18 +103,9 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 
     if (manager != null) {
       TxType txType = transactional.value();
-      if (TxType.REQUIRED.equals(txType)) {
-        attribute = TransactionAttribute.REQUIRED;
-      } else if (TxType.REQUIRES_NEW.equals(txType)) {
-        attribute = TransactionAttribute.REQUIRESNEW;
-      } else if (TxType.MANDATORY.equals(txType)) {
-        attribute = TransactionAttribute.MANDATORY;
-      } else if (TxType.SUPPORTS.equals(txType)) {
-        attribute = TransactionAttribute.SUPPORTS;
-      } else if (TxType.NOT_SUPPORTED.equals(txType)) {
-        attribute = null; // FIXME add implementation
-      } else if (TxType.NEVER.equals(txType)) {
-        attribute = TransactionAttribute.NEVER;
+      TransactionAttributeStrategy strategy = strategies.get(txType);
+      if (strategy != null) {
+        attribute = strategy.getTransactionAttribute();
       }
     }
 
