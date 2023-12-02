@@ -36,48 +36,87 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
   private final List<KeyResolver> resolvers = new ArrayList<KeyResolver>();
 
   /**
-   * Instantiates a new jdbc url ant formatter.
+   * Constructs a new JdbcUrlAntFormatter based on the provided pattern.
    *
    * @param pattern
-   *          the pattern
+   *          the pattern for URL formatting
    */
   public JdbcUrlAntFormatter(final String pattern) {
-    int prev = 0;
-    int pos;
-    while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
-      if (pos > 0) {
-        appenders.add(Providers.of(pattern.substring(prev, pos)));
-      }
-      if (pos == pattern.length() - 1) {
-        appenders.add(Providers.of(VAR_BEGIN));
-        prev = pos + 1;
-      } else if (pattern.charAt(pos + 1) != '{') {
-        if (pattern.charAt(pos + 1) == '$') {
-          appenders.add(Providers.of(VAR_BEGIN));
-          prev = pos + 2;
-        } else {
-          appenders.add(Providers.of(pattern.substring(pos, pos + 2)));
-          prev = pos + 2;
-        }
-      } else {
-        int endName = pattern.indexOf('}', pos);
-        if (endName < 0) {
-          throw new IllegalArgumentException("Syntax error in property: " + pattern);
-        }
-        StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
-        String key = keyTokenizer.nextToken();
-        String defaultValue = null;
-        if (keyTokenizer.hasMoreTokens()) {
-          defaultValue = keyTokenizer.nextToken();
-        }
-        KeyResolver resolver = new KeyResolver(key, defaultValue);
-        appenders.add(resolver);
-        resolvers.add(resolver);
-        prev = endName + 1;
-      }
+    initializeAppender(pattern);
+  }
+
+  /**
+   * Initializes the appenders based on the given pattern.
+   *
+   * @param pattern
+   *          the pattern for URL formatting
+   */
+  private void initializeAppender(String pattern) {
+    int previousIndex = 0;
+    int currentIndex;
+    while ((currentIndex = pattern.indexOf(VAR_BEGIN, previousIndex)) >= 0) {
+      processPatternSubstring(pattern, previousIndex, currentIndex);
+      previousIndex = updatePrevPosition(pattern, currentIndex);
     }
-    if (prev < pattern.length()) {
-      appenders.add(Providers.of(pattern.substring(prev)));
+    appendRemainingPatternSubstring(pattern, previousIndex);
+  }
+
+  // Processes the substring of the pattern based on the currentIndex and previousIndex
+  private void processPatternSubstring(String pattern, int previousIndex, int currentIndex) {
+    if (currentIndex > 0) {
+      appenders.add(Providers.of(pattern.substring(previousIndex, currentIndex)));
+    }
+
+    if (currentIndex == pattern.length() - 1) {
+      appenders.add(Providers.of(VAR_BEGIN));
+    } else if (pattern.charAt(currentIndex + 1) != '{') {
+      handleNonCurlyBracePattern(pattern, currentIndex);
+    } else {
+      handleCurlyBracePattern(pattern, currentIndex);
+    }
+  }
+
+  // Handles patterns without curly braces
+  private void handleNonCurlyBracePattern(String pattern, int currentIndex) {
+    if (pattern.charAt(currentIndex + 1) == '$') {
+      appenders.add(Providers.of(VAR_BEGIN));
+    } else {
+      appenders.add(Providers.of(pattern.substring(currentIndex, currentIndex + 2)));
+    }
+  }
+
+  // Handles patterns with curly braces
+  private void handleCurlyBracePattern(String pattern, int currentIndex) {
+    int endName = pattern.indexOf('}', currentIndex);
+    if (endName < 0) {
+      throw new IllegalArgumentException("Syntax error in property: " + pattern);
+    }
+    processKeyResolver(pattern, currentIndex, endName);
+  }
+
+  // Method to append KeyResolver based on the variable
+  private void processKeyResolver(String pattern, int startPos, int endPos) {
+    StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(startPos + 2, endPos), PIPE_SEPARATOR);
+    String key = keyTokenizer.nextToken();
+    String defaultValue = keyTokenizer.hasMoreTokens() ? keyTokenizer.nextToken() : null;
+    KeyResolver resolver = new KeyResolver(key, defaultValue);
+    appenders.add(resolver);
+    resolvers.add(resolver);
+  }
+
+  // Updates the previous position based on the current index and pattern
+  private int updatePrevPosition(String pattern, int currentIndex) {
+    if (pattern.charAt(currentIndex + 1) == '{') {
+      return pattern.indexOf('}', currentIndex) + 1;
+    } else {
+      return currentIndex + (pattern.charAt(currentIndex + 1) == '$' ? 2 : 1);
+    }
+  }
+
+  // Appends the remaining substring of the pattern
+  private void appendRemainingPatternSubstring(String pattern, int previousIndex) {
+    if (previousIndex < pattern.length()) {
+      appenders.add(Providers.of(pattern.substring(previousIndex)));
     }
   }
 

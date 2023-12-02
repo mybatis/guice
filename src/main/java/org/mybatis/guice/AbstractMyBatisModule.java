@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import static com.google.inject.matcher.Matchers.any;
 import static com.google.inject.matcher.Matchers.not;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
+import static org.mybatis.guice.Preconditions.checkArgument;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
@@ -27,7 +28,9 @@ import com.google.inject.Scopes;
 import com.google.inject.matcher.AbstractMatcher;
 
 import java.lang.reflect.Method;
+import java.util.Set;
 
+import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionManager;
 import org.mybatis.guice.mappers.MapperProvider;
@@ -54,6 +57,34 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
   private ClassLoader driverClassLoader = getDefaultClassLoader();
+
+  /**
+   * Return a set of all classes contained in the given package.
+   *
+   * @param packageName
+   *          the package has to be analyzed.
+   *
+   * @return a set of all classes contained in the given package.
+   */
+  protected static Set<Class<?>> getClasses(String packageName) {
+    return AbstractMyBatisModule.getClasses(new ResolverUtil.IsA(Object.class), packageName);
+  }
+
+  /**
+   * Return a set of all classes contained in the given package that match with the given test requirement.
+   *
+   * @param test
+   *          the class filter on the given package.
+   * @param packageName
+   *          the package has to be analyzed.
+   *
+   * @return a set of all classes contained in the given package.
+   */
+  protected static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
+    checkArgument(test != null, "Parameter 'test' must not be null");
+    checkArgument(packageName != null, "Parameter 'packageName' must not be null");
+    return new ResolverUtil<Object>().find(test, packageName).getClasses();
+  }
 
   @Override
   protected final void configure() {
