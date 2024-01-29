@@ -68,7 +68,7 @@
     <connection>scm:git:ssh://git@github.com/mybatis/guice.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/guice.git</developerConnection>
     <tag>HEAD</tag>
-    <url>http://github.com/mybatis/guice</url>
+    <url>http://github.com/mybatis/guice/</url>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
@@ -107,9 +107,6 @@
   </properties>
 
   <dependencies>
-    <!--
-     | Required dependencies
-    -->
     <!--
      | Provided dependencies
     -->
