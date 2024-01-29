@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HikariCPProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.hikaricp</a> &gt; <span class="el_source">HikariCPProvider.java</span></div><h1>HikariCPProvider.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2023 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.hikaricp;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.metrics.MetricsTrackerFactory;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.inject.Provider;
+
+import java.util.Properties;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+
+import javax.sql.DataSource;
+
+/**
+ * Provides the HikariCP DataSource.
+ * &lt;p&gt;
+ * For additional information see configuration here
+ * &lt;a href=&quot;https://github.com/brettwooldridge/HikariCP&quot;&gt;https://github.com/brettwooldridge/HikariCP&lt;/a&gt;.
+ */
+<span class="fc" id="L38">public final class HikariCPProvider implements Provider&lt;DataSource&gt; {</span>
+<span class="fc" id="L39">  private final HikariConfig configuration = new HikariConfig();</span>
+
+  private Integer loginTimeout;
+
+  @Override
+  public DataSource get() {
+<span class="fc" id="L45">    HikariDataSource dataSource = new HikariDataSource(configuration);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">    if (loginTimeout != null) {</span>
+      try {
+<span class="fc" id="L48">        dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="nc" id="L49">      } catch (Exception e) {</span>
+<span class="nc" id="L50">        throw new RuntimeException(&quot;Failed to set login timeout '&quot; + loginTimeout + &quot;' for the HikariCP datasource&quot;, e);</span>
+<span class="fc" id="L51">      }</span>
+    }
+
+<span class="fc" id="L54">    return dataSource;</span>
+  }
+
+  @com.google.inject.Inject(optional = true)
+  public void setAllowPoolSuspension(@Named(&quot;hikaricp.allowPoolSuspension&quot;) boolean allowPoolSuspension) {
+<span class="fc" id="L59">    configuration.setAllowPoolSuspension(allowPoolSuspension);</span>
+<span class="fc" id="L60">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setAutoCommit(@Named(&quot;hikaricp.autoCommit&quot;) boolean autoCommit) {
+<span class="fc" id="L64">    configuration.setAutoCommit(autoCommit);</span>
+<span class="fc" id="L65">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setCatalog(@Named(&quot;hikaricp.catalog&quot;) String catalog) {
+<span class="fc" id="L69">    configuration.setCatalog(catalog);</span>
+<span class="fc" id="L70">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setConnectionInitSql(@Named(&quot;hikaricp.connectionInitSql&quot;) String connectionInitSql) {
+<span class="fc" id="L74">    configuration.setConnectionInitSql(connectionInitSql);</span>
+<span class="fc" id="L75">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setConnectionTestQuery(@Named(&quot;hikaricp.connectionTestQuery&quot;) String connectionTestQuery) {
+<span class="fc" id="L79">    configuration.setConnectionTestQuery(connectionTestQuery);</span>
+<span class="fc" id="L80">  }</span>
+
+  /**
+   * Sets the &lt;code&gt;connectionTimeout&lt;/code&gt; HikariCP configuration property.
+   *
+   * @param connectionTimeoutMs
+   *          the connection timeout in milliseconds
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setConnectionTimeout(@Named(&quot;hikaricp.connectionTimeoutMs&quot;) long connectionTimeoutMs) {
+<span class="fc" id="L90">    configuration.setConnectionTimeout(connectionTimeoutMs);</span>
+<span class="fc" id="L91">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDriverClassName(@Named(&quot;hikaricp.driverClassName&quot;) String driverClassName) {
+<span class="fc" id="L95">    configuration.setDriverClassName(driverClassName);</span>
+<span class="fc" id="L96">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setHealthCheckProperties(@Named(&quot;hikaricp.healthCheckProperties&quot;) Properties healthCheckProperties) {
+<span class="fc" id="L100">    configuration.setHealthCheckProperties(healthCheckProperties);</span>
+<span class="fc" id="L101">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setHealthCheckRegistry(@Named(&quot;hikaricp.healthCheckRegistry&quot;) Object healthCheckRegistry) {
+<span class="fc" id="L105">    configuration.setHealthCheckRegistry(healthCheckRegistry);</span>
+<span class="fc" id="L106">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setIdleTimeout(@Named(&quot;hikaricp.idleTimeoutMs&quot;) long idleTimeoutMs) {
+<span class="fc" id="L110">    configuration.setIdleTimeout(idleTimeoutMs);</span>
+<span class="fc" id="L111">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setInitializationFailTimeout(
+      @Named(&quot;hikaricp.initializationFailTimeout&quot;) long initializationFailTimeout) {
+<span class="fc" id="L116">    configuration.setInitializationFailTimeout(initializationFailTimeout);</span>
+<span class="fc" id="L117">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setIsolateInternalQueries(@Named(&quot;hikaricp.isolateInternalQueries&quot;) boolean isolateInternalQueries) {
+<span class="fc" id="L121">    configuration.setIsolateInternalQueries(isolateInternalQueries);</span>
+<span class="fc" id="L122">  }</span>
+
+  @Inject
+  public void setJdbcUrl(@Named(&quot;JDBC.url&quot;) String jdbcUrl) {
+<span class="fc" id="L126">    configuration.setJdbcUrl(jdbcUrl);</span>
+<span class="fc" id="L127">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setLeakDetectionThreshold(@Named(&quot;hikaricp.leakDetectionThresholdMs&quot;) long leakDetectionThresholdMs) {
+<span class="fc" id="L131">    configuration.setLeakDetectionThreshold(leakDetectionThresholdMs);</span>
+<span class="fc" id="L132">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int loginTimeout) {
+<span class="fc" id="L136">    this.loginTimeout = loginTimeout;</span>
+<span class="fc" id="L137">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMaxLifetime(@Named(&quot;hikaricp.maxLifetimeMs&quot;) long maxLifetimeMs) {
+<span class="fc" id="L141">    configuration.setMaxLifetime(maxLifetimeMs);</span>
+<span class="fc" id="L142">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMaximumPoolSize(@Named(&quot;hikaricp.maxPoolSize&quot;) int maxPoolSize) {
+<span class="nc" id="L146">    configuration.setMaximumPoolSize(maxPoolSize);</span>
+<span class="nc" id="L147">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMetricRegistry(@Named(&quot;hikaricp.metricRegistry&quot;) Object metricRegistry) {
+<span class="fc" id="L151">    configuration.setMetricRegistry(metricRegistry);</span>
+<span class="fc" id="L152">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMetricsTrackerFactory(
+      @Named(&quot;hikaricp.metricsTrackerFactory&quot;) MetricsTrackerFactory metricsTrackerFactory) {
+<span class="fc" id="L157">    configuration.setMetricsTrackerFactory(metricsTrackerFactory);</span>
+<span class="fc" id="L158">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMinimumIdle(@Named(&quot;hikaricp.minimumIdle&quot;) int minimumIdle) {
+<span class="nc" id="L162">    configuration.setMinimumIdle(minimumIdle);</span>
+<span class="nc" id="L163">  }</span>
+
+  @Inject
+  public void setPassword(@Named(&quot;JDBC.password&quot;) String password) {
+<span class="fc" id="L167">    configuration.setPassword(password);</span>
+<span class="fc" id="L168">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setPoolName(@Named(&quot;hikaricp.poolName&quot;) String poolName) {
+<span class="fc" id="L172">    configuration.setPoolName(poolName);</span>
+<span class="fc" id="L173">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setReadOnly(@Named(&quot;hikaricp.readOnly&quot;) boolean readOnly) {
+<span class="fc" id="L177">    configuration.setReadOnly(readOnly);</span>
+<span class="fc" id="L178">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setRegisterMbeans(@Named(&quot;hikaricp.registerMbeans&quot;) boolean registerMbeans) {
+<span class="fc" id="L182">    configuration.setRegisterMbeans(registerMbeans);</span>
+<span class="fc" id="L183">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setScheduledExecutor(
+      @Named(&quot;hikaricp.scheduledExecutorService&quot;) ScheduledExecutorService scheduledExecutorService) {
+<span class="fc" id="L188">    configuration.setScheduledExecutor(scheduledExecutorService);</span>
+<span class="fc" id="L189">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setSchema(@Named(&quot;hikaricp.schema&quot;) String schema) {
+<span class="fc" id="L193">    configuration.setSchema(schema);</span>
+<span class="fc" id="L194">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setThreadFactory(@Named(&quot;hikaricp.threadFactory&quot;) ThreadFactory threadFactory) {
+<span class="fc" id="L198">    configuration.setThreadFactory(threadFactory);</span>
+<span class="fc" id="L199">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setTransactionIsolation(@Named(&quot;hikaricp.transactionIsolation&quot;) String transactionIsolation) {
+<span class="fc" id="L203">    configuration.setTransactionIsolation(transactionIsolation);</span>
+<span class="fc" id="L204">  }</span>
+
+  @Inject
+  public void setUsername(@Named(&quot;JDBC.username&quot;) String username) {
+<span class="fc" id="L208">    configuration.setUsername(username);</span>
+<span class="fc" id="L209">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setValidationTimeout(@Named(&quot;hikaricp.validationTimeoutMs&quot;) long validationTimeoutMs) {
+<span class="fc" id="L213">    configuration.setValidationTimeout(validationTimeoutMs);</span>
+<span class="fc" id="L214">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

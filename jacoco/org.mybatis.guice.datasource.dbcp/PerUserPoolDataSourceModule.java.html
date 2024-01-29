@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PerUserPoolDataSourceModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">PerUserPoolDataSourceModule.java</span></div><h1>PerUserPoolDataSourceModule.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2023 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.dbcp;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
+
+import jakarta.inject.Provider;
+
+import java.lang.annotation.Annotation;
+import java.util.Map;
+
+public final class PerUserPoolDataSourceModule extends AbstractModule {
+
+<span class="fc" id="L29">  private static final TypeLiteral&lt;Map&lt;String, Boolean&gt;&gt; STRING_BOOLEAN_MAP = new TypeLiteral&lt;Map&lt;String, Boolean&gt;&gt;() {</span>
+  };
+
+<span class="fc" id="L32">  private static final TypeLiteral&lt;Map&lt;String, Integer&gt;&gt; STRING_INTEGER_MAP = new TypeLiteral&lt;Map&lt;String, Integer&gt;&gt;() {</span>
+  };
+
+<span class="fc" id="L35">  private static final TypeLiteral&lt;Map&lt;String, Long&gt;&gt; STRING_LONG_MAP = new TypeLiteral&lt;Map&lt;String, Long&gt;&gt;() {</span>
+  };
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultAutoCommitProviderClass;
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultReadOnlyProviderClass;
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserDefaultTransactionIsolationProviderClass;
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxActiveProviderClass;
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxIdleProviderClass;
+
+  private final Class&lt;? extends Provider&lt;Map&lt;String, Long&gt;&gt;&gt; perUserMaxWaitMillisProviderClass;
+
+  private PerUserPoolDataSourceModule(
+      Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultAutoCommitProviderClass,
+      Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultReadOnlyProviderClass,
+      Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserDefaultTransactionIsolationProviderClass,
+      Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxActiveProviderClass,
+      Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxIdleProviderClass,
+<span class="fc" id="L56">      Class&lt;? extends Provider&lt;Map&lt;String, Long&gt;&gt;&gt; perUserMaxWaitMillisProviderClass) {</span>
+<span class="fc" id="L57">    this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;</span>
+<span class="fc" id="L58">    this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;</span>
+<span class="fc" id="L59">    this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;</span>
+<span class="fc" id="L60">    this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;</span>
+<span class="fc" id="L61">    this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;</span>
+<span class="fc" id="L62">    this.perUserMaxWaitMillisProviderClass = perUserMaxWaitMillisProviderClass;</span>
+<span class="fc" id="L63">  }</span>
+
+  @Override
+  protected void configure() {
+<span class="fc" id="L67">    doBind(perUserDefaultAutoCommitProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultAutoCommit.class);</span>
+<span class="fc" id="L68">    doBind(perUserDefaultReadOnlyProviderClass, STRING_BOOLEAN_MAP, PerUserDefaultReadOnly.class);</span>
+<span class="fc" id="L69">    doBind(perUserDefaultTransactionIsolationProviderClass, STRING_INTEGER_MAP,</span>
+        PerUserDefaultTransactionIsolation.class);
+<span class="fc" id="L71">    doBind(perUserMaxActiveProviderClass, STRING_INTEGER_MAP, PerUserMaxTotal.class);</span>
+<span class="fc" id="L72">    doBind(perUserMaxIdleProviderClass, STRING_INTEGER_MAP, PerUserMaxIdle.class);</span>
+<span class="fc" id="L73">    doBind(perUserMaxWaitMillisProviderClass, STRING_LONG_MAP, PerUserMaxWaitMillis.class);</span>
+<span class="fc" id="L74">  }</span>
+
+  private &lt;T&gt; void doBind(Class&lt;? extends Provider&lt;T&gt;&gt; providerClass, TypeLiteral&lt;T&gt; typeLiteral,
+      Class&lt;? extends Annotation&gt; annotation) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (providerClass != null) {</span>
+<span class="fc" id="L79">      bind(typeLiteral).annotatedWith(annotation).toProvider(providerClass).in(Scopes.SINGLETON);</span>
+    }
+<span class="fc" id="L81">  }</span>
+
+<span class="fc" id="L83">  public static final class Builder {</span>
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultAutoCommitProviderClass;
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultReadOnlyProviderClass;
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserDefaultTransactionIsolationProviderClass;
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxActiveProviderClass;
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxIdleProviderClass;
+
+    private Class&lt;? extends Provider&lt;Map&lt;String, Long&gt;&gt;&gt; perUserMaxWaitProviderClass;
+
+    /**
+     * Sets the per user default auto commit provider class.
+     *
+     * @param perUserDefaultAutoCommitProviderClass
+     *          the perUserDefaultAutoCommitProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserDefaultAutoCommitProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultAutoCommitProviderClass) {
+<span class="fc" id="L107">      this.perUserDefaultAutoCommitProviderClass = perUserDefaultAutoCommitProviderClass;</span>
+<span class="fc" id="L108">      return this;</span>
+    }
+
+    /**
+     * Sets the per user default read only provider class.
+     *
+     * @param perUserDefaultReadOnlyProviderClass
+     *          the perUserDefaultReadOnlyProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserDefaultReadOnlyProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Boolean&gt;&gt;&gt; perUserDefaultReadOnlyProviderClass) {
+<span class="fc" id="L121">      this.perUserDefaultReadOnlyProviderClass = perUserDefaultReadOnlyProviderClass;</span>
+<span class="fc" id="L122">      return this;</span>
+    }
+
+    /**
+     * Sets the per user default transaction isolation provider class.
+     *
+     * @param perUserDefaultTransactionIsolationProviderClass
+     *          the perUserDefaultTransactionIsolationProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserDefaultTransactionIsolationProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserDefaultTransactionIsolationProviderClass) {
+<span class="fc" id="L135">      this.perUserDefaultTransactionIsolationProviderClass = perUserDefaultTransactionIsolationProviderClass;</span>
+<span class="fc" id="L136">      return this;</span>
+    }
+
+    /**
+     * Sets the per user max active provider class.
+     *
+     * @param perUserMaxActiveProviderClass
+     *          the perUserMaxActiveProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserMaxTotalProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxActiveProviderClass) {
+<span class="fc" id="L149">      this.perUserMaxActiveProviderClass = perUserMaxActiveProviderClass;</span>
+<span class="fc" id="L150">      return this;</span>
+    }
+
+    /**
+     * Sets the per user max idle provider class.
+     *
+     * @param perUserMaxIdleProviderClass
+     *          the perUserMaxIdleProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserMaxIdleProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Integer&gt;&gt;&gt; perUserMaxIdleProviderClass) {
+<span class="fc" id="L163">      this.perUserMaxIdleProviderClass = perUserMaxIdleProviderClass;</span>
+<span class="fc" id="L164">      return this;</span>
+    }
+
+    /**
+     * Sets the per user max wait provider class.
+     *
+     * @param perUserMaxWaitProviderClass
+     *          the perUserMaxWaitProviderClass to set
+     *
+     * @return the builder
+     */
+    public Builder setPerUserMaxWaitMillisProviderClass(
+        Class&lt;? extends Provider&lt;Map&lt;String, Long&gt;&gt;&gt; perUserMaxWaitProviderClass) {
+<span class="fc" id="L177">      this.perUserMaxWaitProviderClass = perUserMaxWaitProviderClass;</span>
+<span class="fc" id="L178">      return this;</span>
+    }
+
+    /**
+     * Creates the pool.
+     *
+     * @return the per user pool data source module
+     */
+    public PerUserPoolDataSourceModule create() {
+<span class="fc" id="L187">      return new PerUserPoolDataSourceModule(perUserDefaultAutoCommitProviderClass, perUserDefaultReadOnlyProviderClass,</span>
+          perUserDefaultTransactionIsolationProviderClass, perUserMaxActiveProviderClass, perUserMaxIdleProviderClass,
+          perUserMaxWaitProviderClass);
+    }
+
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

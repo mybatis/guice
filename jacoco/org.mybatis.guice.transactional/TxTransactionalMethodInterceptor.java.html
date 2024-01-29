@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TxTransactionalMethodInterceptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">TxTransactionalMethodInterceptor.java</span></div><h1>TxTransactionalMethodInterceptor.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2023 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.transactional;
+
+import static java.lang.String.format;
+
+import jakarta.ejb.ApplicationException;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.transaction.TransactionManager;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.transaction.xa.XAResource;
+
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
+import org.mybatis.guice.transactional.Transactional.TxType;
+
+/**
+ * Method interceptor for {@link Transactional} annotation.
+ */
+public class TxTransactionalMethodInterceptor implements MethodInterceptor {
+  /**
+   * This class logger.
+   */
+<span class="fc" id="L45">  private final Log log = LogFactory.getLog(getClass());</span>
+
+  @Inject
+  private TransactionManager manager;
+
+  @Inject
+  private Provider&lt;XAResource&gt; xaResourceProvider;
+
+<span class="fc" id="L53">  private Map&lt;TxType, TransactionAttributeStrategy&gt; strategies = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L55">  public TxTransactionalMethodInterceptor() {</span>
+<span class="fc" id="L56">    strategies.put(TxType.REQUIRED, new RequiredTransactionAttributeStrategy());</span>
+<span class="fc" id="L57">    strategies.put(TxType.REQUIRES_NEW, new RequiresNewTransactionAttributeStrategy());</span>
+<span class="fc" id="L58">    strategies.put(TxType.MANDATORY, new MandatoryTransactionAttributeStrategy());</span>
+<span class="fc" id="L59">    strategies.put(TxType.SUPPORTS, new SupportsTransactionAttributeStrategy());</span>
+<span class="fc" id="L60">    strategies.put(TxType.NEVER, new NeverTransactionAttributeStrategy());</span>
+<span class="fc" id="L61">  }</span>
+
+  private boolean isApplicationExceptionAvailable() {
+    try {
+<span class="fc" id="L65">      Class.forName(&quot;jakarta.ejb.ApplicationException&quot;);</span>
+<span class="fc" id="L66">      return true;</span>
+<span class="nc" id="L67">    } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L68">      return false;</span>
+    }
+  }
+
+  private &lt;A extends Annotation&gt; A findAnnotation(Class&lt;?&gt; clazz, Class&lt;A&gt; annotationClass) {
+<span class="fc" id="L73">    Class&lt;?&gt; current = clazz;</span>
+<span class="fc" id="L74">    A annotation = null;</span>
+<span class="fc bfc" id="L75" title="All 4 branches covered.">    while (annotation == null &amp;&amp; current != null) {</span>
+<span class="fc" id="L76">      annotation = current.getAnnotation(annotationClass);</span>
+<span class="fc" id="L77">      current = current.getSuperclass();</span>
+    }
+<span class="fc" id="L79">    return annotation;</span>
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Object invoke(MethodInvocation invocation) throws Throwable {
+<span class="fc" id="L87">    Method interceptedMethod = invocation.getMethod();</span>
+<span class="fc" id="L88">    Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);</span>
+
+    // The annotation may be present at the class level instead
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">    if (transactional == null) {</span>
+<span class="nc" id="L92">      transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);</span>
+    }
+
+<span class="fc" id="L95">    String debugPrefix = null;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    if (this.log.isDebugEnabled()) {</span>
+<span class="nc" id="L97">      debugPrefix = String.format(&quot;[Intercepted method: %s]&quot;, interceptedMethod.toGenericString());</span>
+    }
+
+<span class="fc" id="L100">    boolean needsRollback = transactional.rollbackOnly();</span>
+<span class="fc" id="L101">    Object object = null;</span>
+<span class="fc" id="L102">    TransactionAttribute attribute = null;</span>
+
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (manager != null) {</span>
+<span class="fc" id="L105">      TxType txType = transactional.value();</span>
+<span class="fc" id="L106">      TransactionAttributeStrategy strategy = strategies.get(txType);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">      if (strategy != null) {</span>
+<span class="fc" id="L108">        attribute = strategy.getTransactionAttribute();</span>
+      }
+    }
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">    if (attribute == null) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L114">        log.debug(format(&quot;%s - skip Tx Transaction&quot;, debugPrefix));</span>
+      }
+
+      // without Tx
+      try {
+<span class="nc" id="L119">        object = invocation.proceed();</span>
+<span class="nc" id="L120">      } catch (Throwable t) {</span>
+<span class="nc" id="L121">        throw t;</span>
+<span class="nc" id="L122">      }</span>
+    } else {
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L125">        log.debug(format(&quot;%s - Tx Transaction %s begin&quot;, debugPrefix, attribute.name()));</span>
+      }
+
+      // with Tx
+<span class="fc" id="L129">      TransactionToken tranToken = attribute.begin(manager);</span>
+
+<span class="fc" id="L131">      log.debug(&quot;enlistResource XASqlSessionManager&quot;);</span>
+<span class="fc" id="L132">      XAResource xaRes = xaResourceProvider.get();</span>
+<span class="fc" id="L133">      tranToken.getActiveTransaction().enlistResource(xaRes);</span>
+
+      try {
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L137">          log.debug(format(&quot;%s - Tx Transaction %s (CompletionAllowed %s) call method&quot;, debugPrefix, attribute.name(),</span>
+<span class="nc" id="L138">              tranToken.isCompletionAllowed()));</span>
+        }
+<span class="fc" id="L140">        object = invocation.proceed();</span>
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (needsRollback) {</span>
+<span class="nc" id="L143">          manager.setRollbackOnly();</span>
+        }
+
+<span class="fc" id="L146">      } catch (Throwable t) {</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L148">          log.debug(format(&quot;%s - Tx Transaction %s (CompletionAllowed %s) rolling back&quot;, debugPrefix, attribute.name(),</span>
+<span class="nc" id="L149">              tranToken.isCompletionAllowed()));</span>
+        }
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (isApplicationExceptionAvailable()) {</span>
+<span class="fc" id="L152">          ApplicationException ae = t.getClass().getAnnotation(ApplicationException.class);</span>
+<span class="fc" id="L153">          ApplicationException parentAe = findAnnotation(t.getClass().getSuperclass(), ApplicationException.class);</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">          boolean bothAEsNull = (ae == null &amp;&amp; parentAe == null);</span>
+<span class="fc bfc" id="L155" title="All 4 branches covered.">          boolean aeNotNullAndRollback = (ae != null &amp;&amp; ae.rollback());</span>
+<span class="fc" id="L156">          boolean parentAeRollbackConditions = false;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">          if (parentAe != null) {</span>
+<span class="fc bfc" id="L158" title="All 4 branches covered.">            parentAeRollbackConditions = (!parentAe.inherited() || parentAe.rollback());</span>
+          }
+<span class="fc bfc" id="L160" title="All 6 branches covered.">          boolean shouldTriggerRollback = (bothAEsNull || aeNotNullAndRollback || parentAeRollbackConditions);</span>
+          // Combine the simplified conditions
+<span class="fc bfc" id="L162" title="All 2 branches covered.">          if (shouldTriggerRollback) {</span>
+<span class="fc" id="L163">            manager.setRollbackOnly();</span>
+          }
+<span class="fc" id="L165">        } else {</span>
+<span class="nc" id="L166">          manager.setRollbackOnly();</span>
+        }
+<span class="fc" id="L168">        throw t;</span>
+      } finally {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L171">          log.debug(format(&quot;%s - Tx Transaction %s (CompletionAllowed %s) finish&quot;, debugPrefix, attribute.name(),</span>
+<span class="nc" id="L172">              tranToken.isCompletionAllowed()));</span>
+        }
+<span class="fc" id="L174">        attribute.finish(manager, tranToken);</span>
+      }
+    }
+<span class="fc" id="L177">    return object;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

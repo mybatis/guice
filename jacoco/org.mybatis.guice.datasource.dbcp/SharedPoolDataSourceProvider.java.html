@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SharedPoolDataSourceProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">SharedPoolDataSourceProvider.java</span></div><h1>SharedPoolDataSourceProvider.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2023 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.dbcp;
+
+import jakarta.inject.Named;
+import jakarta.inject.Provider;
+
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
+
+/**
+ * Provides the Apache commons-dbcp {@code SharedPoolDataSource}.
+ */
+<span class="fc" id="L29">public final class SharedPoolDataSourceProvider implements Provider&lt;DataSource&gt; {</span>
+
+<span class="fc" id="L31">  private final SharedPoolDataSource dataSource = new SharedPoolDataSource();</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setConnectionPoolDataSource(ConnectionPoolDataSource cpds) {
+<span class="fc" id="L35">    dataSource.setConnectionPoolDataSource(cpds);</span>
+<span class="fc" id="L36">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDataSourceName(@Named(&quot;DBCP.name&quot;) String name) {
+<span class="fc" id="L40">    dataSource.setDataSourceName(name);</span>
+<span class="fc" id="L41">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultAutoCommit(@Named(&quot;JDBC.autoCommit&quot;) boolean autoCommit) {
+<span class="fc" id="L45">    dataSource.setDefaultAutoCommit(autoCommit);</span>
+<span class="fc" id="L46">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultReadOnly(@Named(&quot;DBCP.defaultReadOnly&quot;) boolean defaultReadOnly) {
+<span class="fc" id="L50">    dataSource.setDefaultReadOnly(defaultReadOnly);</span>
+<span class="fc" id="L51">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTransactionIsolation(
+      @Named(&quot;DBCP.defaultTransactionIsolation&quot;) int defaultTransactionIsolation) {
+<span class="fc" id="L56">    dataSource.setDefaultTransactionIsolation(defaultTransactionIsolation);</span>
+<span class="fc" id="L57">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDescription(@Named(&quot;DBCP.description&quot;) String description) {
+<span class="fc" id="L61">    dataSource.setDescription(description);</span>
+<span class="fc" id="L62">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setJndiEnvironment(@Named(&quot;DBCP.jndi.key&quot;) String key, @Named(&quot;DBCP.jndi.value&quot;) String value) {
+<span class="fc" id="L66">    dataSource.setJndiEnvironment(key, value);</span>
+<span class="fc" id="L67">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int loginTimeout) {
+<span class="fc" id="L71">    dataSource.setLoginTimeout(loginTimeout);</span>
+<span class="fc" id="L72">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultMinEvictableIdleTimeMillis(
+      @Named(&quot;DBCP.defaultMinEvictableIdleTimeMillis&quot;) int defaultMinEvictableIdleTimeMillis) {
+<span class="fc" id="L77">    dataSource.setDefaultMinEvictableIdleTimeMillis(defaultMinEvictableIdleTimeMillis);</span>
+<span class="fc" id="L78">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultNumTestsPerEvictionRun(
+      @Named(&quot;DBCP.defaultNumTestsPerEvictionRun&quot;) int defaultNumTestsPerEvictionRun) {
+<span class="fc" id="L83">    dataSource.setDefaultNumTestsPerEvictionRun(defaultNumTestsPerEvictionRun);</span>
+<span class="fc" id="L84">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setRollbackAfterValidation(@Named(&quot;DBCP.rollbackAfterValidation&quot;) boolean rollbackAfterValidation) {
+<span class="fc" id="L88">    dataSource.setRollbackAfterValidation(rollbackAfterValidation);</span>
+<span class="fc" id="L89">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTestOnBorrow(@Named(&quot;DBCP.defaultTestOnBorrow&quot;) boolean defaultTestOnBorrow) {
+<span class="fc" id="L93">    dataSource.setDefaultTestOnBorrow(defaultTestOnBorrow);</span>
+<span class="fc" id="L94">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTestOnReturn(@Named(&quot;DBCP.defaultTestOnReturn&quot;) boolean defaultTestOnReturn) {
+<span class="fc" id="L98">    dataSource.setDefaultTestOnReturn(defaultTestOnReturn);</span>
+<span class="fc" id="L99">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTestWhileIdle(@Named(&quot;DBCP.defaultTestWhileIdle&quot;) boolean defaultTestWhileIdle) {
+<span class="fc" id="L103">    dataSource.setDefaultTestWhileIdle(defaultTestWhileIdle);</span>
+<span class="fc" id="L104">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultTimeBetweenEvictionRunsMillis(
+      @Named(&quot;DBCP.defaultTimeBetweenEvictionRunsMillis&quot;) int defaultTimeBetweenEvictionRunsMillis) {
+<span class="fc" id="L109">    dataSource.setDefaultTimeBetweenEvictionRunsMillis(defaultTimeBetweenEvictionRunsMillis);</span>
+<span class="fc" id="L110">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setValidationQuery(@Named(&quot;DBCP.validationQuery&quot;) String validationQuery) {
+<span class="fc" id="L114">    dataSource.setValidationQuery(validationQuery);</span>
+<span class="fc" id="L115">  }</span>
+
+  /**
+   * Sets the default max total.
+   *
+   * @param defaultMaxTotal
+   *          the new default max total
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultMaxTotal(@Named(&quot;DBCP.defaultMaxTotal&quot;) final int defaultMaxTotal) {
+<span class="fc" id="L125">    dataSource.setDefaultMaxTotal(defaultMaxTotal);</span>
+<span class="fc" id="L126">  }</span>
+
+  /**
+   * Sets the default max idle.
+   *
+   * @param defaultMaxIdle
+   *          the new default max idle
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultMaxIdle(@Named(&quot;DBCP.defaultMaxIdle&quot;) final int defaultMaxIdle) {
+<span class="fc" id="L136">    dataSource.setDefaultMaxIdle(defaultMaxIdle);</span>
+<span class="fc" id="L137">  }</span>
+
+  /**
+   * Sets the default max wait in milliseconds.
+   *
+   * @param defaultMaxWaitMillis
+   *          the new default max wait in milliseconds
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDefaultMaxWaitMillis(@Named(&quot;DBCP.defaultMaxWaitMillis&quot;) final int defaultMaxWaitMillis) {
+<span class="fc" id="L147">    dataSource.setDefaultMaxWaitMillis(defaultMaxWaitMillis);</span>
+<span class="fc" id="L148">  }</span>
+
+  @Override
+  public DataSource get() {
+<span class="fc" id="L152">    return dataSource;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
