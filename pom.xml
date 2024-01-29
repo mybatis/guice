@@ -87,23 +87,41 @@
   </distributionManagement>
 
   <properties>
+    <!-- Java Usage -->
     <java.version>11</java.version>
     <java.release.version>11</java.release.version>
 
-    <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
-    <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
-    <gcu.product>Guice</gcu.product>
-    <derby.version>10.17.1.0</derby.version>
-    <guice.version>7.0.0</guice.version>
+    <!-- Versions -->
+    <agroal.version>2.2</agroal.version>
     <annotation-api.version>2.1.1</annotation-api.version>
+    <byte-buddy.version>1.14.11</byte-buddy.version>
+    <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
+    <derby.version>10.17.1.0</derby.version>
     <ejb-api.version>4.0.1</ejb-api.version>
+    <guice.version>7.0.0</guice.version>
     <inject-api.version>2.0.1</inject-api.version>
-    <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,jakarta.transaction.*;resolution:=optional</osgi.import>
+    <metrics.version>4.2.25</metrics.version>
+    <mockito.version>5.10.0</mockito.version>
+    <slf4j.version>2.0.11</slf4j.version>
+
+    <!-- Analysis -->
+    <spotbugs.onlyAnalyze>org.mybatis.guice.*</spotbugs.onlyAnalyze>
     <spotbugs.omitVisitors>UnreadFields</spotbugs.omitVisitors>
+
+    <!-- GCU Product -->
+    <gcu.product>Guice</gcu.product>
+
+    <!-- OSGI Headers -->
+    <osgi.import>com.alibaba.druid.pool.*;resolution:=optional,com.zaxxer.hikari.*;resolution:=optional,com.mchange.v2.c3p0.*;resolution:=optional,org.apache.commons.dbcp2.*;resolution:=optional,jakarta.transaction.*;resolution:=optional</osgi.import>
+
+    <!-- Automatic Module Name -->
     <module.name>org.mybatis.guice</module.name>
 
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1706488285</project.build.outputTimestamp>
+
+    <!-- Surefire Setup -->
+    <argLine>-javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/${byte-buddy.version}/byte-buddy-agent-${byte-buddy.version}.jar</argLine>
   </properties>
 
   <dependencies>
@@ -218,13 +236,26 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>5.10.0</version>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>5.10.0</version>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>${byte-buddy.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy-agent</artifactId>
+      <version>${byte-buddy.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -238,19 +269,19 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>2.0.11</version>
+      <version>${slf4j.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.11</version>
+      <version>${slf4j.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>2.0.11</version>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -263,19 +294,19 @@
     <dependency>
       <groupId>io.agroal</groupId>
       <artifactId>agroal-api</artifactId>
-      <version>2.2</version>
+      <version>${agroal.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.agroal</groupId>
       <artifactId>agroal-pool</artifactId>
-      <version>2.2</version>
+      <version>${agroal.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.agroal</groupId>
       <artifactId>agroal-narayana</artifactId>
-      <version>2.2</version>
+      <version>${agroal.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -327,14 +358,14 @@
     <dependency>
       <groupId>io.dropwizard.metrics</groupId>
       <artifactId>metrics-core</artifactId>
-      <version>4.2.25</version>
+      <version>${metrics.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>io.dropwizard.metrics</groupId>
       <artifactId>metrics-healthchecks</artifactId>
-      <version>4.2.25</version>
+      <version>${metrics.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
