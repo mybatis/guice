@@ -92,7 +92,7 @@
     <java.release.version>11</java.release.version>
 
     <!-- Versions -->
-    <agroal.version>2.2</agroal.version>
+    <agroal.version>2.3</agroal.version>
     <annotation-api.version>2.1.1</annotation-api.version>
     <byte-buddy.version>1.14.12</byte-buddy.version>
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
