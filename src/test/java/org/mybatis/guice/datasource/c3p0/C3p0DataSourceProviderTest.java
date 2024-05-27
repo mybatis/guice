@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -65,7 +65,6 @@ class C3p0DataSourceProviderTest {
     final boolean testConnectionOnCheckin = true;
     final boolean testConnectionOnCheckout = true;
     final int unreturnedConnectionTimeout = 160;
-    final boolean usesTraditionalReflectiveProxies = true;
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -98,8 +97,6 @@ class C3p0DataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("c3p0.testConnectionOnCheckin")).to(testConnectionOnCheckin);
         bindConstant().annotatedWith(Names.named("c3p0.testConnectionOnCheckout")).to(testConnectionOnCheckout);
         bindConstant().annotatedWith(Names.named("c3p0.unreturnedConnectionTimeout")).to(unreturnedConnectionTimeout);
-        bindConstant().annotatedWith(Names.named("c3p0.usesTraditionalReflectiveProxies"))
-            .to(usesTraditionalReflectiveProxies);
       }
     });
     C3p0DataSourceProvider provider = injector.getInstance(C3p0DataSourceProvider.class);
@@ -134,7 +131,6 @@ class C3p0DataSourceProviderTest {
     assertEquals(testConnectionOnCheckin, dataSource.isTestConnectionOnCheckin());
     assertEquals(testConnectionOnCheckout, dataSource.isTestConnectionOnCheckout());
     assertEquals(unreturnedConnectionTimeout, dataSource.getUnreturnedConnectionTimeout());
-    assertEquals(usesTraditionalReflectiveProxies, dataSource.isUsesTraditionalReflectiveProxies());
   }
 
   @Test
@@ -167,7 +163,6 @@ class C3p0DataSourceProviderTest {
     final boolean testConnectionOnCheckin = false;
     final boolean testConnectionOnCheckout = false;
     final int unreturnedConnectionTimeout = 161;
-    final boolean usesTraditionalReflectiveProxies = false;
     Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -200,8 +195,6 @@ class C3p0DataSourceProviderTest {
         bindConstant().annotatedWith(Names.named("c3p0.testConnectionOnCheckin")).to(testConnectionOnCheckin);
         bindConstant().annotatedWith(Names.named("c3p0.testConnectionOnCheckout")).to(testConnectionOnCheckout);
         bindConstant().annotatedWith(Names.named("c3p0.unreturnedConnectionTimeout")).to(unreturnedConnectionTimeout);
-        bindConstant().annotatedWith(Names.named("c3p0.usesTraditionalReflectiveProxies"))
-            .to(usesTraditionalReflectiveProxies);
       }
     });
     C3p0DataSourceProvider provider = injector.getInstance(C3p0DataSourceProvider.class);
@@ -236,7 +229,6 @@ class C3p0DataSourceProviderTest {
     assertEquals(testConnectionOnCheckin, dataSource.isTestConnectionOnCheckin());
     assertEquals(testConnectionOnCheckout, dataSource.isTestConnectionOnCheckout());
     assertEquals(unreturnedConnectionTimeout, dataSource.getUnreturnedConnectionTimeout());
-    assertEquals(usesTraditionalReflectiveProxies, dataSource.isUsesTraditionalReflectiveProxies());
   }
 
   @Test

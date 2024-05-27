@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -369,18 +369,6 @@ public final class C3p0DataSourceProvider implements Provider<DataSource> {
   public void setUnreturnedConnectionTimeout(
       @Named("c3p0.unreturnedConnectionTimeout") final int unreturnedConnectionTimeout) {
     dataSource.setUnreturnedConnectionTimeout(unreturnedConnectionTimeout);
-  }
-
-  /**
-   * Sets the uses traditional reflective proxies.
-   *
-   * @param usesTraditionalReflectiveProxies
-   *          the new uses traditional reflective proxies
-   */
-  @com.google.inject.Inject(optional = true)
-  public void setUsesTraditionalReflectiveProxies(
-      @Named("c3p0.usesTraditionalReflectiveProxies") final boolean usesTraditionalReflectiveProxies) {
-    dataSource.setUsesTraditionalReflectiveProxies(usesTraditionalReflectiveProxies);
   }
 
   @Override
