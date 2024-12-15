@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2022 the original author or authors.
+ *    Copyright 2009-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -104,7 +104,6 @@ class ConfigurationProviderTest {
     assertEquals(0, configuration.getInterceptors().size());
     assertFalse(configuration.isLazyLoadingEnabled());
     assertTrue(configuration.isAggressiveLazyLoading());
-    assertTrue(configuration.isMultipleResultSetsEnabled());
     assertFalse(configuration.isUseGeneratedKeys());
     assertTrue(configuration.isUseColumnLabel());
     assertTrue(configuration.isCacheEnabled());
@@ -130,7 +129,6 @@ class ConfigurationProviderTest {
         bind(DataSource.class).toInstance(dataSource);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.lazyLoadingEnabled")).to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.aggressiveLazyLoading")).to(false);
-        bindConstant().annotatedWith(Names.named("mybatis.configuration.multipleResultSetsEnabled")).to(false);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.useGeneratedKeys")).to(true);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.useColumnLabel")).to(false);
         bindConstant().annotatedWith(Names.named("mybatis.configuration.cacheEnabled")).to(false);
@@ -183,7 +181,6 @@ class ConfigurationProviderTest {
     assertEquals(databaseId, configuration.getDatabaseId());
     assertTrue(configuration.isLazyLoadingEnabled());
     assertFalse(configuration.isAggressiveLazyLoading());
-    assertFalse(configuration.isMultipleResultSetsEnabled());
     assertTrue(configuration.isUseGeneratedKeys());
     assertFalse(configuration.isUseColumnLabel());
     assertFalse(configuration.isCacheEnabled());
