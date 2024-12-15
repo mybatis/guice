@@ -160,6 +160,8 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
   /**
    * Multiple result sets enabled.
    *
+   * @deprecated this option has no effect
+   *
    * @param multipleResultSetsEnabled
    *          the multiple result sets enabled
    */

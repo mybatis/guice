@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package org.mybatis.guice.configuration;
 
 import com.google.inject.ProvisionException;
+
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import jakarta.inject.Named;
 import jakarta.inject.Provider;
@@ -34,8 +36,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.configuration.settings.ConfigurationSetting;
 import org.mybatis.guice.configuration.settings.MapperConfigurationSetting;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * Provides the myBatis Configuration.
@@ -56,6 +56,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
   @Named("mybatis.configuration.aggressiveLazyLoading")
   private boolean aggressiveLazyLoading = true;
 
+  @Deprecated
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.multipleResultSetsEnabled")
   private boolean multipleResultSetsEnabled = true;
@@ -163,7 +164,6 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
     final Configuration configuration = newConfiguration(environment);
     configuration.setLazyLoadingEnabled(lazyLoadingEnabled);
     configuration.setAggressiveLazyLoading(aggressiveLazyLoading);
-    configuration.setMultipleResultSetsEnabled(multipleResultSetsEnabled);
     configuration.setUseGeneratedKeys(useGeneratedKeys);
     configuration.setUseColumnLabel(useColumnLabel);
     configuration.setCacheEnabled(cacheEnabled);
