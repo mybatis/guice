@@ -94,7 +94,7 @@
     <!-- Versions -->
     <agroal.version>2.2</agroal.version>
     <annotation-api.version>3.0.0</annotation-api.version>
-    <byte-buddy.version>1.17.0</byte-buddy.version>
+    <byte-buddy.version>1.17.1</byte-buddy.version>
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>
     <derby.version>10.17.1.0</derby.version>
     <ejb-api.version>4.0.1</ejb-api.version>
