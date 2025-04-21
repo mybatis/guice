@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
-import org.apache.ibatis.session.Configuration;
 
 public class ObjectWrapperFactoryConfigurationSetting implements Provider<ConfigurationSetting> {
 
@@ -40,11 +39,6 @@ public class ObjectWrapperFactoryConfigurationSetting implements Provider<Config
   @Override
   public ConfigurationSetting get() {
     final ObjectWrapperFactory objectWrapperFactory = injector.getInstance(objectWrapperFactoryType);
-    return new ConfigurationSetting() {
-      @Override
-      public void applyConfigurationSetting(Configuration configuration) {
-        configuration.setObjectWrapperFactory(objectWrapperFactory);
-      }
-    };
+    return configuration -> configuration.setObjectWrapperFactory(objectWrapperFactory);
   }
 }

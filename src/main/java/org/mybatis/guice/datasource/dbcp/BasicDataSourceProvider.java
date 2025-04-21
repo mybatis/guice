@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Provider;
 
+import java.time.Duration;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -205,7 +206,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
    */
   @com.google.inject.Inject(optional = true)
   public void setMaxWaitMillis(@Named("DBCP.maxWaitMillis") final long maxWaitMillis) {
-    dataSource.setMaxWaitMillis(maxWaitMillis);
+    dataSource.setMaxWait(Duration.ofMillis(maxWaitMillis));
   }
 
   /**
@@ -217,7 +218,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   @com.google.inject.Inject(optional = true)
   public void setMinEvictableIdleTimeMillis(
       @Named("DBCP.minEvictableIdleTimeMillis") final long minEvictableIdleTimeMillis) {
-    dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+    dataSource.setMinEvictableIdle(Duration.ofMillis(minEvictableIdleTimeMillis));
   }
 
   /**
@@ -295,7 +296,7 @@ public final class BasicDataSourceProvider implements Provider<DataSource> {
   @com.google.inject.Inject(optional = true)
   public void setTimeBetweenEvictionRunsMillis(
       @Named("DBCP.timeBetweenEvictionRunsMillis") int timeBetweenEvictionRunsMillis) {
-    dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+    dataSource.setDurationBetweenEvictionRuns(Duration.ofMillis(timeBetweenEvictionRunsMillis));
   }
 
   /**

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ public class Utils {
 
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
     TransactionSynchronizationRegistry transactionSynchronizationRegistry = new com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
-    // intitialization of recovery manager
+    // Initialization of recovery manager
     RecoveryManager recoveryManager = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
     recoveryManager.initialize();
 

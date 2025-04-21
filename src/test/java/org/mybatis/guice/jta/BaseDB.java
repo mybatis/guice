@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -58,30 +58,26 @@ public class BaseDB {
   public static DataSource createLocalDataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    DataSource recoverableDataSource = AgroalDataSource
-        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
-            .connectionFactoryConfiguration(cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER))
-                .credential(new SimplePassword(PASSWORD)))
-            .transactionIntegration(
-                new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
-
-    return recoverableDataSource;
+    return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
+        .maxSize(10)
+        .connectionFactoryConfiguration(
+            cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
+        .transactionIntegration(
+            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
   }
 
   public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
-    Class.forName(className).newInstance();
+    Class.forName(className).getConstructor().newInstance();
 
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    DataSource recoverableDataSource = AgroalDataSource
-        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
-            .connectionFactoryConfiguration(cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER))
-                .credential(new SimplePassword(PASSWORD)))
-            .transactionIntegration(
-                new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
-
-    return recoverableDataSource;
+    return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
+        .maxSize(10)
+        .connectionFactoryConfiguration(
+            cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
+        .transactionIntegration(
+            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
   }
 
   public static void dropTable(String dataSourceURL) throws Exception {
@@ -93,36 +89,32 @@ public class BaseDB {
   }
 
   public static void insertRow(Connection con, int id, String name) throws Exception {
-    PreparedStatement stmt = con.prepareStatement(QUERY_INSERT);
-    stmt.setInt(1, id);
-    stmt.setString(2, name);
-    stmt.executeUpdate();
-    stmt.close();
+    try (PreparedStatement stmt = con.prepareStatement(QUERY_INSERT)) {
+      stmt.setInt(1, id);
+      stmt.setString(2, name);
+      stmt.executeUpdate();
+    }
   }
 
   public static List<Integer> readRows(String dataSourceURL, String dataSourceName) throws Exception {
     List<Integer> list = new ArrayList<Integer>(2);
-    Connection connection = DriverManager.getConnection(dataSourceURL, USER, PASSWORD);
-    PreparedStatement stmt = connection.prepareStatement(QUERY_SELECT);
-    ResultSet rs = stmt.executeQuery();
+    try (Connection connection = DriverManager.getConnection(dataSourceURL, USER, PASSWORD);
+        PreparedStatement stmt = connection.prepareStatement(QUERY_SELECT); ResultSet rs = stmt.executeQuery()) {
 
-    while (rs.next()) {
-      int id = rs.getInt(1);
-      list.add(id);
-      LOGGER.info("read {} from {}", id, dataSourceName);
+      while (rs.next()) {
+        int id = rs.getInt(1);
+        list.add(id);
+        LOGGER.info("read {} from {}", id, dataSourceName);
+      }
     }
-    rs.close();
-    stmt.close();
-    connection.close();
 
     return list;
   }
 
   private static void executeScript(String dataSourceName, String query) throws Exception {
-    Connection connection = DriverManager.getConnection(dataSourceName, USER, PASSWORD);
-    Statement stmt = connection.createStatement();
-    stmt.execute(query);
-    stmt.close();
-    connection.close();
+    try (Connection connection = DriverManager.getConnection(dataSourceName, USER, PASSWORD);
+        Statement stmt = connection.createStatement()) {
+      stmt.execute(query);
+    }
   }
 }

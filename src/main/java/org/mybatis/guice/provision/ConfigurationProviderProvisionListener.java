@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,35 +44,24 @@ public final class ConfigurationProviderProvisionListener implements ProvisionLi
     @SuppressWarnings("unchecked")
     final MembersInjector<P> membersInjector = (MembersInjector<P>) binder
         .getMembersInjector(configurationSettingProvider.getClass());
-    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
-      @Override
-      public void perform(ConfigurationSettingListener configurationSettingListener) {
-        membersInjector.injectMembers(configurationSettingProvider);
-        configurationSettingListener.addConfigurationSetting(configurationSettingProvider.get());
-      }
+    return new ConfigurationProviderProvisionListener(configurationSettingListener -> {
+      membersInjector.injectMembers(configurationSettingProvider);
+      configurationSettingListener.addConfigurationSetting(configurationSettingProvider.get());
     });
   }
 
   public static ConfigurationProviderProvisionListener create(final ConfigurationSetting configurationSetting) {
-    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
-      @Override
-      public void perform(ConfigurationSettingListener configurationSettingListener) {
-        configurationSettingListener.addConfigurationSetting(configurationSetting);
-      }
-    });
+    return new ConfigurationProviderProvisionListener(
+        configurationSettingListener -> configurationSettingListener.addConfigurationSetting(configurationSetting));
   }
 
   public static ConfigurationProviderProvisionListener create(
       final MapperConfigurationSetting mapperConfigurationSetting) {
-    return new ConfigurationProviderProvisionListener(new ConfigurationProviderProvisionAction() {
-      @Override
-      public void perform(ConfigurationSettingListener configurationSettingListener) {
-        configurationSettingListener.addMapperConfigurationSetting(mapperConfigurationSetting);
-      }
-    });
+    return new ConfigurationProviderProvisionListener(configurationSettingListener -> configurationSettingListener
+        .addMapperConfigurationSetting(mapperConfigurationSetting));
   }
 
-  private static interface ConfigurationProviderProvisionAction {
+  private interface ConfigurationProviderProvisionAction {
     void perform(ConfigurationSettingListener configurationSettingListener);
   }
 }
