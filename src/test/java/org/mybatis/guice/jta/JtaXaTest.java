@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ class JtaXaTest {
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").getConstructor().newInstance();
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
@@ -67,9 +67,9 @@ class JtaXaTest {
   JtaProcess process;
 
   @BeforeEach
-  void setup(TestInfo testInfo) throws Exception {
+  void setup(TestInfo testInfo) {
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing: {}({})", testInfo.getTestMethod(), getClass().getName());
     LOGGER.info("********************************************************************************");
     LogFactory.useSlf4jLogging();
 
@@ -94,7 +94,7 @@ class JtaXaTest {
         });
 
         expose(JtaService1Impl.class);
-      };
+      }
     }, new PrivateModule() {
 
       @Override
@@ -117,7 +117,7 @@ class JtaXaTest {
 
         expose(JtaService2Impl.class);
         expose(JtaProcess.class);
-      };
+      }
     });
 
     injector.injectMembers(this);
@@ -130,7 +130,7 @@ class JtaXaTest {
     BaseDB.clearTable(BaseDB.URL_DB2);
 
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing done: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing done: {}({})", testInfo.getTestMethod(), getClass().getName());
     LOGGER.info("********************************************************************************");
   }
 
@@ -166,6 +166,7 @@ class JtaXaTest {
     try {
       process.requiredAndRollback(1);
     } catch (JtaRollbackException e) {
+      // Do nothing
     }
     checkCountRows(testInfo, 0);
   }
@@ -180,6 +181,7 @@ class JtaXaTest {
     try {
       process.requiresNewAndRollback(1);
     } catch (JtaRollbackException e) {
+      // Do Nothing
     }
     checkCountRows(testInfo, 0);
   }
@@ -216,6 +218,7 @@ class JtaXaTest {
     try {
       process.rollbackInternalRequiresNew();
     } catch (JtaRollbackException e) {
+      // Do Nothing
     }
     checkCountRowsAndIndex(testInfo, 1, 1);
   }
@@ -230,6 +233,7 @@ class JtaXaTest {
     try {
       process.rollbackInternalRequiresNew2();
     } catch (JtaRollbackException e) {
+      // Do Nothing
     }
     checkCountRowsAndIndex(testInfo, 1, 2);
   }
@@ -244,6 +248,7 @@ class JtaXaTest {
     try {
       process.rollbackExternalRequired();
     } catch (JtaRollbackException e) {
+      // Do Nothing
     }
     checkCountRowsAndIndex(testInfo, 1, 1);
   }
@@ -258,14 +263,14 @@ class JtaXaTest {
     try {
       process.rollbackExternalRequired2();
     } catch (JtaRollbackException e) {
+      // Do Nothing
     }
     checkCountRowsAndIndex(testInfo, 1, 2);
   }
 
   private void checkCountRows(TestInfo testInfo, int count) throws Exception {
     String name = testInfo.getDisplayName();
-    List<Integer> readRows;
-    readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
+    List<Integer> readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
     LOGGER.info("db1 check count rows {}:{}", count, readRows.size());
 
     assertEquals(count, readRows.size(), name + " db1 count rows");
@@ -278,8 +283,7 @@ class JtaXaTest {
 
   private void checkCountRowsAndIndex(TestInfo testInfo, int count, int index) throws Exception {
     String name = testInfo.getDisplayName();
-    List<Integer> readRows;
-    readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
+    List<Integer> readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
 
     LOGGER.info("{} db1 check count rows {}:{}", new Object[] { name, count, readRows.size() });
     LOGGER.info("{} db1 check row id {}:{}", new Object[] { name, index, readRows.get(0).intValue() });

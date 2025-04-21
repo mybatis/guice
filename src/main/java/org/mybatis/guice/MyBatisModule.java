@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2024 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -165,6 +165,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    * @param multipleResultSetsEnabled
    *          the multiple result sets enabled
    */
+  @Deprecated
   protected final void multipleResultSetsEnabled(boolean multipleResultSetsEnabled) {
     bindConfigurationSetting(new MultipleResultSetsEnabledConfigurationSetting(multipleResultSetsEnabled));
   }
@@ -435,16 +436,11 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
    * @return the alias binder
    */
   protected final AliasBinder addAlias(final String alias) {
-    checkArgument(alias != null && alias.length() > 0, "Empty or null 'alias' is not valid");
+    checkArgument(alias != null && !alias.isEmpty(), "Empty or null 'alias' is not valid");
 
-    return new AliasBinder() {
-
-      @Override
-      public void to(final Class<?> clazz) {
-        checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
-        bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));
-      }
-
+    return clazz -> {
+      checkArgument(clazz != null, "Null type not valid for alias '%s'", alias);
+      bindConfigurationSetting(new AliasConfigurationSetting(alias, clazz));
     };
   }
 
@@ -559,7 +555,7 @@ public abstract class MyBatisModule extends AbstractMyBatisModule {
 
       final <TH extends TypeHandler<? extends T>> void bindProvidedTypeHandler(TypeLiteral<TH> typeHandlerType,
           Class<T> type) {
-        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<TH, T>(typeHandlerType, type)))
+        bind(typeHandlerType).toProvider(guicify(new TypeHandlerProvider<>(typeHandlerType, type)))
             .in(Scopes.SINGLETON);
       }
     };

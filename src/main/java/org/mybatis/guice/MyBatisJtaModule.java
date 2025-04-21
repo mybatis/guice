@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,10 +41,10 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
   private TransactionManager transactionManager;
   private Class<? extends Provider<? extends XAResource>> xaResourceProvider = XASqlSessionManagerProvider.class;
 
-  public MyBatisJtaModule() {
+  protected MyBatisJtaModule() {
   }
 
-  public MyBatisJtaModule(TransactionManager transactionManager) {
+  protected MyBatisJtaModule(TransactionManager transactionManager) {
     this.transactionManager = transactionManager;
   }
 
@@ -72,7 +72,7 @@ public abstract class MyBatisJtaModule extends MyBatisModule {
       bindInterceptor(any(), not(DECLARED_BY_OBJECT).and(annotatedWith(Transactional.class)), interceptorTx,
           interceptor);
       // Intercept classes annotated with Transactional, but avoid "double"
-      // interception when a mathod is also annotated inside an annotated
+      // interception when a method is also annotated inside an annotated
       // class.
       bindInterceptor(annotatedWith(Transactional.class),
           not(DECLARED_BY_OBJECT).and(not(annotatedWith(Transactional.class))), interceptorTx, interceptor);

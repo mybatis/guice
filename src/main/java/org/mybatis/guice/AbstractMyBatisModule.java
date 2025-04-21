@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import static org.mybatis.guice.Preconditions.checkArgument;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
-import com.google.inject.matcher.AbstractMatcher;
+import com.google.inject.matcher.Matcher;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -40,19 +40,9 @@ import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
 
 abstract class AbstractMyBatisModule extends AbstractModule {
 
-  protected static final AbstractMatcher<Method> DECLARED_BY_OBJECT = new AbstractMatcher<Method>() {
-    @Override
-    public boolean matches(Method method) {
-      return method.getDeclaringClass() == Object.class;
-    }
-  };
+  protected static final Matcher<Method> DECLARED_BY_OBJECT = method -> method.getDeclaringClass() == Object.class;
 
-  protected static final AbstractMatcher<Method> SYNTHETIC = new AbstractMatcher<Method>() {
-    @Override
-    public boolean matches(Method method) {
-      return method.isSynthetic();
-    }
-  };
+  protected static final Matcher<Method> SYNTHETIC = Method::isSynthetic;
 
   private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
@@ -83,7 +73,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
   protected static Set<Class<?>> getClasses(ResolverUtil.Test test, String packageName) {
     checkArgument(test != null, "Parameter 'test' must not be null");
     checkArgument(packageName != null, "Parameter 'packageName' must not be null");
-    return new ResolverUtil<Object>().find(test, packageName).getClasses();
+    return new ResolverUtil<>().find(test, packageName).getClasses();
   }
 
   @Override
@@ -129,7 +119,7 @@ abstract class AbstractMyBatisModule extends AbstractModule {
    *          the mapper type
    */
   final <T> void bindMapper(Class<T> mapperType) {
-    bind(mapperType).toProvider(guicify(new MapperProvider<T>(mapperType))).in(Scopes.SINGLETON);
+    bind(mapperType).toProvider(guicify(new MapperProvider<>(mapperType))).in(Scopes.SINGLETON);
   }
 
   /**

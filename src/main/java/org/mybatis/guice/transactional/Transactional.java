@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -191,29 +191,5 @@ public @interface Transactional {
      */
     NEVER
   }
-
-  /**
-   * The rollbackOn element can be set to indicate exceptions that must cause the interceptor to mark the transaction
-   * for rollback. Conversely, the dontRollbackOn element can be set to indicate exceptions that must not cause the
-   * interceptor to mark the transaction for rollback. When a class is specified for either of these elements, the
-   * designated behavior applies to subclasses of that class as well. If both elements are specified, dontRollbackOn
-   * takes precedence.
-   *
-   * @return Class[] of Exceptions
-   */
-  // @Nonbinding
-  // public Class[] rollbackOn() default {};
-
-  /**
-   * The dontRollbackOn element can be set to indicate exceptions that must not cause the interceptor to mark the
-   * transaction for rollback. Conversely, the rollbackOn element can be set to indicate exceptions that must cause the
-   * interceptor to mark the transaction for rollback. When a class is specified for either of these elements, the
-   * designated behavior applies to subclasses of that class as well. If both elements are specified, dontRollbackOn
-   * takes precedence.
-   *
-   * @return Class[] of Exceptions
-   */
-  // @Nonbinding
-  // public Class[] dontRollbackOn() default {};
 
 }

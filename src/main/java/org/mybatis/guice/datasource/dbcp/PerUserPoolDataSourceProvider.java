@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.mybatis.guice.datasource.dbcp;
 import jakarta.inject.Named;
 import jakarta.inject.Provider;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -71,13 +72,13 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
 
   @com.google.inject.Inject(optional = true)
   public void setLoginTimeout(@Named("JDBC.loginTimeout") int loginTimeout) {
-    dataSource.setLoginTimeout(loginTimeout);
+    dataSource.setLoginTimeout(Duration.ofSeconds(loginTimeout));
   }
 
   @com.google.inject.Inject(optional = true)
   public void setDefaultMinEvictableIdleTimeMillis(
       @Named("DBCP.defaultMinEvictableIdleTimeMillis") int defaultMinEvictableIdleTimeMillis) {
-    dataSource.setDefaultMinEvictableIdleTimeMillis(defaultMinEvictableIdleTimeMillis);
+    dataSource.setDefaultMinEvictableIdle(Duration.ofMillis(defaultMinEvictableIdleTimeMillis));
   }
 
   @com.google.inject.Inject(optional = true)
@@ -109,7 +110,7 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   @com.google.inject.Inject(optional = true)
   public void setDefaultTimeBetweenEvictionRunsMillis(
       @Named("DBCP.defaultTimeBetweenEvictionRunsMillis") int defaultTimeBetweenEvictionRunsMillis) {
-    dataSource.setDefaultTimeBetweenEvictionRunsMillis(defaultTimeBetweenEvictionRunsMillis);
+    dataSource.setDefaultDurationBetweenEvictionRuns(Duration.ofMillis(defaultTimeBetweenEvictionRunsMillis));
   }
 
   @com.google.inject.Inject(optional = true)
@@ -129,7 +130,7 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
 
   @com.google.inject.Inject(optional = true)
   public void setDefaultMaxWaitMillis(@Named("DBCP.defaultMaxWaitMillis") int defaultMaxWaitMillis) {
-    dataSource.setDefaultMaxWaitMillis(defaultMaxWaitMillis);
+    dataSource.setDefaultMaxWait(Duration.ofMillis(defaultMaxWaitMillis));
   }
 
   /**
@@ -207,7 +208,7 @@ public final class PerUserPoolDataSourceProvider implements Provider<DataSource>
   @com.google.inject.Inject(optional = true)
   public void setPerUserMaxWaitMillis(@PerUserMaxWaitMillis Map<String, Long> perUserMaxWaitMillis) {
     for (Entry<String, Long> entry : perUserMaxWaitMillis.entrySet()) {
-      dataSource.setPerUserMaxWaitMillis(entry.getKey(), entry.getValue());
+      dataSource.setPerUserMaxWait(entry.getKey(), Duration.ofMillis(entry.getValue()));
     }
   }
 
