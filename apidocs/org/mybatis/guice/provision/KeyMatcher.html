@@ -87,9 +87,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class KeyMatcher" class="title">Class KeyMatcher&lt;T&gt;</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">com.google.inject.matcher.AbstractMatcher&lt;com.google.inject.Binding&lt;?&gt;&gt;
 <div class="inheritance">org.mybatis.guice.provision.KeyMatcher&lt;T&gt;</div>
-</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -98,7 +96,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">KeyMatcher&lt;T&gt;</span>
-<span class="extends-implements">extends com.google.inject.matcher.AbstractMatcher&lt;com.google.inject.Binding&lt;?&gt;&gt;</span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements com.google.inject.matcher.Matcher&lt;com.google.inject.Binding&lt;?&gt;&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -123,11 +122,11 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.google.inject.matcher.AbstractMatcher">Methods inherited from class&nbsp;com.google.inject.matcher.AbstractMatcher</h3>
-<code>and, or</code></div>
-<div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.google.inject.matcher.Matcher">Methods inherited from interface&nbsp;com.google.inject.matcher.Matcher</h3>
+<code>and, or</code></div>
 </section>
 </li>
 </ul>
@@ -143,6 +142,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="matches(com.google.inject.Binding)">
 <h3>matches</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">matches</span><wbr><span class="parameters">(com.google.inject.Binding&lt;?&gt;&nbsp;t)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>matches</code>&nbsp;in interface&nbsp;<code>com.google.inject.matcher.Matcher&lt;<a href="KeyMatcher.html" title="type parameter in KeyMatcher">T</a>&gt;</code></dd>
+</dl>
 </section>
 </li>
 <li>
