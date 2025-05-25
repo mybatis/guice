@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2023 the original author or authors.
+       Copyright 2009-2025 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
     <subsection name="Basic Data Source Provider">
         <p>
             The <code>org.mybatis.guice.datasource.dbcp.BasicDataSourceProvider</code>
-            is the provider that builds the <code>org.apache.commons.dbcp.BasicDataSource</code>
+            is the provider that builds the <code>org.apache.commons.dbcp2.BasicDataSource</code>
             and helps users to configure it.
         </p>
         <p>
@@ -179,7 +179,7 @@
     <subsection name="Shared Pool Data Source">
         <p>
             The <code>org.mybatis.guice.datasource.dbcp.SharedPoolDataSourceProvider</code>
-            is the provider that builds the <code>org.apache.commons.dbcp.datasources.SharedPoolDataSource</code>
+            is the provider that builds the <code>org.apache.commons.dbcp2.datasources.SharedPoolDataSource</code>
             and helps users to configure it.
         </p>
         <p>
@@ -301,7 +301,7 @@
     <subsection name="Per User Pool Data Source">
         <p>
             The <code>org.mybatis.guice.datasource.dbcp.PerUserPoolDataSourceProvider</code>
-            is the provider that builds the <code>org.apache.commons.dbcp.datasources.PerUserPoolDataSource</code>
+            is the provider that builds the <code>org.apache.commons.dbcp2.datasources.PerUserPoolDataSource</code>
             and helps users to configure it.
         </p>
         <p>
@@ -518,7 +518,7 @@ Injector injector = Guice.createInjector(
     <subsection name="Connection Pool Data Source driver adapter">
         <p>
             The <code>org.mybatis.guice.datasource.dbcp.DriverAdapterCPDSProvider</code>
-            provides the <code>org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS</code>
+            provides the <code>org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS</code>
             adapter for jdbc drivers that do not include an implementation of
             <code>javax.sql.ConnectionPoolDataSource</code>.
         </p>
