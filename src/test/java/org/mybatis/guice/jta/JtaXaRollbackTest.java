@@ -42,12 +42,12 @@ class JtaXaRollbackTest {
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").getDeclaredConstructor().newInstance();
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
     String className = "org.apache.derby.jdbc.EmbeddedDriver";
-    Class.forName(className).newInstance();
+    Class.forName(className).getDeclaredConstructor().newInstance();
 
     dataSource = BaseDB.createXADataSource(BaseDB.URL_DB1, manager);
   }

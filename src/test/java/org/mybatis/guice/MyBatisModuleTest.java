@@ -534,9 +534,7 @@ class MyBatisModuleTest {
       }
     });
 
-    injector.getInstance(Configuration.class);
-
-    // Success.
+    Assertions.assertNotNull(injector.getInstance(Configuration.class));
   }
 
   @Test

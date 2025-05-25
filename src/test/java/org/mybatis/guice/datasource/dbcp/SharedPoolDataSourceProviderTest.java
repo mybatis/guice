@@ -91,18 +91,18 @@ class SharedPoolDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(loginTimeout, dataSource.getLoginTimeout());
-    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(loginTimeout, dataSource.getLoginTimeoutDuration().getSeconds());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleDuration().toMillis());
     assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
     assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
     assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
     assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
-    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
     assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
     assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWait().toMillis());
   }
 
   @Test
@@ -157,18 +157,18 @@ class SharedPoolDataSourceProviderTest {
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(loginTimeout, dataSource.getLoginTimeout());
-    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(loginTimeout, dataSource.getLoginTimeoutDuration().getSeconds());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleDuration().toMillis());
     assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
     assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
     assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
     assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
-    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
     assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
     assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWait().toMillis());
   }
 
   @Test

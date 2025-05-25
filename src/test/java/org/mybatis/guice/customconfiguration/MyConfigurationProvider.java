@@ -23,11 +23,6 @@ import org.mybatis.guice.configuration.ConfigurationProvider;
 
 public class MyConfigurationProvider extends ConfigurationProvider {
 
-  /**
-   * @param environment
-   *
-   * @since 1.0.1
-   */
   @Inject
   public MyConfigurationProvider(Environment environment) {
     super(environment);

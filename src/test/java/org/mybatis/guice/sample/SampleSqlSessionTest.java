@@ -76,7 +76,7 @@ class SampleSqlSessionTest {
     runner.setStopOnError(true);
     runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-schema.sql"));
     runner.runScript(getResourceAsReader("org/mybatis/guice/sample/db/database-test-data.sql"));
-    runner.closeConnection();
+    dataSource.getConnection().close();
 
     this.fooService = this.injector.getInstance(FooService.class);
   }

@@ -89,21 +89,21 @@ class PerUserPoolDataSourceProviderTest {
 
     assertEquals(connectionPoolDataSource, dataSource.getConnectionPoolDataSource());
     assertEquals(autoCommit, dataSource.isDefaultAutoCommit());
-    assertEquals(loginTimeout, dataSource.getLoginTimeout());
+    assertEquals(loginTimeout, dataSource.getLoginTimeoutDuration().getSeconds());
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleDuration().toMillis());
     assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
     assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
     assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
     assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
-    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
     assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
     assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWait().toMillis());
   }
 
   @Test
@@ -155,21 +155,21 @@ class PerUserPoolDataSourceProviderTest {
 
     assertEquals(connectionPoolDataSource, dataSource.getConnectionPoolDataSource());
     assertEquals(autoCommit, dataSource.isDefaultAutoCommit());
-    assertEquals(loginTimeout, dataSource.getLoginTimeout());
+    assertEquals(loginTimeout, dataSource.getLoginTimeoutDuration().getSeconds());
     assertEquals(defaultReadOnly, dataSource.isDefaultReadOnly());
     assertEquals(defaultTransactionIsolation, dataSource.getDefaultTransactionIsolation());
     assertEquals(description, dataSource.getDescription());
-    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleTimeMillis());
+    assertEquals(defaultMinEvictableIdleTimeMillis, dataSource.getDefaultMinEvictableIdleDuration().toMillis());
     assertEquals(defaultNumTestsPerEvictionRun, dataSource.getDefaultNumTestsPerEvictionRun());
     assertEquals(rollbackAfterValidation, dataSource.isRollbackAfterValidation());
     assertEquals(defaultTestOnBorrow, dataSource.getDefaultTestOnBorrow());
     assertEquals(defaultTestOnReturn, dataSource.getDefaultTestOnReturn());
     assertEquals(defaultTestWhileIdle, dataSource.getDefaultTestWhileIdle());
-    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultTimeBetweenEvictionRunsMillis());
+    assertEquals(defaultTimeBetweenEvictionRunsMillis, dataSource.getDefaultDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
     assertEquals(defaultMaxTotal, dataSource.getDefaultMaxTotal());
     assertEquals(defaultMaxIdle, dataSource.getDefaultMaxIdle());
-    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWaitMillis());
+    assertEquals(defaultMaxWaitMillis, dataSource.getDefaultMaxWait().toMillis());
   }
 
   @Test
@@ -326,7 +326,7 @@ class PerUserPoolDataSourceProviderTest {
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals(50, dataSource.getPerUserMaxWaitMillis("test_user"));
-    assertEquals(60, dataSource.getPerUserMaxWaitMillis("test_user2"));
+    assertEquals(50, dataSource.getPerUserMaxWaitDuration("test_user").toMillis());
+    assertEquals(60, dataSource.getPerUserMaxWaitDuration("test_user2").toMillis());
   }
 }
