@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
 
 /**
- * Provides the Apache commons-dbcp {@code SharedPoolDataSource}.
+ * Provides the Apache commons-dbcp2 {@code SharedPoolDataSource}.
  */
 public final class SharedPoolDataSourceProvider implements Provider<DataSource> {
 

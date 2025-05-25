@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
- * Provides the Apache commons-dbcp {@code BasicDataSource}.
+ * Provides the Apache commons-dbcp2 {@code BasicDataSource}.
  */
 public final class BasicDataSourceProvider implements Provider<DataSource> {
 

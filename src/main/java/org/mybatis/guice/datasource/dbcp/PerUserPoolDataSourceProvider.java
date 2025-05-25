@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.datasources.PerUserPoolDataSource;
 
 /**
- * Provides the Apache commons-dbcp {@code PerUserPoolDataSource}.
+ * Provides the Apache commons-dbcp2 {@code PerUserPoolDataSource}.
  */
 public final class PerUserPoolDataSourceProvider implements Provider<DataSource> {
 
