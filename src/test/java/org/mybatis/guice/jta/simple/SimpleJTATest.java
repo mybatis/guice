@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -255,29 +255,37 @@ class SimpleJTATest {
 
   @ApplicationException(rollback = true)
   public static class RollbackException extends Exception {
+    private static final long serialVersionUID = 1L;
   }
 
   public static class InheritedRollbackException extends RollbackException {
+    private static final long serialVersionUID = 1L;
   }
 
   @ApplicationException(rollback = true, inherited = false)
   public static class NonInheritableRollbackException extends Exception {
+    private static final long serialVersionUID = 1L;
   }
 
   public static class NonInheritedRollbackException extends NonInheritableRollbackException {
+    private static final long serialVersionUID = 1L;
   }
 
   @ApplicationException(rollback = false)
   public static class CommitException extends Exception {
+    private static final long serialVersionUID = 1L;
   }
 
   public static class InheritedCommitException extends CommitException {
+    private static final long serialVersionUID = 1L;
   }
 
   @ApplicationException(rollback = false, inherited = false)
   public static class NonInheritableCommitException extends Exception {
+    private static final long serialVersionUID = 1L;
   }
 
   public static class NonInheritedCommitException extends NonInheritableCommitException {
+    private static final long serialVersionUID = 1L;
   }
 }
