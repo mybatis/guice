@@ -109,8 +109,8 @@ class PerUserPoolDataSourceModuleTest {
 
     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 
-    assertEquals(50, dataSource.getPerUserMaxWaitMillis("test_user"));
-    assertEquals(60, dataSource.getPerUserMaxWaitMillis("test_user2"));
+    assertEquals(50, dataSource.getPerUserMaxWaitDuration("test_user").toMillis());
+    assertEquals(60, dataSource.getPerUserMaxWaitDuration("test_user2").toMillis());
   }
 
   public static class PerUserDefaultAutoCommitProvider implements Provider<Map<String, Boolean>> {
