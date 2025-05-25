@@ -384,15 +384,6 @@
 
   <profiles>
     <profile>
-      <id>pre16</id>
-      <activation>
-        <jdk>(,16)</jdk>
-      </activation>
-      <properties>
-        <derby.version>10.15.2.0</derby.version>
-      </properties>
-    </profile>
-    <profile>
       <id>17</id>
       <activation>
         <jdk>[17,)</jdk>
