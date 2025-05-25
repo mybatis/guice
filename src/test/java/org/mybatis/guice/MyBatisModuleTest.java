@@ -1532,6 +1532,7 @@ class MyBatisModuleTest {
 
     @Override
     public void setProperties(Properties p) {
+        // Do Nothing
     }
 
     @Override
