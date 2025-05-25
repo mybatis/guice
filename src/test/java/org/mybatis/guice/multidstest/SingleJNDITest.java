@@ -59,7 +59,7 @@ class SingleJNDITest {
   }
 
   private Injector setupInjector() {
-    Injector injector = Guice.createInjector(new MyBatisModule() {
+    return Guice.createInjector(new MyBatisModule() {
 
       @Override
       protected void initialize() {
@@ -77,7 +77,5 @@ class SingleJNDITest {
         bind(Schema1Service.class);
       }
     });
-
-    return injector;
   }
 }
