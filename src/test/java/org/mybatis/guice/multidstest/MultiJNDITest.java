@@ -87,7 +87,7 @@ class MultiJNDITest {
   }
 
   private Injector setupInjectorWithProvider() {
-    Injector injector = Guice.createInjector(new PrivateModule() {
+    return Guice.createInjector(new PrivateModule() {
       @Override
       protected void configure() {
         install(new MyBatisModule() {
@@ -140,8 +140,6 @@ class MultiJNDITest {
         expose(Schema2Service.class);
       }
     });
-
-    return injector;
   }
 
   /**
@@ -150,7 +148,7 @@ class MultiJNDITest {
    * @return
    */
   private Injector setupInjectorWithProviderType() {
-    Injector injector = Guice.createInjector(new PrivateModule() {
+    return Guice.createInjector(new PrivateModule() {
       @Override
       protected void configure() {
         install(new MyBatisModule() {
@@ -201,7 +199,5 @@ class MultiJNDITest {
         expose(Schema2Service.class);
       }
     });
-
-    return injector;
   }
 }
