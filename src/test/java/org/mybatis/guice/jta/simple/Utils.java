@@ -16,6 +16,7 @@
 package org.mybatis.guice.jta.simple;
 
 import com.arjuna.ats.arjuna.recovery.RecoveryManager;
+import com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple;
 
 import io.agroal.api.AgroalDataSource;
 import io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
@@ -47,9 +48,9 @@ public class Utils {
     InitialContext ic = new InitialContext(properties);
 
     TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    TransactionSynchronizationRegistry transactionSynchronizationRegistry = new com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
+    TransactionSynchronizationRegistry transactionSynchronizationRegistry = new TransactionSynchronizationRegistryImple();
     // Initialization of recovery manager
-    RecoveryManager recoveryManager = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
+    RecoveryManager recoveryManager = RecoveryManager.manager();
     recoveryManager.initialize();
 
     ic.bind("jakarta.transaction.TransactionManager", tm);
