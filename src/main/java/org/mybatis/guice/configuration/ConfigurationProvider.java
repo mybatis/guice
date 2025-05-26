@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2024 the original author or authors.
+ *    Copyright 2009-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.lazyLoadingEnabled")
-  private boolean lazyLoadingEnabled = false;
+  private boolean lazyLoadingEnabled;
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.aggressiveLazyLoading")
@@ -63,7 +63,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.useGeneratedKeys")
-  private boolean useGeneratedKeys = false;
+  private boolean useGeneratedKeys;
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.useColumnLabel")
@@ -83,7 +83,7 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.callSettersOnNulls")
-  private boolean callSettersOnNulls = false;
+  private boolean callSettersOnNulls;
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.defaultStatementTimeout")
@@ -92,11 +92,11 @@ public class ConfigurationProvider implements Provider<Configuration>, Configura
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.mapUnderscoreToCamelCase")
-  private boolean mapUnderscoreToCamelCase = false;
+  private boolean mapUnderscoreToCamelCase;
 
   @com.google.inject.Inject(optional = true)
   @Named("mybatis.configuration.failFast")
-  private boolean failFast = false;
+  private boolean failFast;
 
   @com.google.inject.Inject(optional = true)
   private DatabaseIdProvider databaseIdProvider;
