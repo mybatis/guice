@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/datasource/dbcp/DriverAdapterCPDSProviderTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2025 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -78,10 +78,10 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      assertEquals(description, adapter.getDescription());
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      assertEquals(maxIdle, adapter.getMaxIdle());
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleDuration().toMillis());
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      assertEquals(numTestsPerEvictionRun, adapter.getNumTestsPerEvictionRun());
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      assertEquals(poolPreparedStatements, adapter.isPoolPreparedStatements());
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      assertEquals(timeBetweenEvictionRunsMillis, adapter.getTimeBetweenEvictionRunsMillis());
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      assertEquals(timeBetweenEvictionRunsMillis, adapter.getDurationBetweenEvictionRuns().toMillis());
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>    }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>    @Test
@@ -128,10 +128,10 @@
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>     assertEquals(description, adapter.getDescription());
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>     assertEquals(maxIdle, adapter.getMaxIdle());
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>     assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>     assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>     assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleDuration().toMillis());
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     assertEquals(numTestsPerEvictionRun, adapter.getNumTestsPerEvictionRun());
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     assertEquals(poolPreparedStatements, adapter.isPoolPreparedStatements());
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>     assertEquals(timeBetweenEvictionRunsMillis, adapter.getTimeBetweenEvictionRunsMillis());
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>     assertEquals(timeBetweenEvictionRunsMillis, adapter.getDurationBetweenEvictionRuns().toMillis());
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>   }
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> 
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> TestDriver {

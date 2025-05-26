@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/datasource/dbcp/PerUserPoolDataSourceModuleTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2023 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2025 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -117,8 +117,8 @@
 <a class="jxr_linenumber" name="L109" href="#L109">109</a> 
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>     PerUserPoolDataSource dataSource = (PerUserPoolDataSource) provider.get();
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>     assertEquals(50, dataSource.getPerUserMaxWaitMillis(<span class="jxr_string">"test_user"</span>));
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     assertEquals(60, dataSource.getPerUserMaxWaitMillis(<span class="jxr_string">"test_user2"</span>));
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>     assertEquals(50, dataSource.getPerUserMaxWaitDuration(<span class="jxr_string">"test_user"</span>).toMillis());
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>     assertEquals(60, dataSource.getPerUserMaxWaitDuration(<span class="jxr_string">"test_user2"</span>).toMillis());
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>   }
 <a class="jxr_linenumber" name="L115" href="#L115">115</a> 
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> PerUserDefaultAutoCommitProvider <strong class="jxr_keyword">implements</strong> Provider&lt;Map&lt;String, Boolean&gt;&gt; {

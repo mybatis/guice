@@ -24,63 +24,64 @@
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.guice.jta.simple;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.arjuna.ats.arjuna.recovery.RecoveryManager;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.AgroalDataSource;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.security.NamePrincipal;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.security.SimplePassword;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> io.agroal.narayana.NarayanaTransactionIntegration;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> jakarta.transaction.TransactionManager;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> jakarta.transaction.TransactionSynchronizationRegistry;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> javax.naming.Context;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> javax.naming.InitialContext;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> javax.sql.DataSource;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.mybatis.guice.multidstest.MockInitialContextFactory;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="Utils" href="../../../../../org/mybatis/guice/jta/simple/Utils.html#Utils">Utils</a> {
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>    <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">   * This method sets up a mock JNDI context with a transaction manager and two XA datasources</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">   *</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">   * @throws Exception</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">   */</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupMockJNDI() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      Properties properties = <strong class="jxr_keyword">new</strong> Properties();
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.<strong class="jxr_keyword">class</strong>.getName());
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      InitialContext ic = <strong class="jxr_keyword">new</strong> InitialContext(properties);
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      TransactionSynchronizationRegistry transactionSynchronizationRegistry = <strong class="jxr_keyword">new</strong> com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple();
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <em class="jxr_comment">// Initialization of recovery manager</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      RecoveryManager recoveryManager = com.arjuna.ats.arjuna.recovery.RecoveryManager.manager();
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      recoveryManager.initialize();
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      ic.bind(<span class="jxr_string">"jakarta.transaction.TransactionManager"</span>, tm);
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      DataSource ads1 = AgroalDataSource
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema1"</span>)
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>              .transactionIntegration(
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds1"</span>, false))));
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS1"</span>, ads1);
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      DataSource ads2 = AgroalDataSource
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema2"</span>)
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>              .transactionIntegration(
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds2"</span>, false))));
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS2"</span>, ads2);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>    }
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  }
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.AgroalDataSource;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.configuration.supplier.AgroalDataSourceConfigurationSupplier;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.security.NamePrincipal;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> io.agroal.api.security.SimplePassword;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> io.agroal.narayana.NarayanaTransactionIntegration;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> jakarta.transaction.TransactionManager;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> jakarta.transaction.TransactionSynchronizationRegistry;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> javax.naming.Context;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> javax.naming.InitialContext;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> javax.sql.DataSource;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.mybatis.guice.multidstest.MockInitialContextFactory;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="Utils" href="../../../../../org/mybatis/guice/jta/simple/Utils.html#Utils">Utils</a> {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>    <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">   * This method sets up a mock JNDI context with a transaction manager and two XA datasources</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">   *</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">   * @throws Exception</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">   */</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupMockJNDI() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      Properties properties = <strong class="jxr_keyword">new</strong> Properties();
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, MockInitialContextFactory.<strong class="jxr_keyword">class</strong>.getName());
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      InitialContext ic = <strong class="jxr_keyword">new</strong> InitialContext(properties);
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      TransactionSynchronizationRegistry transactionSynchronizationRegistry = <strong class="jxr_keyword">new</strong> TransactionSynchronizationRegistryImple();
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <em class="jxr_comment">// Initialization of recovery manager</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      RecoveryManager recoveryManager = RecoveryManager.manager();
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      recoveryManager.initialize();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      ic.bind(<span class="jxr_string">"jakarta.transaction.TransactionManager"</span>, tm);
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      DataSource ads1 = AgroalDataSource
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema1"</span>)
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>              .transactionIntegration(
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds1"</span>, false))));
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS1"</span>, ads1);
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      DataSource ads2 = AgroalDataSource
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema2"</span>)
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>              .transactionIntegration(
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds2"</span>, false))));
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS2"</span>, ads2);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>    }
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2009–2025 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
