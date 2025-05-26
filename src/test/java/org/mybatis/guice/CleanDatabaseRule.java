@@ -55,7 +55,7 @@ public class CleanDatabaseRule {
       contact.setId(1);
       contactWithAddress.setId(2);
     } finally {
-      runner.closeConnection();
+      sqlSession.getConfiguration().getEnvironment().getDataSource().getConnection().close();
     }
   }
 

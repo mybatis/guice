@@ -45,7 +45,7 @@ public class JtaCustomXaResourceTest {
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").getDeclaredConstructor().newInstance();
     LogFactory.useSlf4jLogging();
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();

@@ -72,7 +72,7 @@ class NestedTxTest {
     runner.setAutoCommit(true);
     runner.setStopOnError(true);
     runner.runScript(getResourceAsReader("org/mybatis/guice/nestedtx/setupdb.sql"));
-    runner.closeConnection();
+    dataSource.getConnection().close();
 
     service = injector.getInstance(NestedTxService.class);
   }

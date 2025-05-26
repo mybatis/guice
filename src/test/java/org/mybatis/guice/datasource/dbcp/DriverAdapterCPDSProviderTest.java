@@ -70,10 +70,10 @@ class DriverAdapterCPDSProviderTest {
     assertEquals(description, adapter.getDescription());
     assertEquals(maxIdle, adapter.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
-    assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
+    assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleDuration().toMillis());
     assertEquals(numTestsPerEvictionRun, adapter.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, adapter.isPoolPreparedStatements());
-    assertEquals(timeBetweenEvictionRunsMillis, adapter.getTimeBetweenEvictionRunsMillis());
+    assertEquals(timeBetweenEvictionRunsMillis, adapter.getDurationBetweenEvictionRuns().toMillis());
   }
 
   @Test
@@ -120,10 +120,10 @@ class DriverAdapterCPDSProviderTest {
     assertEquals(description, adapter.getDescription());
     assertEquals(maxIdle, adapter.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, adapter.getMaxPreparedStatements());
-    assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleTimeMillis());
+    assertEquals(minEvictableIdleTimeMillis, adapter.getMinEvictableIdleDuration().toMillis());
     assertEquals(numTestsPerEvictionRun, adapter.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, adapter.isPoolPreparedStatements());
-    assertEquals(timeBetweenEvictionRunsMillis, adapter.getTimeBetweenEvictionRunsMillis());
+    assertEquals(timeBetweenEvictionRunsMillis, adapter.getDurationBetweenEvictionRuns().toMillis());
   }
 
   public static class TestDriver {

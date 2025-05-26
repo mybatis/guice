@@ -99,7 +99,7 @@ class BasicDataSourceProviderTest {
     assertEquals(driverClassLoader, dataSource.getDriverClassLoader());
     assertEquals(driver, dataSource.getDriverClassName());
     assertEquals(url, dataSource.getUrl());
-    assertEquals(username, dataSource.getUsername());
+    assertEquals(username, dataSource.getUserName());
     assertEquals(password, dataSource.getPassword());
     assertEquals(autoCommit, dataSource.getDefaultAutoCommit());
     // Cannot test driver properties.
@@ -111,14 +111,14 @@ class BasicDataSourceProviderTest {
     assertEquals(maxTotal, dataSource.getMaxTotal());
     assertEquals(maxIdle, dataSource.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-    assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
+    assertEquals(maxWaitMillis, dataSource.getMaxWaitDuration().toMillis());
     assertEquals(minIdle, dataSource.getMinIdle());
     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());
     assertEquals(testOnBorrow, dataSource.getTestOnBorrow());
     assertEquals(testOnReturn, dataSource.getTestOnReturn());
     assertEquals(testWhileIdle, dataSource.getTestWhileIdle());
-    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getTimeBetweenEvictionRunsMillis());
+    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
   }
 
@@ -186,7 +186,7 @@ class BasicDataSourceProviderTest {
     assertEquals(driverClassLoader, dataSource.getDriverClassLoader());
     assertEquals(driver, dataSource.getDriverClassName());
     assertEquals(url, dataSource.getUrl());
-    assertEquals(username, dataSource.getUsername());
+    assertEquals(username, dataSource.getUserName());
     assertEquals(password, dataSource.getPassword());
     assertEquals(autoCommit, dataSource.getDefaultAutoCommit());
     // Cannot test driver properties.
@@ -198,14 +198,14 @@ class BasicDataSourceProviderTest {
     assertEquals(maxTotal, dataSource.getMaxTotal());
     assertEquals(maxIdle, dataSource.getMaxIdle());
     assertEquals(maxOpenPreparedStatements, dataSource.getMaxOpenPreparedStatements());
-    assertEquals(maxWaitMillis, dataSource.getMaxWaitMillis());
+    assertEquals(maxWaitMillis, dataSource.getMaxWaitDuration().toMillis());
     assertEquals(minIdle, dataSource.getMinIdle());
     assertEquals(numTestsPerEvictionRun, dataSource.getNumTestsPerEvictionRun());
     assertEquals(poolPreparedStatements, dataSource.isPoolPreparedStatements());
     assertEquals(testOnBorrow, dataSource.getTestOnBorrow());
     assertEquals(testOnReturn, dataSource.getTestOnReturn());
     assertEquals(testWhileIdle, dataSource.getTestWhileIdle());
-    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getTimeBetweenEvictionRunsMillis());
+    assertEquals(timeBetweenEvictionRunsMillis, dataSource.getDurationBetweenEvictionRuns().toMillis());
     assertEquals(validationQuery, dataSource.getValidationQuery());
   }
 }

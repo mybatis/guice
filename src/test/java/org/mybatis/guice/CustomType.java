@@ -41,17 +41,11 @@ public class CustomType {
     this.value = value;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
     return value != null ? value.toString() : null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -60,9 +54,6 @@ public class CustomType {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)

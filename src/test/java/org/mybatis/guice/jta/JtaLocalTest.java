@@ -48,7 +48,7 @@ class JtaLocalTest {
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
-    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+    Class.forName("org.apache.derby.jdbc.EmbeddedDriver").getDeclaredConstructor().newInstance();
     LogFactory.useSlf4jLogging();
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
@@ -68,9 +68,9 @@ class JtaLocalTest {
   JtaProcess process;
 
   @BeforeEach
-  void setup(TestInfo testInfo) throws Exception {
+  void setup(TestInfo testInfo) {
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing: {}({})", testInfo.getTestMethod(), getClass().getName());
     LOGGER.info("********************************************************************************");
     LogFactory.useSlf4jLogging();
 
@@ -95,7 +95,7 @@ class JtaLocalTest {
         });
 
         expose(JtaService1Impl.class);
-      };
+      }
     }, new PrivateModule() {
 
       @Override
@@ -118,7 +118,7 @@ class JtaLocalTest {
 
         expose(JtaService2Impl.class);
         expose(JtaProcess.class);
-      };
+      }
     });
 
     injector.injectMembers(this);
@@ -131,7 +131,7 @@ class JtaLocalTest {
     BaseDB.clearTable(BaseDB.URL_DB2);
 
     LOGGER.info("********************************************************************************");
-    LOGGER.info("Testing done: " + testInfo.getTestMethod() + "(" + getClass().getName() + ")");
+    LOGGER.info("Testing done: {}({})", testInfo.getTestMethod(), getClass().getName());
     LOGGER.info("********************************************************************************");
   }
 
@@ -210,7 +210,7 @@ class JtaLocalTest {
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) roll back REQUIRES_NEW commit REQUIRED
    * <p>
-   * have 1 rows and id=1 (from commited REQUIRED)
+   * have 1 rows and id=1 (from committed REQUIRED)
    */
   @Test
   void testRollbackInternalRequiresNew(TestInfo testInfo) throws Exception {
@@ -238,7 +238,7 @@ class JtaLocalTest {
   /**
    * begin REQUIRED begin REQUIRES_NEW insert(id=1) commit REQUIRES_NEW insert(id=2) roll back REQUIRED
    * <p>
-   * have 1 rows and id=1 (from commited REQUIRES_NEW)
+   * have 1 rows and id=1 (from committed REQUIRES_NEW)
    */
   @Test
   void testRollbackExternalRequired(TestInfo testInfo) throws Exception {
@@ -252,7 +252,7 @@ class JtaLocalTest {
   /**
    * begin REQUIRED insert(id=1) begin REQUIRES_NEW insert(id=2) commit REQUIRES_NEW roll back REQUIRED
    * <p>
-   * have 1 rows and id=2 (from commited REQUIRES_NEW)
+   * have 1 rows and id=2 (from committed REQUIRES_NEW)
    */
   @Test
   void testRollbackExternalRequired2(TestInfo testInfo) throws Exception {
@@ -282,15 +282,15 @@ class JtaLocalTest {
     List<Integer> readRows;
     readRows = BaseDB.readRows(BaseDB.URL_DB1, BaseDB.NAME_DB1);
 
-    LOGGER.info("{} db1 check count rows {}:{}", new Object[] { name, count, readRows.size() });
-    LOGGER.info("{} db1 check row id {}:{}", new Object[] { name, index, readRows.get(0).intValue() });
+    LOGGER.info("{} db1 check count rows {}:{}", name, count, readRows.size());
+    LOGGER.info("{} db1 check row id {}:{}", name, index, readRows.get(0).intValue());
 
     assertEquals(count, readRows.size(), name + " db1 count rows");
     assertEquals(index, readRows.get(0).intValue(), name + " db1 row id");
 
     readRows = BaseDB.readRows(BaseDB.URL_DB2, BaseDB.NAME_DB2);
-    LOGGER.info("{} db2 check count rows {}:{}", new Object[] { name, count, readRows.size() });
-    LOGGER.info("{} db2 check row id {}:{}", new Object[] { name, index, readRows.get(0).intValue() });
+    LOGGER.info("{} db2 check count rows {}:{}", name, count, readRows.size());
+    LOGGER.info("{} db2 check row id {}:{}", name, index, readRows.get(0).intValue());
 
     assertEquals(count, readRows.size(), name + " db2 count rows");
     assertEquals(index, readRows.get(0).intValue(), name + " db2 row id");
