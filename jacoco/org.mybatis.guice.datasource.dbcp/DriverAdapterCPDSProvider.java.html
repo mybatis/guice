@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DriverAdapterCPDSProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.datasource.dbcp</a> &gt; <span class="el_source">DriverAdapterCPDSProvider.java</span></div><h1>DriverAdapterCPDSProvider.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2025 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice.datasource.dbcp;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.inject.Provider;
+
+import java.time.Duration;
+
+import javax.sql.ConnectionPoolDataSource;
+
+import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
+
+/**
+ * Provides the Apache commons-dbcp2 {@code DriverAdapterCPDS}.
+ */
+public final class DriverAdapterCPDSProvider implements Provider&lt;ConnectionPoolDataSource&gt; {
+
+<span class="fc" id="L33">  private final DriverAdapterCPDS adapter = new DriverAdapterCPDS();</span>
+
+  /**
+   * Instantiates a new driver adapter CPDS provider.
+   *
+   * @param driver
+   *          the driver
+   * @param url
+   *          the url
+   */
+  @Inject
+<span class="fc" id="L44">  public DriverAdapterCPDSProvider(@Named(&quot;JDBC.driver&quot;) final String driver, @Named(&quot;JDBC.url&quot;) final String url) {</span>
+    try {
+<span class="fc" id="L46">      adapter.setDriver(driver);</span>
+<span class="nc" id="L47">    } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L48">      throw new RuntimeException(&quot;Driver '&quot; + driver + &quot;' not found in the classpath&quot;, e);</span>
+<span class="fc" id="L49">    }</span>
+<span class="fc" id="L50">    adapter.setUrl(url);</span>
+<span class="fc" id="L51">  }</span>
+
+  /**
+   * Sets the user.
+   *
+   * @param username
+   *          the new user
+   *
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setUser(@Named(&quot;JDBC.username&quot;) final String username) {
+<span class="fc" id="L63">    adapter.setUser(username);</span>
+<span class="fc" id="L64">  }</span>
+
+  /**
+   * Sets the password.
+   *
+   * @param password
+   *          the new password
+   *
+   * @since 3.3
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setPassword(@Named(&quot;JDBC.password&quot;) final String password) {
+<span class="fc" id="L76">    adapter.setPassword(password);</span>
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * Sets the description.
+   *
+   * @param description
+   *          the new description
+   */
+  @com.google.inject.Inject(optional = true)
+  public void setDescription(@Named(&quot;DBCP.description&quot;) String description) {
+<span class="fc" id="L87">    adapter.setDescription(description);</span>
+<span class="fc" id="L88">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setLoginTimeout(@Named(&quot;JDBC.loginTimeout&quot;) int seconds) {
+<span class="fc" id="L92">    adapter.setLoginTimeout(seconds);</span>
+<span class="fc" id="L93">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMaxIdle(@Named(&quot;DBCP.maxIdle&quot;) int maxIdle) {
+<span class="fc" id="L97">    adapter.setMaxIdle(maxIdle);</span>
+<span class="fc" id="L98">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMaxPreparedStatements(@Named(&quot;DBCP.maxOpenPreparedStatements&quot;) int maxPreparedStatements) {
+<span class="fc" id="L102">    adapter.setMaxPreparedStatements(maxPreparedStatements);</span>
+<span class="fc" id="L103">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setMinEvictableIdleTimeMillis(@Named(&quot;DBCP.minEvictableIdleTimeMillis&quot;) int minEvictableIdleTimeMillis) {
+<span class="fc" id="L107">    adapter.setMinEvictableIdleDuration(Duration.ofMillis(minEvictableIdleTimeMillis));</span>
+<span class="fc" id="L108">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setNumTestsPerEvictionRun(@Named(&quot;DBCP.numTestsPerEvictionRun&quot;) int numTestsPerEvictionRun) {
+<span class="fc" id="L112">    adapter.setNumTestsPerEvictionRun(numTestsPerEvictionRun);</span>
+<span class="fc" id="L113">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setPoolPreparedStatements(@Named(&quot;DBCP.poolPreparedStatements&quot;) boolean poolPreparedStatements) {
+<span class="fc" id="L117">    adapter.setPoolPreparedStatements(poolPreparedStatements);</span>
+<span class="fc" id="L118">  }</span>
+
+  @com.google.inject.Inject(optional = true)
+  public void setTimeBetweenEvictionRunsMillis(
+      @Named(&quot;DBCP.timeBetweenEvictionRunsMillis&quot;) int timeBetweenEvictionRunsMillis) {
+<span class="fc" id="L123">    adapter.setDurationBetweenEvictionRuns(Duration.ofMillis(timeBetweenEvictionRunsMillis));</span>
+<span class="fc" id="L124">  }</span>
+
+  @Override
+  public ConnectionPoolDataSource get() {
+<span class="fc" id="L128">    return adapter;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

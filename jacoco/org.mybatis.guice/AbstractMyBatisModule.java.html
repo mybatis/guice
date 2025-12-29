@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMyBatisModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice</a> &gt; <span class="el_source">AbstractMyBatisModule.java</span></div><h1>AbstractMyBatisModule.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2009-2025 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.guice;
+
+import static com.google.inject.matcher.Matchers.annotatedWith;
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.not;
+import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
+import static org.mybatis.guice.Preconditions.checkArgument;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Scopes;
+import com.google.inject.matcher.Matcher;
+
+import java.lang.reflect.Method;
+import java.util.Set;
+
+import org.apache.ibatis.io.ResolverUtil;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionManager;
+import org.mybatis.guice.mappers.MapperProvider;
+import org.mybatis.guice.session.SqlSessionManagerProvider;
+import org.mybatis.guice.transactional.Transactional;
+import org.mybatis.guice.transactional.TransactionalMethodInterceptor;
+
+<span class="fc" id="L41">abstract class AbstractMyBatisModule extends AbstractModule {</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">  protected static final Matcher&lt;Method&gt; DECLARED_BY_OBJECT = method -&gt; method.getDeclaringClass() == Object.class;</span>
+
+<span class="fc" id="L45">  protected static final Matcher&lt;Method&gt; SYNTHETIC = Method::isSynthetic;</span>
+
+<span class="fc" id="L47">  private ClassLoader resourcesClassLoader = getDefaultClassLoader();</span>
+
+<span class="fc" id="L49">  private ClassLoader driverClassLoader = getDefaultClassLoader();</span>
+
+  /**
+   * Return a set of all classes contained in the given package.
+   *
+   * @param packageName
+   *          the package has to be analyzed.
+   *
+   * @return a set of all classes contained in the given package.
+   */
+  protected static Set&lt;Class&lt;?&gt;&gt; getClasses(String packageName) {
+<span class="fc" id="L60">    return AbstractMyBatisModule.getClasses(new ResolverUtil.IsA(Object.class), packageName);</span>
+  }
+
+  /**
+   * Return a set of all classes contained in the given package that match with the given test requirement.
+   *
+   * @param test
+   *          the class filter on the given package.
+   * @param packageName
+   *          the package has to be analyzed.
+   *
+   * @return a set of all classes contained in the given package.
+   */
+  protected static Set&lt;Class&lt;?&gt;&gt; getClasses(ResolverUtil.Test test, String packageName) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">    checkArgument(test != null, &quot;Parameter 'test' must not be null&quot;);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">    checkArgument(packageName != null, &quot;Parameter 'packageName' must not be null&quot;);</span>
+<span class="fc" id="L76">    return new ResolverUtil&lt;&gt;().find(test, packageName).getClasses();</span>
+  }
+
+  @Override
+  protected final void configure() {
+    try {
+      // sql session manager
+<span class="fc" id="L83">      bind(SqlSessionManager.class).toProvider(SqlSessionManagerProvider.class).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L84">      bind(SqlSession.class).to(SqlSessionManager.class).in(Scopes.SINGLETON);</span>
+
+<span class="fc" id="L86">      internalConfigure();</span>
+
+<span class="fc" id="L88">      bindTransactionInterceptors();</span>
+
+<span class="fc" id="L90">      bind(ClassLoader.class).annotatedWith(named(&quot;JDBC.driverClassLoader&quot;)).toInstance(driverClassLoader);</span>
+    } finally {
+<span class="fc" id="L92">      resourcesClassLoader = getDefaultClassLoader();</span>
+<span class="fc" id="L93">      driverClassLoader = getDefaultClassLoader();</span>
+    }
+<span class="fc" id="L95">  }</span>
+
+  /**
+   * bind transactional interceptors.
+   */
+  protected void bindTransactionInterceptors() {
+    // transactional interceptor
+<span class="fc" id="L102">    TransactionalMethodInterceptor interceptor = new TransactionalMethodInterceptor();</span>
+<span class="fc" id="L103">    requestInjection(interceptor);</span>
+<span class="fc" id="L104">    bindInterceptor(any(), not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(annotatedWith(Transactional.class)),</span>
+        interceptor);
+    // Intercept classes annotated with Transactional, but avoid &quot;double&quot;
+    // interception when a mathod is also annotated inside an annotated
+    // class.
+<span class="fc" id="L109">    bindInterceptor(annotatedWith(Transactional.class),</span>
+<span class="fc" id="L110">        not(SYNTHETIC).and(not(DECLARED_BY_OBJECT)).and(not(annotatedWith(Transactional.class))), interceptor);</span>
+<span class="fc" id="L111">  }</span>
+
+  /**
+   * Bind mapper.
+   *
+   * @param &lt;T&gt;
+   *          the generic type
+   * @param mapperType
+   *          the mapper type
+   */
+  final &lt;T&gt; void bindMapper(Class&lt;T&gt; mapperType) {
+<span class="fc" id="L122">    bind(mapperType).toProvider(guicify(new MapperProvider&lt;&gt;(mapperType))).in(Scopes.SINGLETON);</span>
+<span class="fc" id="L123">  }</span>
+
+  /**
+   * Use resource class loader.
+   *
+   * @param resourceClassLoader
+   *          the resource class loader
+   *
+   * @since 3.3
+   */
+  public void useResourceClassLoader(ClassLoader resourceClassLoader) {
+<span class="nc" id="L134">    this.resourcesClassLoader = resourceClassLoader;</span>
+<span class="nc" id="L135">  }</span>
+
+  /**
+   * Gets the resource class loader.
+   *
+   * @return the resource class loader
+   *
+   * @since 3.3
+   */
+  protected final ClassLoader getResourceClassLoader() {
+<span class="fc" id="L145">    return resourcesClassLoader;</span>
+  }
+
+  /**
+   * Use jdbc driver class loader.
+   *
+   * @param driverClassLoader
+   *          the driver class loader
+   *
+   * @since 3.3
+   */
+  public void useJdbcDriverClassLoader(ClassLoader driverClassLoader) {
+<span class="nc" id="L157">    this.driverClassLoader = driverClassLoader;</span>
+<span class="nc" id="L158">  }</span>
+
+  /**
+   * Gets the default class loader.
+   *
+   * @return the default class loader
+   *
+   * @since 3.3
+   */
+  private ClassLoader getDefaultClassLoader() {
+<span class="fc" id="L168">    return getClass().getClassLoader();</span>
+  }
+
+  /**
+   * Configures a {@link Binder} via the exposed methods.
+   */
+  abstract void internalConfigure();
+
+  /**
+   * Initialize.
+   */
+  protected abstract void initialize();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

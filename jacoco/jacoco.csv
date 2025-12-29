@@ -1,0 +1,80 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+mybatis-guice,org.mybatis.guice.session,SqlSessionFactoryProvider,3,14,0,0,2,5,1,3,1,3
+mybatis-guice,org.mybatis.guice.session,SqlSessionManagerProvider,7,11,0,0,3,5,1,3,1,3
+mybatis-guice,org.mybatis.guice.datasource.c3p0,C3p0DataSourceProvider,16,170,0,4,4,66,0,31,0,29
+mybatis-guice,org.mybatis.guice.mappers,MapperProvider,8,32,2,2,3,10,3,4,1,4
+mybatis-guice,org.mybatis.guice.datasource.builtin,JndiDataSourceProvider,0,46,0,0,0,13,0,5,0,5
+mybatis-guice,org.mybatis.guice.datasource.builtin,PooledDataSourceProvider,0,76,0,0,0,28,0,14,0,14
+mybatis-guice,org.mybatis.guice.datasource.builtin,UnpooledDataSourceProvider,0,42,0,0,0,14,0,7,0,7
+mybatis-guice,org.mybatis.guice.configuration.settings,MultipleResultSetsEnabledConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,TypeHandlerConfigurationSettingProvider,0,21,0,0,0,5,0,3,0,3
+mybatis-guice,org.mybatis.guice.configuration.settings,InterceptorConfigurationSettingProvider.new ConfigurationSetting() {...},0,14,0,0,0,3,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,DefaultExecutorTypeConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,LazyLoadingEnabledConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,UseColumnLabelConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,UseGeneratedKeysConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,AliasConfigurationSetting,0,17,0,0,0,6,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,LocalCacheScopeConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,ObjectFactoryConfigurationSetting,0,24,0,0,0,7,0,4,0,4
+mybatis-guice,org.mybatis.guice.configuration.settings,JavaTypeAndHandlerConfigurationSettingProvider,0,21,0,0,0,5,0,3,0,3
+mybatis-guice,org.mybatis.guice.configuration.settings,JavaTypeAndHandlerConfigurationSettingProvider.Wrapper.new ConfigurationSetting() {...},0,18,0,0,0,3,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,AggressiveLazyLoadingConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,CacheEnabledConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,DefaultStatementTimeoutConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,AutoMappingBehaviorConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,JavaTypeAndHandlerConfigurationSettingProvider.Wrapper,0,21,0,0,0,6,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,DefaultScriptingLanguageTypeConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,MapperConfigurationSetting,0,16,0,2,0,6,0,3,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,MapUnderscoreToCamelCaseConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,ObjectWrapperFactoryConfigurationSetting,0,24,0,0,0,7,0,4,0,4
+mybatis-guice,org.mybatis.guice.configuration.settings,CallSettersOnNullsConfigurationSetting,0,11,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.configuration.settings,InterceptorConfigurationSettingProvider,0,19,0,0,0,5,0,2,0,2
+mybatis-guice,org.mybatis.guice.transactional,NeverTransactionAttributeStrategy,2,3,0,0,1,1,1,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,MandatoryTransactionAttributeStrategy,2,3,0,0,1,1,1,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager.Token,21,106,7,15,5,29,7,8,0,4
+mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager,617,288,93,56,95,88,83,15,7,11
+mybatis-guice,org.mybatis.guice.transactional,MyBatisXAException,18,0,0,0,7,0,2,0,2,0
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},17,5,2,0,3,1,2,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},15,5,2,0,3,1,2,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},7,57,1,7,3,17,1,6,0,3
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},18,5,2,0,3,1,2,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},27,5,4,0,7,1,4,1,2,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionalMethodInterceptor,158,242,10,28,22,58,10,15,0,6
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute.new TransactionAttribute() {...},0,41,0,6,0,10,0,6,0,3
+mybatis-guice,org.mybatis.guice.transactional,TransactionAttribute,7,39,0,0,3,7,3,1,3,1
+mybatis-guice,org.mybatis.guice.transactional,SupportsTransactionAttributeStrategy,2,3,0,0,1,1,1,1,1,1
+mybatis-guice,org.mybatis.guice.transactional,TransactionToken,11,39,0,0,5,15,3,7,3,7
+mybatis-guice,org.mybatis.guice.transactional,RequiresNewTransactionAttributeStrategy,0,5,0,0,0,2,0,2,0,2
+mybatis-guice,org.mybatis.guice.transactional,Isolation,0,56,0,0,0,11,0,3,0,3
+mybatis-guice,org.mybatis.guice.transactional,TxTransactionalMethodInterceptor,129,232,13,37,19,57,12,17,0,4
+mybatis-guice,org.mybatis.guice.transactional,RequiredTransactionAttributeStrategy,0,5,0,0,0,2,0,2,0,2
+mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager.GlobalKey,44,34,6,4,10,11,6,3,1,3
+mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManager.GlobalToken,32,74,6,8,5,20,5,6,0,4
+mybatis-guice,org.mybatis.guice.transactional,XASqlSessionManagerProvider,0,9,0,0,0,2,0,2,0,2
+mybatis-guice,org.mybatis.guice.transactional,Transactional.TxType,0,39,0,0,0,7,0,1,0,1
+mybatis-guice,org.mybatis.guice.configuration,ConfigurationProvider,8,151,0,8,4,40,2,9,2,5
+mybatis-guice,org.mybatis.guice,MyBatisModule.new TypeHandlerBinder() {...},4,140,4,4,0,22,4,7,0,7
+mybatis-guice,org.mybatis.guice,AbstractMyBatisModule,10,150,2,4,4,27,4,11,2,10
+mybatis-guice,org.mybatis.guice,Preconditions,389,6,52,2,85,4,44,2,17,2
+mybatis-guice,org.mybatis.guice,MyBatisJtaModule,25,110,3,3,6,26,5,5,2,5
+mybatis-guice,org.mybatis.guice,MyBatisJtaModule.ProviderImpl,0,9,0,0,0,4,0,2,0,2
+mybatis-guice,org.mybatis.guice,MyBatisModule,28,645,29,39,0,153,29,53,0,48
+mybatis-guice,org.mybatis.guice,XMLMyBatisModule,25,126,4,8,7,34,4,8,1,5
+mybatis-guice,org.mybatis.guice.datasource.hikaricp,HikariCPProvider,19,165,0,2,6,63,2,31,2,30
+mybatis-guice,org.mybatis.guice.datasource.helper,JdbcHelper,0,453,0,0,0,60,0,3,0,3
+mybatis-guice,org.mybatis.guice.datasource.helper,JdbcUrlAntFormatter,70,181,11,13,10,41,11,12,2,9
+mybatis-guice,org.mybatis.guice.datasource.helper,KeyResolver,6,34,1,1,2,11,2,3,1,3
+mybatis-guice,org.mybatis.guice.provision,KeyMatcher,0,21,0,0,0,5,0,3,0,3
+mybatis-guice,org.mybatis.guice.provision,ConfigurationProviderProvisionListener,0,56,0,0,0,16,0,8,0,8
+mybatis-guice,org.mybatis.guice.environment,EnvironmentProvider,0,25,0,0,0,8,0,5,0,5
+mybatis-guice,org.mybatis.guice.type,TypeHandlerProvider,68,87,8,4,13,25,6,7,2,5
+mybatis-guice,org.mybatis.guice.datasource.druid,DruidDataSourceProvider,0,163,0,0,0,63,0,32,0,32
+mybatis-guice,org.mybatis.guice.datasource.dbcp,BasicDataSourceProvider,6,154,0,2,2,53,1,24,1,23
+mybatis-guice,org.mybatis.guice.datasource.dbcp,SharedPoolDataSourceProvider,0,117,0,0,0,41,0,21,0,21
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule.new TypeLiteral() {...},0,3,0,0,0,1,0,1,0,1
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule.Builder,0,49,0,0,0,14,0,8,0,8
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule.new TypeLiteral() {...},0,3,0,0,0,1,0,1,0,1
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule.new TypeLiteral() {...},0,3,0,0,0,1,0,1,0,1
+mybatis-guice,org.mybatis.guice.datasource.dbcp,DriverAdapterCPDSProvider,8,74,0,0,2,27,0,12,0,12
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceProvider,0,251,0,12,0,65,0,33,0,27
+mybatis-guice,org.mybatis.guice.datasource.dbcp,PerUserPoolDataSourceModule,0,83,0,2,0,21,0,5,0,4
