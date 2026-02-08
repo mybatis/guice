@@ -55,12 +55,15 @@ public class Utils {
 
     ic.bind("jakarta.transaction.TransactionManager", tm);
 
+    // Use XA DataSource for DS1 and connectable local for DS2
     DataSource ads1 = AgroalDataSource
-        .from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
-            .connectionFactoryConfiguration(cf -> cf.jdbcUrl("jdbc:hsqldb:mem:schema1")
-                .principal(new NamePrincipal("sa")).credential(new SimplePassword("")))
-            .transactionIntegration(
-                new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds1", false))));
+        .from(
+            new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+                .connectionFactoryConfiguration(cf -> cf
+                    .connectionProviderClassName("org.hsqldb.jdbc.pool.JDBCXADataSource")
+                    .xaProperty("url", "jdbc:hsqldb:mem:schema1").xaProperty("user", "sa").xaProperty("password", ""))
+                .transactionIntegration(
+                    new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds1"))));
 
     ic.bind("java:comp/env/jdbc/DS1", ads1);
 
@@ -69,7 +72,7 @@ public class Utils {
             .connectionFactoryConfiguration(cf -> cf.jdbcUrl("jdbc:hsqldb:mem:schema2")
                 .principal(new NamePrincipal("sa")).credential(new SimplePassword("")))
             .transactionIntegration(
-                new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds2", false))));
+                new NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, "java:/agroalds2", true))));
 
     ic.bind("java:comp/env/jdbc/DS2", ads2);
   }

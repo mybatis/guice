@@ -58,26 +58,28 @@ public class BaseDB {
   public static DataSource createLocalDataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
+    // Use connectable mode for local datasource when mixed with XA datasources
     return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
         .maxSize(10)
         .connectionFactoryConfiguration(
             cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
         .transactionIntegration(
-            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
+            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple(), null, true))));
   }
 
   public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager) throws Exception {
-    String className = "org.apache.derby.jdbc.EmbeddedDriver";
-    Class.forName(className).getConstructor().newInstance();
-
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
-        .maxSize(10)
-        .connectionFactoryConfiguration(
-            cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
-        .transactionIntegration(
-            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
+    // Use Derby's XA DataSource for proper XA support
+    return AgroalDataSource
+        .from(
+            new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+                .connectionFactoryConfiguration(cf -> cf
+                    .connectionProviderClassName("org.apache.derby.jdbc.EmbeddedXADataSource")
+                    .xaProperty("databaseName", dataSourceURL.replace("jdbc:derby:", ""))
+                    .xaProperty("createDatabase", "create").xaProperty("user", USER).xaProperty("password", PASSWORD))
+                .transactionIntegration(
+                    new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
   }
 
   public static void dropTable(String dataSourceURL) throws Exception {
