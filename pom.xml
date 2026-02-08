@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2025 the original author or authors.
+       Copyright 2009-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@
     <java.release.version>11</java.release.version>
 
     <!-- Versions -->
-    <agroal.version>2.2</agroal.version>
+    <agroal.version>3.0</agroal.version>
     <annotation-api.version>3.0.0</annotation-api.version>
     <byte-buddy.version>1.18.4</byte-buddy.version>
     <clirr.comparisonVersion>3.10</clirr.comparisonVersion>

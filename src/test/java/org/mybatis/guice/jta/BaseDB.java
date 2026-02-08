@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2025 the original author or authors.
+ *    Copyright 2009-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -58,26 +58,28 @@ public class BaseDB {
   public static DataSource createLocalDataSource(String dataSourceURL, TransactionManager manager) throws Exception {
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
+    // Use connectable mode for local datasource when mixed with XA datasources
     return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
         .maxSize(10)
         .connectionFactoryConfiguration(
             cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
         .transactionIntegration(
-            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
+            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple(), null, true))));
   }
 
   public static DataSource createXADataSource(String dataSourceURL, TransactionManager manager) throws Exception {
-    String className = "org.apache.derby.jdbc.EmbeddedDriver";
-    Class.forName(className).getConstructor().newInstance();
-
     executeScript(dataSourceURL + ";create=true", QUERY_CREATE_TABLE);
 
-    return AgroalDataSource.from(new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp
-        .maxSize(10)
-        .connectionFactoryConfiguration(
-            cf -> cf.jdbcUrl(dataSourceURL).principal(new NamePrincipal(USER)).credential(new SimplePassword(PASSWORD)))
-        .transactionIntegration(
-            new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
+    // Use Derby's XA DataSource for proper XA support
+    return AgroalDataSource
+        .from(
+            new AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -> cp.maxSize(10)
+                .connectionFactoryConfiguration(cf -> cf
+                    .connectionProviderClassName("org.apache.derby.jdbc.EmbeddedXADataSource")
+                    .xaProperty("databaseName", dataSourceURL.replace("jdbc:derby:", ""))
+                    .xaProperty("createDatabase", "create").xaProperty("user", USER).xaProperty("password", PASSWORD))
+                .transactionIntegration(
+                    new NarayanaTransactionIntegration(manager, new TransactionSynchronizationRegistryImple()))));
   }
 
   public static void dropTable(String dataSourceURL) throws Exception {

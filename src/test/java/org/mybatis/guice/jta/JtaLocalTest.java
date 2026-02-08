@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2025 the original author or authors.
+ *    Copyright 2009-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -53,7 +53,8 @@ class JtaLocalTest {
 
     manager = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
-    dataSource1 = BaseDB.createLocalDataSource(BaseDB.URL_DB1, manager);
+    // Use XA for dataSource1 and local (connectable) for dataSource2 to support Agroal 2.8+
+    dataSource1 = BaseDB.createXADataSource(BaseDB.URL_DB1, manager);
     dataSource2 = BaseDB.createLocalDataSource(BaseDB.URL_DB2, manager);
   }
 
