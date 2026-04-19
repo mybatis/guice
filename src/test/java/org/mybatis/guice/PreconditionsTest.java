@@ -59,12 +59,14 @@ class PreconditionsTest {
 
   @Test
   void checkState_WithErrorMessage() {
+    assertDoesNotThrow(() -> Preconditions.checkState(true, "boom"));
     IllegalStateException e = assertThrows(IllegalStateException.class, () -> Preconditions.checkState(false, "boom"));
     assertEquals("boom", e.getMessage());
   }
 
   @Test
   void checkState_WithTemplate() {
+    assertDoesNotThrow(() -> Preconditions.checkState(true, "value %s", 11));
     IllegalStateException e = assertThrows(IllegalStateException.class,
         () -> Preconditions.checkState(false, "value %s", 11));
     assertEquals("value 11", e.getMessage());
@@ -79,6 +81,8 @@ class PreconditionsTest {
 
   @Test
   void checkNotNull_WithMessage() {
+    Object value = new Object();
+    assertSame(value, Preconditions.checkNotNull(value, "missing"));
     NullPointerException e = assertThrows(NullPointerException.class,
         () -> Preconditions.checkNotNull(null, "missing"));
     assertEquals("missing", e.getMessage());
@@ -86,6 +90,8 @@ class PreconditionsTest {
 
   @Test
   void checkNotNull_WithTemplate() {
+    Object value = new Object();
+    assertSame(value, Preconditions.checkNotNull(value, "missing %s", "name"));
     NullPointerException e = assertThrows(NullPointerException.class,
         () -> Preconditions.checkNotNull(null, "missing %s", "name"));
     assertEquals("missing name", e.getMessage());
@@ -102,6 +108,8 @@ class PreconditionsTest {
 
   @Test
   void checkContentsNotNull_WithMessage() {
+    List<String> values = Arrays.asList("a", "b");
+    assertSame(values, Preconditions.checkContentsNotNull(values, "x"));
     NullPointerException e = assertThrows(NullPointerException.class,
         () -> Preconditions.checkContentsNotNull(Arrays.asList("a", null), "x"));
     assertEquals("x", e.getMessage());
@@ -109,6 +117,8 @@ class PreconditionsTest {
 
   @Test
   void checkContentsNotNull_WithTemplate() {
+    List<String> values = Arrays.asList("a", "b");
+    assertSame(values, Preconditions.checkContentsNotNull(values, "bad %s", "value"));
     NullPointerException e = assertThrows(NullPointerException.class,
         () -> Preconditions.checkContentsNotNull(Arrays.asList("a", null), "bad %s", "value"));
     assertEquals("bad value", e.getMessage());
@@ -134,6 +144,15 @@ class PreconditionsTest {
     };
 
     assertSame(collection, Preconditions.checkContentsNotNull(collection));
+  }
+
+  @Test
+  void checkContentsNotNull_NonCollectionIterable() {
+    Iterable<String> iterable = () -> Arrays.asList("a", "b").iterator();
+    Iterable<String> iterableWithNull = () -> Arrays.asList("a", null).iterator();
+
+    assertSame(iterable, Preconditions.checkContentsNotNull(iterable));
+    assertThrows(NullPointerException.class, () -> Preconditions.checkContentsNotNull(iterableWithNull));
   }
 
   @Test

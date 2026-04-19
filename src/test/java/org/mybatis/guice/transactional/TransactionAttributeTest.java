@@ -148,4 +148,11 @@ class TransactionAttributeTest {
     TransactionAttribute.REQUIRESNEW.finish(manager, token);
     verify(manager).resume(suspended);
   }
+
+  @Test
+  void strategyImplementations() {
+    assertEquals(TransactionAttribute.MANDATORY, new MandatoryTransactionAttributeStrategy().getTransactionAttribute());
+    assertEquals(TransactionAttribute.NEVER, new NeverTransactionAttributeStrategy().getTransactionAttribute());
+    assertEquals(TransactionAttribute.SUPPORTS, new SupportsTransactionAttributeStrategy().getTransactionAttribute());
+  }
 }

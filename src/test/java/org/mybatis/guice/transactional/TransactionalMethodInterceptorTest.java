@@ -16,6 +16,7 @@
 package org.mybatis.guice.transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.never;
@@ -262,6 +263,46 @@ class TransactionalMethodInterceptorTest {
   }
 
   @Test
+  void invoke_Rethrow_NoMatchingConstructor() throws Throwable {
+    Method method = MethodAnnotationRethrowNoConstructor.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    when(invocation.proceed()).thenThrow(new IOException("test"));
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected RuntimeException");
+    } catch (RuntimeException e) {
+      assertNotNull(e);
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
+  void invoke_Rethrow_ConstructorThrows() throws Throwable {
+    Method method = MethodAnnotationRethrowConstructorThrows.class.getMethod("transaction");
+    when(invocation.getMethod()).thenReturn(method);
+    Transactional transactional = method.getAnnotation(Transactional.class);
+    when(invocation.proceed()).thenThrow(new IOException("test"));
+
+    try {
+      transactionalMethodInterceptor.invoke(invocation);
+      fail("Expected RuntimeException");
+    } catch (RuntimeException e) {
+      assertNotNull(e);
+    }
+
+    verify(sqlSessionManager).startManagedSession(transactional.executorType(),
+        transactional.isolation().getTransactionIsolationLevel());
+    verify(sqlSessionManager).rollback(true);
+    verify(sqlSessionManager).close();
+  }
+
+  @Test
   void invoke_SessionInherited() throws Throwable {
     Method method = MethodAnnotation.class.getMethod("transaction");
     when(invocation.getMethod()).thenReturn(method);
@@ -353,10 +394,39 @@ class TransactionalMethodInterceptorTest {
     }
   }
 
+  private static class MethodAnnotationRethrowNoConstructor {
+    @Transactional(rethrowExceptionsAs = NoMatchingConstructorException.class)
+    public void transaction() {
+    }
+  }
+
+  private static class MethodAnnotationRethrowConstructorThrows {
+    @Transactional(rethrowExceptionsAs = ConstructorFailureException.class)
+    public void transaction() {
+    }
+  }
+
   @Transactional
   private static class ClassAnnotation {
     @SuppressWarnings("unused")
     public void transaction() {
+    }
+  }
+
+  private static class NoMatchingConstructorException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    NoMatchingConstructorException() {
+      super("no-args");
+    }
+  }
+
+  private static class ConstructorFailureException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    ConstructorFailureException(Throwable t) {
+      super("boom");
+      throw new IllegalStateException("constructor failure", t);
     }
   }
 }
