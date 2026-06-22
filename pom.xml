@@ -99,7 +99,7 @@
     <derby.version>10.17.1.0</derby.version>
     <ejb-api.version>4.0.1</ejb-api.version>
     <guice.version>7.0.0</guice.version>
-    <inject-api.version>2.0.1</inject-api.version>
+    <inject-api.version>2.0.1.MR</inject-api.version>
     <metrics.version>4.2.39</metrics.version>
     <mockito.version>5.23.0</mockito.version>
     <slf4j.version>2.0.18</slf4j.version>
