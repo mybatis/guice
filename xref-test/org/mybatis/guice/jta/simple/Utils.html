@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../testapidocs/org/mybatis/guice/jta/simple/Utils.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2025 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2009-2026 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -63,27 +63,30 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>      ic.bind(<span class="jxr_string">"jakarta.transaction.TransactionManager"</span>, tm);
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      DataSource ads1 = AgroalDataSource
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema1"</span>)
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>              .transactionIntegration(
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds1"</span>, false))));
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS1"</span>, ads1);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      DataSource ads2 = AgroalDataSource
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema2"</span>)
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>              .transactionIntegration(
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds2"</span>, false))));
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS2"</span>, ads2);
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>    }
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  }
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <em class="jxr_comment">// Use XA DataSource for DS1 and connectable local for DS2</em>
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      DataSource ads1 = AgroalDataSource
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          .from(
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>              <strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  .connectionFactoryConfiguration(cf -&gt; cf
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                      .connectionProviderClassName(<span class="jxr_string">"org.hsqldb.jdbc.pool.JDBCXADataSource"</span>)
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                      .xaProperty(<span class="jxr_string">"url"</span>, <span class="jxr_string">"jdbc:hsqldb:mem:schema1"</span>).xaProperty(<span class="jxr_string">"user"</span>, <span class="jxr_string">"sa"</span>).xaProperty(<span class="jxr_string">"password"</span>, <span class="jxr_string">""</span>))
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  .transactionIntegration(
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                      <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds1"</span>))));
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS1"</span>, ads1);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      DataSource ads2 = AgroalDataSource
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          .from(<strong class="jxr_keyword">new</strong> AgroalDataSourceConfigurationSupplier().connectionPoolConfiguration(cp -&gt; cp.maxSize(10)
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>              .connectionFactoryConfiguration(cf -&gt; cf.jdbcUrl(<span class="jxr_string">"jdbc:hsqldb:mem:schema2"</span>)
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  .principal(<strong class="jxr_keyword">new</strong> NamePrincipal(<span class="jxr_string">"sa"</span>)).credential(<strong class="jxr_keyword">new</strong> SimplePassword(<span class="jxr_string">""</span>)))
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              .transactionIntegration(
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  <strong class="jxr_keyword">new</strong> NarayanaTransactionIntegration(tm, transactionSynchronizationRegistry, <span class="jxr_string">"java:/agroalds2"</span>, <strong class="jxr_keyword">true</strong>))));
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      ic.bind(<span class="jxr_string">"java:comp/env/jdbc/DS2"</span>, ads2);
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>    }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  }
 </pre>
 <hr/>
-<div id="footer">© 2009–2025 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
+<div id="footer">© 2009–2026 <a href="https://www.mybatis.org/">MyBatis.org</a></div>
 </body>
 </html>

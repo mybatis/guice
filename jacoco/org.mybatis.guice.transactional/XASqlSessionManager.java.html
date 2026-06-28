@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XASqlSessionManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">XASqlSessionManager.java</span></div><h1>XASqlSessionManager.java</h1><pre class="source lang-java linenums">/*
- *    Copyright 2009-2025 the original author or authors.
+ *    Copyright 2009-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -51,11 +51,11 @@ public class XASqlSessionManager implements XAResource {
 <span class="fc" id="L51">  }</span>
 
   public String getId() {
-<span class="nc" id="L54">    return id;</span>
+<span class="fc" id="L54">    return id;</span>
   }
 
   public int getState() {
-<span class="nc" id="L58">    return state;</span>
+<span class="fc" id="L58">    return state;</span>
   }
 
   private String xlatedState() {
@@ -74,7 +74,7 @@ public class XASqlSessionManager implements XAResource {
   }
 
   private String decodeXAResourceFlag(int flag) {
-<span class="nc bnc" id="L77" title="All 10 branches missed.">    switch (flag) {</span>
+<span class="pc bpc" id="L77" title="8 of 10 branches missed.">    switch (flag) {</span>
       case XAResource.TMENDRSCAN:
 <span class="nc" id="L79">        return &quot;TMENDRSCAN&quot;;</span>
       case XAResource.TMFAIL:
@@ -82,7 +82,7 @@ public class XASqlSessionManager implements XAResource {
       case XAResource.TMJOIN:
 <span class="nc" id="L83">        return &quot;TMJOIN&quot;;</span>
       case XAResource.TMNOFLAGS:
-<span class="nc" id="L85">        return &quot;TMNOFLAGS&quot;;</span>
+<span class="fc" id="L85">        return &quot;TMNOFLAGS&quot;;</span>
       case XAResource.TMONEPHASE:
 <span class="nc" id="L87">        return &quot;TMONEPHASE&quot;;</span>
       case XAResource.TMRESUME:
@@ -90,7 +90,7 @@ public class XASqlSessionManager implements XAResource {
       case XAResource.TMSTARTRSCAN:
 <span class="nc" id="L91">        return &quot;TMSTARTRSCAN&quot;;</span>
       case XAResource.TMSUCCESS:
-<span class="nc" id="L93">        return &quot;TMSUCCESS&quot;;</span>
+<span class="fc" id="L93">        return &quot;TMSUCCESS&quot;;</span>
       case XAResource.TMSUSPEND:
 <span class="nc" id="L95">        return &quot;TMSUSPEND&quot;;</span>
       default:
@@ -100,7 +100,7 @@ public class XASqlSessionManager implements XAResource {
 
   @Override
   public int getTransactionTimeout() throws XAException {
-<span class="nc" id="L103">    return transactionTimeout;</span>
+<span class="fc" id="L103">    return transactionTimeout;</span>
   }
 
   @Override
@@ -111,16 +111,16 @@ public class XASqlSessionManager implements XAResource {
 
   @Override
   public void forget(Xid xid) throws XAException {
-<span class="nc" id="L114">  }</span>
+<span class="fc" id="L114">  }</span>
 
   @Override
   public Xid[] recover(int flags) throws XAException {
-<span class="nc" id="L118">    return new Xid[0];</span>
+<span class="fc" id="L118">    return new Xid[0];</span>
   }
 
   @Override
   public boolean isSameRM(XAResource xares) throws XAException {
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">    return this == xares;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">    return this == xares;</span>
   }
 
   @Override
@@ -130,16 +130,16 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L130">          id + &quot;: call start old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
     }
 
-<span class="pc bpc" id="L133" title="3 of 4 branches missed.">    if (flag != XAResource.TMNOFLAGS &amp;&amp; flag != XAResource.TMJOIN) {</span>
-<span class="nc" id="L134">      throw new MyBatisXAException(id + &quot;: unsupported start flag &quot; + decodeXAResourceFlag(flag),</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">    if (flag != XAResource.TMNOFLAGS &amp;&amp; flag != XAResource.TMJOIN) {</span>
+<span class="fc" id="L134">      throw new MyBatisXAException(id + &quot;: unsupported start flag &quot; + decodeXAResourceFlag(flag),</span>
           XAException.XAER_RMERR);
     }
 
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">    if (xid == null) {</span>
-<span class="nc" id="L139">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">    if (xid == null) {</span>
+<span class="fc" id="L139">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">    if (state == NO_TX) {</span>
 <span class="pc bpc" id="L143" title="1 of 2 branches missed.">      if (this.xid != null) {</span>
 <span class="nc" id="L144">        throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
       } else {
@@ -153,19 +153,19 @@ public class XASqlSessionManager implements XAResource {
 <span class="fc" id="L153">          this.xid = xid;</span>
         }
       }
-<span class="nc bnc" id="L156" title="All 2 branches missed.">    } else if (state == STARTED) {</span>
-<span class="nc" id="L157">      throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">    } else if (state == ENDED) {</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">      if (flag == XAResource.TMNOFLAGS) {</span>
-<span class="nc" id="L160">        throw new MyBatisXAException(id + &quot;: resource already registered XID &quot; + this.xid, XAException.XAER_DUPID);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">    } else if (state == STARTED) {</span>
+<span class="fc" id="L157">      throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">      if (flag == XAResource.TMNOFLAGS) {</span>
+<span class="fc" id="L160">        throw new MyBatisXAException(id + &quot;: resource already registered XID &quot; + this.xid, XAException.XAER_DUPID);</span>
       } else {
-<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (xid.equals(this.xid)) {</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">          if (log.isDebugEnabled()) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (xid.equals(this.xid)) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">          if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L164">            log.debug(id + &quot;: OK to join, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot;</span>
 <span class="nc" id="L165">                + decodeXAResourceFlag(flag));</span>
           }
         } else {
-<span class="nc" id="L168">          throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid</span>
+<span class="fc" id="L168">          throw new MyBatisXAException(id + &quot;: resource already started on XID &quot; + this.xid</span>
               + &quot; - cannot start it on more than one XID at a time&quot;, XAException.XAER_RMERR);
         }
       }
@@ -184,24 +184,24 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L184">          id + &quot;: call end old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot; and flag &quot; + decodeXAResourceFlag(flag));</span>
     }
 
-<span class="pc bpc" id="L187" title="1 of 4 branches missed.">    if (flag != XAResource.TMSUCCESS &amp;&amp; flag != XAResource.TMFAIL) {</span>
-<span class="nc" id="L188">      throw new MyBatisXAException(id + &quot;: unsupported end flag &quot; + decodeXAResourceFlag(flag), XAException.XAER_RMERR);</span>
+<span class="fc bfc" id="L187" title="All 4 branches covered.">    if (flag != XAResource.TMSUCCESS &amp;&amp; flag != XAResource.TMFAIL) {</span>
+<span class="fc" id="L188">      throw new MyBatisXAException(id + &quot;: unsupported end flag &quot; + decodeXAResourceFlag(flag), XAException.XAER_RMERR);</span>
     }
 
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">    if (xid == null) {</span>
-<span class="nc" id="L192">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">    if (xid == null) {</span>
+<span class="fc" id="L192">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
 <span class="pc bpc" id="L195" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
 <span class="nc" id="L196">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
 <span class="pc bpc" id="L197" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">      if (this.xid.equals(xid)) {</span>
 <span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L200">          log.debug(</span>
 <span class="nc" id="L201">              id + &quot;: OK to end, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid + &quot;, flag=&quot; + decodeXAResourceFlag(flag));</span>
         }
       } else {
-<span class="nc" id="L204">        throw new MyBatisXAException(</span>
+<span class="fc" id="L204">        throw new MyBatisXAException(</span>
             id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot end it on another XID &quot; + xid,
             XAException.XAER_PROTO);
       }
@@ -232,11 +232,11 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L232">      throw new MyBatisXAException(id + &quot;: XID cannot be null&quot;, XAException.XAER_INVAL);</span>
     }
 
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
-<span class="nc" id="L236">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
-<span class="nc" id="L238">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">    if (state == NO_TX) {</span>
+<span class="fc" id="L236">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">    } else if (state == STARTED) {</span>
+<span class="fc" id="L238">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">    } else if (state == ENDED) {</span>
 <span class="pc bpc" id="L240" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
 <span class="pc bpc" id="L241" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L242">          log.debug(id + &quot;: OK to prepare, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
@@ -246,8 +246,8 @@ public class XASqlSessionManager implements XAResource {
             id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot prepare it on another XID &quot; + xid,
             XAException.XAER_PROTO);
       }
-<span class="nc bnc" id="L249" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
-<span class="nc" id="L250">      throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="fc" id="L250">      throw new MyBatisXAException(id + &quot;: resource already prepared on XID &quot; + this.xid, XAException.XAER_PROTO);</span>
     }
 
 <span class="fc" id="L253">    this.state = PREPARED;</span>
@@ -266,29 +266,29 @@ public class XASqlSessionManager implements XAResource {
 
 <span class="pc bpc" id="L267" title="1 of 2 branches missed.">    if (state == NO_TX) {</span>
 <span class="nc" id="L268">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
-<span class="nc" id="L270">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">      if (onePhase) {</span>
-<span class="nc bnc" id="L273" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">    } else if (state == STARTED) {</span>
+<span class="fc" id="L270">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">    } else if (state == ENDED) {</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">      if (onePhase) {</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L274">          log.debug(id + &quot;: OK to commit with 1PC, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
         }
       } else {
-<span class="nc" id="L277">        throw new MyBatisXAException(id + &quot;: resource never prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
+<span class="fc" id="L277">        throw new MyBatisXAException(id + &quot;: resource never prepared on XID &quot; + xid, XAException.XAER_PROTO);</span>
       }
 <span class="pc bpc" id="L279" title="1 of 2 branches missed.">    } else if (state == PREPARED) {</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">      if (!onePhase) {</span>
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (this.xid.equals(xid)) {</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">      if (!onePhase) {</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (this.xid.equals(xid)) {</span>
 <span class="pc bpc" id="L282" title="1 of 2 branches missed.">          if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L283">            log.debug(id + &quot;: OK to commit, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
           }
         } else {
-<span class="nc" id="L286">          throw new MyBatisXAException(</span>
+<span class="fc" id="L286">          throw new MyBatisXAException(</span>
               id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot commit it on another XID &quot; + xid,
               XAException.XAER_PROTO);
         }
       } else {
-<span class="nc" id="L291">        throw new MyBatisXAException(id + &quot;: cannot commit in one phase as resource has been prepared on XID &quot; + xid,</span>
+<span class="fc" id="L291">        throw new MyBatisXAException(id + &quot;: cannot commit in one phase as resource has been prepared on XID &quot; + xid,</span>
             XAException.XAER_PROTO);
       }
     }
@@ -318,7 +318,7 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L318">      throw new MyBatisXAException(id + &quot;: resource never started on XID &quot; + xid, XAException.XAER_PROTO);</span>
 <span class="pc bpc" id="L319" title="1 of 2 branches missed.">    } else if (state == STARTED) {</span>
 <span class="nc" id="L320">      throw new MyBatisXAException(id + &quot;: resource never ended on XID &quot; + xid, XAException.XAER_PROTO);</span>
-<span class="pc bpc" id="L321" title="1 of 2 branches missed.">    } else if (state == ENDED) {</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">    } else if (state == ENDED) {</span>
 <span class="pc bpc" id="L322" title="1 of 2 branches missed.">      if (this.xid.equals(xid)) {</span>
 <span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L324">          log.debug(id + &quot;: OK to rollback, old state=&quot; + xlatedState() + &quot;, XID=&quot; + xid);</span>
@@ -328,12 +328,12 @@ public class XASqlSessionManager implements XAResource {
             id + &quot;: resource already started on XID &quot; + this.xid + &quot; - cannot roll it back on another XID &quot; + xid,
             XAException.XAER_PROTO);
       }
-<span class="nc bnc" id="L331" title="All 2 branches missed.">    } else if (state == PREPARED) {</span>
-<span class="nc bnc" id="L332" title="All 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">    } else if (state == PREPARED) {</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L333">        log.debug(id + &quot;: rollback reset state from PREPARED to NO_TX&quot;);</span>
       }
-<span class="nc" id="L335">      this.state = NO_TX;</span>
-<span class="nc" id="L336">      throw new MyBatisXAException(id + &quot;: resource committed during prepare on XID &quot; + this.xid,</span>
+<span class="fc" id="L335">      this.state = NO_TX;</span>
+<span class="fc" id="L336">      throw new MyBatisXAException(id + &quot;: resource committed during prepare on XID &quot; + this.xid,</span>
           XAException.XA_HEURCOM);
     }
 
@@ -421,30 +421,30 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L421">        return true;</span>
       }
 
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">      if (obj == null) {</span>
-<span class="nc" id="L425">        return false;</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">      if (obj == null) {</span>
+<span class="fc" id="L425">        return false;</span>
       }
 
-<span class="pc bpc" id="L428" title="1 of 2 branches missed.">      if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L429">        return false;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">      if (getClass() != obj.getClass()) {</span>
+<span class="fc" id="L429">        return false;</span>
       }
 
 <span class="fc" id="L432">      GlobalKey other = (GlobalKey) obj;</span>
-<span class="pc bpc" id="L433" title="1 of 2 branches missed.">      if (!Arrays.equals(globalId, other.globalId)) {</span>
-<span class="nc" id="L434">        return false;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">      if (!Arrays.equals(globalId, other.globalId)) {</span>
+<span class="fc" id="L434">        return false;</span>
       }
 <span class="fc" id="L436">      return true;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L441">      StringBuilder s = new StringBuilder();</span>
-<span class="nc" id="L442">      s.append(&quot;[Xid:globalId=&quot;);</span>
-<span class="nc bnc" id="L443" title="All 2 branches missed.">      for (int i = 0; i &lt; globalId.length; i++) {</span>
-<span class="nc" id="L444">        s.append(Integer.toHexString(globalId[i]));</span>
+<span class="fc" id="L441">      StringBuilder s = new StringBuilder();</span>
+<span class="fc" id="L442">      s.append(&quot;[Xid:globalId=&quot;);</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">      for (int i = 0; i &lt; globalId.length; i++) {</span>
+<span class="fc" id="L444">        s.append(Integer.toHexString(globalId[i]));</span>
       }
-<span class="nc" id="L446">      s.append(&quot;,length=&quot;).append(globalId.length);</span>
-<span class="nc" id="L447">      return s.toString();</span>
+<span class="fc" id="L446">      s.append(&quot;,length=&quot;).append(globalId.length);</span>
+<span class="fc" id="L447">      return s.toString();</span>
     }
   }
 
@@ -476,7 +476,7 @@ public class XASqlSessionManager implements XAResource {
     void parentResume(String id, SqlSessionManager sqlSessionManager) {
 <span class="fc" id="L477">      Token token = tokens.get(sqlSessionManager);</span>
 
-<span class="pc bpc" id="L479" title="1 of 2 branches missed.">      if (token != null) {</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">      if (token != null) {</span>
 <span class="fc" id="L480">        token.parentResume(id);</span>
 
         // remove last
@@ -488,7 +488,7 @@ public class XASqlSessionManager implements XAResource {
 <span class="fc" id="L488">          tokens.remove(sqlSessionManager);</span>
         }
       } else {
-<span class="nc bnc" id="L491" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L492">          log.debug(id + &quot;: not find parent session &quot; + sqlSessionManager);</span>
         }
       }
@@ -528,7 +528,7 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L528">          log.debug(id + &quot; suspend parent session&quot;);</span>
         }
 
-<span class="pc bpc" id="L531" title="1 of 2 branches missed.">        if (localSqlSession != null) {</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (localSqlSession != null) {</span>
 <span class="fc" id="L532">          suspendedSqlSession = localSqlSession.get();</span>
 <span class="fc" id="L533">          localSqlSession.remove();</span>
         }
@@ -550,7 +550,7 @@ public class XASqlSessionManager implements XAResource {
 <span class="nc" id="L550">          log.debug(id + &quot; resume parent session&quot;);</span>
         }
 
-<span class="pc bpc" id="L553" title="1 of 2 branches missed.">        if (localSqlSession != null) {</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        if (localSqlSession != null) {</span>
 <span class="fc bfc" id="L554" title="All 2 branches covered.">          if (suspendedSqlSession == null) {</span>
 <span class="fc" id="L555">            localSqlSession.remove();</span>
           } else {
@@ -566,4 +566,4 @@ public class XASqlSessionManager implements XAResource {
 <span class="fc" id="L566">    }</span>
   }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

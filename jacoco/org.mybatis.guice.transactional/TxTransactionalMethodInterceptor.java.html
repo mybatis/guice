@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TxTransactionalMethodInterceptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">TxTransactionalMethodInterceptor.java</span></div><h1>TxTransactionalMethodInterceptor.java</h1><pre class="source lang-java linenums">/*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -88,8 +88,8 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 <span class="fc" id="L88">    Transactional transactional = interceptedMethod.getAnnotation(Transactional.class);</span>
 
     // The annotation may be present at the class level instead
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">    if (transactional == null) {</span>
-<span class="nc" id="L92">      transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">    if (transactional == null) {</span>
+<span class="fc" id="L92">      transactional = interceptedMethod.getDeclaringClass().getAnnotation(Transactional.class);</span>
     }
 
 <span class="fc" id="L95">    String debugPrefix = null;</span>
@@ -101,7 +101,7 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
 <span class="fc" id="L101">    Object object = null;</span>
 <span class="fc" id="L102">    TransactionAttribute attribute = null;</span>
 
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (manager != null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    if (manager != null) {</span>
 <span class="fc" id="L105">      TxType txType = transactional.value();</span>
 <span class="fc" id="L106">      TransactionAttributeStrategy strategy = strategies.get(txType);</span>
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">      if (strategy != null) {</span>
@@ -109,17 +109,17 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
       }
     }
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">    if (attribute == null) {</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">      if (log.isDebugEnabled()) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">    if (attribute == null) {</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L114">        log.debug(format(&quot;%s - skip Tx Transaction&quot;, debugPrefix));</span>
       }
 
       // without Tx
       try {
-<span class="nc" id="L119">        object = invocation.proceed();</span>
-<span class="nc" id="L120">      } catch (Throwable t) {</span>
-<span class="nc" id="L121">        throw t;</span>
-<span class="nc" id="L122">      }</span>
+<span class="fc" id="L119">        object = invocation.proceed();</span>
+<span class="fc" id="L120">      } catch (Throwable t) {</span>
+<span class="fc" id="L121">        throw t;</span>
+<span class="fc" id="L122">      }</span>
     } else {
 <span class="pc bpc" id="L124" title="1 of 2 branches missed.">      if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L125">        log.debug(format(&quot;%s - Tx Transaction %s begin&quot;, debugPrefix, attribute.name()));</span>
@@ -139,8 +139,8 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
         }
 <span class="fc" id="L140">        object = invocation.proceed();</span>
 
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (needsRollback) {</span>
-<span class="nc" id="L143">          manager.setRollbackOnly();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (needsRollback) {</span>
+<span class="fc" id="L143">          manager.setRollbackOnly();</span>
         }
 
 <span class="fc" id="L146">      } catch (Throwable t) {</span>
@@ -178,4 +178,4 @@ public class TxTransactionalMethodInterceptor implements MethodInterceptor {
   }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionAttribute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mybatis-guice</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.guice.transactional</a> &gt; <span class="el_source">TransactionAttribute.java</span></div><h1>TransactionAttribute.java</h1><pre class="source lang-java linenums">/*
- *    Copyright 2009-2023 the original author or authors.
+ *    Copyright 2009-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -29,40 +29,40 @@ import jakarta.transaction.TransactionManager;
 <span class="fc" id="L29">  MANDATORY {</span>
     @Override
     public TransactionToken begin(TransactionManager man) throws SystemException {
-<span class="nc bnc" id="L32" title="All 2 branches missed.">      if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {</span>
-<span class="nc" id="L33">        throw new IllegalStateException(</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">      if (man.getStatus() == Status.STATUS_NO_TRANSACTION) {</span>
+<span class="fc" id="L33">        throw new IllegalStateException(</span>
             &quot;A call is being made on a method that mandates a transaction but there is no current transaction.&quot;);
       }
-<span class="nc" id="L36">      return new TransactionToken(man.getTransaction(), null, MANDATORY);</span>
+<span class="fc" id="L36">      return new TransactionToken(man.getTransaction(), null, MANDATORY);</span>
     }
   },
 <span class="fc" id="L39">  NEVER {</span>
     @Override
     public TransactionToken begin(TransactionManager man) throws SystemException {
-<span class="nc bnc" id="L42" title="All 2 branches missed.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
-<span class="nc" id="L43">        throw new IllegalStateException(</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
+<span class="fc" id="L43">        throw new IllegalStateException(</span>
             &quot;A call is being made on a method that forbids a transaction but there is a current transaction.&quot;);
       }
-<span class="nc" id="L46">      return new TransactionToken(null, null, NEVER);</span>
+<span class="fc" id="L46">      return new TransactionToken(null, null, NEVER);</span>
     }
   },
 <span class="fc" id="L49">  NOTSUPPORTED {</span>
     @Override
     public TransactionToken begin(TransactionManager man) throws SystemException {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
-<span class="nc" id="L53">        return new TransactionToken(null, man.suspend(), this);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
+<span class="fc" id="L53">        return new TransactionToken(null, man.suspend(), this);</span>
       }
-<span class="nc" id="L55">      return new TransactionToken(null, null, NOTSUPPORTED);</span>
+<span class="fc" id="L55">      return new TransactionToken(null, null, NOTSUPPORTED);</span>
     }
 
     @Override
     public void finish(TransactionManager man, TransactionToken tranToken)
         throws SystemException, InvalidTransactionException, IllegalStateException {
-<span class="nc" id="L61">      Transaction tran = tranToken.getSuspendedTransaction();</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">      if (tran != null) {</span>
-<span class="nc" id="L63">        man.resume(tran);</span>
+<span class="fc" id="L61">      Transaction tran = tranToken.getSuspendedTransaction();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">      if (tran != null) {</span>
+<span class="fc" id="L63">        man.resume(tran);</span>
       }
-<span class="nc" id="L65">    }</span>
+<span class="fc" id="L65">    }</span>
   },
 <span class="fc" id="L67">  REQUIRED {</span>
     @Override
@@ -101,9 +101,9 @@ import jakarta.transaction.TransactionManager;
 
       try {
 <span class="fc" id="L103">        man.begin();</span>
-<span class="nc" id="L104">      } catch (NotSupportedException | SystemException e) {</span>
-<span class="nc" id="L105">        man.resume(tranToken.getSuspendedTransaction());</span>
-<span class="nc" id="L106">        throw e;</span>
+<span class="fc" id="L104">      } catch (NotSupportedException | SystemException e) {</span>
+<span class="fc" id="L105">        man.resume(tranToken.getSuspendedTransaction());</span>
+<span class="fc" id="L106">        throw e;</span>
 <span class="fc" id="L107">      }</span>
 
 <span class="fc" id="L109">      tranToken.setActiveTransaction(man.getTransaction());</span>
@@ -116,7 +116,7 @@ import jakarta.transaction.TransactionManager;
     public void finish(TransactionManager man, TransactionToken tranToken)
         throws SystemException, InvalidTransactionException, IllegalStateException, SecurityException,
         RollbackException, HeuristicMixedException, HeuristicRollbackException {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">      if (tranToken.isCompletionAllowed()) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">      if (tranToken.isCompletionAllowed()) {</span>
 <span class="fc bfc" id="L120" title="All 2 branches covered.">        if (man.getStatus() == Status.STATUS_MARKED_ROLLBACK) {</span>
 <span class="fc" id="L121">          man.rollback();</span>
         } else {
@@ -134,16 +134,16 @@ import jakarta.transaction.TransactionManager;
     @Override
     public TransactionToken begin(TransactionManager man)
         throws SystemException, NotSupportedException, InvalidTransactionException, IllegalStateException {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
-<span class="nc" id="L138">        return new TransactionToken(man.getTransaction(), null, SUPPORTS);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">      if (man.getStatus() == Status.STATUS_ACTIVE) {</span>
+<span class="fc" id="L138">        return new TransactionToken(man.getTransaction(), null, SUPPORTS);</span>
       }
 
-<span class="nc" id="L141">      return new TransactionToken(null, null, SUPPORTS);</span>
+<span class="fc" id="L141">      return new TransactionToken(null, null, SUPPORTS);</span>
     }
   };
 
   public static TransactionAttribute fromValue(String value) {
-<span class="nc" id="L146">    return valueOf(value.toUpperCase());</span>
+<span class="fc" id="L146">    return valueOf(value.toUpperCase());</span>
   }
 
   public TransactionToken begin(TransactionManager man)
@@ -156,6 +156,6 @@ import jakarta.transaction.TransactionManager;
       throws SystemException, InvalidTransactionException, IllegalStateException, SecurityException, RollbackException,
       HeuristicMixedException, HeuristicRollbackException {
 
-<span class="nc" id="L159">  }</span>
+<span class="fc" id="L159">  }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
