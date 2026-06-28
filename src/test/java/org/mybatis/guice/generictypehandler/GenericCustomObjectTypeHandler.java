@@ -17,6 +17,7 @@ package org.mybatis.guice.generictypehandler;
 
 import jakarta.inject.Inject;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -77,12 +78,11 @@ public class GenericCustomObjectTypeHandler<E extends CustomObject> extends Base
 
   private E createResult(String name) {
     try {
-      E customObject = type.newInstance();
+      E customObject = type.getDeclaredConstructor().newInstance();
       customObject.setName(name);
       return customObject;
-    } catch (InstantiationException e) {
-      throw new PersistenceException(e);
-    } catch (IllegalAccessException e) {
+    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+        | NoSuchMethodException | SecurityException e) {
       throw new PersistenceException(e);
     }
   }

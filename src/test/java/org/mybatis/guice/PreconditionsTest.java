@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.lang.reflect.Constructor;
 import java.util.AbstractCollection;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -129,7 +129,7 @@ class PreconditionsTest {
     AbstractCollection<String> collection = new AbstractCollection<>() {
       @Override
       public Iterator<String> iterator() {
-        return Collections.singleton("ok").iterator();
+        return Set.of("ok").iterator();
       }
 
       @Override
