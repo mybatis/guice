@@ -48,7 +48,7 @@ public class BaseDB {
   static final String USER = "SA";
   static final String PASSWORD = "";
 
-  static final String QUERY_CREATE_TABLE = "create table table1 (" + "id integer not null,"
+  static final String QUERY_CREATE_TABLE = "create table table1 (" + "id integer not null, "
       + "name varchar(80) not null," + "constraint pk_table1 primary key (id) )";
   static final String QUERY_DROP_TABLE = "drop table table1";
   static final String QUERY_INSERT = "insert into table1 (id, name) values (?,?)";
