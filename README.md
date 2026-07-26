@@ -10,9 +10,3 @@ MyBatis Guice Module
 ![mybatis-guice](https://mybatis.org/images/mybatis-logo.png)
 
 The MyBatis Guice module is easy-to-use Google Guice bridge for MyBatis sql mapping framework.
-
-Essentials
-----------
-
-* [See the docs](https://mybatis.org/guice/)
-
