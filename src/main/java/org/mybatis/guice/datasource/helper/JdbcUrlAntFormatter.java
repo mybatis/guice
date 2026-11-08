@@ -23,13 +23,12 @@ import jakarta.inject.Provider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public final class JdbcUrlAntFormatter implements Provider<String> {
 
   private static final String VAR_BEGIN = "$";
 
-  private static final String PIPE_SEPARATOR = "|";
+  private static final String PIPE_SEPARATOR_REGEX = "\\|";
 
   private final List<Provider<String>> appenders = new ArrayList<>();
 
@@ -96,9 +95,9 @@ public final class JdbcUrlAntFormatter implements Provider<String> {
 
   // Method to append KeyResolver based on the variable
   private void processKeyResolver(String pattern, int startPos, int endPos) {
-    StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(startPos + 2, endPos), PIPE_SEPARATOR);
-    String key = keyTokenizer.nextToken();
-    String defaultValue = keyTokenizer.hasMoreTokens() ? keyTokenizer.nextToken() : null;
+    String[] tokens = pattern.substring(startPos + 2, endPos).split(PIPE_SEPARATOR_REGEX);
+    String key = tokens[0];
+    String defaultValue = tokens.length > 1 ? tokens[1] : null;
     KeyResolver resolver = new KeyResolver(key, defaultValue);
     appenders.add(resolver);
     resolvers.add(resolver);
